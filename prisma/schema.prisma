@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  OWNER
+  ADMIN
+}
+
+model User {
+  id       String   @id @default(cuid())
+  name     String?
+  email    String?  @unique
+  password String?
+  role     UserRole @default(ADMIN)
+}
+
+model Team {
+  id          String   @id @unique
+  name        String
+  logo        String?
+  createdDate DateTime @default(now())
+
+  players Player[]
+  goals   Goal[]
+  teamA   Match[]        @relation("TeamA")
+  teamB   Match[]        @relation("TeamB")
+  groups  TeamsInGroup[]
+}
+
+model Player {
+  goals        Goal[]
+  id           String   @id @unique
+  teamId       String
+  teamName     String?
+  dateOfBirth  String?
+  height       String?
+  position     String?
+  number       String?
+  profilePhoto String?
+  firstName    String
+  lastName     String
+  nationality  String?
+  footed       String?
+  team         Team     @relation(fields: [teamId], references: [id])
+  createdDate  DateTime @default(now())
+}
+
+model TournamentGallery {
+  id        String   @id @unique
+  url       String
+  createdAt DateTime @default(now())
+}
+
+model TributeGallery {
+  id        String   @id @unique
+  url       String
+  createdAt DateTime @default(now())
+}
+
+model Goal {
+  id          String   @id @default(uuid())
+  playerId    String
+  teamId      String
+  matchId     String
+  createdDate DateTime @default(now())
+
+  player Player @relation(fields: [playerId], references: [id])
+  team   Team   @relation(fields: [teamId], references: [id])
+  match  Match  @relation(fields: [matchId], references: [id])
+}
+
+model Match {
+  id          String   @id @unique @default(uuid())
+  teamAId     String
+  teamBId     String
+  teamA       Team     @relation("TeamA", fields: [teamAId], references: [id])
+  teamB       Team     @relation("TeamB", fields: [teamBId], references: [id])
+  playDate    String?
+  createdDate DateTime @default(now())
+  goals       Goal[]
+}
+
+model Group {
+  id           String  @id @unique @default(uuid())
+  name         String
+  teamsInGroup TeamsInGroup[]
+}
+
+model TeamsInGroup {
+  id             String @id @default(uuid())
+  groupId        String
+  teamId         String
+  points         Int?   @default(0)
+  goalsFor       Int?   @default(0)
+  goalsAgainst   Int?   @default(0)
+  goalDifference Int?   @default(0)
+
+  group Group @relation(fields: [groupId], references: [id])
+  team  Team  @relation(fields: [teamId], references: [id])
+}
