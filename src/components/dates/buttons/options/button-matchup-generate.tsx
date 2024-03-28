@@ -4,7 +4,7 @@ import { Button } from '@nextui-org/react'
 import { Group, Team } from '@prisma/client'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import useSWR from 'swr'
 
 type ExtenedGroup = Group & {
@@ -19,12 +19,6 @@ const ButtonMatchupGenerate = () => {
 
   const { data: getGroups } = useSWR<ExtenedGroup[]>(
     '/api/groups',
-    fetcher,
-    revalidate
-  )
-
-  const { data: getMatches } = useSWR<ExtenedGroup[]>(
-    '/api/matches',
     fetcher,
     revalidate
   )
@@ -47,14 +41,9 @@ const ButtonMatchupGenerate = () => {
     const allMatchups = getGroups?.map((group) => generateMatchups(group))
     const tournamentMatchups = allMatchups?.flat()
 
-    if (getGroups && getGroups.length === 0) {
+    if (getGroups?.length === 0) {
       setIsPending(false)
-      return toast.info('There are not groups created!')
-    }
-
-    if (getMatches && getMatches.length === 40) {
-      setIsPending(false)
-      return toast.info('There are matches created!')
+      return toast.error('There are not groups available!')
     }
 
     const matchupPromises = tournamentMatchups?.map((match) =>
@@ -72,7 +61,15 @@ const ButtonMatchupGenerate = () => {
         return toast.success('All groups has been created!')
       }
     } catch (error) {
-      setIsPending(false)
+      if (error instanceof AxiosError) {
+        const status = error.response?.status === 409
+        if (status) {
+          setIsPending(false)
+          const errorMessage = error.response?.data.error
+          return toast.error(errorMessage)
+        }
+      }
+
       return toast.error('An ocurred a error')
     }
   }

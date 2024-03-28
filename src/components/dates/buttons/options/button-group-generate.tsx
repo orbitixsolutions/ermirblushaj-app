@@ -4,37 +4,32 @@ import { useState } from 'react'
 import { Button } from '@nextui-org/react'
 import { Group, Team } from '@prisma/client'
 import { toast } from 'sonner'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import useSWR from 'swr'
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data)
 
 const ButtonGroupGenerate = () => {
   const [isPending, setIsPending] = useState(false)
-  const revalidate = { revalidateOnFocus: true }
 
   const { data: getTeams } = useSWR<Team[]>('/api/teams', fetcher, {
     refreshInterval: 3000
   })
 
-  const { data: getGroups } = useSWR<Group[]>(
-    '/api/groups',
-    fetcher,
-    revalidate
-  )
-
-  const mixArray = (array: any) => {
+  // Mezclamos el array de 20 equipos que llega como paramentro
+  const mixArray = (array: Team[]) => {
     for (let i = array && array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
       ;[array[i], array[j]] = [array[j], array[i]]
     }
+    console.log(array)
     return array
   }
 
   const generateGroups = () => {
     setIsPending(true)
-    let teams = Array.from({ length: 20 }, (_, i) => i + 1)
-    teams = mixArray(getTeams)
+    let teams = Array.from({ length: 20 }, (_, i) => i + 1) as unknown as Team[]
+    teams = mixArray(getTeams as Team[])
 
     let groups = []
     for (let i = 0; i < 4; i++) {
@@ -53,11 +48,6 @@ const ButtonGroupGenerate = () => {
   const createGroups = async () => {
     const generatedGroups = generateGroups()
 
-    if (getGroups && getGroups.length === 4) {
-      setIsPending(false)
-      return toast.info('There are groups created!')
-    }
-
     const groupsPromises = generatedGroups.map((groups) =>
       axios.post('/api/groups', groups)
     )
@@ -70,7 +60,15 @@ const ButtonGroupGenerate = () => {
         return toast.success('Groups has been created!')
       }
     } catch (error) {
-      setIsPending(false)
+      if (error instanceof AxiosError) {
+        const status = error.response?.status === 409
+        if (status) {
+          setIsPending(false)
+          const errorMessage = error.response?.data.error
+          return toast.error(errorMessage)
+        }
+      }
+
       return toast.error('An ocurred a error!')
     }
   }

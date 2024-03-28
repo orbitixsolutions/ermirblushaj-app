@@ -1,5 +1,5 @@
-import prisma from '@/libs/prisma'
 import { NextResponse } from 'next/server'
+import prisma from '@/libs/prisma'
 
 export async function GET(request: Request) {
   const matches = await prisma.match.findMany({
@@ -17,11 +17,11 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const data = await request.json()
-
   const matches = await prisma.match.findMany()
-  const NO_MATCHES = matches.length === 40
 
-  if (NO_MATCHES)
+  const ALREADY_MATCHES = matches.length === 40
+
+  if (ALREADY_MATCHES)
     return NextResponse.json(
       { error: 'Already exists matchups created!' },
       { status: 409 }
