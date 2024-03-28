@@ -25,10 +25,12 @@ model User {
 
 model Team {
   id          String   @id @unique
+  groupId     String?
   name        String
   logo        String?
   createdDate DateTime @default(now())
 
+  group   Group?         @relation(fields: [groupId], references: [id])
   players Player[]
   goals   Goal[]
   teamA   Match[]        @relation("TeamA")
@@ -90,8 +92,9 @@ model Match {
 }
 
 model Group {
-  id           String  @id @unique @default(uuid())
+  id           String         @id @unique @default(uuid())
   name         String
+  teams        Team[]
   teamsInGroup TeamsInGroup[]
 }
 

@@ -1,15 +1,31 @@
+import prisma from '@/libs/prisma'
 import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
-    
-
-  return NextResponse.json('Success Get', { status: 200 })
+  const groups = await prisma.group.findMany({
+    include: {
+      teams: true
+    },
+    orderBy: {
+      name: 'asc'
+    }
+  })
+  return NextResponse.json(groups, { status: 200 })
 }
 
 export async function POST(request: Request) {
   const data = await request.json()
 
+  const newGroups = await prisma.group.create({
+    data: {
+      name: data.groupName,
+      teams: {
+        connect: data.teams
+      }
+    }
+  })
 
+  console.log(newGroups)
 
-  return NextResponse.json('Success Post', { status: 200 })
+  return NextResponse.json(newGroups, { status: 200 })
 }
