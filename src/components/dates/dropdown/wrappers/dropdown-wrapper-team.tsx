@@ -4,18 +4,8 @@ import {
   DropdownMenu,
   DropdownSection,
   DropdownTrigger,
-  Image,
+  Image
 } from '@nextui-org/react'
-import { Match, Player, Team } from '@prisma/client'
-
-type ExtendedMatch = Match & {
-  teamA: Team
-  teamB: Team
-}
-
-type ExtendedPlayer = Team & {
-  players: Player[]
-}
 
 interface Props {
   name: string
@@ -36,7 +26,13 @@ const DropdownWrapper = ({ render, name, src }: Props) => {
         </Card>
       </DropdownTrigger>
       <DropdownMenu aria-label='Team player list'>
-        <DropdownSection title='Player List' showDivider>
+        <DropdownSection
+          classNames={{
+            heading: 'text-xl font-bold text-custom-white'
+          }}
+          title='Players'
+          showDivider
+        >
           {render}
         </DropdownSection>
       </DropdownMenu>
