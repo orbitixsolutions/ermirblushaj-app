@@ -1,18 +1,8 @@
 import { fetcher } from '@/helpers/fetcher'
-import {
-  Avatar,
-  Card,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownSection,
-  DropdownTrigger,
-  Image,
-  Spinner
-} from '@nextui-org/react'
+import { Avatar, DropdownItem, Spinner } from '@nextui-org/react'
 import { Match, Player, Team } from '@prisma/client'
 import useSWR from 'swr'
-import DropdownWrapper from '../wrappers/dropdown-wrapper-team'
+import DropdownWrapper from '@/components/dates/dropdown/wrappers/dropdown-wrapper-team'
 
 type ExtendedMatch = Match & {
   teamA: Team

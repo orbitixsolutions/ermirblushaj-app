@@ -42,7 +42,7 @@ const Matches = () => {
       {getMatches?.map((matchup) => (
         <li
           key={matchup.id}
-          className='bg-custom-darknavy rounded-lg grid grid-cols-4 gap-4 p-4'
+          className='bg-custom-darkblue rounded-lg grid grid-cols-4 gap-4 p-4'
         >
           <ImagesMatches item={matchup} />
 
