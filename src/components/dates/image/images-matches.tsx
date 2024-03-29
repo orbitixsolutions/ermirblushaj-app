@@ -1,5 +1,6 @@
-import { Card, Image } from '@nextui-org/react'
 import { Match, Team } from '@prisma/client'
+import { DropdownTeamA } from '@/components/dates/dropdown/teams/dropdown-team-a'
+import { DropdownTeamB } from '@/components/dates/dropdown/teams/dropdown-team-b'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -12,26 +13,14 @@ const ImagesMatches = ({ item }: { item: ExtendedMatch }) => {
   return (
     <div className='col-span-4 flex gap-4'>
       <div className='text-center space-y-4'>
-        <Card className='aspect-square p-4 bg-custom-navy'>
-          <Image
-            className='size-full object-cover'
-            src={teamA.logo || ''}
-            alt={`Logo team ${teamA.name}`}
-          />
-        </Card>
+        <DropdownTeamA item={item} />
         <h2>{teamA.name}</h2>
       </div>
       <div className='grid place-items-center'>
         <h2 className='-translate-y-2 text-xl font-bold'>VS</h2>
       </div>
       <div className='text-center space-y-4'>
-        <Card className='aspect-square p-4 bg-custom-navy'>
-          <Image
-            className='size-full object-cover'
-            src={teamB.logo || ''}
-            alt={`Logo team ${teamA.name}`}
-          />
-        </Card>
+        <DropdownTeamB item={item} />
         <h2>{teamB.name}</h2>
       </div>
     </div>
