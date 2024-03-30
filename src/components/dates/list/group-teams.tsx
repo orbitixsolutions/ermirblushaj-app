@@ -1,15 +1,13 @@
 'use client'
 
+import { fetcher } from '@/helpers/fetcher'
 import { Card, Image } from '@nextui-org/react'
 import { Group, Team } from '@prisma/client'
-import axios from 'axios'
 import useSWR from 'swr'
 
 type extendedGroups = Group & {
   teams: Team[]
 }
-
-const fetcher = (url: string) => axios.get(url).then((res) => res.data)
 
 const GroupTeams = () => {
   const interval = { refreshInterval: 3000 }

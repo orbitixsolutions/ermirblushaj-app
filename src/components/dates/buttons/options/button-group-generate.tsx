@@ -68,7 +68,7 @@ const ButtonGroupGenerate = () => {
           return toast.error(errorMessage)
         }
       }
-
+      setIsPending(false)
       return toast.error('An ocurred a error!')
     }
   }

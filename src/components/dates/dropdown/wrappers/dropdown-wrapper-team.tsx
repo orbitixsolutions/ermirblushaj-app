@@ -11,6 +11,7 @@ interface Props {
   name: string
   src: string | null
   render: JSX.Element
+  id: string
 }
 
 const DropdownWrapper = ({ render, name, src }: Props) => {

@@ -30,12 +30,25 @@ model Team {
   logo        String?
   createdDate DateTime @default(now())
 
-  group   Group?         @relation(fields: [groupId], references: [id])
+  group   Group?   @relation(fields: [groupId], references: [id])
   players Player[]
   goals   Goal[]
-  teamA   Match[]        @relation("TeamA")
-  teamB   Match[]        @relation("TeamB")
-  groups  TeamsInGroup[]
+
+  teamA Match[] @relation("TeamA")
+  teamB Match[] @relation("TeamB")
+
+  teamStats   TeamStats?
+  playerStats PlayerStats[]
+}
+
+model TeamStats {
+  teamId         String @id @unique
+  points         Int?   @default(0)
+  goalsFor       Int?   @default(0)
+  goalsAgainst   Int?   @default(0)
+  goalDifference Int?   @default(0)
+
+  team Team @relation(fields: [teamId], references: [id])
 }
 
 model Player {
@@ -52,8 +65,19 @@ model Player {
   lastName     String
   nationality  String?
   footed       String?
-  team         Team     @relation(fields: [teamId], references: [id])
   createdDate  DateTime @default(now())
+
+  player PlayerStats?
+  team         Team     @relation(fields: [teamId], references: [id])
+}
+
+model PlayerStats {
+  playerId String @id @unique
+  goals    Int?   @default(0)
+  teamId String?
+
+  player Player  @relation(fields: [playerId], references: [id])
+  Team   Team?   @relation(fields: [teamId], references: [id])
 }
 
 model TournamentGallery {
@@ -92,21 +116,7 @@ model Match {
 }
 
 model Group {
-  id           String         @id @unique @default(uuid())
-  name         String
-  teams        Team[]
-  teamsInGroup TeamsInGroup[]
-}
-
-model TeamsInGroup {
-  id             String @id @default(uuid())
-  groupId        String
-  teamId         String
-  points         Int?   @default(0)
-  goalsFor       Int?   @default(0)
-  goalsAgainst   Int?   @default(0)
-  goalDifference Int?   @default(0)
-
-  group Group @relation(fields: [groupId], references: [id])
-  team  Team  @relation(fields: [teamId], references: [id])
+  id    String @id @unique @default(uuid())
+  name  String
+  teams Team[]
 }

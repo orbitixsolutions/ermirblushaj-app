@@ -3,6 +3,7 @@ import { Avatar, DropdownItem, Spinner } from '@nextui-org/react'
 import { Match, Player, Team } from '@prisma/client'
 import useSWR from 'swr'
 import DropdownWrapper from '@/components/dates/dropdown/wrappers/dropdown-wrapper-team'
+import DropdownTeamContent from '../content/dropdown-team-content'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -27,6 +28,7 @@ export const DropdownTeamA = ({ item }: { item: ExtendedMatch }) => {
       <DropdownWrapper
         src={item.teamA.logo}
         name={item.teamA.name}
+        id=''
         render={
           <DropdownItem textValue='loading-message' key='loading'>
             <Spinner size='lg' color='success' />
@@ -41,6 +43,7 @@ export const DropdownTeamA = ({ item }: { item: ExtendedMatch }) => {
       <DropdownWrapper
         src={item.teamA.logo}
         name={item.teamA.name}
+        id=''
         render={
           <DropdownItem textValue='error-message' color='danger' key='error'>
             <h2 className='text-xl font-bold'>An ocurred a error!</h2>
@@ -54,19 +57,11 @@ export const DropdownTeamA = ({ item }: { item: ExtendedMatch }) => {
     <DropdownWrapper
       src={item.teamA.logo}
       name={item.teamA.name}
+      id=''
       render={
         team?.players.map((player) => (
           <DropdownItem textValue={player.firstName} key={player.id}>
-            <div className='flex items-center gap-2'>
-              <Avatar
-                size='sm'
-                src={player.profilePhoto || ''}
-                name={player.firstName}
-              />
-              <h2 className='text-sm capitalize'>
-                {player.firstName} {player.lastName}
-              </h2>
-            </div>
+            <DropdownTeamContent player={player} />
           </DropdownItem>
         )) as any
       }

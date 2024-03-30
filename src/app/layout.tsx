@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body id='body' className={`${DM_SANS_FONT.className}`}>
-        <Toaster position='bottom-right' richColors />
+        <Toaster position='top-center' richColors />
         <Providers>{children}</Providers>
       </body>
     </html>
