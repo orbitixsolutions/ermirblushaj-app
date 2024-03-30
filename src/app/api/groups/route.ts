@@ -1,12 +1,10 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/libs/prisma'
-import { Team } from '@prisma/client'
 
 export async function GET(request: Request) {
   const groups = await prisma.group.findMany({
     include: {
-      teams: true,
-      teamsInGroup: true
+      teams: true
     },
     orderBy: {
       name: 'asc'
@@ -17,8 +15,6 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const data = await request.json()
-  
-  
 
   const groups = await prisma.group.findMany()
   const ALREADY_GROUPS = groups.length === 4
@@ -37,15 +33,6 @@ export async function POST(request: Request) {
       }
     }
   })
-
-  const newGroupStats = await prisma.teamsInGroup.create({
-    data: {
-      teamId: 'a',
-      groupId: 'a'
-    }
-  })
-
-  console.log(newGroupStats)
 
   return NextResponse.json(newGroups, { status: 200 })
 }

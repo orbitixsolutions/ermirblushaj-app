@@ -14,16 +14,12 @@ import {
 import { Controller } from 'react-hook-form'
 import { usePlayerModal } from '@/hooks/player-hooks/use-player-modal'
 import { Team } from '@prisma/client'
+import { fetcher } from '@/helpers/fetcher'
 import useSWR from 'swr'
-import axios from 'axios'
 import ImagePreviewPlayer from '@/components/new/image/players/image-preview-player'
 
-const fetcher = (url: string) => axios.get(url).then((res) => res.data)
-
 const ModalPlayer = () => {
-  const { data: teams } = useSWR<Team[]>('/api/teams', fetcher, {
-    refreshInterval: 30000
-  })
+  const { data: teams } = useSWR<Team[]>('/api/teams', fetcher)
 
   const {
     playerModalOpen,
@@ -152,7 +148,9 @@ const ModalPlayer = () => {
                   render={({ field }) => (
                     <Input
                       className={`${
-                        !playerModalEdit ? 'col-span-2' : 'col-span-4'
+                        !playerModalEdit && teamData.id === ''
+                          ? 'col-span-2'
+                          : 'col-span-4'
                       }  `}
                       type='text'
                       size='lg'
@@ -163,7 +161,7 @@ const ModalPlayer = () => {
                     />
                   )}
                 />
-                {!playerModalEdit && (
+                {!playerModalEdit && teamData.id === '' && (
                   <Controller
                     name='team_id'
                     control={control}

@@ -16,6 +16,7 @@ export const deleteTeam = async (id: string) => {
         players: true
       }
     })
+    await prisma.teamStats.delete({ where: { teamId: teamsId } })
 
     if (teams?.id === teamsId) {
       await deleteImage({ path: 'teams', id: teamsId })
@@ -27,8 +28,8 @@ export const deleteTeam = async (id: string) => {
         await prisma.player.deleteMany({ where: { teamId: teamsId } })
       }
     }
-    await prisma.team.delete({ where: { id: teamsId } })
 
+    await prisma.team.delete({ where: { id: teamsId } })
     return { success: 'Team deleted!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error.', status: 500 }
@@ -37,12 +38,10 @@ export const deleteTeam = async (id: string) => {
 
 export const deletePlayer = async (id: string) => {
   try {
-    await prisma.player.delete({
-      where: {
-        id: id
-      }
-    })
+    const playerId = id
 
+    await prisma.playerStats.delete({ where: { playerId: playerId } })
+    await prisma.player.delete({ where: { id: playerId } })
     return { success: 'Player deleted!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error.', status: 500 }

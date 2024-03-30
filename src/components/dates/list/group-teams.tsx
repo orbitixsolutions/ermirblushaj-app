@@ -10,13 +10,11 @@ type extendedGroups = Group & {
 }
 
 const GroupTeams = () => {
-  const interval = { refreshInterval: 3000 }
-
   const {
     data: getGroups,
     isLoading,
     error
-  } = useSWR<extendedGroups[]>('/api/groups', fetcher, interval)
+  } = useSWR<extendedGroups[]>('/api/groups', fetcher)
 
   if (isLoading) {
     return <p>Loading...</p>

@@ -149,8 +149,8 @@ export const usePlayerModal = () => {
     const res = await axios.post(`/api/players`, {
       ...data,
       id: playerId,
-      is_team_name: teamData.name,
-      is_team_id: teamData.id
+      EXIST_TEAM_NAME: teamData.name,
+      EXIST_TEAM_ID: teamData.id
     })
 
     uploadImage({
