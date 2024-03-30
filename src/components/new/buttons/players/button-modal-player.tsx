@@ -21,18 +21,14 @@ const ButtonModalPlayer = () => {
   }
 
   return (
-    <Tooltip
-      content={<h2 className='px-4 py-2 text-sm font-bold'>Add player</h2>}
+    <Button
+      isIconOnly
+      radius='full'
+      onPress={() => handleOpenModal()}
+      className='bg-transparent border-[1px] border-custom-green'
     >
-      <Button
-        isIconOnly
-        radius='full'
-        onPress={() => handleOpenModal()}
-        className='bg-transparent border-[1px] border-custom-green'
-      >
-        <IconPlus size={24} className='text-custom-green' />
-      </Button>
-    </Tooltip>
+      <IconPlus size={24} className='text-custom-green' />
+    </Button>
   )
 }
 

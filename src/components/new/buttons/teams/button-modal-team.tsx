@@ -21,10 +21,7 @@ const ButtonModalTeam = () => {
   }
 
   return (
-    <Tooltip
-      content={<h2 className='px-4 py-2 text-sm font-bold'>Add team</h2>}
-    >
-      <Button
+    <Button
         isIconOnly
         radius='full'
         onPress={() => handleOpenModal()}
@@ -32,7 +29,6 @@ const ButtonModalTeam = () => {
       >
         <IconPlus size={24} className='text-custom-green' />
       </Button>
-    </Tooltip>
   )
 }
 
