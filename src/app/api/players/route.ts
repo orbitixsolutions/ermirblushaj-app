@@ -5,15 +5,14 @@ export async function GET(request: Request) {
   const players = await prisma.player.findMany({
     orderBy: {
       createdDate: 'desc'
-    },
-
+    }
   })
   return NextResponse.json(players, { status: 200 })
 }
 
 export async function POST(request: Request) {
   const data = await request.json()
-  
+
   const {
     first_name,
     last_name,
@@ -24,8 +23,8 @@ export async function POST(request: Request) {
     position,
     team_id,
     id,
-    is_team_name,
-    is_team_id
+    EXIST_TEAM_NAME,
+    EXIST_TEAM_ID
   } = data
 
   const teamFoundName = await prisma.team.findUnique({
@@ -43,10 +42,18 @@ export async function POST(request: Request) {
       height: height,
       nationality: nationality,
       position: position,
-      teamId: team_id === '' ? is_team_id : team_id,
-      teamName: teamFoundName?.name ?? is_team_name,
+      teamId: team_id === '' ? EXIST_TEAM_ID : team_id,
+      teamName: teamFoundName?.name ?? EXIST_TEAM_NAME,
       id: id
     }
   })
+
+  await prisma.playerStats.create({
+    data: {
+      playerId: id,
+      teamId: team_id === '' ? EXIST_TEAM_ID : team_id
+    }
+  })
+
   return NextResponse.json(newPlayer, { status: 200 })
 }
