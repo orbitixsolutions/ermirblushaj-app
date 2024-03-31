@@ -50,10 +50,19 @@ export const useTeamModal = () => {
   // Si estamos editando rellenamos los campos del modal
   useEffect(() => {
     if (teamModalEdit) {
-      axios.get(`/api/teams/${teamModalId}`).then((res) => {
-        setValue('name', res.data.name)
-        updatedImageTeam({ imgFile: null, imgPreview: res.data.logo })
-      })
+      setIsPending(true)
+      axios
+        .get(`/api/teams/${teamModalId}`)
+        .then((res) => {
+          setValue('name', res.data.name)
+          updatedImageTeam({ imgFile: null, imgPreview: res.data.logo })
+        })
+        .catch(() => {
+          toast.error('An ocurred a error!')
+        })
+        .finally(() => {
+          setIsPending(false)
+        })
     }
   }, [teamModalEdit])
 

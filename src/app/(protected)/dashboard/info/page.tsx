@@ -16,7 +16,7 @@ const InfoPage = () => {
     isLoading,
     error
   } = useSWR<ExtendedTeams[]>('/api/teams/full', fetcher, {
-    revalidateOnFocus: true
+    refreshInterval: 1000
   })
 
   if (isLoading) {

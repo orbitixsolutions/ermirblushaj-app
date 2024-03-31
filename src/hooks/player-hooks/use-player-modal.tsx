@@ -60,17 +60,29 @@ export const usePlayerModal = () => {
   // Si estamos editando rellenamos los campos del modal
   useEffect(() => {
     if (playerModalEdit) {
-      axios.get(`/api/players/${playerModalId}`).then((res) => {
-        setValue('first_name', res.data.firstName)
-        setValue('last_name', res.data.lastName)
-        setValue('date_birthday', res.data.dateOfBirth)
-        setValue('number', res.data.number)
-        setValue('height', res.data.height)
-        setValue('nationality', res.data.nationality)
-        setValue('position', res.data.position)
-        setValue('team_id', res.data.teamId)
-        updatedImagePlayer({ imgFile: null, imgPreview: res.data.profilePhoto })
-      })
+      setIsPending(true)
+      axios
+        .get(`/api/players/${playerModalId}`)
+        .then((res) => {
+          setValue('first_name', res.data.firstName)
+          setValue('last_name', res.data.lastName)
+          setValue('date_birthday', res.data.dateOfBirth)
+          setValue('number', res.data.number)
+          setValue('height', res.data.height)
+          setValue('nationality', res.data.nationality)
+          setValue('position', res.data.position)
+          setValue('team_id', res.data.teamId)
+          updatedImagePlayer({
+            imgFile: null,
+            imgPreview: res.data.profilePhoto
+          })
+        })
+        .catch(() => {
+          toast.error('An ocurred a error!')
+        })
+        .finally(() => {
+          setIsPending(false)
+        })
     }
   }, [playerModalEdit])
 
@@ -121,18 +133,6 @@ export const usePlayerModal = () => {
     if (data.first_name === '') {
       return toast.info('First name is required!')
     }
-    // if (data.date_birthday === '') {
-    //   return toast.info('Date birthday is required!')
-    // }
-    // if (data.height === '') {
-    //   return toast.info('Height is required!')
-    // }
-    // if (data.number === '') {
-    //   return toast.info('Number of player is required!')
-    // }
-    // if (data.nationality === '') {
-    //   return toast.info('Nationality is required!')
-    // }
     // if (data.position === '') {
     //   return toast.info('Position of player is required!')
     // }

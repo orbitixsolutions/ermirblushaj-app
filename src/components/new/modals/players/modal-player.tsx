@@ -16,7 +16,7 @@ import { usePlayerModal } from '@/hooks/player-hooks/use-player-modal'
 import { Team } from '@prisma/client'
 import { fetcher } from '@/helpers/fetcher'
 import useSWR from 'swr'
-import ImagePreviewPlayer from '@/components/new/image/players/image-preview-player'
+import ImageDropzonePlayer from '@/components/new/image/players/image-dropzone-player'
 
 const ModalPlayer = () => {
   const { data: teams } = useSWR<Team[]>('/api/teams', fetcher)
@@ -193,8 +193,8 @@ const ModalPlayer = () => {
                   />
                 )}
               </div>
-              <div className='col-span-4 grid grid-cols-4 rounded-md overflow-hidden'>
-                <ImagePreviewPlayer />
+              <div className='col-span-4'>
+                <ImageDropzonePlayer />
               </div>
             </div>
           </ModalBody>
