@@ -11,7 +11,6 @@ import {
 } from '@nextui-org/react'
 import { Controller } from 'react-hook-form'
 import { useTeamModal } from '@/hooks/team-hooks/use-team-modal'
-import ImagePreviewTeam from '@/components/new/image/teams/image-preview-team'
 import ImageDropzoneTeam from '@/components/new/image/teams/image-dropzone-team'
 
 const ModalTeam = () => {
