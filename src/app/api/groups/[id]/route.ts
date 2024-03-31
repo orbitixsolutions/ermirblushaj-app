@@ -18,18 +18,3 @@ export async function GET(
 
   return NextResponse.json(groupsById, { status: 200 })
 }
-
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  const groupsId = params.id
-
-  const deleteGroups = await prisma.group.delete({
-    where: {
-      id: groupsId
-    }
-  })
-
-  return NextResponse.json(deleteGroups, { status: 200 })
-}

@@ -36,3 +36,24 @@ export async function POST(request: Request) {
 
   return NextResponse.json(newGroups, { status: 200 })
 }
+
+export async function PUT(request: Request) {
+  const data = await request.json()
+
+  const playerId = data.playerId
+  const teamId = data.teamId
+
+  await prisma.playerStats.update({
+    where: { playerId: playerId },
+    data: { goals: { increment: 1 } }
+  })
+
+  const teamStats = await prisma.teamStats.update({
+    where: { teamId: teamId },
+    data: {
+      goalsFor: { increment: 1 }
+    }
+  })
+
+  return NextResponse.json(teamStats, { status: 200 })
+}

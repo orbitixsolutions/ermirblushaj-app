@@ -11,24 +11,26 @@ import {
   Input
 } from '@nextui-org/react'
 import { Controller, useForm } from 'react-hook-form'
-import { LoginSchema } from '@/schemas'
+import { RegisterAdminSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTransition } from 'react'
-import { login } from '@/actions/login'
 import { toast } from 'sonner'
+import { registerAdmin } from '@/actions/register'
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const [isPending, startTransition] = useTransition()
 
   const {
     control,
     handleSubmit,
     formState: { errors }
-  } = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  } = useForm<z.infer<typeof RegisterAdminSchema>>({
+    resolver: zodResolver(RegisterAdminSchema),
     defaultValues: {
+      name: '',
       email: '',
-      password: ''
+      password: '',
+      role: ''
     }
   })
 
@@ -50,7 +52,7 @@ const LoginForm = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     startTransition(() => {
-      login(data).then((data) => {
+      registerAdmin(data).then((data) => {
         if (data && data.error) {
           return toast.error(data.error)
         }
@@ -75,6 +77,37 @@ const LoginForm = () => {
         </CardHeader>
 
         <CardBody className='flex flex-col gap-8'>
+          <div>
+            <Controller
+              name='name'
+              control={control}
+              rules={{
+                required: {
+                  message: 'Name is required',
+                  value: true
+                }
+              }}
+              render={({ field }) => (
+                <Input
+                  autoComplete='false'
+                  type='text'
+                  size='lg'
+                  isDisabled={isPending}
+                  labelPlacement='outside'
+                  placeholder='User726'
+                  label='Enter your name'
+                  classNames={styleInput}
+                  {...field}
+                />
+              )}
+            />
+            {errors.name && (
+              <p className='text-xl font-semibold text-custom-teal'>
+                {errors.name.message}
+              </p>
+            )}
+          </div>
+
           <div>
             <Controller
               name='email'
@@ -152,4 +185,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default RegisterForm

@@ -19,17 +19,3 @@ export async function GET(
 
   return NextResponse.json(matchesById, { status: 200 })
 }
-
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  const matchesId = params.id
-  const deleteMatches = await prisma.match.delete({
-    where: {
-      id: matchesId
-    }
-  })
-
-  return NextResponse.json(deleteMatches, { status: 200 })
-}

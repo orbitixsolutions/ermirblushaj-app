@@ -35,6 +35,7 @@ export const editTeam = async (
       }
     })
 
+
     return { success: 'Team edited!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error.', status: 500 }
@@ -42,7 +43,7 @@ export const editTeam = async (
 }
 
 export const editPlayer = async (
-  teamId: string,
+  playerId: string,
   values: z.infer<typeof PlayerSchema>
 ) => {
   try {
@@ -70,7 +71,7 @@ export const editPlayer = async (
 
     await prisma.player.update({
       where: {
-        id: teamId
+        id: playerId
       },
       data: {
         firstName: first_name,
@@ -82,6 +83,16 @@ export const editPlayer = async (
         position: position,
         teamId: team_id,
         teamName: teamFoundName?.name
+      }
+    })
+
+    await prisma.playerStats.update({
+      where: {
+        playerId: playerId
+      },
+      data: {
+        firstName: first_name,
+        lastName: last_name
       }
     })
 
@@ -111,7 +122,7 @@ export const setDatePlay = async (
         playDate: play_date
       }
     })
-    
+
     return { success: 'Chages saved!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }

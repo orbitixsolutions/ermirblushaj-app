@@ -22,13 +22,13 @@ const ButtonModalTeam = () => {
 
   return (
     <Button
-        isIconOnly
-        radius='full'
-        onPress={() => handleOpenModal()}
-        className='bg-transparent border-[1px] border-custom-green'
-      >
-        <IconPlus size={24} className='text-custom-green' />
-      </Button>
+      isIconOnly
+      radius='full'
+      onPress={() => handleOpenModal()}
+      className='bg-transparent border-[1px] border-custom-green'
+    >
+      <IconPlus size={24} className='text-custom-green' />
+    </Button>
   )
 }
 

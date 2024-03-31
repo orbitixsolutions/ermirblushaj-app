@@ -50,6 +50,8 @@ export async function POST(request: Request) {
 
   await prisma.playerStats.create({
     data: {
+      firstName: first_name,
+      lastName: last_name,
       playerId: id,
       teamId: team_id === '' ? EXIST_TEAM_ID : team_id
     }

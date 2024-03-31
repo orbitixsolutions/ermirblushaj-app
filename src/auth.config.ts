@@ -5,6 +5,7 @@ import Credentials from 'next-auth/providers/credentials'
 import bcrypt from 'bcryptjs'
 
 export default {
+  
   providers: [
     Credentials({
       async authorize(credentials): Promise<any> {

@@ -68,16 +68,18 @@ model Player {
   createdDate  DateTime @default(now())
 
   player PlayerStats?
-  team         Team     @relation(fields: [teamId], references: [id])
+  team   Team         @relation(fields: [teamId], references: [id])
 }
 
 model PlayerStats {
-  playerId String @id @unique
-  goals    Int?   @default(0)
-  teamId String
+  firstName String
+  lastName  String
+  playerId  String @id @unique
+  goals     Int?   @default(0)
+  teamId    String
 
-  player Player  @relation(fields: [playerId], references: [id])
-  Team   Team?   @relation(fields: [teamId], references: [id])
+  player Player @relation(fields: [playerId], references: [id])
+  Team   Team?  @relation(fields: [teamId], references: [id])
 }
 
 model TournamentGallery {

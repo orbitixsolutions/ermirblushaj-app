@@ -1,14 +1,12 @@
 'use client'
 
+import { fetcher } from '@/helpers/fetcher'
 import { useIsActive } from '@/store/use-active'
 import { Match, Team } from '@prisma/client'
-import axios from 'axios'
 import useSWR from 'swr'
 import ImagesMatches from '@/components/dates/image/images-matches'
 import FormDateMatches from '@/components/dates/form/form-date-matches'
 import ButtonDateMatchup from '@/components/dates/buttons/button-date-matchup'
-
-const fetcher = (url: string) => axios.get(url).then((res) => res.data)
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -16,8 +14,6 @@ type ExtendedMatch = Match & {
 }
 
 const Matches = () => {
-  const interval = { refreshInterval: 3000 }
-
   const { isActive, activeId } = useIsActive((state) => ({
     isActive: state.isActive,
     activeId: state.id
@@ -27,7 +23,9 @@ const Matches = () => {
     data: getMatches,
     isLoading,
     error
-  } = useSWR<ExtendedMatch[]>('/api/matches', fetcher, interval)
+  } = useSWR<ExtendedMatch[]>('/api/matches', fetcher, {
+    refreshInterval: 1000
+  })
 
   if (isLoading) {
     return <p>Loading...</p>

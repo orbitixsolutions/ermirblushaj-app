@@ -4,9 +4,10 @@ import * as z from 'zod'
 
 import { getUserByEmail } from '@/data/user'
 import { RegisterAdminSchema } from '@/schemas'
-import { UserRole } from '@prisma/client'
 import prisma from '@/libs/prisma'
 import bcrypt from 'bcryptjs'
+import { signIn } from '@/auth'
+import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
 
 export const registerAdmin = async (
   values: z.infer<typeof RegisterAdminSchema>
@@ -17,7 +18,8 @@ export const registerAdmin = async (
     return { error: 'Invalidad fields!' }
   }
 
-  const { email, password, name, role } = values
+  const { email, password, name } = values
+
   const hashedPassword = await bcrypt.hash(password, 10)
 
   const existingUser = await getUserByEmail(email)
@@ -30,9 +32,15 @@ export const registerAdmin = async (
     data: {
       name,
       email,
-      role: role as UserRole,
+      role: 'OWNER',
       password: hashedPassword
     }
+  })
+
+  signIn('credentials', {
+    email,
+    password: hashedPassword,
+    redirectTo: DEFAULT_LOGIN_REDIRECT
   })
 
   return { success: 'User created!' }

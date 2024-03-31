@@ -11,10 +11,10 @@ export async function GET(
       id: teamId
     },
     include: {
-      players: true,
-      teamStats: true,
-      playerStats: true
-    }
+        players: true,
+        teamStats: true,
+        playerStats: true
+      }
   })
   return NextResponse.json(teamById, { status: 200 })
 }

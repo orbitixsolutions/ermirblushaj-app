@@ -31,10 +31,10 @@ const DropdownPlayer = ({ player }: Props) => {
     onPlayerModalEdit(id)
   }
 
-  const handlePlayerDeleted = async (id: string) => {
+  const handlePlayerDeleted = async (playerId: string, teamId: string) => {
     setIsPending(true)
-    const res = await deletePlayer(id)
-    await deleteImage({ path: 'players', id: id })
+    const res = await deletePlayer(playerId, teamId)
+    await deleteImage({ path: 'players', id: playerId })
 
     if (res.error) {
       return toast.error(res.error)
@@ -70,7 +70,7 @@ const DropdownPlayer = ({ player }: Props) => {
             <DropdownItem
               key='delete'
               color='danger'
-              onPress={() => handlePlayerDeleted(player.id)}
+              onPress={() => handlePlayerDeleted(player.id, player.teamId)}
               className='text-danger'
               startContent={<IconTrash size={24} />}
             >

@@ -14,14 +14,16 @@ const GroupTeams = () => {
     data: getGroups,
     isLoading,
     error
-  } = useSWR<extendedGroups[]>('/api/groups', fetcher)
-
-  if (isLoading) {
-    return <p>Loading...</p>
-  }
+  } = useSWR<extendedGroups[]>('/api/groups', fetcher, {
+    refreshInterval: 1000
+  })
 
   if (error) {
     return <p>An ocurred a error!</p>
+  }
+
+  if (isLoading) {
+    return <p>Loading...</p>
   }
 
   return (

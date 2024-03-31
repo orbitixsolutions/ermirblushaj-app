@@ -1,31 +1,31 @@
 'use client'
 
 import { User } from '@prisma/client'
+import { fetcher } from '@/helpers/fetcher'
 import { signOut, useSession } from 'next-auth/react'
-import axios from 'axios'
+import { useEffect } from 'react'
 import useSWR from 'swr'
 import Loading from '@/components/admin/loading/loading'
 
-const fetcher = (url: string) => axios.get(url).then((res) => res.data)
-
 const WrapperAuth = ({ children }: { children: React.ReactNode }) => {
-  const { data } = useSession()
-  const userId = data?.user.id || ''
+  const { data: session, status } = useSession()
 
-  const { data: users } = useSWR<User[]>(`/api/users/${userId}`, fetcher, {
-    refreshInterval: 3000
-  })
+  const {
+    data: users,
+    isValidating,
+    error
+  } = useSWR<User[]>(session ? `/api/users/${session.user.id}` : null, fetcher)
 
-  const LOADING_USERS = undefined
-  const USER_NO_EXIST = null
+  const isLoading = status === 'loading' || (isValidating && !users)
 
-  if (users === LOADING_USERS) {
-    return <Loading />
-  }
+  useEffect(() => {
+    if (users === null) {
+      signOut()
+    }
+  }, [users])
 
-  if (users === USER_NO_EXIST) {
-    return signOut()
-  }
+  if (error) return <p>An occurred an error!</p>
+  if (isLoading) return <Loading />
 
   return <>{children}</>
 }

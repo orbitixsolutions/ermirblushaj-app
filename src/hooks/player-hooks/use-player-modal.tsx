@@ -121,25 +121,26 @@ export const usePlayerModal = () => {
     if (data.first_name === '') {
       return toast.info('First name is required!')
     }
-    if (data.date_birthday === '') {
-      return toast.info('Date birthday is required!')
-    }
-    if (data.height === '') {
-      return toast.info('Height is required!')
-    }
-    if (data.number === '') {
-      return toast.info('Number of player is required!')
-    }
-    if (data.nationality === '') {
-      return toast.info('Nationality is required!')
-    }
+    // if (data.date_birthday === '') {
+    //   return toast.info('Date birthday is required!')
+    // }
+    // if (data.height === '') {
+    //   return toast.info('Height is required!')
+    // }
+    // if (data.number === '') {
+    //   return toast.info('Number of player is required!')
+    // }
+    // if (data.nationality === '') {
+    //   return toast.info('Nationality is required!')
+    // }
+    // if (data.position === '') {
+    //   return toast.info('Position of player is required!')
+    // }
+
     if (teamData.id === '') {
       if (data.team_id === '') {
         return toast.info('Team name is required!')
       }
-    }
-    if (data.position === '') {
-      return toast.info('Position of player is required!')
     }
     if (imagePlayer.imgFile === null) {
       return toast.info('Image is required!')

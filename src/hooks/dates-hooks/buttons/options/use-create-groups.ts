@@ -1,19 +1,15 @@
-'use client'
-
 import { useState } from 'react'
-import { Button } from '@nextui-org/react'
-import { Group, Team } from '@prisma/client'
+import { Team } from '@prisma/client'
 import { toast } from 'sonner'
-import axios, { AxiosError } from 'axios'
+import { fetcher } from '@/helpers/fetcher'
+import axios from 'axios'
 import useSWR from 'swr'
 
-const fetcher = (url: string) => axios.get(url).then((res) => res.data)
-
-const ButtonGroupGenerate = () => {
+const useCreateGroups = () => {
   const [isPending, setIsPending] = useState(false)
 
   const { data: getTeams } = useSWR<Team[]>('/api/teams', fetcher, {
-    refreshInterval: 3000
+    revalidateOnFocus: true
   })
 
   // Mezclamos el array de 20 equipos que llega como paramentro
@@ -22,7 +18,6 @@ const ButtonGroupGenerate = () => {
       const j = Math.floor(Math.random() * (i + 1))
       ;[array[i], array[j]] = [array[j], array[i]]
     }
-    console.log(array)
     return array
   }
 
@@ -45,7 +40,7 @@ const ButtonGroupGenerate = () => {
     return groups
   }
 
-  const createGroups = async () => {
+  const handleCreateGroups = async () => {
     const generatedGroups = generateGroups()
 
     const groupsPromises = generatedGroups.map((groups) =>
@@ -53,31 +48,27 @@ const ButtonGroupGenerate = () => {
     )
 
     try {
+      setIsPending(true)
       const responses = await Promise.all(groupsPromises)
 
-      if (responses && responses[0].status === 200) {
-        setIsPending(false)
-        return toast.success('Groups has been created!')
+      if (responses.every((response) => response.status === 200)) {
+        toast.success('Groups have been created!')
+      } else {
+        toast.error('Not all groups could be created.')
       }
     } catch (error) {
-      if (error instanceof AxiosError) {
-        const status = error.response?.status === 409
-        if (status) {
-          setIsPending(false)
-          const errorMessage = error.response?.data.error
-          return toast.error(errorMessage)
-        }
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data.error || 'An error occurred'
+        toast.error(errorMessage)
+      } else {
+        toast.error('An error occurred')
       }
+    } finally {
       setIsPending(false)
-      return toast.error('An ocurred a error!')
     }
   }
 
-  return (
-    <Button isLoading={isPending} onPress={() => createGroups()}>
-      Create Groups
-    </Button>
-  )
+  return { isPending, handleCreateGroups }
 }
 
-export default ButtonGroupGenerate
+export default useCreateGroups
