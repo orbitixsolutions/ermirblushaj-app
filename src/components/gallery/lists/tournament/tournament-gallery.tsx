@@ -11,29 +11,29 @@ import WrapperGallery from '@/components/gallery/wrappers/wrapper-gallery'
 const fetcher = (url: string) => axios.get(url).then((res) => res.data)
 
 const ListTournamentGallery = () => {
-  const { data: tournamentGallery } = useSWR<TournamentGallery[]>(
-    '/api/tournament-gallery',
-    fetcher,
-    {
-      refreshInterval: 3000
-    }
-  )
+  const EMPTY_ITEMS = 0
 
-  const DEFAULT_ITEMS = 0
-  const UNDEFINED_GALLERY = undefined
-  const isLoaded = tournamentGallery?.length === 0
+  const {
+    data: tournamentGallery,
+    isLoading,
+    error
+  } = useSWR<TournamentGallery[]>('/api/tournament-gallery', fetcher, {
+    refreshInterval: 3000
+  })
 
-  if (tournamentGallery && tournamentGallery.length === DEFAULT_ITEMS) {
+  if (error) return <p>An ocurred a error</p>
+
+  if (tournamentGallery && tournamentGallery.length === EMPTY_ITEMS) {
     return <NoItems />
   }
 
-  if (tournamentGallery === UNDEFINED_GALLERY) {
-    return <SkeletonGallery isLoaded={isLoaded} />
+  if (isLoading) {
+    return <SkeletonGallery isLoaded={isLoading} />
   }
 
   return (
     <WrapperGallery>
-      {tournamentGallery.map((item) => (
+      {tournamentGallery?.map((item) => (
         <CardTournamentImage key={item.id} item={item} />
       ))}
     </WrapperGallery>

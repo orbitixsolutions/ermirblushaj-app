@@ -1,36 +1,39 @@
 'use client'
 
 import { Team } from '@prisma/client'
-import axios from 'axios'
-import useSWR from 'swr'
+import { fetcher } from '@/helpers/fetcher'
 import WrapperNew from '@/components/new/wrappers/wrapper-new'
 import CardTeamImage from '@/components/new/cards/teams/card-team-image'
 import NoItems from '@/components/new/lists/no-items'
 import SkeletonNew from '@/components/new/skeleton/skeleton-new'
-
-const fetcher = (url: string) => axios.get(url).then((res) => res.data)
+import useSWR from 'swr'
 
 const Teams = () => {
-  const { data: teams } = useSWR<Team[]>('/api/teams', fetcher, {
+  const EMPTY_ITEMS = 0
+
+  const {
+    data: teams,
+    isLoading,
+    error
+  } = useSWR<Team[]>('/api/teams', fetcher, {
     refreshInterval: 3000
   })
 
-  const DEFAULT_ITEMS = 0
-  const UNDEFINED_TEAMS = undefined
-  const isLoaded = teams?.length === 0
+  if (error) return <p>An ocurred a error</p>
 
-  if (teams && teams.length === DEFAULT_ITEMS) {
+  if (teams?.length === EMPTY_ITEMS) {
     return <NoItems />
   }
 
-  if (teams === UNDEFINED_TEAMS) {
-    return <SkeletonNew isLoaded={isLoaded} />
+  if (isLoading) {
+    return <SkeletonNew isLoaded={isLoading} />
   }
 
   return (
     <WrapperNew>
-      {teams &&
-        teams.map((team) => <CardTeamImage key={team.id} team={team} />)}
+      {teams?.map((team) => (
+        <CardTeamImage key={team.id} team={team} />
+      ))}
     </WrapperNew>
   )
 }
