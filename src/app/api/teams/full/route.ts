@@ -9,12 +9,9 @@ export async function GET(request: Request) {
     include: {
       players: true,
       teamStats: true,
-      playerStats: true
+      playerStats: true,
     }
   })
   return NextResponse.json(teams, { status: 200 })
 }
 
-export async function POST(request: Request) {
-  return NextResponse.json('Success', { status: 200 })
-}

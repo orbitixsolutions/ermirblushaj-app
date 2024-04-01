@@ -32,7 +32,6 @@ model Team {
 
   group   Group?   @relation(fields: [groupId], references: [id])
   players Player[]
-  goals   Goal[]
 
   teamA Match[] @relation("TeamA")
   teamB Match[] @relation("TeamB")
@@ -52,7 +51,6 @@ model TeamStats {
 }
 
 model Player {
-  goals        Goal[]
   id           String   @id @unique
   teamId       String
   teamName     String?
@@ -94,17 +92,6 @@ model TributeGallery {
   createdAt DateTime @default(now())
 }
 
-model Goal {
-  id          String   @id @default(uuid())
-  playerId    String
-  teamId      String
-  matchId     String
-  createdDate DateTime @default(now())
-
-  player Player @relation(fields: [playerId], references: [id])
-  team   Team   @relation(fields: [teamId], references: [id])
-  match  Match  @relation(fields: [matchId], references: [id])
-}
 
 model Match {
   id          String   @id @unique @default(uuid())
@@ -114,7 +101,6 @@ model Match {
   teamB       Team     @relation("TeamB", fields: [teamBId], references: [id])
   playDate    String?
   createdDate DateTime @default(now())
-  goals       Goal[]
 }
 
 model Group {
