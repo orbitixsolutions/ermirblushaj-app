@@ -20,6 +20,7 @@ import { deleteTeam } from '@/actions/services/delete'
 import { toast } from 'sonner'
 import { useModalPlayerStore } from '@/store/modal/use-modal-player-store'
 import { useState } from 'react'
+import { deleteImage } from '@/helpers/delete-image'
 
 const DropdownTeam = ({ team }: { team: Team }) => {
   const [isPending, setIsPending] = useState(false)
@@ -36,14 +37,18 @@ const DropdownTeam = ({ team }: { team: Team }) => {
     onTeamModalEdit(id)
   }
 
-  const handleDeleteTeam = async (id: string) => {
+  const handleDeleteTeam = async (teamId: string) => {
     setIsPending(true)
-    const res = await deleteTeam(id)
+    await deleteImage({ path: 'teams', id: teamId })
 
-    if (res.error) {
-      return toast.error(res.error)
+    const res = await deleteTeam(teamId)
+    if (res.status === 200) {
+      setIsPending(false)
+      return toast.success(res.success)
     }
-    toast.success(res.success)
+
+    setIsPending(false)
+    return toast.error('An ocurred a error')
   }
 
   return (

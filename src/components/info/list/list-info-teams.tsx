@@ -27,6 +27,8 @@ const ListInfoList = () => {
         return <p>Loading...</p>
       }
 
+      return <div>asd</div>
+
     return (
     <ol className='w-full grid grid-cols-4'>
       {getTeams?.map((team) => (

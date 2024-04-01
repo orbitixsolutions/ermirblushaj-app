@@ -65,7 +65,7 @@ model Player {
   footed       String?
   createdDate  DateTime @default(now())
 
-  player PlayerStats?
+  playerStatus PlayerStats?
   team   Team         @relation(fields: [teamId], references: [id])
 }
 
@@ -76,7 +76,7 @@ model PlayerStats {
   goals     Int?   @default(0)
   teamId    String
 
-  player Player @relation(fields: [playerId], references: [id])
+  playerStatus Player @relation(fields: [playerId], references: [id])
   Team   Team?  @relation(fields: [teamId], references: [id])
 }
 

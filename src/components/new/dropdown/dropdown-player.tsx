@@ -33,13 +33,16 @@ const DropdownPlayer = ({ player }: Props) => {
 
   const handlePlayerDeleted = async (playerId: string, teamId: string) => {
     setIsPending(true)
-    const res = await deletePlayer(playerId, teamId)
     await deleteImage({ path: 'players', id: playerId })
 
-    if (res.error) {
-      return toast.error(res.error)
+    const res = await deletePlayer(playerId, teamId)
+    if (res.status === 200) {
+      setIsPending(false)
+      return toast.success(res.success)
     }
-    toast.success(res.success)
+
+    setIsPending(false)
+    return toast.error('An ocurred a error')
   }
 
   return (

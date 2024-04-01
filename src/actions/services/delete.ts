@@ -15,31 +15,24 @@ export const deleteTeam = async (id: string) => {
   }
 
   try {
-    const teams = await prisma.team.findUnique({
-      where: {
-        id
-      },
-      include: {
-        players: true
-      }
-    })
-    await prisma.teamStats.delete({ where: { teamId: id } })
+    const teamId = id
 
-    if (teams?.id === id) {
-      await deleteImage({ path: 'teams', id: id })
+    const players = await prisma.player.findMany({ where: { teamId: teamId } })
+    players.map((player) => deleteImage({ path: 'players', id: player.id }))
 
-      if (teams.players.length > 0) {
-        for (const player of teams.players) {
-          deleteImage({ path: 'players', id: player.id })
-          await prisma.playerStats.delete({ where: { playerId: player.id } })
-        }
-        await prisma.player.deleteMany({ where: { teamId: id } })
-      }
-    }
+    await prisma.$transaction([
+      prisma.match.deleteMany({
+        where: { OR: [{ teamAId: teamId }, { teamBId: teamId }] }
+      }),
+      prisma.playerStats.deleteMany({ where: { teamId: teamId } }),
+      prisma.player.deleteMany({ where: { teamId: teamId } }),
+      prisma.teamStats.deleteMany({ where: { teamId: teamId } }),
+      prisma.team.delete({ where: { id: teamId } })
+    ])
 
-    await prisma.team.delete({ where: { id: id } })
     return { success: 'Team deleted!', status: 200 }
-  } catch (error) {
+  } catch (error: any) {
+    console.log(error)
     return { error: 'An ocurred a error!', status: 500 }
   }
 }
