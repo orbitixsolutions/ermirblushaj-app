@@ -1,30 +1,28 @@
 import {
-  Card,
+  Button,
   Dropdown,
   DropdownMenu,
   DropdownSection,
-  DropdownTrigger,
-  Image
+  DropdownTrigger
 } from '@nextui-org/react'
+import { IconPlus } from '@tabler/icons-react'
 
 interface Props {
-  name: string
-  src: string | null
   render: JSX.Element
-  id: string
 }
 
-const DropdownWrapper = ({ render, name, src }: Props) => {
+const DropdownWrapper = ({ render }: Props) => {
   return (
     <Dropdown className='bg-custom-darknavy text-white'>
       <DropdownTrigger>
-        <Card className='aspect-square p-4 cursor-pointer bg-custom-navy'>
-          <Image
-            className='size-full object-cover'
-            src={src || ''}
-            alt={`Logo team ${name}`}
-          />
-        </Card>
+        <Button
+          size='sm'
+          isIconOnly
+          radius='full'
+          className='bg-transparent border-2 border-custom-blue rounded-full mx-auto'
+        >
+          <IconPlus size={24} className='text-custom-blue' />
+        </Button>
       </DropdownTrigger>
       <DropdownMenu aria-label='Team player list'>
         <DropdownSection

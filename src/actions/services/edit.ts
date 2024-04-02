@@ -4,6 +4,7 @@ import * as z from 'zod'
 
 import { MatchesSchemas, PlayerSchema, TeamSchema } from '@/schemas'
 import prisma from '@/libs/prisma'
+import { MatchStatus } from '@prisma/client'
 
 export const editTeam = async (
   teamId: string,
@@ -34,7 +35,6 @@ export const editTeam = async (
         teamName: name
       }
     })
-
 
     return { success: 'Team edited!', status: 200 }
   } catch (error) {
@@ -112,18 +112,35 @@ export const setDatePlay = async (
       return { error: 'Fields invalid!' }
     }
 
-    const { play_date } = validateFields.data
+    const { play_start_date } = validateFields.data
 
     await prisma.match.update({
       where: {
         id: matchesId
       },
       data: {
-        playDate: play_date
+        playStartDate: play_start_date
       }
     })
 
     return { success: 'Chages saved!', status: 200 }
+  } catch (error) {
+    return { error: 'An ocurred a error!', status: 500 }
+  }
+}
+
+export const updateStatusMatches = async (matchesId: string, value: string) => {
+  try {
+    await prisma.match.update({
+      where: {
+        id: matchesId
+      },
+      data: {
+        status: value as MatchStatus
+      }
+    })
+
+    return { success: 'Status updated!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
   }

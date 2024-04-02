@@ -11,25 +11,23 @@ type ExtendedTeams = Team & {
 }
 
 const ListInfoList = () => {
-    const {
-        data: getTeams,
-        isLoading,
-        error
-      } = useSWR<ExtendedTeams[]>('/api/teams/full', fetcher, {
-        refreshInterval: 1000
-      })
-    
-      if (error) {
-        return <p>An ocurred a error!</p>
-      }
-      
-      if (isLoading) {
-        return <p>Loading...</p>
-      }
+  const {
+    data: getTeams,
+    isLoading,
+    error
+  } = useSWR<ExtendedTeams[]>('/api/teams/full', fetcher, {
+    refreshInterval: 1000
+  })
 
-      return <div>asd</div>
+  if (error) {
+    return <p>An ocurred a error!</p>
+  }
 
-    return (
+  if (isLoading) {
+    return <p>Loading...</p>
+  }
+
+  return (
     <ol className='w-full grid grid-cols-4'>
       {getTeams?.map((team) => (
         <li key={team.id} className='col-span-2'>

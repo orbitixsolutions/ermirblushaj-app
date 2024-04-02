@@ -28,5 +28,5 @@ export const PlayerSchema = z.object({
 })
 
 export const MatchesSchemas = z.object({
-  play_date: z.string()
+  play_start_date: z.string(),
 })

@@ -1,5 +1,6 @@
 import { MatchesSchemas } from '@/schemas'
 import { useIsActive } from '@/store/use-active'
+import { useTodayGameStore } from '@/store/use-today-game'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
@@ -7,9 +8,14 @@ const useMatches = () => {
   const { handleSubmit, reset, setValue, control } = useForm({
     resolver: zodResolver(MatchesSchemas),
     defaultValues: {
-      play_date: ''
+      play_start_date: ''
     }
   })
+
+  const { isToday, updatedTodayGame } = useTodayGameStore((state) => ({
+    isToday: state.isToday,
+    updatedTodayGame: state.updatedTodayGame
+  }))
 
   const { isActive, activeId, updateIsActive, updatedId, disableIsActive } =
     useIsActive((state) => ({
@@ -27,16 +33,18 @@ const useMatches = () => {
   }
 
   return {
+    updateIsActive,
+    updatedTodayGame,
+    updatedId,
+    setValue,
+    reset,
+    isToday,
     isActive,
-    activeId,
-    control,
     handleSubmit,
     handleClear,
     disableIsActive,
-    updateIsActive,
-    updatedId,
-    setValue,
-    reset
+    control,
+    activeId
   }
 }
 

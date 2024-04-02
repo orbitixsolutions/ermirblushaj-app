@@ -15,6 +15,12 @@ enum UserRole {
   ADMIN
 }
 
+enum MatchStatus {
+  PENDING
+  LIVE
+  COMPLETED
+}
+
 model User {
   id       String   @id @default(cuid())
   name     String?
@@ -66,7 +72,7 @@ model Player {
   createdDate  DateTime @default(now())
 
   playerStatus PlayerStats?
-  team   Team         @relation(fields: [teamId], references: [id])
+  team         Team         @relation(fields: [teamId], references: [id])
 }
 
 model PlayerStats {
@@ -77,7 +83,7 @@ model PlayerStats {
   teamId    String
 
   playerStatus Player @relation(fields: [playerId], references: [id])
-  Team   Team?  @relation(fields: [teamId], references: [id])
+  Team         Team?  @relation(fields: [teamId], references: [id])
 }
 
 model TournamentGallery {
@@ -92,15 +98,17 @@ model TributeGallery {
   createdAt DateTime @default(now())
 }
 
-
 model Match {
-  id          String   @id @unique @default(uuid())
-  teamAId     String
-  teamBId     String
-  teamA       Team     @relation("TeamA", fields: [teamAId], references: [id])
-  teamB       Team     @relation("TeamB", fields: [teamBId], references: [id])
-  playDate    String?
-  createdDate DateTime @default(now())
+  id            String      @id @unique @default(uuid())
+  teamAId       String
+  teamBId       String
+  status        MatchStatus @default(PENDING)
+  playStartDate String?
+  playEndDate   String?
+  createdDate   DateTime    @default(now())
+
+  teamA Team @relation("TeamA", fields: [teamAId], references: [id])
+  teamB Team @relation("TeamB", fields: [teamBId], references: [id])
 }
 
 model Group {

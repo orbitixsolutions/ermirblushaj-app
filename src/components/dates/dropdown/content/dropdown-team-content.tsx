@@ -28,9 +28,11 @@ const DropdownTeamContent = ({ player }: { player: Player }) => {
         src={player.profilePhoto || ''}
         name={player.firstName}
       />
-      <h2 className='text-sm capitalize'>
-        {player.firstName} {player.lastName}
-      </h2>
+      <div>
+        <h2 className='text-base capitalize'>
+          {player.firstName} {player.lastName}
+        </h2>
+      </div>
     </div>
   )
 }

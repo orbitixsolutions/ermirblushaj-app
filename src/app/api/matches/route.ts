@@ -8,7 +8,7 @@ export async function GET(request: Request) {
       teamB: true
     },
     orderBy: {
-      playDate: 'asc'
+      playStartDate: 'asc'
     }
   })
 

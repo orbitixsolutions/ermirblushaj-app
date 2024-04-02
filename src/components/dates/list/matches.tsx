@@ -7,6 +7,7 @@ import useSWR from 'swr'
 import ImagesMatches from '@/components/dates/image/images-matches'
 import FormDateMatches from '@/components/dates/form/form-date-matches'
 import ButtonDateMatchup from '@/components/dates/buttons/button-date-matchup'
+import { Divider } from '@nextui-org/react'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -14,11 +15,6 @@ type ExtendedMatch = Match & {
 }
 
 const Matches = () => {
-  const { isActive, activeId } = useIsActive((state) => ({
-    isActive: state.isActive,
-    activeId: state.id
-  }))
-
   const {
     data: getMatches,
     isLoading,
@@ -36,23 +32,41 @@ const Matches = () => {
   }
 
   return (
-    <ol className='grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4'>
-      {getMatches?.map((matchup) => (
-        <li
-          key={matchup.id}
-          className='bg-custom-darkblue rounded-lg grid grid-cols-4 gap-4 p-4'
-        >
-          <ImagesMatches item={matchup} />
-
-          {isActive && activeId === matchup.id ? (
-            <FormDateMatches item={matchup} />
-          ) : (
-            <ButtonDateMatchup item={matchup} />
-          )}
-        </li>
-      ))}
-    </ol>
+    <div className='w-[480px]'>
+      <h2 className='text-5xl font-bold my-5 text-center'>Dates</h2>
+      <ol className='w-full'>
+        {getMatches?.map((matchup) => (
+          <>
+            <li
+              key={matchup.id}
+              className='rounded-lg flex flex-col items-start gap-4 py-4'
+            >
+              <MatchupItem matchup={matchup} />
+            </li>
+            <Divider className='bg-custom-lightgray' />
+          </>
+        ))}
+      </ol>
+    </div>
   )
 }
-
 export default Matches
+
+const MatchupItem = ({ matchup }: { matchup: ExtendedMatch }) => {
+  const { isActive, activeId } = useIsActive((state) => ({
+    isActive: state.isActive,
+    activeId: state.id
+  }))
+
+  return (
+    <>
+      <ImagesMatches match={matchup} />
+
+      {isActive && activeId === matchup.id ? (
+        <FormDateMatches match={matchup} />
+      ) : (
+        <ButtonDateMatchup match={matchup} />
+      )}
+    </>
+  )
+}
