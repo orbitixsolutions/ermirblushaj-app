@@ -3,17 +3,24 @@
 import * as z from 'zod'
 
 import { MatchesSchemas, PlayerSchema, TeamSchema } from '@/schemas'
+import { currentRole } from '@/libs/auth'
+import { MatchStatus, Player } from '@prisma/client'
 import prisma from '@/libs/prisma'
-import { MatchStatus } from '@prisma/client'
 
 export const editTeam = async (
   teamId: string,
   values: z.infer<typeof TeamSchema>
 ) => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     const validateFields = TeamSchema.safeParse(values)
     if (!validateFields.success) {
-      return { error: 'Fields invalid!' }
+      return { error: 'Fields invalid!', status: 409 }
     }
 
     const { name } = validateFields.data
@@ -46,10 +53,16 @@ export const editPlayer = async (
   playerId: string,
   values: z.infer<typeof PlayerSchema>
 ) => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     const validateFields = PlayerSchema.safeParse(values)
     if (!validateFields.success) {
-      return { error: 'Fields invalid!' }
+      return { error: 'Fields invalid!', status: 409 }
     }
 
     const {
@@ -106,6 +119,12 @@ export const setDatePlay = async (
   matchesId: string,
   values: z.infer<typeof MatchesSchemas>
 ) => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     const validateFields = MatchesSchemas.safeParse(values)
     if (!validateFields.success) {
@@ -140,6 +159,34 @@ export const updateStatusMatches = async (matchesId: string, value: string) => {
       }
     })
 
+    return { success: 'Status updated!', status: 200 }
+  } catch (error) {
+    return { error: 'An ocurred a error!', status: 500 }
+  }
+}
+
+export const updatedStats = async (data: Player) => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
+  try {
+    const playerId = data.id
+    const teamId = data.teamId
+
+    await prisma.playerStats.update({
+      where: { playerId: playerId },
+      data: { goals: { increment: 1 } }
+    })
+
+    await prisma.teamStats.update({
+      where: { teamId: teamId },
+      data: {
+        goalsFor: { increment: 1 }
+      }
+    })
     return { success: 'Status updated!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }

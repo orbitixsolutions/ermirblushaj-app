@@ -1,20 +1,15 @@
 import { Avatar } from '@nextui-org/react'
 import { Player } from '@prisma/client'
 import { toast } from 'sonner'
-import axios from 'axios'
+import { updatedStats } from '@/actions/services/edit'
 
 const DropdownTeamContent = ({ player }: { player: Player }) => {
   const addGoalPlayer = async () => {
-    const playerId = player.id
-    const teamId = player.teamId
-
-    const res = await axios.put('/api/groups', {
-      playerId: playerId,
-      teamId: teamId
-    })
+    const res = await updatedStats(player)
+  
     if (res.status === 200) {
       return toast.success(
-        `Goal add for player ${player.firstName} ${player.lastName}`
+        `Goal added for player: ${player.firstName} ${player.lastName}`
       )
     }
 

@@ -15,9 +15,7 @@ const ListInfoList = () => {
     data: getTeams,
     isLoading,
     error
-  } = useSWR<ExtendedTeams[]>('/api/teams/full', fetcher, {
-    refreshInterval: 1000
-  })
+  } = useSWR<ExtendedTeams[]>('/api/teams/full', fetcher)
 
   if (error) {
     return <p>An ocurred a error!</p>

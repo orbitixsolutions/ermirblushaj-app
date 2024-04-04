@@ -9,6 +9,7 @@ import { editPlayer } from '@/actions/services/edit'
 import { useModalPlayerStore } from '@/store/modal/use-modal-player-store'
 import { PlayerSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { createPlayers } from '@/actions/services/create'
 import axios from 'axios'
 
 export const usePlayerModal = () => {
@@ -26,7 +27,7 @@ export const usePlayerModal = () => {
       number: '',
       nationality: '',
       position: '',
-      team_id: ''
+      team_id: '',
     }
   })
 
@@ -147,12 +148,14 @@ export const usePlayerModal = () => {
     }
 
     setIsPending(true)
-    const res = await axios.post(`/api/players`, {
+    const playerData = {
       ...data,
       id: playerId,
       EXIST_TEAM_NAME: teamData.name,
       EXIST_TEAM_ID: teamData.id
-    })
+    }
+    const res = await createPlayers(playerData)
+    console.log(res)
 
     uploadImage({
       path: 'players',

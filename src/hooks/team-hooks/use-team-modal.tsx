@@ -10,6 +10,7 @@ import { toast } from 'sonner'
 import { editTeam } from '@/actions/services/edit'
 import { useModalTeamStore } from '@/store/modal/use-modal-team-store'
 import axios from 'axios'
+import { createTeam } from '@/actions/services/create'
 
 export const useTeamModal = () => {
   const [isPending, setIsPending] = useState(false)
@@ -115,7 +116,8 @@ export const useTeamModal = () => {
       return toast.info('Image is required!')
     }
 
-    const res = await axios.post(`/api/teams`, { ...data, id: teamId })
+    const dataTeam = { ...data, id: teamId }
+    const res = await createTeam(dataTeam)
 
     uploadImage({
       path: 'teams',

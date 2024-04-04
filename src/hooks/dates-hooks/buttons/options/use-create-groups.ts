@@ -1,67 +1,70 @@
 import { useState } from 'react'
-import { Team } from '@prisma/client'
+import { Group, Team } from '@prisma/client'
 import { toast } from 'sonner'
 import { fetcher } from '@/helpers/fetcher'
-import axios from 'axios'
+import { createGroups } from '@/actions/services/create'
 import useSWR from 'swr'
+
+type ExtendedGroup = Group & {
+  teams: Team[]
+}
 
 const useCreateGroups = () => {
   const [isPending, setIsPending] = useState(false)
 
   const { data: getTeams } = useSWR<Team[]>('/api/teams', fetcher, {
-    revalidateOnFocus: true
+    refreshInterval: 1000
   })
 
-  // Mezclamos el array de 20 equipos que llega como paramentro
-  const mixArray = (array: Team[]) => {
-    for (let i = array && array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[array[i], array[j]] = [array[j], array[i]]
+  // Mezclamos los equipos que son pasados como parametro
+  const mixTeams = (team: Team[] | null | undefined): Team[] => {
+    // Si es null un undefined retornamos un arreglo vacio
+    if (!team || team.length <= 1) {
+      return team || []
     }
-    return array
+
+    // Procede a mezclar el team como antes
+    for (let i = team.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[team[i], team[j]] = [team[j], team[i]]
+    }
+    return team
   }
 
+  // Generamos los grupos
   const generateGroups = () => {
     setIsPending(true)
-    let teams = Array.from({ length: 20 }, (_, i) => i + 1) as unknown as Team[]
-    teams = mixArray(getTeams as Team[])
 
-    let groups = []
-    for (let i = 0; i < 4; i++) {
-      const grupupName = String.fromCharCode(65 + i)
+    // Mezclamos los equipos
+    const mixedTeams = mixTeams(getTeams)
 
-      let group = {
-        groupName: grupupName,
-        teams: teams.slice(i * 5, (i + 1) * 5)
-      }
-      groups.push(group)
-    }
+    // Generamos grupos nuevos con los equipos mezclados
+    const newGroups = Array.from({ length: 4 }, (_, i) => ({
+      name: String.fromCharCode(65 + i),
+      teams: mixedTeams.slice(i * 5, (i + 1) * 5)
+    }))
 
-    return groups
+    setIsPending(false)
+    return newGroups as ExtendedGroup[]
   }
 
   const handleCreateGroups = async () => {
     const generatedGroups = generateGroups()
 
-    const groupsPromises = generatedGroups.map((groups) =>
-      axios.post('/api/groups', groups)
-    )
+    const groupsPromises = generatedGroups.map((groups) => createGroups(groups))
 
     try {
       setIsPending(true)
       const responses = await Promise.all(groupsPromises)
 
       if (responses.every((response) => response.status === 200)) {
-        toast.success('Groups have been created!')
-      } else {
-        toast.error('Not all groups could be created.')
+        return toast.success('Groups have been created!')
       }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const errorMessage = error.response?.data.error || 'An error occurred'
-        toast.error(errorMessage)
-      } else {
-        toast.error('An error occurred')
+      if (responses.every((response) => response.status === 409)) {
+        return toast.error('Already exists groups created!')
+      }
+      if (responses.every((response) => response.status === 500)) {
+        return toast.error('An ocurred a error!')
       }
     } finally {
       setIsPending(false)

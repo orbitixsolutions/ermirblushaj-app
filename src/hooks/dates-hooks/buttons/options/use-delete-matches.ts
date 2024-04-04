@@ -7,9 +7,7 @@ import useSWR from 'swr'
 
 const useDeleteMatches = () => {
   const [isPending, setIsPending] = useState(false)
-  const { data: getMatches } = useSWR<Match[]>('/api/matches', fetcher, {
-    revalidateOnFocus: true
-  })
+  const { data: getMatches } = useSWR<Match[]>('/api/matches', fetcher)
 
   const handleDeleteMatches = async () => {
     if (!getMatches?.length) {
@@ -17,24 +15,11 @@ const useDeleteMatches = () => {
       return toast.error('There are not matches created!')
     }
 
-    const sendPromisesMatches = getMatches.map((matchup) =>
-      deleteMatches(matchup.id)
-    )
-
     try {
       setIsPending(true)
-      const responsesMatches = await Promise.all(sendPromisesMatches)
-      const allDeletedSuccessfully = responsesMatches.every(
-        (response) => response.status === 200
-      )
+      deleteMatches()
 
-      if (allDeletedSuccessfully) {
-        toast.success('All matches have been deleted!')
-      } else {
-        toast.error('Some matches could not be deleted.')
-      }
-    } catch (error) {
-      toast.error('An error occurred!')
+      toast.success('All machtes have been deleted!')
     } finally {
       setIsPending(false)
     }

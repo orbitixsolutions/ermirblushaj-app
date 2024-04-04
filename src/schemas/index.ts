@@ -24,9 +24,9 @@ export const PlayerSchema = z.object({
   height: z.string(),
   nationality: z.string(),
   position: z.string(),
-  team_id: z.string()
+  team_id: z.string(),
 })
 
 export const MatchesSchemas = z.object({
-  play_start_date: z.string(),
+  play_start_date: z.string()
 })

@@ -2,21 +2,18 @@ import { Group, Team } from '@prisma/client'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { fetcher } from '@/helpers/fetcher'
-import axios from 'axios'
+import { createMatches } from '@/actions/services/create'
 import useSWR from 'swr'
 
-type ExtenedGroup = Group & {
+type ExtendedGroup = Group & {
   teams: Team[]
 }
 
 const useCreateMatches = () => {
   const [isPending, setIsPending] = useState(false)
+  const { data: getGroups } = useSWR<ExtendedGroup[]>('/api/groups', fetcher)
 
-  const { data: getGroups } = useSWR<ExtenedGroup[]>('/api/groups', fetcher, {
-    revalidateOnFocus: true
-  })
-
-  const generateMatches = (group: ExtenedGroup) => {
+  const generateMatches = (group: ExtendedGroup) => {
     setIsPending(true)
     const newGroups = group.teams
 
@@ -37,38 +34,34 @@ const useCreateMatches = () => {
       return
     }
 
-    const allMatchups = getGroups.map((group) => generateMatches(group))
-    const tournamentMatchups = allMatchups.flat()
+    const allMatches = getGroups.map((group) => generateMatches(group))
+    const tournamentMatchups = allMatches.flat()
 
-    const matchupPromises = tournamentMatchups.map((match) =>
-      axios.post('/api/matches', {
-        teamAId: match[0].id,
-        teamBId: match[1].id
-      })
-    )
+    const matchupPromises = tournamentMatchups.map((match) => {
+      const teamAId = match[0].id
+      const teamBId = match[1].id
+      return createMatches(teamAId, teamBId)
+    })
 
     try {
       setIsPending(true)
       const responses = await Promise.all(matchupPromises)
 
       if (responses.every((response) => response.status === 200)) {
-        toast.success('All matches have been created!')
-      } else {
-        toast.error('Not all matches could be created.')
+        return toast.success('Matches have been created!')
       }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const errorMessage = error.response?.data.error || 'An error occurred'
-        toast.error(errorMessage)
-      } else {
-        toast.error('An error occurred')
+      if (responses.every((response) => response.status === 409)) {
+        return toast.error('Already exists matches created!')
+      }
+      if (responses.every((response) => response.status === 500)) {
+        return toast.error('An ocurred a error!')
       }
     } finally {
       setIsPending(false)
     }
   }
 
-  return {isPending, handleCreateMatches}
+  return { isPending, handleCreateMatches }
 }
 
 export default useCreateMatches

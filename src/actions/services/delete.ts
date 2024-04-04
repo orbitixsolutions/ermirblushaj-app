@@ -141,12 +141,9 @@ export const deleteAdmin = async (id: string) => {
 // -------------------------------- //
 // RESET TEAM STATS //
 // -------------------------------- //
-export const resetTeamStats = async (teamId: string) => {
+export const resetTeamStats = async () => {
   try {
-    await prisma.teamStats.update({
-      where: {
-        teamId
-      },
+    await prisma.teamStats.updateMany({
       data: {
         goalsFor: 0,
         goalDifference: 0,
@@ -164,12 +161,9 @@ export const resetTeamStats = async (teamId: string) => {
 // -------------------------------- //
 // RESET PLAYER STATS //
 // -------------------------------- //
-export const resetPlayerStats = async (playerId: string) => {
+export const resetPlayerStats = async () => {
   try {
-    await prisma.playerStats.update({
-      where: {
-        playerId
-      },
+    await prisma.playerStats.updateMany({
       data: {
         goals: 0
       }
@@ -184,14 +178,9 @@ export const resetPlayerStats = async (playerId: string) => {
 // -------------------------------- //
 // DELETE GROUPS //
 // -------------------------------- //
-export const deleteGroups = async (id: string) => {
+export const deleteGroups = async () => {
   try {
-    await prisma.group.delete({
-      where: {
-        id
-      }
-    })
-
+    await prisma.group.deleteMany()
     return { success: 'Groups deleted!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
@@ -201,14 +190,9 @@ export const deleteGroups = async (id: string) => {
 // -------------------------------- //
 // DELETE MATCHES //
 // -------------------------------- //
-export const deleteMatches = async (id: string) => {
+export const deleteMatches = async () => {
   try {
-    await prisma.match.delete({
-      where: {
-        id
-      }
-    })
-
+    await prisma.match.deleteMany()
     return { success: 'Matches deleted!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
