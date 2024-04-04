@@ -8,6 +8,7 @@ import ImagesMatches from '@/components/dates/image/images-matches'
 import FormDateMatches from '@/components/dates/form/form-date-matches'
 import ButtonDateMatchup from '@/components/dates/buttons/button-date-matchup'
 import { Divider } from '@nextui-org/react'
+import CardMatchup from '../cards/card-matchup'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -41,7 +42,7 @@ const Matches = () => {
               key={matchup.id}
               className='rounded-lg flex flex-col items-start gap-4 py-4'
             >
-              <MatchupItem matchup={matchup} />
+              <CardMatchup match={matchup} />
             </li>
             <Divider className='bg-custom-lightgray' />
           </>
@@ -51,22 +52,3 @@ const Matches = () => {
   )
 }
 export default Matches
-
-const MatchupItem = ({ matchup }: { matchup: ExtendedMatch }) => {
-  const { isActive, activeId } = useIsActive((state) => ({
-    isActive: state.isActive,
-    activeId: state.id
-  }))
-
-  return (
-    <>
-      <ImagesMatches match={matchup} />
-
-      {isActive && activeId === matchup.id ? (
-        <FormDateMatches match={matchup} />
-      ) : (
-        <ButtonDateMatchup match={matchup} />
-      )}
-    </>
-  )
-}

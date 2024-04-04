@@ -2,11 +2,11 @@ import { formattedDate } from '@/helpers/get-formated-date'
 import { Button } from '@nextui-org/react'
 import { Match, Team } from '@prisma/client'
 import { useEffect, useState } from 'react'
+import { updateStatusMatches } from '@/actions/services/edit'
+import { IconPointFilled } from '@tabler/icons-react'
 import useMatches from '@/hooks/matches-hooks/use-matches'
 import ButtonStartMatchup from './button-start-matchup'
 import axios from 'axios'
-import { updateStatusMatches } from '@/actions/services/edit'
-import { IconPointFilled } from '@tabler/icons-react'
 
 type ExtendedMatch = Match & {
   teamA: Team

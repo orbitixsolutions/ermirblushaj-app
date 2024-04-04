@@ -9,26 +9,24 @@ type ExtendedMatch = Match & {
   teamB: Team
 }
 
-const CardMatchup = ({ item }: { item: ExtendedMatch }) => {
+const CardMatchup = ({ match }: { match: ExtendedMatch }) => {
   const { isActive, activeId } = useIsActive((state) => ({
     isActive: state.isActive,
     activeId: state.id
   }))
 
-  const { id } = item
+  const { id } = match
 
   return (
-    <li>
-      <div className='bg-custom-darknavy rounded-lg grid grid-cols-4 gap-4 p-4'>
-        <ImagesMatches item={item} />
+    <>
+      <ImagesMatches match={match} />
 
-        {isActive && activeId === id ? (
-          <FormDateMatches item={item} />
-        ) : (
-          <ButtonDateMatchup item={item} />
-        )}
-      </div>
-    </li>
+      {isActive && activeId === id ? (
+        <FormDateMatches match={match} />
+      ) : (
+        <ButtonDateMatchup match={match} />
+      )}
+    </>
   )
 }
 
