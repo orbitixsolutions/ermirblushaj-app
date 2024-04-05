@@ -2,14 +2,14 @@
 
 import { currentRole } from '@/libs/auth'
 import { Group } from '@prisma/client'
-import { Player, Team } from '@/actions/types'
+import { Player, TeamData } from '@/actions/types'
 import prisma from '@/libs/prisma'
 
 type ExtendedGroup = Group & {
-  teams: Team[]
+  teams: TeamData[]
 }
 
-export const createTeam = async (data: Team) => {
+export const createTeam = async (data: TeamData) => {
   const role = await currentRole()
 
   if (role !== 'ADMIN' && role !== 'OWNER') {

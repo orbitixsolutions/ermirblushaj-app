@@ -15,7 +15,7 @@ const GroupTeams = () => {
     isLoading,
     error
   } = useSWR<extendedGroups[]>('/api/groups', fetcher, {
-    refreshInterval: 1000
+    refreshInterval: 3000
   })
 
   if (error) {

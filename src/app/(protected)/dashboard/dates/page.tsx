@@ -5,6 +5,7 @@ import Matches from '@/components/dates/list/matches'
 import ButtonDeleteMatches from '@/components/dates/buttons/options/button-delete-matches'
 import ButtonDeleteGroups from '@/components/dates/buttons/options/button-delete-groups'
 import ButtonCreateGroups from '@/components/dates/buttons/options/button-create-groups'
+import ButtonDeleteStats from '@/components/dates/buttons/options/button-delete-stats'
 
 const DatePage = () => {
   return (
@@ -14,6 +15,7 @@ const DatePage = () => {
         <ButtonCreateMatches />
         <ButtonDeleteMatches />
         <ButtonDeleteGroups />
+        <ButtonDeleteStats />
       </div>
 
       <GroupTeams />

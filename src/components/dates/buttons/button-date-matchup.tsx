@@ -4,8 +4,9 @@ import { Match, Team } from '@prisma/client'
 import { useEffect, useState } from 'react'
 import { updateStatusMatches } from '@/actions/services/edit'
 import { IconPointFilled } from '@tabler/icons-react'
+import { useRouter } from 'next/navigation'
 import useMatches from '@/hooks/matches-hooks/use-matches'
-import ButtonStartMatchup from './button-start-matchup'
+import ButtonFinishMatchup from '@/components/dates/buttons/button-finish-matchup'
 import axios from 'axios'
 
 type ExtendedMatch = Match & {
@@ -14,9 +15,13 @@ type ExtendedMatch = Match & {
 }
 
 const ButtonDateMatchup = ({ match }: { match: ExtendedMatch }) => {
-  const { id, playStartDate } = match
+  const router = useRouter()
+  const { id, playStartDate, status } = match
   const [matchId, setGameId] = useState('')
+
   const gameId = matchId === match.id
+  const isLived = status === 'LIVE'
+  const isCompleted = status === 'COMPLETED'
 
   const { isToday, updateIsActive, updatedId, updatedTodayGame } = useMatches()
 
@@ -26,11 +31,15 @@ const ButtonDateMatchup = ({ match }: { match: ExtendedMatch }) => {
   })
 
   const handleClickDate = () => {
+    if (isCompleted) return
+
     updateIsActive(true)
     updatedId(id)
   }
 
   useEffect(() => {
+    if (isCompleted) return
+
     const checkMatchIsToday = () => {
       const playDate = new Date(playStartDate || '')
       const currentData = new Date()
@@ -45,18 +54,21 @@ const ButtonDateMatchup = ({ match }: { match: ExtendedMatch }) => {
 
             setGameId(data.id)
             updateStatusMatches(data.id, 'LIVE')
+
+            updatedTodayGame(false)
+            console.log('uwu')
           })
         }
       }
     }
 
     checkMatchIsToday()
-  }, [playStartDate])
+  }, [status])
 
   return (
     <>
-      {isToday && gameId ? (
-        <ButtonStartMatchup />
+      {isToday && gameId && isLived ? (
+        <ButtonFinishMatchup match={match} />
       ) : (
         <div className='w-full flex'>
           <Button
@@ -65,14 +77,28 @@ const ButtonDateMatchup = ({ match }: { match: ExtendedMatch }) => {
             fullWidth
             className='bg-custom-darkblue rounded-lg cursor-pointer text-white'
           >
-            <span className='text-sm font-bold'>
-              {!playStartDate ? 'No date' : playDateFomatted}
-            </span>
+            <p className='text-sm font-bold'>
+              {status === 'COMPLETED' ? (
+                <span className='text-lime-500'>Finished</span>
+              ) : !playStartDate ? (
+                'No date'
+              ) : (
+                playDateFomatted
+              )}
+            </p>
           </Button>
-          <div className='flex items-center'>
-            <IconPointFilled className='text-custom-red animate-pulse' />
-            <p>Live</p>
-          </div>
+          {status === 'LIVE' && (
+            <div className='flex items-center'>
+              <IconPointFilled className='text-custom-red animate-pulse' />
+              <p>Live</p>
+            </div>
+          )}
+          {status === 'PENDING' && (
+            <div className='flex items-center'>
+              <IconPointFilled className='text-custom-red animate-pulse' />
+              <p>Live</p>
+            </div>
+          )}
         </div>
       )}
     </>

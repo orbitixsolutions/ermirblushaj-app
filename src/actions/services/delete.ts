@@ -180,6 +180,7 @@ export const resetPlayerStats = async () => {
 // -------------------------------- //
 export const deleteGroups = async () => {
   try {
+    await prisma.matchHistory.deleteMany()
     await prisma.group.deleteMany()
     return { success: 'Groups deleted!', status: 200 }
   } catch (error) {
@@ -192,8 +193,45 @@ export const deleteGroups = async () => {
 // -------------------------------- //
 export const deleteMatches = async () => {
   try {
+    await prisma.matchHistory.deleteMany()
     await prisma.match.deleteMany()
     return { success: 'Matches deleted!', status: 200 }
+  } catch (error) {
+    return { error: 'An ocurred a error!', status: 500 }
+  }
+}
+
+export const resetAllStats = async () => {
+  try {
+    await prisma.$transaction([
+      prisma.teamStats.updateMany({
+        data: {
+          points: 0,
+          goalsFor: 0,
+          goalDifference: 0,
+          goalsAgainst: 0,
+          currentGoals: 0,
+          matchDraw: 0,
+          matchLoss: 0,
+          matchPlayed: 0,
+          matchWin: 0
+        }
+      }),
+      prisma.playerStats.updateMany({
+        data: {
+          goals: 0
+        }
+      }),
+      prisma.match.updateMany({
+        data: {
+          playEndDate: null,
+          status: 'PENDING'
+        }
+      }),
+      prisma.matchHistory.deleteMany()
+    ])
+
+    return { success: 'All stats reseted!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
   }

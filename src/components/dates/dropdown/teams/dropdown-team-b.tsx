@@ -4,6 +4,8 @@ import { Match, Player, Team } from '@prisma/client'
 import useSWR from 'swr'
 import DropdownWrapper from '@/components/dates/dropdown/wrappers/dropdown-wrapper-team'
 import DropdownTeamContent from '@/components/dates/dropdown/content/dropdown-team-content'
+import { updatedStats } from '@/actions/services/edit'
+import { toast } from 'sonner'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -22,6 +24,18 @@ export const DropdownTeamB = ({ match }: { match: ExtendedMatch }) => {
   } = useSWR<ExtendedPlayer>(`/api/teams/${match.teamB.id}`, fetcher, {
     revalidateOnFocus: true
   })
+
+  const addGoalPlayer = async (player: Player) => {
+    const res = await updatedStats(player)
+
+    if (res.status === 200) {
+      return toast.success(
+        `Goal added for player: ${player.firstName} ${player.lastName}`
+      )
+    }
+
+    return toast.error('An ocurred a error!')
+  }
 
   if (isLoading) {
     return (
@@ -51,7 +65,11 @@ export const DropdownTeamB = ({ match }: { match: ExtendedMatch }) => {
     <DropdownWrapper
       render={
         team?.players.map((player) => (
-          <DropdownItem textValue={player.firstName} key={player.id}>
+          <DropdownItem
+            key={player.id}
+            textValue={player.firstName}
+            onPress={() => addGoalPlayer(player)}
+          >
             <DropdownTeamContent player={player} />
           </DropdownItem>
         )) as any

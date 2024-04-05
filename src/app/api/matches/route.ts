@@ -6,8 +6,17 @@ export const dynamic = 'force-dynamic'
 export async function GET(request: Request) {
   const matches = await prisma.match.findMany({
     include: {
-      teamA: true,
-      teamB: true
+      teamA: {
+        include: {
+          teamStats: true,
+          matchHistory: true
+        }
+      },
+      teamB: {
+        include: {
+          teamStats: true
+        }
+      }
     },
     orderBy: {
       playStartDate: 'asc'

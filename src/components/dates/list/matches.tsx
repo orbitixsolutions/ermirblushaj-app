@@ -1,14 +1,10 @@
 'use client'
 
 import { fetcher } from '@/helpers/fetcher'
-import { useIsActive } from '@/store/use-active'
 import { Match, Team } from '@prisma/client'
-import useSWR from 'swr'
-import ImagesMatches from '@/components/dates/image/images-matches'
-import FormDateMatches from '@/components/dates/form/form-date-matches'
-import ButtonDateMatchup from '@/components/dates/buttons/button-date-matchup'
 import { Divider } from '@nextui-org/react'
-import CardMatchup from '../cards/card-matchup'
+import useSWR from 'swr'
+import CardMatchup from '@/components/dates/cards/card-matchup'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -21,7 +17,7 @@ const Matches = () => {
     isLoading,
     error
   } = useSWR<ExtendedMatch[]>('/api/matches', fetcher, {
-    refreshInterval: 1000
+    refreshInterval: 3000
   })
 
   if (isLoading) {

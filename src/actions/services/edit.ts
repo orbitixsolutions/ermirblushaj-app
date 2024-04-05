@@ -4,7 +4,8 @@ import * as z from 'zod'
 
 import { MatchesSchemas, PlayerSchema, TeamSchema } from '@/schemas'
 import { currentRole } from '@/libs/auth'
-import { MatchStatus, Player } from '@prisma/client'
+import { Match, MatchStatus, Player } from '@prisma/client'
+import { ExtendedMatches } from '@/actions/types'
 import prisma from '@/libs/prisma'
 
 export const editTeam = async (
@@ -184,11 +185,114 @@ export const updatedStats = async (data: Player) => {
     await prisma.teamStats.update({
       where: { teamId: teamId },
       data: {
-        goalsFor: { increment: 1 }
+        goalsFor: { increment: 1 },
+        currentGoals: { increment: 1 }
       }
     })
     return { success: 'Status updated!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
   }
+}
+
+export const updatedFinishStats = async (data: Match) => {
+  const { teamA, teamB, teamAId, teamBId, id } = data as ExtendedMatches
+
+  try {
+    const goalsTeamA = teamA.teamStats.currentGoals
+    const goalsTeamB = teamB.teamStats.currentGoals
+
+    const goalsForTeamA = teamA.teamStats.goalsFor
+    const goalsForTeamB = teamB.teamStats.goalsFor
+
+    let resultTeamA, resultTeamB
+
+    // Determinar el resultado del partido
+    if (goalsTeamA === goalsTeamB) {
+      resultTeamA = 'DRAW'
+      resultTeamB = 'DRAW'
+    } else {
+      resultTeamA = goalsTeamA > goalsTeamB ? 'WIN' : 'LOSS'
+      resultTeamB = goalsTeamB > goalsTeamA ? 'WIN' : 'LOSS'
+    }
+
+    // Determina los puntos basados en el resultado
+    const pointsTeamA =
+      resultTeamA === 'WIN' ? 3 : resultTeamA === 'DRAW' ? 1 : 0
+    const pointsTeamB =
+      resultTeamB === 'WIN' ? 3 : resultTeamB === 'DRAW' ? 1 : 0
+
+    const operations = []
+
+    operations.push(
+      prisma.teamStats.update({
+        where: { teamId: teamAId },
+        data: {
+          goalsAgainst: { increment: goalsForTeamB },
+          goalDifference: goalsForTeamA - goalsForTeamB,
+          points: { increment: pointsTeamA },
+          currentGoals: 0
+        }
+      }),
+      prisma.teamStats.update({
+        where: { teamId: teamBId },
+        data: {
+          goalsAgainst: { increment: goalsForTeamA },
+          goalDifference: goalsForTeamA - goalsForTeamA,
+          points: { increment: pointsTeamB },
+          currentGoals: 0
+        }
+      })
+    )
+
+    operations.push(
+      prisma.matchHistory.createMany({
+        data: [
+          { result: resultTeamA, matchId: id, teamId: teamAId },
+          { result: resultTeamB, matchId: id, teamId: teamBId }
+        ]
+      })
+    )
+
+    updateTeamStats(teamAId, resultTeamA, operations)
+    updateTeamStats(teamBId, resultTeamB, operations)
+
+    operations.push(
+      prisma.match.update({
+        where: { id },
+        data: {
+          playEndDate: new Date() + '',
+          status: 'COMPLETED'
+        }
+      })
+    )
+
+    await prisma.$transaction(operations)
+
+    return { success: 'Match stats successfully updated!', status: 200 }
+  } catch (error) {
+    console.error(error)
+    return { error: 'An occurred error while updating stats!', status: 500 }
+  }
+}
+
+const updateTeamStats = (teamId: string, result: string, operations: any[]) => {
+  let updateData: any = {
+    matchPlayed: { increment: 1 }
+  }
+
+  if (result === 'WIN') {
+    updateData.matchWin = { increment: 1 }
+  } else if (result === 'DRAW') {
+    updateData.matchDraw = { increment: 1 }
+  } else if (result === 'LOSS') {
+    updateData.matchLoss = { increment: 1 }
+  }
+
+  operations.push(
+    prisma.teamStats.update({
+      where: { teamId: teamId },
+      data: updateData
+    })
+  )
 }

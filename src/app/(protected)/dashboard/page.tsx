@@ -1,13 +1,12 @@
-import { currentUser } from '@/libs/auth'
+import GroupsResume from '@/components/home/list/groups-resumen'
 
 const DashboardPage = async () => {
-  const user = await currentUser()
+  
 
   return (
-    <div>
-      <h1>Dashboard page</h1>
-      {JSON.stringify(user)}
-    </div>
+    <section className='container mx-auto py-20'>
+      <GroupsResume />
+    </section>
   )
 }
 

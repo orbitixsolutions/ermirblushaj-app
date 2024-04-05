@@ -6,7 +6,12 @@ export const dynamic = 'force-dynamic'
 export async function GET(request: Request) {
   const groups = await prisma.group.findMany({
     include: {
-      teams: true
+      teams: {
+        include: {
+          teamStats: true,
+          matchHistory: true
+        }
+      }
     },
     orderBy: {
       name: 'asc'

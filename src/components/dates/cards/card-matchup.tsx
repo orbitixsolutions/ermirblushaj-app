@@ -16,12 +16,13 @@ const CardMatchup = ({ match }: { match: ExtendedMatch }) => {
   }))
 
   const { id } = match
+  const isSameId = activeId === id
 
   return (
     <>
       <ImagesMatches match={match} />
 
-      {isActive && activeId === id ? (
+      {isActive && isSameId ? (
         <FormDateMatches match={match} />
       ) : (
         <ButtonDateMatchup match={match} />
