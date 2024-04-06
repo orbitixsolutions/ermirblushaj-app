@@ -4,13 +4,18 @@ import { resetAllStats } from '@/actions/services/delete'
 import { Button } from '@nextui-org/react'
 
 const ButtonDeleteStats = () => {
-  const handleClick = async () => {
+  const handleResetStats = async () => {
     await resetAllStats()
   }
 
   return (
-    <Button color='danger' onPress={() => handleClick()}>
-      Reset Stats
+    <Button
+      onPress={() => handleResetStats()}
+      fullWidth
+      color='danger'
+      className='text-2xl font-semibold'
+    >
+      Reset
     </Button>
   )
 }

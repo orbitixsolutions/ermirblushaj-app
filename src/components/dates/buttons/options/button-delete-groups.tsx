@@ -8,11 +8,13 @@ const ButtonDeleteGroups = () => {
 
   return (
     <Button
+      onPress={() => handleDeleteGroups()}
       isLoading={isPending}
       color='danger'
-      onPress={() => handleDeleteGroups()}
+      fullWidth
+      className='text-2xl font-semibold'
     >
-      Delete Groups
+      Delete
     </Button>
   )
 }

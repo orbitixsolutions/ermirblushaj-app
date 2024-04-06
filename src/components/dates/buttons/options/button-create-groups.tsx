@@ -7,8 +7,13 @@ const ButtonCreateGroups = () => {
   const { isPending, handleCreateGroups } = useCreateGroups()
 
   return (
-    <Button isLoading={isPending} onPress={() => handleCreateGroups()}>
-      Create Groups
+    <Button
+      onPress={() => handleCreateGroups()}
+      isLoading={isPending}
+      fullWidth
+      className='text-2xl font-semibold bg-custom-blue text-custom-darknavy'
+    >
+      Sort
     </Button>
   )
 }

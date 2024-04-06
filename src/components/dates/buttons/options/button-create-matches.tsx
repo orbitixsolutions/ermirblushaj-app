@@ -7,8 +7,13 @@ const ButtonCreateMatches = () => {
   const { isPending, handleCreateMatches } = useCreateMatches()
 
   return (
-    <Button isLoading={isPending} onPress={() => handleCreateMatches()}>
-      Create Matchups
+    <Button
+      onPress={() => handleCreateMatches()}
+      isLoading={isPending}
+      fullWidth
+      className='text-2xl font-semibold bg-custom-blue text-custom-darknavy'
+    >
+      Generate
     </Button>
   )
 }

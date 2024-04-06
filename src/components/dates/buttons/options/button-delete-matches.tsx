@@ -8,11 +8,13 @@ const ButtonDeleteMatches = () => {
 
   return (
     <Button
+    onPress={() => handleDeleteMatches()}
       isLoading={isPending}
       color='danger'
-      onPress={() => handleDeleteMatches()}
+      fullWidth
+      className='text-2xl font-semibold'
     >
-      Delete Matchups
+      Delete
     </Button>
   )
 }
