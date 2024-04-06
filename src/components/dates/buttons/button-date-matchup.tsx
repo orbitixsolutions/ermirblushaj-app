@@ -51,8 +51,6 @@ const ButtonDateMatchup = ({ match }: { match: ExtendedMatch }) => {
             updateStatusMatches(data.id, 'LIVE')
           })
         } else if (isLived) {
-          console.log('asd')
-
           axios.get(`/api/matches/${id}`).then((res) => {
             const data = res.data
 
@@ -90,7 +88,7 @@ const ButtonDateMatchup = ({ match }: { match: ExtendedMatch }) => {
           {status === 'PENDING' && (
             <div className='flex items-center'>
               <IconPointFilled className='text-custom-red animate-pulse' />
-              <p>Live</p>
+              <p>Pending</p>
             </div>
           )}
         </div>

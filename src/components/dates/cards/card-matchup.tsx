@@ -10,23 +10,20 @@ type ExtendedMatch = Match & {
 }
 
 const CardMatchup = ({ match }: { match: ExtendedMatch }) => {
-  const { isActive, activeId } = useIsActive((state) => ({
-    isActive: state.isActive,
-    activeId: state.id
-  }))
-
+  const activeIs = useIsActive((state) => state.id)
   const { id, status } = match
-  const isLived = status === 'LIVE'
-  const isSameId = activeId === id
+
+  const isPending = status === 'PENDING'
+  const isSameId = activeIs === id
 
   return (
     <>
       <ImagesMatches match={match} />
 
-      {isLived && isSameId ? (
+      {isPending && isSameId ? (
         <FormDateMatches match={match} />
-        ) : (
-          <ButtonDateMatchup match={match} />
+      ) : (
+        <ButtonDateMatchup match={match} />
       )}
     </>
   )
