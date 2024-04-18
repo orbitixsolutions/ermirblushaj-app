@@ -194,7 +194,11 @@ export const deleteGroups = async () => {
 export const deleteMatches = async () => {
   try {
     await prisma.matchHistory.deleteMany()
+    await prisma.matchKey.deleteMany()
+
+    await prisma.matchHistory.deleteMany()
     await prisma.match.deleteMany()
+    
     return { success: 'Matches deleted!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }

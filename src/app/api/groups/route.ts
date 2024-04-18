@@ -7,6 +7,19 @@ export async function GET(request: Request) {
   const groups = await prisma.group.findMany({
     include: {
       teams: {
+        orderBy: [
+          {
+            teamStats: {
+              points: 'desc'
+            }
+          },
+          {
+            teamStats: {
+              goalsFor: 'desc'
+            }
+          }
+        ],
+
         include: {
           teamStats: true,
           matchHistory: true

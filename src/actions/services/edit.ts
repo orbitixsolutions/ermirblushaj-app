@@ -296,3 +296,17 @@ const updateTeamStats = (teamId: string, result: string, operations: any[]) => {
     })
   )
 }
+
+export const updatedGroupsFase = async () => {
+  try {
+    await prisma.match.updateMany({
+      data: {
+        status: 'COMPLETED'
+      }
+    })
+
+    return { message: 'Group stage over!', status: 200 }
+  } catch (error) {
+    return { error: 'An occurred error while updating stats!', status: 500 }
+  }
+}

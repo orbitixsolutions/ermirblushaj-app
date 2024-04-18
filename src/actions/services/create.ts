@@ -1,7 +1,7 @@
 'use server'
 
 import { currentRole } from '@/libs/auth'
-import { Group } from '@prisma/client'
+import { Group, Team } from '@prisma/client'
 import { Player, TeamData } from '@/actions/types'
 import prisma from '@/libs/prisma'
 
@@ -151,4 +151,61 @@ export const createMatches = async (teamAId: string, teamBId: string) => {
     console.log(error)
     return { error: 'An ocurred a error!', status: 500 }
   }
+}
+
+export const createKeys = async () => {
+  try {
+    const groups = await prisma.group.findMany({
+      include: {
+        teams: {
+          orderBy: {
+            teamStats: {
+              points: 'desc'
+            }
+          },
+          take: 4
+        }
+      }
+    })
+
+    const [firstHalf, secondHalf] = [
+      groups.slice(0, groups.length / 2),
+      groups.slice(groups.length / 2)
+    ]
+
+    const matchupsAB = await generateMatchups(
+      firstHalf[0].teams,
+      firstHalf[1].teams
+    )
+    const matchupsCD = await generateMatchups(
+      secondHalf[0].teams,
+      secondHalf[1].teams
+    )
+
+    const transaction = [...matchupsAB, ...matchupsCD].flatMap((matches) =>
+      matches.map((match) =>
+        prisma.matchKey.create({
+          data: {
+            teamAId: match.teamA.id,
+            teamBId: match.teamB.id
+          }
+        })
+      )
+    )
+
+    await prisma.$transaction(transaction)
+
+    return { message: 'Keys created!', status: 200 }
+  } catch {
+    return { error: 'An error occurred while updating stats.', status: 500 }
+  }
+}
+
+const generateMatchups = async (teamA: Team[], teamB: Team[]) => {
+  return teamA.map((aTeam, index) => [
+    {
+      teamA: aTeam,
+      teamB: teamB[index]
+    }
+  ])
 }

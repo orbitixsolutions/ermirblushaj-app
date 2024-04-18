@@ -21,6 +21,13 @@ enum MatchStatus {
   COMPLETED
 }
 
+enum TournamentPhase {
+  EIGHTH
+  ROOMS
+  SEMIFINALS
+  FINAL
+}
+
 model User {
   id       String   @id @default(cuid())
   name     String?
@@ -42,9 +49,14 @@ model Team {
   teamA Match[] @relation("TeamA")
   teamB Match[] @relation("TeamB")
 
-  teamStats    TeamStats?
-  playerStats  PlayerStats[]
-  matchHistory MatchHistory[]
+  teamKeyA MatchKey[] @relation("TeamKeyA")
+  teamKeyB MatchKey[] @relation("TeamKeyB")
+
+  teamStats   TeamStats?
+  playerStats PlayerStats[]
+
+  matchHistory    MatchHistory[]
+  MatchKeyHistory MatchKeyHistory[]
 }
 
 model TeamStats {
@@ -119,6 +131,32 @@ model Match {
   teamB Team @relation("TeamB", fields: [teamBId], references: [id])
 
   matchHistory MatchHistory[]
+}
+
+model MatchKey {
+  id            String          @id @unique @default(uuid())
+  teamAId       String
+  teamBId       String
+  phase         TournamentPhase @default(EIGHTH)
+  status        MatchStatus     @default(PENDING)
+  playStartDate String?
+  playEndDate   String?
+  createdDate   DateTime        @default(now())
+
+  teamKeyA Team @relation("TeamKeyA", fields: [teamAId], references: [id])
+  teamKeyB Team @relation("TeamKeyB", fields: [teamBId], references: [id])
+
+  matchKeyHistory MatchKeyHistory[]
+}
+
+model MatchKeyHistory {
+  id      String @id @default(uuid())
+  teamId  String
+  result  String
+  matchId String
+
+  team     Team     @relation(fields: [teamId], references: [id])
+  matchKey MatchKey @relation(fields: [matchId], references: [id])
 }
 
 model MatchHistory {
