@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { fetcher } from '@/helpers/fetcher'
 import { createMatches } from '@/actions/services/create'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 
 type ExtendedGroup = Group & {
   teams: Team[]
@@ -34,6 +34,10 @@ const useCreateMatches = () => {
       return
     }
 
+    if (getGroups.length === 40 ) {
+      return toast.error('There are not groups available!')
+    }
+
     const allMatches = getGroups.map((group) => generateMatches(group))
     const tournamentMatchups = allMatches.flat()
 
@@ -57,6 +61,7 @@ const useCreateMatches = () => {
         return toast.error('An ocurred a error!')
       }
     } finally {
+      mutate('/api/matches')
       setIsPending(false)
     }
   }

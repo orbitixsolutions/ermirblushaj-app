@@ -41,6 +41,10 @@ model Team {
   groupId     String?
   name        String
   logo        String?
+
+  phase         TournamentPhase?
+  isEliminated  Boolean?
+
   createdDate DateTime @default(now())
 
   group   Group?   @relation(fields: [groupId], references: [id])
@@ -142,6 +146,7 @@ model MatchKey {
   playStartDate String?
   playEndDate   String?
   createdDate   DateTime        @default(now())
+  column String
 
   teamKeyA Team @relation("TeamKeyA", fields: [teamAId], references: [id])
   teamKeyB Team @relation("TeamKeyB", fields: [teamBId], references: [id])

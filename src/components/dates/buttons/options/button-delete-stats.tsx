@@ -2,10 +2,25 @@
 
 import { resetAllStats } from '@/actions/services/delete'
 import { Button } from '@nextui-org/react'
+import { useTransition } from 'react'
+import { toast } from 'sonner'
+import { mutate } from 'swr'
 
 const ButtonDeleteStats = () => {
+  const [isPending, startTransition] = useTransition()
+
   const handleResetStats = async () => {
-    await resetAllStats()
+    startTransition(async () => {
+      const { status, success } = await resetAllStats()
+      if (status === 200) {
+        toast.success(success)
+        mutate('/api/matches')
+        return
+      }
+
+      toast.error('An ocurred a error!')
+      return
+    })
   }
 
   return (
@@ -13,7 +28,8 @@ const ButtonDeleteStats = () => {
       onPress={() => handleResetStats()}
       fullWidth
       color='danger'
-      className='text-2xl font-semibold'
+      isLoading={isPending}
+      className='text-2xl font-semibold bg-custom-red'
     >
       Reset
     </Button>

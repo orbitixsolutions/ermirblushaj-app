@@ -18,7 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body id='body' className={`${DM_SANS_FONT.className}`}>
+      <body
+        id='body'
+        className={`${DM_SANS_FONT.className} dark text-foreground bg-background`}
+      >
         <Toaster position='bottom-right' richColors />
         <Providers>{children}</Providers>
       </body>

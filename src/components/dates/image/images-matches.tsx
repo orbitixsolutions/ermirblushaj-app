@@ -16,7 +16,7 @@ const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
       <div className='flex-1 relative'>
         <Card className=' bg-custom-darkblue text-custom-white'>
           <CardFooter className='space-x-3'>
-            <Avatar src={teamA.logo || ''} alt={`Team ${teamA.name}`} />
+            <Avatar src={teamA.logo!} alt={`Team ${teamA.name}`} />
             <h2 className='text-sm font-medium line-clamp-2'>{teamA.name}</h2>
           </CardFooter>
         </Card>
@@ -35,7 +35,7 @@ const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
       <div className='flex-1 relative'>
         <Card className='bg-custom-darkblue text-custom-white'>
           <CardFooter className='space-x-3'>
-            <Avatar src={teamB.logo || ''} alt={`Team ${teamA.name}`} />
+            <Avatar src={teamB.logo!} alt={`Team ${teamA.name}`} />
             <h2 className='text-sm font-medium line-clamp-2'>{teamB.name}</h2>
           </CardFooter>
         </Card>

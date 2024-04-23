@@ -14,9 +14,7 @@ const GroupTeams = () => {
     data: getGroups,
     isLoading,
     error
-  } = useSWR<extendedGroups[]>('/api/groups', fetcher, {
-    refreshInterval: 3000
-  })
+  } = useSWR<extendedGroups[]>('/api/groups', fetcher)
 
   if (error) {
     return <p>An ocurred a error!</p>
@@ -41,7 +39,7 @@ const GroupTeams = () => {
             {group.teams.map((team) => (
               <li key={team.id}>
                 <Card className='bg-custom-navy p-4 aspect-square'>
-                  <Image src={team.logo || ''} alt={`Team ${team.name}`} />
+                  <Image src={team.logo!} alt={`Team ${team.name}`} />
                 </Card>
                 <h2 className='text-lg text-center line-clamp-1 mt-2'>
                   {team.name}

@@ -8,7 +8,7 @@ import {
 import { IconPlus } from '@tabler/icons-react'
 
 interface Props {
-  render: JSX.Element
+  render: JSX.Element | any
 }
 
 const DropdownWrapper = ({ render }: Props) => {
@@ -30,7 +30,6 @@ const DropdownWrapper = ({ render }: Props) => {
             heading: 'text-xl font-bold text-custom-white'
           }}
           title='Players'
-          showDivider
         >
           {render}
         </DropdownSection>

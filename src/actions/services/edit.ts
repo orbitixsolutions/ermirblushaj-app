@@ -310,3 +310,41 @@ export const updatedGroupsFase = async () => {
     return { error: 'An occurred error while updating stats!', status: 500 }
   }
 }
+
+export const updatedMatchKeyDate = async (matchId: string, date: string) => {
+  try {
+    await prisma.matchKey.update({
+      where: {
+        id: matchId
+      },
+      data: {
+        playStartDate: date,
+        status: 'LIVE'
+      }
+    })
+
+    return { message: 'Match key date updated!', status: 200 }
+  } catch (error) {
+    return { error: 'An occurred error while updating stats!', status: 500 }
+  }
+}
+
+export const updatedMatchKeyStatus = async (
+  matchId: string,
+  status: string
+) => {
+  try {
+    await prisma.matchKey.update({
+      where: {
+        id: matchId
+      },
+      data: {
+        status: status as MatchStatus
+      }
+    })
+
+    return { message: 'Match key date updated!', status: 200 }
+  } catch (error) {
+    return { error: 'An occurred error while updating stats!', status: 500 }
+  }
+}

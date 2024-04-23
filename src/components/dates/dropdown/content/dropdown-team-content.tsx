@@ -6,7 +6,7 @@ const DropdownTeamContent = ({ player }: { player: Player }) => {
     <div className='flex items-center gap-2 size-full'>
       <Avatar
         size='sm'
-        src={player.profilePhoto || ''}
+        src={player.profilePhoto!}
         name={player.firstName}
       />
       <h2 className='text-base capitalize'>

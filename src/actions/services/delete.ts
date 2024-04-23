@@ -180,8 +180,22 @@ export const resetPlayerStats = async () => {
 // -------------------------------- //
 export const deleteGroups = async () => {
   try {
+    await prisma.playerStats.updateMany({
+      data: {
+        goals: 0
+      }
+    })
+    await prisma.teamStats.updateMany({
+      data: {
+        goalsFor: 0,
+        goalDifference: 0,
+        goalsAgainst: 0,
+        points: 0
+      }
+    })
     await prisma.matchHistory.deleteMany()
     await prisma.group.deleteMany()
+
     return { success: 'Groups deleted!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
@@ -194,12 +208,30 @@ export const deleteGroups = async () => {
 export const deleteMatches = async () => {
   try {
     await prisma.matchHistory.deleteMany()
-    await prisma.matchKey.deleteMany()
+    await prisma.match.deleteMany()
+
+    return { success: 'Matches deleted!', status: 200 }
+  } catch (error) {
+    return { error: 'An ocurred a error!', status: 500 }
+  }
+}
+
+// -------------------------------- //
+// DELETE MATCHES //
+// -------------------------------- //
+export const deleteKeyMatches = async () => {
+  try {
+    const matches = await prisma.matchKey.findMany()
+    const MATCHES_LENGTH = matches.length === 8
+
+    if (!MATCHES_LENGTH) {
+      return { message: 'No matches to delete!', status: 409 }
+    }
 
     await prisma.matchHistory.deleteMany()
-    await prisma.match.deleteMany()
-    
-    return { success: 'Matches deleted!', status: 200 }
+    await prisma.matchKey.deleteMany()
+
+    return { message: 'Matches deleted!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
   }

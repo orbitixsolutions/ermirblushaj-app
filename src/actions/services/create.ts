@@ -155,6 +155,13 @@ export const createMatches = async (teamAId: string, teamBId: string) => {
 
 export const createKeys = async () => {
   try {
+    const keys = await prisma.matchKey.findMany()
+    const ALREADY_KEYS = keys.length === 8
+
+    if (ALREADY_KEYS) {
+      return { message: 'Already exists keys created!', status: 409 }
+    }
+
     const groups = await prisma.group.findMany({
       include: {
         teams: {
@@ -173,27 +180,36 @@ export const createKeys = async () => {
       groups.slice(groups.length / 2)
     ]
 
-    const matchupsAB = await generateMatchups(
+    const matchesAB = await generateMatchups(
       firstHalf[0].teams,
       firstHalf[1].teams
     )
-    const matchupsCD = await generateMatchups(
+    const matchesCD = await generateMatchups(
       secondHalf[0].teams,
       secondHalf[1].teams
     )
 
-    const transaction = [...matchupsAB, ...matchupsCD].flatMap((matches) =>
-      matches.map((match) =>
-        prisma.matchKey.create({
-          data: {
-            teamAId: match.teamA.id,
-            teamBId: match.teamB.id
-          }
-        })
-      )
+    const aMatchKeys = matchesAB.flatMap((matches) =>
+      matches.map((match) => ({
+        column: 'A',
+        teamAId: match.teamA.id,
+        teamBId: match.teamB.id
+      }))
     )
 
-    await prisma.$transaction(transaction)
+    const bMatchKeys = matchesCD.flatMap((matches) =>
+      matches.map((match) => ({
+        column: 'B',
+        teamAId: match.teamA.id,
+        teamBId: match.teamB.id
+      }))
+    )
+
+    const matchKeys = [...aMatchKeys, ...bMatchKeys]
+
+    await prisma.matchKey.createMany({
+      data: matchKeys
+    })
 
     return { message: 'Keys created!', status: 200 }
   } catch {

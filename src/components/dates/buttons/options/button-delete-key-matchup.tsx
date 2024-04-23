@@ -1,39 +1,42 @@
-import { createKeys } from '@/actions/services/create'
+import { deleteKeyMatches } from '@/actions/services/delete'
 import { Button } from '@nextui-org/react'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
 import { mutate } from 'swr'
 
-const ButtonCreateKeys = () => {
+const ButtonDeleteKeyMatchup = () => {
   const [isPending, startTransition] = useTransition()
 
-  const handleCreateKeys = async () => {
+  const handleDeleteKeyMatchup = () => {
     startTransition(async () => {
-      const { status, message } = await createKeys()
-
+      const { status, message } = await deleteKeyMatches()
+      
       if (status === 200) {
         mutate('/api/matches/keys/a')
         mutate('/api/matches/keys/b')
         toast.success(message)
         return
       }
+
       if (status === 409) {
         toast.error(message)
         return
       }
+
+      toast.error('An occurred error while deleting matches!')
+      return
     })
   }
 
   return (
     <Button
-      onPress={() => handleCreateKeys()}
+      onPress={handleDeleteKeyMatchup}
       isLoading={isPending}
-      fullWidth
-      className='text-2xl font-semibold bg-custom-blue text-custom-darknavy'
+      className='mx-auto bg-custom-red font-bold'
     >
-      Generate
+      Delete Matches
     </Button>
   )
 }
 
-export default ButtonCreateKeys
+export default ButtonDeleteKeyMatchup

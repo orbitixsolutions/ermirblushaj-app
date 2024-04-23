@@ -3,8 +3,9 @@ import { Match, Team } from '@prisma/client'
 import { Button } from '@nextui-org/react'
 import { IconPointFilled } from '@tabler/icons-react'
 import { toast } from 'sonner'
-import { useState } from 'react'
+import { useTransition } from 'react'
 import { formattedDate } from '@/helpers/get-formated-date'
+import { mutate } from 'swr'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -12,29 +13,30 @@ type ExtendedMatch = Match & {
 }
 
 const ButtonFinishMatchup = ({ match }: { match: ExtendedMatch }) => {
-  const [isPending, setIsPending] = useState(false)
+  const [isPending, starTransition] = useTransition()
   const { playStartDate, status } = match
 
-  const playDate = new Date(playStartDate || '')
+  const playDate = new Date(playStartDate!)
   const currentDate = new Date()
   const isTodayDate = playDate.toDateString() === currentDate.toDateString()
 
   const playDateFomatted = formattedDate({
-    date: playStartDate || '',
+    date: playStartDate!,
     mode: { time: 'full-date' }
   })
 
-  const finishMatchup = async () => {
-    setIsPending(true)
-    const res = await updatedFinishStats(match)
+  const finishMatchup = () => {
+    starTransition(async () => {
+      const { status, success } = await updatedFinishStats(match)
 
-    if (res.status === 200) {
-      setIsPending(false)
-      return toast.success('Matchup finished!')
-    }
-
-    setIsPending(false)
-    return toast.success('An ocurred a error!')
+      if (status === 200) {
+        mutate('/api/matches')
+        toast.success(success)
+        return
+      }
+      toast.success('An ocurred a error!')
+      return
+    })
   }
 
   return (

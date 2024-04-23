@@ -3,7 +3,7 @@ import { Group, Team } from '@prisma/client'
 import { toast } from 'sonner'
 import { fetcher } from '@/helpers/fetcher'
 import { createGroups } from '@/actions/services/create'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 
 type ExtendedGroup = Group & {
   teams: Team[]
@@ -67,6 +67,7 @@ const useCreateGroups = () => {
         return toast.error('An ocurred a error!')
       }
     } finally {
+      mutate('/api/groups')
       setIsPending(false)
     }
   }
