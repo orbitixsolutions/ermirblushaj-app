@@ -10,7 +10,7 @@ export async function GET(request: Request) {
       teamKeyB: true
     },
     orderBy: {
-      playStartDate: 'asc'
+      order: 'asc'
     },
     where: {
       column: 'A',

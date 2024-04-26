@@ -149,13 +149,15 @@ model Match {
 }
 
 model MatchKey {
-  id            String          @id @unique @default(uuid())
-  teamAId       String
-  teamBId       String
+  id      String @id @unique @default(uuid())
+  teamAId String
+  teamBId String
 
-  loserId       String?
-  winnerId      String?
-  
+  loserId  String?
+  winnerId String?
+
+  order Int @default(autoincrement())
+
   phase         TournamentPhase @default(EIGHTH)
   status        MatchStatus     @default(PENDING)
   playStartDate String?

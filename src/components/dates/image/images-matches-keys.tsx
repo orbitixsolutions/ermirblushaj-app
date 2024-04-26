@@ -12,7 +12,14 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
   return (
     <div className='flex w-full gap-3'>
       <div className='flex flex-col gap-3 my-5'>
-        <Tooltip content={teamKeyA.name}>
+        <Tooltip
+          content={
+            <div className='flex flex-col gap-2 text-center'>
+              <p>{teamKeyA.name}</p>
+              <p>{teamKeyA.id}</p>
+            </div>
+          }
+        >
           <Card
             className={`bg-custom-darkblue text-custom-white border-2 ${
               teamKeyA.isEliminated
@@ -28,7 +35,14 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
           </Card>
         </Tooltip>
 
-        <Tooltip content={teamKeyB.name}>
+        <Tooltip
+          content={
+            <div className='flex flex-col gap-2 text-center'>
+              <p>{teamKeyB.name}</p>
+              <p>{teamKeyB.id}</p>
+            </div>
+          }
+        >
           <Card
             className={`bg-custom-darkblue text-custom-white border-2 ${
               teamKeyB.isEliminated

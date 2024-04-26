@@ -4,6 +4,7 @@ import { currentRole } from '@/libs/auth'
 import { Group, Team, TournamentPhase } from '@prisma/client'
 import { Player, TeamData } from '@/actions/types'
 import prisma from '@/libs/prisma'
+import { child } from 'firebase/database'
 
 type ExtendedGroup = Group & {
   teams: TeamData[]
@@ -229,10 +230,64 @@ const generateMatchups = async (teamA: Team[] | any, teamB: Team[] | any) => {
 export const finishMatchesEights = async () => {
   try {
     const matches = await prisma.matchKey.findMany({
-      include: {
-        teamKeyA: true,
-        teamKeyB: true
+      orderBy: {
+        order: 'asc'
       }
+    })
+
+    const winnersId = matches.map((match) => match.winnerId)
+
+    const matchups = [
+      [winnersId[0], winnersId[1]],
+      [winnersId[2], winnersId[3]],
+      [winnersId[4], winnersId[5]],
+      [winnersId[6], winnersId[7]]
+    ]
+
+    const matchCreation = matchups.map((matchup) => {
+      return [
+        {
+          teamAId: matchup[0]
+        },
+        {
+          teamBId: matchup[1]
+        }
+      ]
+    })
+
+    const matchesQuartersA = matchCreation.slice(0, 2)
+    const matchesQuartersB = matchCreation.slice(2, 4)
+
+    const aMatchKeys = matchesQuartersA.map((match) => {
+      const teamAId = match[0].teamAId
+      const teamBId = match[1].teamBId
+
+      return {
+        column: 'A',
+        phase: 'QUARTER',
+        teamAId: teamAId,
+        teamBId: teamBId
+      }
+    })
+
+    const bMatchKeys = matchesQuartersB.map((match) => {
+      const teamAId = match[0].teamAId
+      const teamBId = match[1].teamBId
+
+      return {
+        column: 'B',
+        phase: 'QUARTER',
+        teamAId: teamAId,
+        teamBId: teamBId
+      }
+    })
+
+    const matchKeys: any = [...aMatchKeys, ...bMatchKeys]
+
+    console.log(matchKeys)
+
+    await prisma.matchKey.createMany({
+      data: matchKeys
     })
 
     return { message: 'Matches finished!', status: 200 }

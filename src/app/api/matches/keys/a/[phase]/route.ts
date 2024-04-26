@@ -16,7 +16,7 @@ export async function GET(
       teamKeyB: true
     },
     orderBy: {
-      playStartDate: 'asc'
+      order: 'asc'
     },
     where: {
       column: 'A',
