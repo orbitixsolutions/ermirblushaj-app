@@ -60,6 +60,7 @@ const PopoverMatchDate = ({
       if (status === 200) {
         toast.success(message)
         mutate(`/api/matches/keys/${group}`)
+        mutate('/api/matches/keys')
         return
       }
 

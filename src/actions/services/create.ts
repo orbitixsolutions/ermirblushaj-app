@@ -283,12 +283,48 @@ export const finishMatchesEights = async () => {
     })
 
     const matchKeys: any = [...aMatchKeys, ...bMatchKeys]
-
-    console.log(matchKeys)
-
     await prisma.matchKey.createMany({
       data: matchKeys
     })
+
+    return { message: 'Matches finished!', status: 200 }
+  } catch (error) {
+    return { error: 'An ocurred a error!', status: 500 }
+  }
+}
+
+export const finishMatchesQuarters = async () => {
+  try {
+    const blockA = await prisma.matchKey.findMany({
+      include: {
+        teamKeyA: true,
+        teamKeyB: true
+      },
+      orderBy: {
+        order: 'asc'
+      },
+      where: {
+        column: 'A',
+        phase: 'QUARTER'
+      }
+    })
+    const blockB = await prisma.matchKey.findMany({
+      include: {
+        teamKeyA: true,
+        teamKeyB: true
+      },
+      orderBy: {
+        order: 'asc'
+      },
+      where: {
+        column: 'A',
+        phase: 'QUARTER'
+      }
+    })
+    const matches = [...blockA, ...blockB]
+
+    const winnersId = matches.map((match) => match.winnerId)
+    console.log(winnersId)
 
     return { message: 'Matches finished!', status: 200 }
   } catch (error) {

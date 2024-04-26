@@ -16,7 +16,6 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
           content={
             <div className='flex flex-col gap-2 text-center'>
               <p>{teamKeyA.name}</p>
-              <p>{teamKeyA.id}</p>
             </div>
           }
         >
@@ -39,7 +38,6 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
           content={
             <div className='flex flex-col gap-2 text-center'>
               <p>{teamKeyB.name}</p>
-              <p>{teamKeyB.id}</p>
             </div>
           }
         >
