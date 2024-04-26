@@ -13,7 +13,8 @@ export async function GET(request: Request) {
       playStartDate: 'asc'
     },
     where: {
-      column: 'A'
+      column: 'A',
+      phase: 'EIGHTH'
     }
   })
   return NextResponse.json(matchesKeys, { status: 200, statusText: 'OK' })

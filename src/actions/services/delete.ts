@@ -222,14 +222,16 @@ export const deleteMatches = async () => {
 export const deleteKeyMatches = async () => {
   try {
     const matches = await prisma.matchKey.findMany()
-    const MATCHES_LENGTH = matches.length === 8
-
-    if (!MATCHES_LENGTH) {
-      return { message: 'No matches to delete!', status: 409 }
-    }
 
     await prisma.matchHistory.deleteMany()
     await prisma.matchKey.deleteMany()
+
+    await prisma.team.updateMany({
+      data: {
+        isEliminated: null,
+        phase: null
+      }
+    })
 
     return { message: 'Matches deleted!', status: 200 }
   } catch (error) {

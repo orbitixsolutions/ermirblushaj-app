@@ -1,9 +1,15 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/libs/prisma'
+import { TournamentPhase } from '@prisma/client'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET(request: Request) {
+export async function GET(
+  request: Request,
+  { params }: { params: { phase: string } }
+) {
+  const phaseStatus = params.phase.toUpperCase()
+
   const matchesKeys = await prisma.matchKey.findMany({
     include: {
       teamKeyA: true,
@@ -14,7 +20,7 @@ export async function GET(request: Request) {
     },
     where: {
       column: 'B',
-      phase: 'EIGHTH'
+      phase: phaseStatus as TournamentPhase
     }
   })
   return NextResponse.json(matchesKeys, { status: 200, statusText: 'OK' })

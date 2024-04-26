@@ -1,7 +1,7 @@
 'use server'
 
 import { currentRole } from '@/libs/auth'
-import { Group, Team } from '@prisma/client'
+import { Group, Team, TournamentPhase } from '@prisma/client'
 import { Player, TeamData } from '@/actions/types'
 import prisma from '@/libs/prisma'
 
@@ -189,16 +189,16 @@ export const createKeys = async () => {
       secondHalf[1].teams
     )
 
-    const aMatchKeys = matchesAB.flatMap((matches) =>
-      matches.map((match) => ({
+    const aMatchKeys = matchesAB.flatMap((matches: any) =>
+      matches.map((match: any) => ({
         column: 'A',
         teamAId: match.teamA.id,
         teamBId: match.teamB.id
       }))
     )
 
-    const bMatchKeys = matchesCD.flatMap((matches) =>
-      matches.map((match) => ({
+    const bMatchKeys = matchesCD.flatMap((matches: any) =>
+      matches.map((match: any) => ({
         column: 'B',
         teamAId: match.teamA.id,
         teamBId: match.teamB.id
@@ -217,11 +217,26 @@ export const createKeys = async () => {
   }
 }
 
-const generateMatchups = async (teamA: Team[], teamB: Team[]) => {
-  return teamA.map((aTeam, index) => [
+const generateMatchups = async (teamA: Team[] | any, teamB: Team[] | any) => {
+  return teamA.map((aTeam: any, index: number) => [
     {
       teamA: aTeam,
       teamB: teamB[index]
     }
   ])
+}
+
+export const finishMatchesEights = async () => {
+  try {
+    const matches = await prisma.matchKey.findMany({
+      include: {
+        teamKeyA: true,
+        teamKeyB: true
+      }
+    })
+
+    return { message: 'Matches finished!', status: 200 }
+  } catch (error) {
+    return { error: 'An ocurred a error!', status: 500 }
+  }
 }

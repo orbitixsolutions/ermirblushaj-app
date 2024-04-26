@@ -2,6 +2,7 @@ import { useTransition } from 'react'
 import { updatedGroupsFase } from '@/actions/services/edit'
 import { Button } from '@nextui-org/react'
 import { toast } from 'sonner'
+import { mutate } from 'swr'
 
 const ButtonFinishGroupStage = () => {
   const [isPending, startTransition] = useTransition()
@@ -11,6 +12,7 @@ const ButtonFinishGroupStage = () => {
       const { status, message } = await updatedGroupsFase()
       if (status === 200) {
         toast.success(message)
+        mutate('/api/matches')
         return
       }
     })

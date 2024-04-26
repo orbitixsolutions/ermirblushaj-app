@@ -2,7 +2,7 @@
 
 import { fetcher } from '@/helpers/fetcher'
 import { Match, MatchKey, Team } from '@prisma/client'
-import { Divider } from '@nextui-org/react'
+import { Avatar, Button, Card, CardBody, Divider } from '@nextui-org/react'
 import useSWR from 'swr'
 import CardMatchup from '@/components/dates/cards/card-matchup'
 import DateGeneralOptions from '@/components/dates/options/date-general-options'
@@ -12,6 +12,7 @@ import ButtonDeleteKeyMatchup from '../buttons/options/button-delete-key-matchup
 import DropdownTeamKeyA from '../dropdown/teams/dropdown-team-key-a'
 import DropdownTeamKeyB from '../dropdown/teams/dropdown-team-key-b'
 import ImagesMatchesKeys from '../image/images-matches-keys'
+import ButtonOptionsKeys from '../buttons/options/button-options-keys'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -34,9 +35,17 @@ const Matches = () => {
     '/api/matches/keys/a',
     fetcher
   )
+  const { data: MATCHES_QUARTERS_A } = useSWR<ExtendedMatchKey[]>(
+    '/api/matches/keys/a/quarter',
+    fetcher
+  )
 
   const { data: MATCHES_KEYS_B } = useSWR<ExtendedMatchKey[]>(
     '/api/matches/keys/b',
+    fetcher
+  )
+  const { data: MATCHES_QUARTERS_B } = useSWR<ExtendedMatchKey[]>(
+    '/api/matches/keys/b/quarter',
     fetcher
   )
 
@@ -53,57 +62,94 @@ const Matches = () => {
 
   return (
     <div className='space-y-20'>
-      <div className='w-[720px] mx-auto'>
-        <h2 className='text-5xl font-bold mb-5 text-center'>Keys</h2>
+      {MATCHES_KEYS_A?.length !== 0 && MATCHES_KEYS_B?.length !== 0 && (
+        <div className='w-[968px] mx-auto'>
+          <h2 className='text-5xl font-bold mb-5 text-center'>Keys</h2>
 
-        <div className='flex justify-between mx-auto'>
-          <ol className='col-span-2'>
-            {matchesKeyColomnOne?.map((matchKey) => (
-              <li key={matchKey.id} className='relative'>
-                <div className='absolute top-0 -left-12 h-full flex justify-center items-center'>
-                  <PopoverDateTeam group='a' match={matchKey} />
-                </div>
-                {matchKey.status === 'LIVE' && (
-                  <div className='absolute top-4 -left-10'>
-                    <DropdownTeamKeyA match={matchKey} />
+          <div className='flex justify-between mx-auto relative'>
+            <ol className='col-span-2'>
+              {matchesKeyColomnOne?.map((matchKey) => (
+                <li key={matchKey.id} className='relative'>
+                  <div className='absolute top-0 -left-12 h-full flex justify-center items-center'>
+                    <PopoverDateTeam group='a' match={matchKey} />
                   </div>
-                )}
-                <ImagesMatchesKeys match={matchKey} />
-                {matchKey.status === 'LIVE' && (
-                  <div className='absolute bottom-4 -left-10'>
-                    <DropdownTeamKeyB match={matchKey} />
-                  </div>
-                )}
-              </li>
-            ))}
-          </ol>
 
-          <ol className='col-span-2'>
-            {macthesKeyColomnTwo?.map((matchKey) => (
-              <li key={matchKey.id} className='relative'>
-                <div className='absolute top-0 -right-12 h-full flex justify-center items-center'>
-                  <PopoverDateTeam group='b' match={matchKey} />
-                </div>
-                {matchKey.status === 'LIVE' && (
-                  <div className='absolute top-4 -right-10'>
-                    <DropdownTeamKeyA match={matchKey} />
+                  <ImagesMatchesKeys match={matchKey} />
+                </li>
+              ))}
+            </ol>
+
+            <div className='absolute top-0 left-32 h-full flex justify-center items-center'>
+              <div className='w-[80px] flex justify-center items-center'>
+                <ol>
+                  {MATCHES_QUARTERS_A?.length !== 0 ? (
+                    MATCHES_QUARTERS_A?.map((matchKey) => (
+                      <li key={matchKey.id} className='relative'>
+                        <div className='absolute top-0 -left-12 h-full flex justify-center items-center'>
+                          <PopoverDateTeam group='a' match={matchKey} />
+                        </div>
+
+                        <ImagesMatchesKeys match={matchKey} />
+                      </li>
+                    ))
+                  ) : (
+                    <>
+                      {Array(4)
+                        .fill(0)
+                        .map((_, index) => (
+                          <Avatar className='my-32' size='lg' key={index} />
+                        ))}
+                    </>
+                  )}
+                </ol>
+              </div>
+            </div>
+
+            <ol className='col-span-2'>
+              {macthesKeyColomnTwo?.map((matchKey) => (
+                <li key={matchKey.id} className='relative'>
+                  <div className='absolute top-0 -right-12 h-full flex justify-center items-center'>
+                    <PopoverDateTeam group='b' match={matchKey} />
                   </div>
-                )}
-                <ImagesMatchesKeys match={matchKey} />
-                {matchKey.status === 'LIVE' && (
-                  <div className='absolute bottom-4 -right-10'>
-                    <DropdownTeamKeyB match={matchKey} />
-                  </div>
-                )}
-              </li>
-            ))}
-          </ol>
+
+                  <ImagesMatchesKeys match={matchKey} />
+                </li>
+              ))}
+            </ol>
+
+            <div className='absolute  top-0 right-32 h-full flex justify-center items-center'>
+              <div className='w-[80px] flex justify-center items-center'>
+                <ol>
+                  {MATCHES_QUARTERS_B?.length !== 0 ? (
+                    MATCHES_QUARTERS_B?.map((matchKey) => (
+                      <li key={matchKey.id} className='relative'>
+                        <div className='absolute top-0 -right-12 h-full flex justify-center items-center'>
+                          <PopoverDateTeam group='b' match={matchKey} />
+                        </div>
+
+                        <ImagesMatchesKeys match={matchKey} />
+                      </li>
+                    ))
+                  ) : (
+                    <>
+                      {Array(4)
+                        .fill(0)
+                        .map((_, index) => (
+                          <Avatar className='my-32' size='lg' key={index} />
+                        ))}
+                    </>
+                  )}
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div className='flex flex-col gap-4 py-5 justify-center'>
+            <ButtonDeleteKeyMatchup />
+            <ButtonOptionsKeys />
+          </div>
         </div>
-
-        <div className='flex py-5 justify-center'>
-          <ButtonDeleteKeyMatchup />
-        </div>
-      </div>
+      )}
 
       <div className='flex justify-between'>
         <div className='w-[400px]'>

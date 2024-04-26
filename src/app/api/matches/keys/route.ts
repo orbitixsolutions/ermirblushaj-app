@@ -9,7 +9,6 @@ export async function GET(request: Request) {
       teamKeyA: true,
       teamKeyB: true
     },
-    orderBy: [{ playStartDate: 'asc', column: 'asc' }]
   })
   return NextResponse.json(matchesKeys, { status: 200, statusText: 'OK' })
 }

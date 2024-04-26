@@ -5,7 +5,7 @@ import { toast } from 'sonner'
 import { updatedStats } from '@/actions/services/edit'
 import DropdownTeamContent from '../content/dropdown-team-content'
 import DropdownWrapper from '../wrappers/dropdown-wrapper-team'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 
 type ExtendedMatch = Match & {
   teamKeyB: Team
@@ -22,12 +22,11 @@ const DropdownTeamKeyB = ({ match }: { match: ExtendedMatch }) => {
     error
   } = useSWR<ExtendedPlayer>(`/api/teams/${match.teamKeyB.id}`, fetcher)
 
-  console.log(team)
-
   const addGoalPlayer = async (player: Player) => {
     const { status } = await updatedStats(player)
 
     if (status === 200) {
+      mutate(`/api/teams/${match.teamKeyB.id}`)
       return toast.success(
         `Goal added for player: ${player.firstName} ${player.lastName}`
       )

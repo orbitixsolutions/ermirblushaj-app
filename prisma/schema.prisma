@@ -23,7 +23,7 @@ enum MatchStatus {
 
 enum TournamentPhase {
   EIGHTH
-  ROOMS
+  QUARTER
   SEMIFINALS
   FINAL
 }
@@ -37,13 +37,13 @@ model User {
 }
 
 model Team {
-  id          String   @id @unique
-  groupId     String?
-  name        String
-  logo        String?
+  id      String  @id @unique
+  groupId String?
+  name    String
+  logo    String?
 
-  phase         TournamentPhase?
-  isEliminated  Boolean?
+  phase        TournamentPhase?
+  isEliminated Boolean?
 
   createdDate DateTime @default(now())
 
@@ -78,6 +78,17 @@ model TeamStats {
   matchDraw   Int? @default(0)
 
   team Team @relation(fields: [teamId], references: [id])
+}
+
+model TeamKey {
+  id     String @id @unique @default(uuid())
+  teamId String @unique
+  column String
+
+  phase        TournamentPhase?
+  isEliminated Boolean?
+
+  createdDate DateTime @default(now())
 }
 
 model Player {
@@ -141,12 +152,16 @@ model MatchKey {
   id            String          @id @unique @default(uuid())
   teamAId       String
   teamBId       String
+
+  loserId       String?
+  winnerId      String?
+  
   phase         TournamentPhase @default(EIGHTH)
   status        MatchStatus     @default(PENDING)
   playStartDate String?
   playEndDate   String?
   createdDate   DateTime        @default(now())
-  column String
+  column        String
 
   teamKeyA Team @relation("TeamKeyA", fields: [teamAId], references: [id])
   teamKeyB Team @relation("TeamKeyB", fields: [teamBId], references: [id])

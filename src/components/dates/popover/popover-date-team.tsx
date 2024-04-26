@@ -1,4 +1,5 @@
 import {
+  selectWinnerKey,
   updatedMatchKeyDate,
   updatedMatchKeyStatus
 } from '@/actions/services/edit'
@@ -11,7 +12,10 @@ import {
   DatePicker,
   Popover,
   PopoverTrigger,
-  PopoverContent
+  PopoverContent,
+  Avatar,
+  Card,
+  CardBody
 } from '@nextui-org/react'
 import { dataMatchesKeysById } from '@/actions/services/data'
 import { IconCheck, IconSettings, IconX } from '@tabler/icons-react'
@@ -48,12 +52,10 @@ const PopoverMatchDate = ({
     setIsOpen((prev) => !prev)
   }
 
-  const finishMatchup = () => {
+  const handleSelectWinner = (teamWinnerId: string) => {
     startTransition(async () => {
-      const { status, message } = await updatedMatchKeyStatus(
-        match.id,
-        'COMPLETED'
-      )
+      const matchId = match.id
+      const { status, message } = await selectWinnerKey(matchId, teamWinnerId)
 
       if (status === 200) {
         toast.success(message)
@@ -61,7 +63,7 @@ const PopoverMatchDate = ({
         return
       }
 
-      toast.error('An occurred error while finishing matchup!')
+      toast.error('An occurred error while selecting winner!')
       return
     })
   }
@@ -92,14 +94,35 @@ const PopoverMatchDate = ({
                     <IconCheck size={24} />
                     Today
                   </Button>
-                  <Button
-                    fullWidth
-                    isLoading={isPending}
-                    onPress={finishMatchup}
-                    className='font-bold bg-custom-green'
-                  >
-                    Finish matchup
-                  </Button>
+
+                  <div>
+                    <h2 className='my-3 font-semibold text-center text-xl'>
+                      Select winner
+                    </h2>
+                    <div className='flex gap-5'>
+                      <Card
+                        isPressable
+                        isDisabled={isPending}
+                        onClick={() => handleSelectWinner(match.teamKeyA.id)}
+                        className='bg-custom-darkblue'
+                      >
+                        <CardBody>
+                          <Avatar src={match.teamKeyA.logo!} size='lg' />
+                        </CardBody>
+                      </Card>
+
+                      <Card
+                        isPressable
+                        isDisabled={isPending}
+                        onClick={() => handleSelectWinner(match.teamKeyB.id)}
+                        className='bg-custom-darkblue'
+                      >
+                        <CardBody>
+                          <Avatar src={match.teamKeyB.logo!} size='lg' />
+                        </CardBody>
+                      </Card>
+                    </div>
+                  </div>
                 </>
               )}
             </>

@@ -348,3 +348,81 @@ export const updatedMatchKeyStatus = async (
     return { error: 'An occurred error while updating stats!', status: 500 }
   }
 }
+
+export const selectWinnerKey = async (
+  matchId: string,
+  teamWinnerId: string
+) => {
+  console.log(teamWinnerId)
+
+  try {
+    await prisma.team.update({
+      where: {
+        id: teamWinnerId
+      },
+      data: {
+        phase: 'QUARTER'
+      }
+    })
+
+    const match = await prisma.matchKey.findUnique({
+      where: {
+        id: matchId
+      },
+      include: {
+        teamKeyA: true,
+        teamKeyB: true
+      }
+    })
+
+    const teamA = match?.teamKeyA
+    const teamB = match?.teamKeyB
+
+    let winnerId
+    let loserId
+
+    if (teamA?.phase === 'QUARTER') {
+      winnerId = teamA?.id
+      loserId = teamB?.id
+    }
+    if (teamB?.phase === 'QUARTER') {
+      winnerId = teamB?.id
+      loserId = teamA?.id
+    }
+
+    // Actualizar el equipo perdedor
+    await prisma.team.update({
+      where: {
+        id: loserId
+      },
+      data: {
+        isEliminated: true
+      }
+    })
+
+    // Actualizar el partido con el equipo perdedor y ganador
+    await prisma.matchKey.update({
+      where: {
+        id: matchId
+      },
+      data: {
+        loserId: loserId,
+        winnerId: winnerId
+      }
+    })
+
+    // Finalizar el partido
+    await prisma.matchKey.update({
+      where: {
+        id: matchId
+      },
+      data: {
+        status: 'COMPLETED'
+      }
+    })
+
+    return { status: 200, message: 'Winner selected!' }
+  } catch (error) {
+    return { error: 'An occurred error while updating stats!', status: 500 }
+  }
+}
