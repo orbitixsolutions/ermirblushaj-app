@@ -28,6 +28,12 @@ enum TournamentPhase {
   FINAL
 }
 
+enum TournamentStatus {
+  WINNER
+  LOSER
+  DEFAULT
+}
+
 model User {
   id       String   @id @default(cuid())
   name     String?
@@ -44,6 +50,7 @@ model Team {
 
   phase        TournamentPhase?
   isEliminated Boolean?
+  stageStatus  TournamentStatus?
 
   createdDate DateTime @default(now())
 
@@ -78,17 +85,6 @@ model TeamStats {
   matchDraw   Int? @default(0)
 
   team Team @relation(fields: [teamId], references: [id])
-}
-
-model TeamKey {
-  id     String @id @unique @default(uuid())
-  teamId String @unique
-  column String
-
-  phase        TournamentPhase?
-  isEliminated Boolean?
-
-  createdDate DateTime @default(now())
 }
 
 model Player {

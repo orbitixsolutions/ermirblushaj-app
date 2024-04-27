@@ -349,12 +349,10 @@ export const updatedMatchKeyStatus = async (
   }
 }
 
-export const selectWinnerKey = async (
+export const selectWinnerEights = async (
   matchId: string,
   teamWinnerId: string
 ) => {
-  console.log(teamWinnerId)
-
   try {
     await prisma.team.update({
       where: {
@@ -390,13 +388,25 @@ export const selectWinnerKey = async (
       loserId = teamA?.id
     }
 
+    // Actualizar el equipo ganador
+    await prisma.team.update({
+      where: {
+        id: winnerId
+      },
+      data: {
+        stageStatus: 'WINNER'
+      }
+    })
+
     // Actualizar el equipo perdedor
     await prisma.team.update({
       where: {
         id: loserId
       },
       data: {
-        isEliminated: true
+        isEliminated: true,
+        stageStatus: 'LOSER',
+        phase: 'EIGHTH',
       }
     })
 
@@ -420,6 +430,297 @@ export const selectWinnerKey = async (
         status: 'COMPLETED'
       }
     })
+
+    return { status: 200, message: 'Winner selected!' }
+  } catch (error) {
+    return { error: 'An occurred error while updating stats!', status: 500 }
+  }
+}
+
+export const selectQuartersWinners = async (
+  matchId: string,
+  teamWinnerId: string
+) => {
+  try {
+    const winnerTeam = await prisma.team.findUnique({
+      where: {
+        id: teamWinnerId
+      }
+    })
+
+    // Si el equipo ganador es de cuartos de final
+    if (winnerTeam?.phase === 'QUARTER') {
+      await prisma.team.update({
+        where: {
+          id: teamWinnerId
+        },
+        data: {
+          phase: 'SEMIFINALS'
+        }
+      })
+
+      const match = await prisma.matchKey.findUnique({
+        where: {
+          id: matchId
+        },
+        include: {
+          teamKeyA: true,
+          teamKeyB: true
+        }
+      })
+
+      const teamA = match?.teamKeyA
+      const teamB = match?.teamKeyB
+
+      let winnerId
+      let loserId
+
+      if (teamA?.phase === 'SEMIFINALS') {
+        winnerId = teamA?.id
+        loserId = teamB?.id
+      }
+      if (teamB?.phase === 'SEMIFINALS') {
+        winnerId = teamB?.id
+        loserId = teamA?.id
+      }
+
+      // Actualizar el partido con el equipo perdedor y ganador
+      await prisma.matchKey.update({
+        where: {
+          id: matchId
+        },
+        data: {
+          loserId: loserId,
+          winnerId: winnerId
+        }
+      })
+
+      // Actualizar el equipo ganador
+      await prisma.team.update({
+        where: {
+          id: winnerId
+        },
+        data: {
+          stageStatus: 'WINNER'
+        }
+      })
+
+      // Actualizar el equipo perdedor
+      await prisma.team.update({
+        where: {
+          id: loserId
+        },
+        data: {
+          isEliminated: true,
+          stageStatus: 'LOSER',
+          phase: 'EIGHTH'
+        }
+      })
+
+      // Finalizar el partido
+      await prisma.matchKey.update({
+        where: {
+          id: matchId
+        },
+        data: {
+          status: 'COMPLETED'
+        }
+      })
+    }
+
+    return { status: 200, message: 'Winner selected!' }
+  } catch (error) {
+    return { error: 'An occurred error while updating stats!', status: 500 }
+  }
+}
+
+export const selectSemifinalsWinners = async (
+  matchId: string,
+  teamWinnerId: string
+) => {
+  try {
+    const winnerTeam = await prisma.team.findUnique({
+      where: {
+        id: teamWinnerId
+      }
+    })
+
+    // Si el equipo ganador es de cuartos de final
+    if (winnerTeam?.phase === 'SEMIFINALS') {
+      await prisma.team.update({
+        where: {
+          id: teamWinnerId
+        },
+        data: {
+          phase: 'FINAL'
+        }
+      })
+
+      const match = await prisma.matchKey.findUnique({
+        where: {
+          id: matchId
+        },
+        include: {
+          teamKeyA: true,
+          teamKeyB: true
+        }
+      })
+
+      const teamA = match?.teamKeyA
+      const teamB = match?.teamKeyB
+
+      let winnerId
+      let loserId
+
+      if (teamA?.phase === 'FINAL') {
+        winnerId = teamA?.id
+        loserId = teamB?.id
+      }
+      if (teamB?.phase === 'FINAL') {
+        winnerId = teamB?.id
+        loserId = teamA?.id
+      }
+
+      // Actualizar el equipo ganador
+      await prisma.team.update({
+        where: {
+          id: winnerId
+        },
+        data: {
+          stageStatus: 'WINNER'
+        }
+      })
+
+      // Actualizar el equipo perdedor
+      await prisma.team.update({
+        where: {
+          id: loserId
+        },
+        data: {
+          isEliminated: true,
+          stageStatus: 'LOSER',
+          phase: 'SEMIFINALS'
+        }
+      })
+
+      // Actualizar el partido con el equipo perdedor y ganador
+      await prisma.matchKey.update({
+        where: {
+          id: matchId
+        },
+        data: {
+          loserId: loserId,
+          winnerId: winnerId
+        }
+      })
+
+      // Finalizar el partido
+      await prisma.matchKey.update({
+        where: {
+          id: matchId
+        },
+        data: {
+          status: 'COMPLETED'
+        }
+      })
+    }
+
+    return { status: 200, message: 'Winner selected!' }
+  } catch (error) {
+    return { error: 'An occurred error while updating stats!', status: 500 }
+  }
+}
+
+export const selectFinalWinner = async (
+  matchId: string,
+  teamWinnerId: string
+) => {
+  try {
+    const winnerTeam = await prisma.team.findUnique({
+      where: {
+        id: teamWinnerId
+      }
+    })
+
+    // Si el equipo ganador es de cuartos de final
+    if (winnerTeam?.phase === 'SEMIFINALS') {
+      await prisma.team.update({
+        where: {
+          id: teamWinnerId
+        },
+        data: {
+          phase: 'FINAL'
+        }
+      })
+
+      const match = await prisma.matchKey.findUnique({
+        where: {
+          id: matchId
+        },
+        include: {
+          teamKeyA: true,
+          teamKeyB: true
+        }
+      })
+
+      const teamA = match?.teamKeyA
+      const teamB = match?.teamKeyB
+
+      let winnerId
+      let loserId
+
+      if (teamA?.phase === 'FINAL') {
+        winnerId = teamA?.id
+        loserId = teamB?.id
+      }
+      if (teamB?.phase === 'FINAL') {
+        winnerId = teamB?.id
+        loserId = teamA?.id
+      }
+
+      // Actualizar el equipo ganador
+      await prisma.team.update({
+        where: {
+          id: winnerId
+        },
+        data: {
+          stageStatus: 'WINNER'
+        }
+      })
+
+      // Actualizar el equipo perdedor
+      await prisma.team.update({
+        where: {
+          id: loserId
+        },
+        data: {
+          isEliminated: true,
+          stageStatus: 'LOSER',
+          phase: 'SEMIFINALS'
+        }
+      })
+
+      // Actualizar el partido con el equipo perdedor y ganador
+      await prisma.matchKey.update({
+        where: {
+          id: matchId
+        },
+        data: {
+          loserId: loserId,
+          winnerId: winnerId
+        }
+      })
+
+      // Finalizar el partido
+      await prisma.matchKey.update({
+        where: {
+          id: matchId
+        },
+        data: {
+          status: 'COMPLETED'
+        }
+      })
+    }
 
     return { status: 200, message: 'Winner selected!' }
   } catch (error) {

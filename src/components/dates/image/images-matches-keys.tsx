@@ -15,7 +15,9 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
         <Tooltip
           content={
             <div className='flex flex-col gap-2 text-center'>
-              <p>{teamKeyA.name}</p>
+             <p>Name: {teamKeyA.name}</p>
+              <p>ID: {teamKeyA.id}</p>
+              <p>Phase: {teamKeyA.phase}</p>
             </div>
           }
         >
@@ -23,7 +25,7 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
             className={`bg-custom-darkblue text-custom-white border-2 ${
               teamKeyA.isEliminated
                 ? 'border-custom-red'
-                : teamKeyA.phase === 'QUARTER'
+                : teamKeyA.phase === 'QUARTER' || 'SEMIFINALS'
                 ? 'border-custom-green'
                 : 'border-gray-600'
             }`}
@@ -37,7 +39,9 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
         <Tooltip
           content={
             <div className='flex flex-col gap-2 text-center'>
-              <p>{teamKeyB.name}</p>
+              <p>Name: {teamKeyB.name}</p>
+              <p>ID: {teamKeyB.id}</p>
+              <p>Phase: {teamKeyB.phase}</p>
             </div>
           }
         >
@@ -45,7 +49,7 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
             className={`bg-custom-darkblue text-custom-white border-2 ${
               teamKeyB.isEliminated
                 ? 'border-custom-red'
-                : teamKeyB.phase === 'QUARTER'
+                : teamKeyB.phase === 'QUARTER' || 'SEMIFINALS'
                 ? 'border-custom-green'
                 : 'border-gray-600'
             }`}

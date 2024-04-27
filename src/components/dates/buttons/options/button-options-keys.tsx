@@ -1,6 +1,7 @@
 import {
   finishMatchesEights,
-  finishMatchesQuarters
+  finishMatchesQuarters,
+  finishMatchesSemifinals
 } from '@/actions/services/create'
 import { fetcher } from '@/helpers/fetcher'
 import { Button } from '@nextui-org/react'
@@ -56,7 +57,7 @@ const ButtonOptionsKeys = () => {
     })
   }
 
-  const handleFinisheQuarters = () => {
+  const handleFinishedQuarters = () => {
     startTransition(async () => {
       const { status, message } = await finishMatchesQuarters()
       if (status === 200) {
@@ -72,28 +73,48 @@ const ButtonOptionsKeys = () => {
     })
   }
 
-  if (checkAllMatchesCompleted?.length !== 8) return
+  const handleFinishedSemifinals = () => {
+    startTransition(async () => {
+      const { status, message } = await finishMatchesSemifinals()
+      if (status === 200) {
+        toast.success(message)
+        mutate('/api/matches/keys')
+        mutate('/api/matches/keys/a')
+        mutate('/api/matches/keys/b')
+        mutate('/api/matches/keys/final')
+        return
+      }
+
+      toast.error('An occurred error while finishing matches!')
+      return
+    })
+  }
 
   return (
     <>
-      {MATCHES_QUARTERS_A?.length === 4 && MATCHES_QUARTERS_B?.length === 4 && (
-        <Button
-          onPress={() => handleFinishEighths()}
-          isLoading={isPending}
-          color='danger'
-          className='mx-auto bg-custom-red font-bold'
-        >
-          Finish Eights
-        </Button>
-      )}
-
       <Button
-        onPress={() => handleFinisheQuarters()}
+        onPress={() => handleFinishEighths()}
+        isLoading={isPending}
+        color='danger'
+        className='mx-auto bg-custom-red font-bold'
+      >
+        Finish Eights
+      </Button>
+      <Button
+        onPress={() => handleFinishedQuarters()}
         isLoading={isPending}
         color='danger'
         className='mx-auto bg-custom-red font-bold'
       >
         Finish Quarters
+      </Button>
+      <Button
+        onPress={() => handleFinishedSemifinals()}
+        isLoading={isPending}
+        color='danger'
+        className='mx-auto bg-custom-red font-bold'
+      >
+        Finish Semifinals
       </Button>
     </>
   )

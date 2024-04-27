@@ -5,6 +5,7 @@ import { Group, Team, TournamentPhase } from '@prisma/client'
 import { Player, TeamData } from '@/actions/types'
 import prisma from '@/libs/prisma'
 import { child } from 'firebase/database'
+import { fi } from 'date-fns/locale'
 
 type ExtendedGroup = Group & {
   teams: TeamData[]
@@ -269,7 +270,6 @@ export const finishMatchesEights = async () => {
         teamBId: teamBId
       }
     })
-
     const bMatchKeys = matchesQuartersB.map((match) => {
       const teamAId = match[0].teamAId
       const teamBId = match[1].teamBId
@@ -317,14 +317,134 @@ export const finishMatchesQuarters = async () => {
         order: 'asc'
       },
       where: {
-        column: 'A',
+        column: 'B',
         phase: 'QUARTER'
       }
     })
-    const matches = [...blockA, ...blockB]
 
+    const matches = [...blockA, ...blockB]
     const winnersId = matches.map((match) => match.winnerId)
-    console.log(winnersId)
+
+    const matchups = [
+      [winnersId[0], winnersId[1]],
+      [winnersId[2], winnersId[3]]
+    ]
+
+    const matchCreation = matchups.map((matchup) => {
+      return [
+        {
+          teamAId: matchup[0]
+        },
+        {
+          teamBId: matchup[1]
+        }
+      ]
+    })
+
+    const matchesQuartersA = matchCreation.slice(0, 1)
+    const matchesQuartersB = matchCreation.slice(1, 2)
+
+    const aMatchKeys = matchesQuartersA.map((match) => {
+      const teamAId = match[0].teamAId
+      const teamBId = match[1].teamBId
+
+      return {
+        column: 'A',
+        phase: 'SEMIFINALS',
+        teamAId: teamAId,
+        teamBId: teamBId
+      }
+    })
+
+    const bMatchKeys = matchesQuartersB.map((match) => {
+      const teamAId = match[0].teamAId
+      const teamBId = match[1].teamBId
+
+      return {
+        column: 'B',
+        phase: 'SEMIFINALS',
+        teamAId: teamAId,
+        teamBId: teamBId
+      }
+    })
+
+    const matchKeys: any = [...aMatchKeys, ...bMatchKeys]
+
+    await prisma.matchKey.createMany({
+      data: matchKeys
+    })
+
+    return { message: 'Matches finished!', status: 200 }
+  } catch (error) {
+    return { error: 'An ocurred a error!', status: 500 }
+  }
+}
+
+export const finishMatchesSemifinals = async () => {
+  try {
+    const blockA = await prisma.matchKey.findMany({
+      include: {
+        teamKeyA: true,
+        teamKeyB: true
+      },
+      orderBy: {
+        order: 'asc'
+      },
+      where: {
+        column: 'A',
+        phase: 'SEMIFINALS'
+      }
+    })
+    const blockB = await prisma.matchKey.findMany({
+      include: {
+        teamKeyA: true,
+        teamKeyB: true
+      },
+      orderBy: {
+        order: 'asc'
+      },
+      where: {
+        column: 'B',
+        phase: 'SEMIFINALS'
+      }
+    })
+
+    const matches = [...blockA, ...blockB]
+    const winnersId = matches.map((match) => match.winnerId)
+
+    const matchups = [[winnersId[0], winnersId[1]]]
+
+    const matchCreation = matchups.map((matchup) => {
+      return [
+        {
+          teamAId: matchup[0]
+        },
+        {
+          teamBId: matchup[1]
+        }
+      ]
+    })
+
+    const finalMatchup = matchCreation.map((match) => {
+      const teamIdA = match[0].teamAId
+      const teamIdB = match[1].teamBId
+
+      return {
+        phase: 'FINAl',
+        column: 'A',
+        teamAId: teamIdA,
+        teamBId: teamIdB
+      }
+    })
+
+    await prisma.matchKey.create({
+      data: {
+        phase: 'FINAL',
+        column: 'A',
+        teamAId: finalMatchup[0].teamAId!,
+        teamBId: finalMatchup[0].teamBId!
+      }
+    })
 
     return { message: 'Matches finished!', status: 200 }
   } catch (error) {

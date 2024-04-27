@@ -1,7 +1,4 @@
-import {
-  selectWinnerEights,
-  updatedMatchKeyDate,
-} from '@/actions/services/edit'
+import { selectFinalWinner, updatedMatchKeyDate } from '@/actions/services/edit'
 import { MatchKey, Team } from '@prisma/client'
 import { useEffect, useState, useTransition } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -14,7 +11,8 @@ import {
   PopoverContent,
   Avatar,
   Card,
-  CardBody
+  CardBody,
+  Tooltip
 } from '@nextui-org/react'
 import { dataMatchesKeysById } from '@/actions/services/data'
 import { IconCheck, IconSettings, IconX } from '@tabler/icons-react'
@@ -25,7 +23,7 @@ type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
   teamKeyB: Team
 }
-const PopoverMatchDate = ({
+const PopoverFinalsMatches = ({
   group,
   match
 }: {
@@ -54,12 +52,14 @@ const PopoverMatchDate = ({
   const handleSelectWinner = (teamWinnerId: string) => {
     startTransition(async () => {
       const matchId = match.id
-      const { status, message } = await selectWinnerEights(matchId, teamWinnerId)
+      const { status, message } = await selectFinalWinner(matchId, teamWinnerId)
 
       if (status === 200) {
         toast.success(message)
         mutate(`/api/matches/keys/${group}`)
-        mutate('/api/matches/keys')
+
+        mutate('/api/matches/keys/final')
+        mutate('/api/matches/keys/final')
         return
       }
 
@@ -100,27 +100,31 @@ const PopoverMatchDate = ({
                       Select winner
                     </h2>
                     <div className='flex gap-5'>
-                      <Card
-                        isPressable
-                        isDisabled={isPending}
-                        onClick={() => handleSelectWinner(match.teamKeyA.id)}
-                        className='bg-custom-darkblue'
-                      >
-                        <CardBody>
-                          <Avatar src={match.teamKeyA.logo!} size='lg' />
-                        </CardBody>
-                      </Card>
+                      <Tooltip content={match.teamKeyA.name}>
+                        <Card
+                          isPressable
+                          isDisabled={isPending}
+                          onClick={() => handleSelectWinner(match.teamKeyA.id)}
+                          className='bg-custom-darkblue'
+                        >
+                          <CardBody>
+                            <Avatar src={match.teamKeyA.logo!} size='lg' />
+                          </CardBody>
+                        </Card>
+                      </Tooltip>
 
-                      <Card
-                        isPressable
-                        isDisabled={isPending}
-                        onClick={() => handleSelectWinner(match.teamKeyB.id)}
-                        className='bg-custom-darkblue'
-                      >
-                        <CardBody>
-                          <Avatar src={match.teamKeyB.logo!} size='lg' />
-                        </CardBody>
-                      </Card>
+                      <Tooltip content={match.teamKeyB.name}>
+                        <Card
+                          isPressable
+                          isDisabled={isPending}
+                          onClick={() => handleSelectWinner(match.teamKeyB.id)}
+                          className='bg-custom-darkblue'
+                        >
+                          <CardBody>
+                            <Avatar src={match.teamKeyB.logo!} size='lg' />
+                          </CardBody>
+                        </Card>
+                      </Tooltip>
                     </div>
                   </div>
                 </>
@@ -150,7 +154,7 @@ const PopoverMatchDate = ({
     </Popover>
   )
 }
-export default PopoverMatchDate
+export default PopoverFinalsMatches
 
 const FormMatchDate = ({
   match,
@@ -196,6 +200,8 @@ const FormMatchDate = ({
       if (status === 200) {
         setIsOpen()
         mutate(`/api/matches/keys/${group}`)
+        mutate('/api/matches/keys/final')
+        mutate('/api/matches/keys/final')
         toast.success(message)
         return
       }
