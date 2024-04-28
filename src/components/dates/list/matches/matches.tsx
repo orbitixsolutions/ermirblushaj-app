@@ -7,14 +7,18 @@ import useSWR from 'swr'
 import CardMatchup from '@/components/dates/cards/card-matchup'
 import DateGeneralOptions from '@/components/dates/options/date-general-options'
 import DateOwnerOptions from '../../options/date-owner-options'
-import PopoverDateTeam from '../../popover/popover-date-team'
-import ButtonDeleteKeyMatchup from '../../buttons/options/button-delete-key-matchup'
+import PopoverDateTeam from '../../popover/popover-eighth-team'
+import ButtonDeleteKeyMatches from '../../buttons/options/button-delete-key-matches'
 import ImagesMatchesKeys from '../../image/images-matches-keys'
 import ButtonOptionsKeys from '../../buttons/options/button-options-keys'
 import PopoverQuarterMatches from '../../popover/popover-quarters-team'
 import PopoverSemifinalsMatches from '../../popover/popover-semifinals-team'
 import PopoverFinalsMatches from '../../popover/popover-finals-team'
 import BestTeams from '../best-teams'
+import MatchesEighths from './matches-eighths'
+import MatchesQuarters from './matches-quarters'
+import MatchesSemifinals from './matches-semifinals'
+import MatchesFinal from './matches-final'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -33,36 +37,11 @@ const Matches = () => {
     error
   } = useSWR<ExtendedMatch[]>('/api/matches', fetcher)
 
-  const { data: MATCHES_KEYS_A } = useSWR<ExtendedMatchKey[]>(
-    '/api/matches/keys/a',
+  const { data: matches } = useSWR<ExtendedMatchKey[]>(
+    '/api/matches/keys',
     fetcher
   )
-  const { data: MATCHES_KEYS_B } = useSWR<ExtendedMatchKey[]>(
-    '/api/matches/keys/b',
-    fetcher
-  )
-  const { data: MATCHES_QUARTERS_A } = useSWR<ExtendedMatchKey[]>(
-    '/api/matches/keys/a/quarter',
-    fetcher
-  )
-  const { data: MATCHES_QUARTERS_B } = useSWR<ExtendedMatchKey[]>(
-    '/api/matches/keys/b/quarter',
-    fetcher
-  )
-
-  const { data: MATCHES_SEMIFINAL_A } = useSWR<ExtendedMatchKey[]>(
-    '/api/matches/keys/a/semifinals',
-    fetcher
-  )
-  const { data: MATCHES_SEMIFINAL_B } = useSWR<ExtendedMatchKey[]>(
-    '/api/matches/keys/b/semifinals',
-    fetcher
-  )
-  const { data: MATCH_FINAL } = useSWR<ExtendedMatchKey[]>(
-    '/api/matches/keys/final',
-    fetcher
-  )
-
+  
   if (error) {
     return <p>An ocurred a error!</p>
   }
@@ -71,200 +50,29 @@ const Matches = () => {
     return <p>Loading...</p>
   }
 
-  const matchesKeyColomnOne = MATCHES_KEYS_A
-  const macthesKeyColomnTwo = MATCHES_KEYS_B
-
   return (
     <div className='space-y-20'>
-      {MATCHES_KEYS_A?.length !== 0 && MATCHES_KEYS_B?.length !== 0 && (
+      {matches?.length !== 0 && (
         <div className='w-[968px] mx-auto'>
           <h2 className='text-5xl font-bold mb-5 text-center'>Keys</h2>
 
           <div className='flex justify-between mx-auto relative'>
-            <ol className='col-span-2'>
-              {matchesKeyColomnOne?.map((matchKey) => (
-                <li key={matchKey.id} className='relative'>
-                  <div className='absolute top-0 -left-12 h-full flex justify-center items-center'>
-                    <PopoverDateTeam group='a' match={matchKey} />
-                  </div>
+            {/* Column A */}
+            <MatchesEighths column='a' phase='eighth' />
+            <MatchesQuarters column='a' phase='quarter' />
+            <MatchesSemifinals column='a' phase='semifinals' />
 
-                  <ImagesMatchesKeys match={matchKey} />
-                </li>
-              ))}
-            </ol>
+            {/* Column B */}
+            <MatchesEighths column='b' phase='eighth' />
+            <MatchesQuarters column='b' phase='quarter' />
+            <MatchesSemifinals column='b' phase='semifinals' />
 
-            {/* Quarters Matchups */}
-            <div className='absolute top-0 left-32 h-full flex justify-center items-center'>
-              <div className='w-[80px] flex justify-center items-center'>
-                <ol>
-                  {MATCHES_QUARTERS_A?.length !== 0 ? (
-                    MATCHES_QUARTERS_A?.map((matchKey) => (
-                      <li key={matchKey.id} className='relative'>
-                        <div className='absolute top-0 -left-12 h-full flex justify-center items-center'>
-                          <PopoverQuarterMatches group='a' match={matchKey} />
-                        </div>
-
-                        <div className='my-64'>
-                          <ImagesMatchesKeys match={matchKey} />
-                        </div>
-                      </li>
-                    ))
-                  ) : (
-                    <>
-                      {Array(4)
-                        .fill(0)
-                        .map((_, index) => (
-                          <Avatar className='my-32' size='lg' key={index} />
-                        ))}
-                    </>
-                  )}
-                </ol>
-              </div>
-            </div>
-
-            {/* Semifinal Matchups */}
-            <div className='absolute top-0 left-64 h-full flex justify-center items-center'>
-              <div className='w-[80px] flex justify-center items-center'>
-                <ol>
-                  {MATCHES_SEMIFINAL_A?.length !== 0 ? (
-                    MATCHES_SEMIFINAL_A?.map((matchKey) => (
-                      <li key={matchKey.id} className='relative'>
-                        <div className='absolute top-0 -left-12 h-full flex justify-center items-center'>
-                          <PopoverSemifinalsMatches
-                            group='a'
-                            match={matchKey}
-                          />
-                        </div>
-
-                        <div>
-                          <ImagesMatchesKeys match={matchKey} />
-                        </div>
-                      </li>
-                    ))
-                  ) : (
-                    <>
-                      {Array(2)
-                        .fill(0)
-                        .map((_, index) => (
-                          <Avatar
-                            className='my-[19rem]'
-                            size='lg'
-                            key={index}
-                          />
-                        ))}
-                    </>
-                  )}
-                </ol>
-              </div>
-            </div>
-
-            <ol className='col-span-2'>
-              {macthesKeyColomnTwo?.map((matchKey) => (
-                <li key={matchKey.id} className='relative'>
-                  <div className='absolute top-0 -right-12 h-full flex justify-center items-center'>
-                    <PopoverDateTeam group='b' match={matchKey} />
-                  </div>
-
-                  <ImagesMatchesKeys match={matchKey} />
-                </li>
-              ))}
-            </ol>
-
-            {/* Quarters Matchups */}
-            <div className='absolute top-0 right-32 h-full flex justify-center items-center'>
-              <div className='w-[80px] flex justify-center items-center'>
-                <ol>
-                  {MATCHES_QUARTERS_B?.length !== 0 ? (
-                    MATCHES_QUARTERS_B?.map((matchKey) => (
-                      <li key={matchKey.id} className='relative'>
-                        <div className='absolute top-0 -right-12 h-full flex justify-center items-center'>
-                          <PopoverQuarterMatches group='b' match={matchKey} />
-                        </div>
-
-                        <div className='my-64'>
-                          <ImagesMatchesKeys match={matchKey} />
-                        </div>
-                      </li>
-                    ))
-                  ) : (
-                    <>
-                      {Array(4)
-                        .fill(0)
-                        .map((_, index) => (
-                          <Avatar className='my-32' size='lg' key={index} />
-                        ))}
-                    </>
-                  )}
-                </ol>
-              </div>
-            </div>
-
-            {/* Semifinal Matchups */}
-            <div className='absolute top-0 right-64 h-full flex justify-center items-center'>
-              <div className='w-[80px] flex justify-center items-center'>
-                <ol>
-                  {MATCHES_SEMIFINAL_B?.length !== 0 ? (
-                    MATCHES_SEMIFINAL_B?.map((matchKey) => (
-                      <li key={matchKey.id} className='relative'>
-                        <div className='absolute top-0 -right-12 h-full flex justify-center items-center'>
-                          <PopoverSemifinalsMatches
-                            group='b'
-                            match={matchKey}
-                          />
-                        </div>
-
-                        <div>
-                          <ImagesMatchesKeys match={matchKey} />
-                        </div>
-                      </li>
-                    ))
-                  ) : (
-                    <>
-                      {Array(2)
-                        .fill(0)
-                        .map((_, index) => (
-                          <Avatar
-                            className='my-[19rem]'
-                            size='lg'
-                            key={index}
-                          />
-                        ))}
-                    </>
-                  )}
-                </ol>
-              </div>
-            </div>
-
-            {/* Final Matchups */}
-            <div className='absolute top-0 left-[28rem] h-full flex justify-center items-center'>
-              <div className='w-[80px] flex justify-center items-center'>
-                <ol>
-                  {MATCH_FINAL?.length !== 0 ? (
-                    MATCH_FINAL?.map((matchKey) => (
-                      <li key={matchKey.id} className='relative'>
-                        <div className='absolute top-0 -left-12 h-full flex justify-center items-center'>
-                          <PopoverFinalsMatches group='a' match={matchKey} />
-                        </div>
-
-                        <ImagesMatchesKeys match={matchKey} />
-                      </li>
-                    ))
-                  ) : (
-                    <>
-                      {Array(2)
-                        .fill(0)
-                        .map((_, index) => (
-                          <Avatar className='my-32' size='lg' key={index} />
-                        ))}
-                    </>
-                  )}
-                </ol>
-              </div>
-            </div>
+            {/* Final */}
+            <MatchesFinal column='none' phase='final' />
           </div>
 
           <div className='flex flex-col gap-4 py-5 justify-center'>
-            <ButtonDeleteKeyMatchup />
+            <ButtonDeleteKeyMatches />
             <ButtonOptionsKeys />
           </div>
         </div>

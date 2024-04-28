@@ -1,8 +1,8 @@
 import { createKeys } from '@/actions/services/create'
+import { updatedData } from '@/helpers/updated-data'
 import { Button } from '@nextui-org/react'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
-import { mutate } from 'swr'
 
 const ButtonCreateKeys = () => {
   const [isPending, startTransition] = useTransition()
@@ -12,9 +12,8 @@ const ButtonCreateKeys = () => {
       const { status, message } = await createKeys()
 
       if (status === 200) {
-        mutate('/api/matches/keys/a')
-        mutate('/api/matches/keys/b')
         toast.success(message)
+        updatedData()
         return
       }
       if (status === 409) {

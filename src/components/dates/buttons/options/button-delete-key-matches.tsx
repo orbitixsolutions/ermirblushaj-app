@@ -1,10 +1,10 @@
 import { deleteKeyMatches } from '@/actions/services/delete'
+import { updatedData } from '@/helpers/updated-data'
 import { Button } from '@nextui-org/react'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
-import { mutate } from 'swr'
 
-const ButtonDeleteKeyMatchup = () => {
+const ButtonDeleteKeyMatches = () => {
   const [isPending, startTransition] = useTransition()
 
   const handleDeleteKeyMatchup = () => {
@@ -13,15 +13,7 @@ const ButtonDeleteKeyMatchup = () => {
 
       if (status === 200) {
         toast.success(message)
-        mutate('/api/matches/keys')
-        mutate('/api/matches/keys/a')
-        mutate('/api/matches/keys/b')
-        mutate('/api/matches/keys/a/quarter')
-        mutate('/api/matches/keys/b/quarter')
-        mutate('/api/matches/keys/a/semifinals')
-        mutate('/api/matches/keys/b/semifinals')
-        mutate('/api/matches/keys/final')
-        mutate('/api/matches/keys/top')
+        updatedData()
         return
       }
 
@@ -46,4 +38,4 @@ const ButtonDeleteKeyMatchup = () => {
   )
 }
 
-export default ButtonDeleteKeyMatchup
+export default ButtonDeleteKeyMatches

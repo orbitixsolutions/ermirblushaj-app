@@ -434,7 +434,6 @@ export const finishMatchesSemifinals = async () => {
       const teamIdB = match[1].teamBId
 
       return {
-        column: 'A',
         phase: 'FINAl',
         matchStatus: 'FINAL',
         teamAId: teamIdA,
@@ -444,7 +443,7 @@ export const finishMatchesSemifinals = async () => {
 
     await prisma.matchKey.create({
       data: {
-        column: 'A',
+        column: 'NONE',
         phase: 'FINAL',
         matchStatus: 'FINAL',
         teamAId: finalMatchup[0].teamAId!,
@@ -458,7 +457,7 @@ export const finishMatchesSemifinals = async () => {
   }
 }
 
-export const finishFinal = async () => {
+export const finishMatchFinal = async () => {
   try {
     // Finalizar torneo
     await prisma.matchKey.updateMany({

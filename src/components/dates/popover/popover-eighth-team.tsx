@@ -1,7 +1,6 @@
-import { selectQuartersWinners } from '@/actions/services/edit'
+import { selectWinnerEights } from '@/actions/services/edit'
 import { MatchKey, Team } from '@prisma/client'
 import { useState, useTransition } from 'react'
-import { toast } from 'sonner'
 import {
   Button,
   Popover,
@@ -14,6 +13,7 @@ import {
 } from '@nextui-org/react'
 import { IconCheck, IconSettings } from '@tabler/icons-react'
 import { mutate } from 'swr'
+import { toast } from 'sonner'
 import FormMatchDate from '../form/form-match-date'
 import { updatedData } from '@/helpers/updated-data'
 
@@ -21,7 +21,7 @@ type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
   teamKeyB: Team
 }
-const PopoverQuarterMatches = ({
+const PopoverEighthTeam = ({
   column,
   phase,
   match
@@ -52,7 +52,7 @@ const PopoverQuarterMatches = ({
   const handleSelectWinner = (teamWinnerId: string) => {
     startTransition(async () => {
       const matchId = match.id
-      const { status, message } = await selectQuartersWinners(
+      const { status, message } = await selectWinnerEights(
         matchId,
         teamWinnerId
       )
@@ -150,15 +150,10 @@ const PopoverQuarterMatches = ({
             </Button>
           )
         ) : (
-          <FormMatchDate
-            column={column}
-            phase={phase}
-            match={match}
-            setIsOpen={toggleOpen}
-          />
+          <FormMatchDate column={column} phase={phase} match={match} setIsOpen={toggleOpen} />
         )}
       </PopoverContent>
     </Popover>
   )
 }
-export default PopoverQuarterMatches
+export default PopoverEighthTeam
