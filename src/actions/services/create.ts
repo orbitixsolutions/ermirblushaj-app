@@ -1,7 +1,7 @@
 'use server'
 
 import { currentRole } from '@/libs/auth'
-import { Group, Team, TournamentPhase } from '@prisma/client'
+import { Group, MatchStatus, Team, TournamentPhase } from '@prisma/client'
 import { Player, TeamData } from '@/actions/types'
 import prisma from '@/libs/prisma'
 import { child } from 'firebase/database'
@@ -266,6 +266,7 @@ export const finishMatchesEights = async () => {
       return {
         column: 'A',
         phase: 'QUARTER',
+        matchStatus: 'QUARTER',
         teamAId: teamAId,
         teamBId: teamBId
       }
@@ -277,6 +278,7 @@ export const finishMatchesEights = async () => {
       return {
         column: 'B',
         phase: 'QUARTER',
+        matchStatus: 'QUARTER',
         teamAId: teamAId,
         teamBId: teamBId
       }
@@ -351,6 +353,7 @@ export const finishMatchesQuarters = async () => {
       return {
         column: 'A',
         phase: 'SEMIFINALS',
+        matchStatus: 'SEMIFINALS',
         teamAId: teamAId,
         teamBId: teamBId
       }
@@ -363,6 +366,7 @@ export const finishMatchesQuarters = async () => {
       return {
         column: 'B',
         phase: 'SEMIFINALS',
+        matchStatus: 'SEMIFINALS',
         teamAId: teamAId,
         teamBId: teamBId
       }
@@ -430,8 +434,9 @@ export const finishMatchesSemifinals = async () => {
       const teamIdB = match[1].teamBId
 
       return {
-        phase: 'FINAl',
         column: 'A',
+        phase: 'FINAl',
+        matchStatus: 'FINAL',
         teamAId: teamIdA,
         teamBId: teamIdB
       }
@@ -439,10 +444,26 @@ export const finishMatchesSemifinals = async () => {
 
     await prisma.matchKey.create({
       data: {
-        phase: 'FINAL',
         column: 'A',
+        phase: 'FINAL',
+        matchStatus: 'FINAL',
         teamAId: finalMatchup[0].teamAId!,
         teamBId: finalMatchup[0].teamBId!
+      }
+    })
+
+    return { message: 'Matches finished!', status: 200 }
+  } catch (error) {
+    return { error: 'An ocurred a error!', status: 500 }
+  }
+}
+
+export const finishFinal = async () => {
+  try {
+    // Finalizar torneo
+    await prisma.matchKey.updateMany({
+      data: {
+        matchStatus: 'FINISHED'
       }
     })
 

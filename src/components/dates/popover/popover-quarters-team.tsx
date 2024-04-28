@@ -74,6 +74,8 @@ const PopoverQuarterMatches = ({
     })
   }
 
+  if (match.matchStatus === 'FINISHED') return null
+
   return (
     <Popover placement='bottom' showArrow={true}>
       <PopoverTrigger>

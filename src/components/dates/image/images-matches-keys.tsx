@@ -15,17 +15,17 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
         <Tooltip
           content={
             <div className='flex flex-col gap-2 text-center'>
-             <p>Name: {teamKeyA.name}</p>
-              <p>ID: {teamKeyA.id}</p>
-              <p>Phase: {teamKeyA.phase}</p>
+              <p>Name: {teamKeyA.name}</p>
             </div>
           }
         >
           <Card
             className={`bg-custom-darkblue text-custom-white border-2 ${
-              teamKeyA.isEliminated
+              teamKeyA.stageStatus === 'LOSER'
                 ? 'border-custom-red'
-                : teamKeyA.phase === 'QUARTER' || 'SEMIFINALS'
+                : teamKeyA.phase === 'FINAL'
+                ? 'border-yellow-600'
+                : teamKeyA.stageStatus === 'WINNER'
                 ? 'border-custom-green'
                 : 'border-gray-600'
             }`}
@@ -40,16 +40,16 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
           content={
             <div className='flex flex-col gap-2 text-center'>
               <p>Name: {teamKeyB.name}</p>
-              <p>ID: {teamKeyB.id}</p>
-              <p>Phase: {teamKeyB.phase}</p>
             </div>
           }
         >
           <Card
             className={`bg-custom-darkblue text-custom-white border-2 ${
-              teamKeyB.isEliminated
+              teamKeyB.stageStatus === 'LOSER'
                 ? 'border-custom-red'
-                : teamKeyB.phase === 'QUARTER' || 'SEMIFINALS'
+                : teamKeyB.phase === 'FINAL'
+                ? 'border-yellow-400'
+                : teamKeyB.stageStatus === 'WINNER'
                 ? 'border-custom-green'
                 : 'border-gray-600'
             }`}

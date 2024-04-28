@@ -388,6 +388,13 @@ export const selectWinnerEights = async (
       loserId = teamA?.id
     }
 
+    // Verificar si el equipo perdedor ya fue eliminado
+    const isEliminated = await prisma.team.count({
+      where: {
+        isEliminated: true
+      }
+    })
+
     // Actualizar el equipo ganador
     await prisma.team.update({
       where: {
@@ -405,8 +412,9 @@ export const selectWinnerEights = async (
       },
       data: {
         isEliminated: true,
+        position: isEliminated + 1,
         stageStatus: 'LOSER',
-        phase: 'EIGHTH',
+        phase: 'EIGHTH'
       }
     })
 
@@ -495,6 +503,13 @@ export const selectQuartersWinners = async (
         }
       })
 
+      // Verificar si el equipo perdedor ya fue eliminado
+      const isEliminated = await prisma.team.count({
+        where: {
+          isEliminated: true
+        }
+      })
+
       // Actualizar el equipo ganador
       await prisma.team.update({
         where: {
@@ -513,7 +528,8 @@ export const selectQuartersWinners = async (
         data: {
           isEliminated: true,
           stageStatus: 'LOSER',
-          phase: 'EIGHTH'
+          position: isEliminated + 1,
+          phase: 'QUARTER'
         }
       })
 
@@ -581,6 +597,13 @@ export const selectSemifinalsWinners = async (
         loserId = teamA?.id
       }
 
+      // Verificar si el equipo perdedor ya fue eliminado
+      const isEliminated = await prisma.team.count({
+        where: {
+          isEliminated: true
+        }
+      })
+
       // Actualizar el equipo ganador
       await prisma.team.update({
         where: {
@@ -599,6 +622,7 @@ export const selectSemifinalsWinners = async (
         data: {
           isEliminated: true,
           stageStatus: 'LOSER',
+          position: isEliminated + 1,
           phase: 'SEMIFINALS'
         }
       })
@@ -620,7 +644,8 @@ export const selectSemifinalsWinners = async (
           id: matchId
         },
         data: {
-          status: 'COMPLETED'
+          status: 'COMPLETED',
+          matchStatus: 'FINAL'
         }
       })
     }
@@ -643,7 +668,7 @@ export const selectFinalWinner = async (
     })
 
     // Si el equipo ganador es de cuartos de final
-    if (winnerTeam?.phase === 'SEMIFINALS') {
+    if (winnerTeam?.phase === 'FINAL') {
       await prisma.team.update({
         where: {
           id: teamWinnerId
@@ -678,12 +703,20 @@ export const selectFinalWinner = async (
         loserId = teamA?.id
       }
 
+      // Verificar si el equipo perdedor ya fue eliminado
+      const isEliminated = await prisma.team.count({
+        where: {
+          isEliminated: true
+        }
+      })
+
       // Actualizar el equipo ganador
       await prisma.team.update({
         where: {
           id: winnerId
         },
         data: {
+          position: isEliminated + 2,
           stageStatus: 'WINNER'
         }
       })
@@ -696,6 +729,7 @@ export const selectFinalWinner = async (
         data: {
           isEliminated: true,
           stageStatus: 'LOSER',
+          position: isEliminated + 1,
           phase: 'SEMIFINALS'
         }
       })

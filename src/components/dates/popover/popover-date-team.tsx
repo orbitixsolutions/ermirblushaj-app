@@ -1,6 +1,6 @@
 import {
   selectWinnerEights,
-  updatedMatchKeyDate,
+  updatedMatchKeyDate
 } from '@/actions/services/edit'
 import { MatchKey, Team } from '@prisma/client'
 import { useEffect, useState, useTransition } from 'react'
@@ -54,7 +54,10 @@ const PopoverMatchDate = ({
   const handleSelectWinner = (teamWinnerId: string) => {
     startTransition(async () => {
       const matchId = match.id
-      const { status, message } = await selectWinnerEights(matchId, teamWinnerId)
+      const { status, message } = await selectWinnerEights(
+        matchId,
+        teamWinnerId
+      )
 
       if (status === 200) {
         toast.success(message)
@@ -67,6 +70,8 @@ const PopoverMatchDate = ({
       return
     })
   }
+
+  if (match.matchStatus === 'FINISHED') return null
 
   return (
     <Popover placement='bottom' showArrow={true}>

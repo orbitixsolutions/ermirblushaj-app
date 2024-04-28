@@ -221,15 +221,16 @@ export const deleteMatches = async () => {
 // -------------------------------- //
 export const deleteKeyMatches = async () => {
   try {
-    const matches = await prisma.matchKey.findMany()
-
+    await prisma.matchKey.findMany()
     await prisma.matchHistory.deleteMany()
     await prisma.matchKey.deleteMany()
 
     await prisma.team.updateMany({
       data: {
-        isEliminated: null,
-        phase: null
+        isEliminated: false,
+        phase: 'NONE',
+        stageStatus: 'DEFAULT',
+        position: null
       }
     })
 

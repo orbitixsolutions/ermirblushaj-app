@@ -1,6 +1,6 @@
 import { Divider } from '@nextui-org/react'
 import GroupTeams from '@/components/dates/list/group-teams'
-import Matches from '@/components/dates/list/matches'
+import Matches from '@/components/dates/list/matches/matches'
 
 const DatePage = () => {
   return (

@@ -22,6 +22,7 @@ enum MatchStatus {
 }
 
 enum TournamentPhase {
+  NONE
   EIGHTH
   QUARTER
   SEMIFINALS
@@ -48,9 +49,10 @@ model Team {
   name    String
   logo    String?
 
-  phase        TournamentPhase?
-  isEliminated Boolean?
-  stageStatus  TournamentStatus?
+  phase        TournamentPhase  @default(NONE)
+  isEliminated Boolean          @default(false)
+  stageStatus  TournamentStatus @default(DEFAULT)
+  position     Int?
 
   createdDate DateTime @default(now())
 
@@ -154,11 +156,14 @@ model MatchKey {
 
   order Int @default(autoincrement())
 
-  phase         TournamentPhase @default(EIGHTH)
-  status        MatchStatus     @default(PENDING)
+  phase  TournamentPhase @default(EIGHTH)
+  status MatchStatus     @default(PENDING)
+
+  matchStatus String @default("DEFAULT")
+
   playStartDate String?
   playEndDate   String?
-  createdDate   DateTime        @default(now())
+  createdDate   DateTime @default(now())
   column        String
 
   teamKeyA Team @relation("TeamKeyA", fields: [teamAId], references: [id])

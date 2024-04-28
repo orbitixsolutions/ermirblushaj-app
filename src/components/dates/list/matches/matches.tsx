@@ -2,20 +2,19 @@
 
 import { fetcher } from '@/helpers/fetcher'
 import { Match, MatchKey, Team } from '@prisma/client'
-import { Avatar, Button, Card, CardBody, Divider } from '@nextui-org/react'
+import { Avatar, Divider } from '@nextui-org/react'
 import useSWR from 'swr'
 import CardMatchup from '@/components/dates/cards/card-matchup'
 import DateGeneralOptions from '@/components/dates/options/date-general-options'
-import DateOwnerOptions from '../options/date-owner-options'
-import PopoverDateTeam from '../popover/popover-date-team'
-import ButtonDeleteKeyMatchup from '../buttons/options/button-delete-key-matchup'
-import DropdownTeamKeyA from '../dropdown/teams/dropdown-team-key-a'
-import DropdownTeamKeyB from '../dropdown/teams/dropdown-team-key-b'
-import ImagesMatchesKeys from '../image/images-matches-keys'
-import ButtonOptionsKeys from '../buttons/options/button-options-keys'
-import PopoverQuarterMatches from '../popover/popover-quarters-team'
-import PopoverSemifinalsMatches from '../popover/popover-semifinals-team'
-import PopoverFinalsMatches from '../popover/popover-finals-team'
+import DateOwnerOptions from '../../options/date-owner-options'
+import PopoverDateTeam from '../../popover/popover-date-team'
+import ButtonDeleteKeyMatchup from '../../buttons/options/button-delete-key-matchup'
+import ImagesMatchesKeys from '../../image/images-matches-keys'
+import ButtonOptionsKeys from '../../buttons/options/button-options-keys'
+import PopoverQuarterMatches from '../../popover/popover-quarters-team'
+import PopoverSemifinalsMatches from '../../popover/popover-semifinals-team'
+import PopoverFinalsMatches from '../../popover/popover-finals-team'
+import BestTeams from '../best-teams'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -42,7 +41,6 @@ const Matches = () => {
     '/api/matches/keys/b',
     fetcher
   )
-
   const { data: MATCHES_QUARTERS_A } = useSWR<ExtendedMatchKey[]>(
     '/api/matches/keys/a/quarter',
     fetcher
@@ -60,7 +58,6 @@ const Matches = () => {
     '/api/matches/keys/b/semifinals',
     fetcher
   )
-
   const { data: MATCH_FINAL } = useSWR<ExtendedMatchKey[]>(
     '/api/matches/keys/final',
     fetcher
@@ -107,7 +104,9 @@ const Matches = () => {
                           <PopoverQuarterMatches group='a' match={matchKey} />
                         </div>
 
-                        <ImagesMatchesKeys match={matchKey} />
+                        <div className='my-64'>
+                          <ImagesMatchesKeys match={matchKey} />
+                        </div>
                       </li>
                     ))
                   ) : (
@@ -137,7 +136,9 @@ const Matches = () => {
                           />
                         </div>
 
-                        <ImagesMatchesKeys match={matchKey} />
+                        <div>
+                          <ImagesMatchesKeys match={matchKey} />
+                        </div>
                       </li>
                     ))
                   ) : (
@@ -145,7 +146,11 @@ const Matches = () => {
                       {Array(2)
                         .fill(0)
                         .map((_, index) => (
-                          <Avatar className='my-32' size='lg' key={index} />
+                          <Avatar
+                            className='my-[19rem]'
+                            size='lg'
+                            key={index}
+                          />
                         ))}
                     </>
                   )}
@@ -176,7 +181,9 @@ const Matches = () => {
                           <PopoverQuarterMatches group='b' match={matchKey} />
                         </div>
 
-                        <ImagesMatchesKeys match={matchKey} />
+                        <div className='my-64'>
+                          <ImagesMatchesKeys match={matchKey} />
+                        </div>
                       </li>
                     ))
                   ) : (
@@ -206,7 +213,9 @@ const Matches = () => {
                           />
                         </div>
 
-                        <ImagesMatchesKeys match={matchKey} />
+                        <div>
+                          <ImagesMatchesKeys match={matchKey} />
+                        </div>
                       </li>
                     ))
                   ) : (
@@ -214,7 +223,11 @@ const Matches = () => {
                       {Array(2)
                         .fill(0)
                         .map((_, index) => (
-                          <Avatar className='my-32' size='lg' key={index} />
+                          <Avatar
+                            className='my-[19rem]'
+                            size='lg'
+                            key={index}
+                          />
                         ))}
                     </>
                   )}
@@ -241,7 +254,7 @@ const Matches = () => {
                       {Array(2)
                         .fill(0)
                         .map((_, index) => (
-                          <Avatar className='my-5' size='lg' key={index} />
+                          <Avatar className='my-32' size='lg' key={index} />
                         ))}
                     </>
                   )}
@@ -256,6 +269,8 @@ const Matches = () => {
           </div>
         </div>
       )}
+
+      <BestTeams />
 
       <div className='flex justify-between'>
         <div className='w-[400px]'>
