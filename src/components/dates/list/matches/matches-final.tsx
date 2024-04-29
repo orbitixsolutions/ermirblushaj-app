@@ -59,7 +59,7 @@ const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
                 .map((_, index) => (
                   <Card
                     key={index}
-                    className='bg-custom-darkblue text-custom-white my-28'
+                    className='bg-custom-darkblue text-custom-white my-4'
                   >
                     <CardBody>
                       <Avatar />

@@ -13,9 +13,8 @@ import {
   Tooltip
 } from '@nextui-org/react'
 import { IconCheck, IconSettings } from '@tabler/icons-react'
-import { mutate } from 'swr'
-import FormMatchDate from '../form/form-match-date'
 import { updatedData } from '@/helpers/updated-data'
+import FormMatchDate from '@/components/dates/form/form-match-date'
 
 type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
@@ -91,43 +90,41 @@ const PopoverSemifinalsMatches = ({
                   <Button
                     fullWidth
                     onPress={toggleOpen}
-                    className='font-bold bg-custom-darkblue'
+                    className='font-bold bg-custom-darkblue text-custom-green'
                   >
                     <IconCheck size={24} />
                     Today
                   </Button>
 
-                  <div>
-                    <h2 className='my-3 font-semibold text-center text-xl'>
-                      Select winner
-                    </h2>
-                    <div className='flex gap-5'>
-                      <Tooltip content={match.teamKeyA.name}>
-                        <Card
-                          isPressable
-                          isDisabled={isPending}
-                          onClick={() => handleSelectWinner(match.teamKeyA.id)}
-                          className='bg-custom-darkblue'
-                        >
-                          <CardBody>
-                            <Avatar src={match.teamKeyA.logo!} size='lg' />
-                          </CardBody>
-                        </Card>
-                      </Tooltip>
+                  <h2 className='font-semibold text-center text-xl'>
+                    Select Winner
+                  </h2>
+                  <div className='flex gap-4'>
+                    <Tooltip content={match.teamKeyA.name}>
+                      <Card
+                        isPressable
+                        isDisabled={isPending}
+                        onClick={() => handleSelectWinner(match.teamKeyA.id)}
+                        className='bg-custom-darkblue'
+                      >
+                        <CardBody>
+                          <Avatar src={match.teamKeyA.logo!} size='lg' />
+                        </CardBody>
+                      </Card>
+                    </Tooltip>
 
-                      <Tooltip content={match.teamKeyB.name}>
-                        <Card
-                          isPressable
-                          isDisabled={isPending}
-                          onClick={() => handleSelectWinner(match.teamKeyB.id)}
-                          className='bg-custom-darkblue'
-                        >
-                          <CardBody>
-                            <Avatar src={match.teamKeyB.logo!} size='lg' />
-                          </CardBody>
-                        </Card>
-                      </Tooltip>
-                    </div>
+                    <Tooltip content={match.teamKeyB.name}>
+                      <Card
+                        isPressable
+                        isDisabled={isPending}
+                        onClick={() => handleSelectWinner(match.teamKeyB.id)}
+                        className='bg-custom-darkblue'
+                      >
+                        <CardBody>
+                          <Avatar src={match.teamKeyB.logo!} size='lg' />
+                        </CardBody>
+                      </Card>
+                    </Tooltip>
                   </div>
                 </>
               )}

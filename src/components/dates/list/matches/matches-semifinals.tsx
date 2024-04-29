@@ -68,7 +68,7 @@ const MatchesSemifinals = ({
                 .map((_, index) => (
                   <Card
                     key={index}
-                    className='bg-custom-darkblue text-custom-white my-[19rem]'
+                    className='bg-custom-darkblue text-custom-white my-72'
                   >
                     <CardBody>
                       <Avatar />
