@@ -20,7 +20,7 @@ const DateTeams = () => {
     error
   } = useSWR<ExtendedMatch[]>('/api/matches', fetcher)
 
-  if (!error) {
+  if (error) {
     return <SkeletonError />
   }
 
