@@ -1,12 +1,58 @@
 'use server'
 
+import { z } from 'zod'
+
+import { getUserByEmail } from '@/data/user'
+import { UserRole } from '@prisma/client'
+import { NextResponse } from 'next/server'
 import { currentRole } from '@/libs/auth'
 import { Group, Team } from '@prisma/client'
 import { Player, TeamData } from '@/actions/types'
+import { RegisterAdminSchema } from '@/schemas'
 import prisma from '@/libs/prisma'
+import bcrypt from 'bcryptjs'
 
 type ExtendedGroup = Group & {
   teams: TeamData[]
+}
+
+export const createUser = async (data: z.infer<typeof RegisterAdminSchema>) => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
+  try {
+    const validateFields = RegisterAdminSchema.safeParse(data)
+
+    if (!validateFields.success) {
+      return { error: 'Invalid fields!', status: 400 }
+    }
+
+    const { email, password, name, role } = data
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    const existingUser = await getUserByEmail(email)
+
+    if (existingUser) {
+      return { error: 'Invalid fields!', status: 400 }
+    }
+
+    const emailLowerCase = email.toLowerCase()
+    await prisma.user.create({
+      data: {
+        name,
+        email: emailLowerCase,
+        role: role as UserRole,
+        password: hashedPassword
+      }
+    })
+
+    return { message: 'User created!', status: 200 }
+  } catch (error) {
+    return { error: 'An ocurred a error!', status: 500 }
+  }
 }
 
 export const createTeam = async (data: TeamData) => {
@@ -118,7 +164,6 @@ export const createImageTribute = async (data: any) => {
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
   }
-
 }
 
 export const createGroups = async (data: ExtendedGroup) => {

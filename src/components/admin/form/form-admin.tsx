@@ -3,15 +3,15 @@
 import * as z from 'zod'
 
 import { Button, Input, Select, SelectItem } from '@nextui-org/react'
-import { useState } from 'react'
+import { useTransition } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { RegisterAdminSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
-import axios, { AxiosError } from 'axios'
+import { createUser } from '@/actions/services/create'
 
 const FormAdmin = () => {
-  const [isPending, setIsPending] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   const { handleSubmit, reset, control } = useForm<
     z.infer<typeof RegisterAdminSchema>
@@ -31,27 +31,19 @@ const FormAdmin = () => {
   }
 
   const onSubmit = handleSubmit(async (data) => {
-    try {
-      setIsPending(true)
-      const res = await axios.post('/api/users', data)
-      const succesCode = res.status === 200
-      
-      if (succesCode) {
+    startTransition(async () => {
+      const { status, message } = await createUser(data)
+
+      if (status === 200) {
+        toast.success(message)
         reset()
-        setIsPending(false)
-        return toast.success('Admin created!')
-      }
-    } catch (error: any) {
-      const errorCode = error.response.status
-
-      if (errorCode) {
-        setIsPending(false)
-        return toast.error('Email alredy in use!')
+        return
       }
 
-      setIsPending(false)
-      return toast.error('An ocurred a error!')
-    }
+      toast.success(message)
+      reset()
+      return
+    })
   })
 
   return (
