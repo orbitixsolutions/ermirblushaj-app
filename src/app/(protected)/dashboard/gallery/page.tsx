@@ -8,7 +8,7 @@ import WrapperSection from '@/components/gallery/wrappers/wrapper-section'
 const GalleryPage = () => {
   return (
     <WrapperSection>
-      <div className='col-span-5'>
+      <div className='col-span-11 lg:col-span-5'>
         <article className='w-full flex justify-center items-center gap-4'>
           <h2 className='text-2xl font-bold uppercase'>Gallery (Tournament)</h2>
         </article>
@@ -17,8 +17,8 @@ const GalleryPage = () => {
         </div>
         <ListTournamentGallery />
       </div>
-      <Divider className='bg-custom-gray mx-auto' orientation='vertical' />
-      <div className='col-span-5'>
+      <Divider className='bg-custom-gray mx-auto hidden lg:block' orientation='vertical' />
+      <div className='col-span-11 lg:col-span-5'>
         <article className='w-full flex justify-center items-center gap-4'>
           <h2 className='text-2xl font-bold uppercase'>Gallery (tribute)</h2>
         </article>

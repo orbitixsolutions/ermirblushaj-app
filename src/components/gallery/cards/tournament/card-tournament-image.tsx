@@ -6,7 +6,7 @@ const CardTournamentImage = ({ item }: { item: TournamentGallery }) => {
   const imageLoading = item.url === ''
 
   return (
-    <Card className='bg-custom-darknavy relative aspect-square'>
+    <Card className='col-span-3 xs:col-span-2 md:col-span-1 bg-custom-darknavy relative aspect-square'>
       {imageLoading ? (
         <div className='w-full h-full grid place-items-center'>
           <Spinner color='primary' size='lg' />
