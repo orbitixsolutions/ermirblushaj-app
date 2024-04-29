@@ -29,7 +29,7 @@ const ImageDropzonePlayer = () => {
 
   return (
     <div
-      className={`bg-custom-lightgray w-full h-60 grid place-items-center rounded-xl cursor-pointer text-center text-2xl text-slate-900/40 ${
+      className={`bg-custom-lightgray w-full h-52 grid place-items-center rounded-xl cursor-pointer text-center text-2xl text-slate-900/40 ${
         isDragActive ? 'border-4 border-custom-blue' : 'border-2'
       }`}
       {...getRootProps()}

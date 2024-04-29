@@ -29,7 +29,7 @@ const ImageDropzoneTeam = () => {
 
   return (
     <div
-      className={`bg-custom-lightgray w-full h-80 object-cover grid place-items-center rounded-xl cursor-pointer text-center text-2xl text-slate-900/40 ${
+      className={`bg-custom-lightgray w-full aspect-video object-cover grid place-items-center rounded-xl cursor-pointer text-center text-2xl text-slate-900/40 ${
         isDragActive ? 'border-4 border-custom-blue' : 'border-2'
       }`}
       {...getRootProps()}

@@ -6,7 +6,7 @@ const CardPlayerImage = ({ player }: { player: Player }) => {
   const imageLoading = player.profilePhoto === null
 
   return (
-    <li>
+    <li className='col-span-3 xs:col-span-2 md:col-span-1 lg:col-span-2 2xl:col-span-1'>
       <Card className='bg-custom-darknavy relative aspect-square'>
         {imageLoading ? (
           <div className='w-full h-full grid place-items-center'>

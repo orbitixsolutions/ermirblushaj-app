@@ -20,8 +20,16 @@ const config: Config = {
         'custom-white': '#FFFFFF',
         'custom-darkblue': '#16374B',
         'custom-red': '#FF3A3A',
-        'custom-darknavy': '#052335',
-          
+        'custom-darknavy': '#052335'
+      },
+      screens: {
+        xs: '480px',
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1536px',
+        '3xl': '1920px'
       }
     }
   },

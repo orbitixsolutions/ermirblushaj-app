@@ -34,25 +34,25 @@ const ModalPlayer = () => {
   return (
     <Modal
       isOpen={playerModalOpen}
-      className='bg-custom-navy px-12 py-8'
+      className='bg-custom-navy px-2 md:px-12 py-4 md:py-8'
       onOpenChange={() => onPlayerModalClose()}
       size='5xl'
     >
       <ModalContent>
         <form onSubmit={onSubmit}>
           <ModalHeader className='w-full flex justify-between'>
-            <h2 className='text-2xl uppercase text-custom-white font-bold'>
+            <h2 className='text-base md:text-2xl uppercase text-custom-white font-bold'>
               {playerModalEdit ? 'Edit player' : 'Add player'}
             </h2>
             {teamData.name !== '' && (
-              <h2 className='text-2xl uppercase text-custom-white font-bold'>
+              <h2 className='text-base md:text-2xl uppercase text-custom-white font-bold'>
                 TEAM: <span className='text-custom-green'>{teamData.name}</span>
               </h2>
             )}
           </ModalHeader>
           <ModalBody>
             <div className='grid grid-cols-12 gap-4 text-slate-900'>
-              <div className='col-span-8 grid grid-cols-4 gap-4'>
+              <div className='col-span-12 md:col-span-8 grid grid-cols-4 gap-2 md:gap-4'>
                 <Controller
                   name='first_name'
                   control={control}
@@ -60,7 +60,6 @@ const ModalPlayer = () => {
                     <Input
                       className='col-span-2'
                       type='text'
-                      size='lg'
                       isDisabled={isPending}
                       radius='md'
                       placeholder='First name'
@@ -75,7 +74,6 @@ const ModalPlayer = () => {
                     <Input
                       className='col-span-2'
                       type='text'
-                      size='lg'
                       isDisabled={isPending}
                       radius='md'
                       placeholder='Last name'
@@ -90,7 +88,6 @@ const ModalPlayer = () => {
                     <Input
                       className='col-span-2'
                       type='date'
-                      size='lg'
                       isDisabled={isPending}
                       radius='md'
                       {...field}
@@ -104,7 +101,6 @@ const ModalPlayer = () => {
                     <Input
                       className='col-span-2'
                       type='number'
-                      size='lg'
                       isDisabled={isPending}
                       radius='md'
                       placeholder='Number of player'
@@ -119,7 +115,6 @@ const ModalPlayer = () => {
                     <Input
                       className='col-span-2'
                       type='number'
-                      size='lg'
                       isDisabled={isPending}
                       radius='md'
                       placeholder='1.80'
@@ -134,7 +129,6 @@ const ModalPlayer = () => {
                     <Input
                       className='col-span-2'
                       type='text'
-                      size='lg'
                       isDisabled={isPending}
                       radius='md'
                       placeholder='Colombia'
@@ -153,7 +147,6 @@ const ModalPlayer = () => {
                           : 'col-span-4'
                       }  `}
                       type='text'
-                      size='lg'
                       isDisabled={isPending}
                       radius='md'
                       placeholder='Position'
@@ -168,7 +161,6 @@ const ModalPlayer = () => {
                     render={({ field }) => (
                       <Select
                         className='col-span-2'
-                        size='lg'
                         aria-labelledby='Team select'
                         isDisabled={playerModalEdit || isPending}
                         radius='md'
@@ -193,7 +185,7 @@ const ModalPlayer = () => {
                   />
                 )}
               </div>
-              <div className='col-span-4'>
+              <div className='col-span-12 md:col-span-4'>
                 <ImageDropzonePlayer />
               </div>
             </div>
@@ -202,7 +194,7 @@ const ModalPlayer = () => {
             <Button
               isLoading={isPending}
               type='submit'
-              className='bg-custom-green font-bold uppercase text-xl w-full'
+              className='bg-custom-green font-bold uppercase text-sm md:text-xl w-full'
             >
               {playerModalEdit ? 'Edit' : 'Create'}
             </Button>

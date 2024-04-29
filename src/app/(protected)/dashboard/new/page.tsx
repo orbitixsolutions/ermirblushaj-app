@@ -11,9 +11,11 @@ const NewPage = () => {
   return (
     <>
       <WrapperSection>
-        <div className='col-span-5'>
+        <div className='col-span-11 lg:col-span-5'>
           <div className='w-full flex justify-center items-center gap-4'>
-            <h2 className='text-2xl font-bold uppercase'>Add team</h2>
+            <h2 className='text-sm md:text-2xl font-bold uppercase'>
+              Add team
+            </h2>
             <ButtonModalTeam />
           </div>
           <Divider
@@ -22,10 +24,15 @@ const NewPage = () => {
           />
           <Teams />
         </div>
-        <Divider className='bg-custom-gray mx-auto' orientation='vertical' />
-        <div className='col-span-5'>
+        <Divider
+          className='bg-custom-gray mx-auto hidden lg:block'
+          orientation='vertical'
+        />
+        <div className='col-span-11 lg:col-span-5'>
           <div className='w-full flex justify-center items-center gap-4'>
-            <h2 className='text-2xl font-bold uppercase'>Add player</h2>
+            <h2 className='text-sm md:text-2xl font-bold uppercase'>
+              Add player
+            </h2>
             <ButtonModalPlayer />
           </div>
           <Divider
@@ -35,6 +42,7 @@ const NewPage = () => {
           <Players />
         </div>
       </WrapperSection>
+      
       <ModalTeam />
       <ModalPlayer />
     </>

@@ -73,7 +73,6 @@ const NavigationMenu = () => {
               isIconOnly
               onPress={() => signOutSession}
               color='danger'
-              href='#'
               variant='flat'
             >
               <IconArrowBarRight />
@@ -81,7 +80,7 @@ const NavigationMenu = () => {
           </Tooltip>
         </NavbarItem>
       </NavbarContent>
-      <NavbarMenu className='bg-custom-darkblue text-custom-white mt-2'>
+      <NavbarMenu className='bg-custom-darkblue text-custom-white mt-2 z-[1000]'>
         {menuItems.map((items) => (
           <NavbarMenuItem key={`${items.url}`}>
             <Link
