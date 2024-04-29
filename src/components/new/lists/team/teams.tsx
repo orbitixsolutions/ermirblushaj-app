@@ -17,14 +17,14 @@ const Teams = () => {
     error
   } = useSWR<Team[]>('/api/teams', fetcher)
 
-  if (error) return <p>An ocurred a error</p>
+  if (error) return <h2>Data could not be loaded.</h2>
 
   if (teams?.length === EMPTY_ITEMS) {
     return <NoItems />
   }
 
   if (isLoading) {
-    return <SkeletonNew isLoaded={isLoading} />
+    return <SkeletonNew />
   }
 
   return (
