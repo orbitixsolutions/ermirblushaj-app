@@ -5,9 +5,9 @@ import {
   CardHeader,
   Spinner
 } from '@nextui-org/react'
-import ButtonCreateGroups from '@/components/dates/buttons/options/button-create-groups'
-import ButtonCreateMatches from '@/components/dates/buttons/options/button-create-matches'
-import ButtonCreateKeys from '../buttons/options/button-create-keys'
+import ButtonCreateGroups from '@/components/dates/buttons/options/create/button-create-groups'
+import ButtonCreateMatches from '@/components/dates/buttons/options/create/button-create-matches'
+import ButtonCreateKeys from '../buttons/options/create/button-create-keys'
 import useSWR from 'swr'
 import { fetcher } from '@/helpers/fetcher'
 import { Match } from '@prisma/client'

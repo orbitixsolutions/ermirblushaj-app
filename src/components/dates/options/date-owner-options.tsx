@@ -1,8 +1,8 @@
 import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/react'
 import { useCurrentRole } from '@/hooks/auth/use-current-role'
-import ButtonDeleteGroups from '@/components/dates/buttons/options/button-delete-groups'
-import ButtonDeleteMatches from '@/components/dates/buttons/options/button-delete-matches'
-import ButtonDeleteStats from '@/components/dates/buttons/options/button-delete-stats'
+import ButtonDeleteGroups from '@/components/dates/buttons/options/delete/button-delete-groups'
+import ButtonDeleteMatches from '@/components/dates/buttons/options/delete/button-delete-matches'
+import ButtonDeleteStats from '@/components/dates/buttons/options/delete/button-delete-stats'
 
 const DateOwnerOptions = () => {
   const role = useCurrentRole()
