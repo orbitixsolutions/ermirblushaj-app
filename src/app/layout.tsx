@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang='en'>
       <body
         id='body'
-        className={`${DM_SANS_FONT.className} dark text-foreground bg-background`}
+        className={`${DM_SANS_FONT.className}`}
       >
         <Toaster position='bottom-right' richColors />
         <Providers>{children}</Providers>

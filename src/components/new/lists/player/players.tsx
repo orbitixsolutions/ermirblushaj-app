@@ -15,9 +15,7 @@ const Players = () => {
     data: players,
     isLoading,
     error
-  } = useSWR<Player[]>('/api/players', fetcher, {
-    refreshInterval: 3000
-  })
+  } = useSWR<Player[]>('/api/players', fetcher)
 
   if (error) return <p>An ocurred a error</p>
 

@@ -11,6 +11,7 @@ import { PlayerSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createPlayers } from '@/actions/services/create'
 import axios from 'axios'
+import { mutate } from 'swr'
 
 export const usePlayerModal = () => {
   const [isPending, setIsPending] = useState(false)
@@ -27,7 +28,7 @@ export const usePlayerModal = () => {
       number: '',
       nationality: '',
       position: '',
-      team_id: '',
+      team_id: ''
     }
   })
 
@@ -124,20 +125,16 @@ export const usePlayerModal = () => {
 
       if ((await res).status === 200) {
         clearState()
+        mutate('/api/players')
         return toast.success('Player created!')
       }
 
       clearState()
       return toast.error('An ocurred error!')
     }
-
     if (data.first_name === '') {
       return toast.info('First name is required!')
     }
-    // if (data.position === '') {
-    //   return toast.info('Position of player is required!')
-    // }
-
     if (teamData.id === '') {
       if (data.team_id === '') {
         return toast.info('Team name is required!')
@@ -154,8 +151,7 @@ export const usePlayerModal = () => {
       EXIST_TEAM_NAME: teamData.name,
       EXIST_TEAM_ID: teamData.id
     }
-    const res = await createPlayers(playerData)
-    console.log(res)
+    const { status, message } = await createPlayers(playerData)
 
     uploadImage({
       path: 'players',
@@ -163,9 +159,10 @@ export const usePlayerModal = () => {
       imgFile: imagePlayer.imgFile
     })
 
-    if (res.status === 200) {
+    if (status === 200) {
       clearState()
-      return toast.success('Player created!')
+      mutate('/api/players')
+      return toast.success(message)
     }
 
     clearState()

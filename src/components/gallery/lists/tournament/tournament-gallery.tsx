@@ -1,14 +1,12 @@
 'use client'
 
+import { fetcher } from '@/helpers/fetcher'
 import { TournamentGallery } from '@prisma/client'
-import axios from 'axios'
 import useSWR from 'swr'
 import SkeletonGallery from '@/components/gallery/skeleton/skeleton-gallery'
 import NoItems from '@/components/gallery/lists/no-items'
 import CardTournamentImage from '@/components/gallery/cards/tournament/card-tournament-image'
 import WrapperGallery from '@/components/gallery/wrappers/wrapper-gallery'
-
-const fetcher = (url: string) => axios.get(url).then((res) => res.data)
 
 const ListTournamentGallery = () => {
   const EMPTY_ITEMS = 0
@@ -17,12 +15,9 @@ const ListTournamentGallery = () => {
     data: tournamentGallery,
     isLoading,
     error
-  } = useSWR<TournamentGallery[]>('/api/tournament-gallery', fetcher, {
-    refreshInterval: 3000
-  })
+  } = useSWR<TournamentGallery[]>('/api/tournament-gallery', fetcher)
 
   if (error) return <p>An ocurred a error</p>
-
   if (tournamentGallery && tournamentGallery.length === EMPTY_ITEMS) {
     return <NoItems />
   }

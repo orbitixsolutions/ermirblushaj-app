@@ -7,17 +7,19 @@ import { TributeGallery } from '@prisma/client'
 import { IconTrash } from '@tabler/icons-react'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
+import { mutate } from 'swr'
 
 const ButtonDeleteImageTribute = ({ gallery }: { gallery: TributeGallery }) => {
   const [isPending, startTransition] = useTransition()
 
   const handleDeleteImage = async () => {
     startTransition(async () => {
-      const res = await deleteImageTribute(gallery.id)
+      const { status, message } = await deleteImageTribute(gallery.id)
 
-      if (res.status === 200) {
+      if (status === 200) {
         deleteImage({ id: gallery.id, path: 'tribute' })
-        toast.success('Image deleted!')
+        toast.success(message)
+        mutate('/api/tribute-gallery')
         return
       }
 

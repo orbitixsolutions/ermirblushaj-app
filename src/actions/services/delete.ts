@@ -30,7 +30,7 @@ export const deleteTeam = async (id: string) => {
       prisma.team.delete({ where: { id: teamId } })
     ])
 
-    return { success: 'Team deleted!', status: 200 }
+    return { message: 'Team deleted!', status: 200 }
   } catch (error: any) {
     console.log(error)
     return { error: 'An ocurred a error!', status: 500 }
@@ -63,7 +63,7 @@ export const deletePlayer = async (playerId: string, teamId: string) => {
       }
     })
 
-    return { success: 'Player deleted!', status: 200 }
+    return { message: 'Player deleted!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
   }
@@ -86,7 +86,7 @@ export const deleteImageTournament = async (id: string) => {
       }
     })
 
-    return { success: 'Image deleted!', status: 200 }
+    return { message: 'Image deleted!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
   }
@@ -109,7 +109,7 @@ export const deleteImageTribute = async (id: string) => {
       }
     })
 
-    return { success: 'Image deleted!', status: 200 }
+    return { message: 'Image deleted!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
   }

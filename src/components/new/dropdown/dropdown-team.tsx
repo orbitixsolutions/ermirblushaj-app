@@ -19,11 +19,12 @@ import { useModalTeamStore } from '@/store/modal/use-modal-team-store'
 import { deleteTeam } from '@/actions/services/delete'
 import { toast } from 'sonner'
 import { useModalPlayerStore } from '@/store/modal/use-modal-player-store'
-import { useState } from 'react'
+import { useTransition } from 'react'
 import { deleteImage } from '@/helpers/delete-image'
+import { mutate } from 'swr'
 
 const DropdownTeam = ({ team }: { team: Team }) => {
-  const [isPending, setIsPending] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   const { onPlayerOpenId } = useModalPlayerStore((state) => ({
     onPlayerOpenId: state.onPlayerModalOpenId
@@ -38,17 +39,19 @@ const DropdownTeam = ({ team }: { team: Team }) => {
   }
 
   const handleDeleteTeam = async (teamId: string) => {
-    setIsPending(true)
-    await deleteImage({ path: 'teams', id: teamId })
+    startTransition(async () => {
+      await deleteImage({ path: 'teams', id: teamId })
 
-    const res = await deleteTeam(teamId)
-    if (res.status === 200) {
-      setIsPending(false)
-      return toast.success(res.success)
-    }
-
-    setIsPending(false)
-    return toast.error('An ocurred a error')
+      const { status, message } = await deleteTeam(teamId)
+      if (status === 200) {
+        mutate('/api/teams')
+        mutate('/api/players')
+        toast.success(message)
+        return
+      }
+      toast.error('An ocurred a error')
+      return
+    })
   }
 
   return (

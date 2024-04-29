@@ -5,7 +5,8 @@ import { Button, Tooltip } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { v4 as uuid } from 'uuid'
-import axios from 'axios'
+import { mutate } from 'swr'
+import { createImageTournamnet } from '@/actions/services/create'
 
 const ButtonAddImageTournament = () => {
   const [image, setImage] = useState<File | null>(null)
@@ -35,11 +36,12 @@ const ButtonAddImageTournament = () => {
       url: ''
     }
 
-    const res = await axios.post(`/api/tournament-gallery`, data)
-    if (res && res.status === 200) {
+    const { status, message } = await createImageTournamnet(data)
+    if (status === 200) {
       uploadImage({ path: 'tournament', id: data.id, imgFile: image })
       setImage(null)
-      return toast.success('Image added!')
+      mutate('/api/tournament-gallery')
+      return toast.success(message)
     }
 
     return toast.error('An ocurred error')

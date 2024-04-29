@@ -1,11 +1,9 @@
 'use server'
 
 import { currentRole } from '@/libs/auth'
-import { Group, MatchStatus, Team, TournamentPhase } from '@prisma/client'
+import { Group, Team } from '@prisma/client'
 import { Player, TeamData } from '@/actions/types'
 import prisma from '@/libs/prisma'
-import { child } from 'firebase/database'
-import { fi } from 'date-fns/locale'
 
 type ExtendedGroup = Group & {
   teams: TeamData[]
@@ -32,7 +30,7 @@ export const createTeam = async (data: TeamData) => {
       }
     })
 
-    return { success: 'Team created!', status: 200 }
+    return { message: 'Team created!', status: 200 }
   } catch (error: any) {
     return { error: 'An ocurred a error!', status: 500 }
   }
@@ -92,10 +90,35 @@ export const createPlayers = async (data: Player) => {
         firstName: first_name
       }
     })
-    return { success: 'Player created!', status: 200 }
+    return { message: 'Player created!', status: 200 }
   } catch (error: any) {
     return { error: 'An ocurred a error!', status: 500 }
   }
+}
+
+export const createImageTournamnet = async (data: any) => {
+  try {
+    await prisma.tournamentGallery.create({
+      data
+    })
+
+    return { message: 'Image created!', status: 200 }
+  } catch (error) {
+    return { error: 'An ocurred a error!', status: 500 }
+  }
+}
+
+export const createImageTribute = async (data: any) => {
+  try {
+    await prisma.tributeGallery.create({
+      data
+    })
+
+    return { message: 'Image created!', status: 200 }
+  } catch (error) {
+    return { error: 'An ocurred a error!', status: 500 }
+  }
+
 }
 
 export const createGroups = async (data: ExtendedGroup) => {

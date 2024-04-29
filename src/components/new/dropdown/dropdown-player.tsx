@@ -14,14 +14,15 @@ import { useModalPlayerStore } from '@/store/modal/use-modal-player-store'
 import { deletePlayer } from '@/actions/services/delete'
 import { toast } from 'sonner'
 import { deleteImage } from '@/helpers/delete-image'
-import { useState } from 'react'
+import { useTransition } from 'react'
+import { mutate } from 'swr'
 
 interface Props {
   player: Player
 }
 
 const DropdownPlayer = ({ player }: Props) => {
-  const [isPending, setIsPending] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   const { onPlayerModalEdit } = useModalPlayerStore((state) => ({
     onPlayerModalEdit: state.onPlayerModalEdit
@@ -32,17 +33,19 @@ const DropdownPlayer = ({ player }: Props) => {
   }
 
   const handlePlayerDeleted = async (playerId: string, teamId: string) => {
-    setIsPending(true)
-    await deleteImage({ path: 'players', id: playerId })
+    startTransition(async () => {
+      await deleteImage({ path: 'players', id: playerId })
 
-    const res = await deletePlayer(playerId, teamId)
-    if (res.status === 200) {
-      setIsPending(false)
-      return toast.success(res.success)
-    }
+      const { status, message } = await deletePlayer(playerId, teamId)
+      if (status === 200) {
+        mutate('/api/players')
+        toast.success(message)
+        return
+      }
 
-    setIsPending(false)
-    return toast.error('An ocurred a error')
+      toast.error('An ocurred a error')
+      return
+    })
   }
 
   return (

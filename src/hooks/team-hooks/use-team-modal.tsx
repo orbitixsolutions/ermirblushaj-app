@@ -11,6 +11,7 @@ import { editTeam } from '@/actions/services/edit'
 import { useModalTeamStore } from '@/store/modal/use-modal-team-store'
 import axios from 'axios'
 import { createTeam } from '@/actions/services/create'
+import { mutate } from 'swr'
 
 export const useTeamModal = () => {
   const [isPending, setIsPending] = useState(false)
@@ -102,6 +103,7 @@ export const useTeamModal = () => {
 
       if (res.status === 200) {
         clearState()
+        mutate('/api/teams')
         return toast.success('Team edited!')
       }
 
@@ -117,7 +119,7 @@ export const useTeamModal = () => {
     }
 
     const dataTeam = { ...data, id: teamId }
-    const res = await createTeam(dataTeam)
+    const { status, message } = await createTeam(dataTeam)
 
     uploadImage({
       path: 'teams',
@@ -125,9 +127,10 @@ export const useTeamModal = () => {
       imgFile: imageTeam.imgFile
     })
 
-    if (res.status === 200) {
+    if (status === 200) {
       clearState()
-      return toast.success('Team created!')
+      mutate('/api/teams')
+      return toast.success(message)
     }
 
     clearState()
