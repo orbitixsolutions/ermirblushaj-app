@@ -14,7 +14,7 @@ import { useCallback } from 'react'
 import { columns } from '@/components/home/data'
 import { IconCheck, IconMinus, IconX } from '@tabler/icons-react'
 
-const GroupTable = ({ group }: { group: ExtendedGroups }) => {
+const TableGroup = ({ group }: { group: ExtendedGroups }) => {
   const renderCell = useCallback((item: Team, columnKey: React.Key) => {
     const cellValue = item[columnKey as keyof Team]
 
@@ -134,7 +134,9 @@ const GroupTable = ({ group }: { group: ExtendedGroups }) => {
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey) as any}</TableCell>
+              <TableCell>
+                {renderCell(item, columnKey) as React.ReactNode}
+              </TableCell>
             )}
           </TableRow>
         )}
@@ -143,4 +145,4 @@ const GroupTable = ({ group }: { group: ExtendedGroups }) => {
   )
 }
 
-export default GroupTable
+export default TableGroup
