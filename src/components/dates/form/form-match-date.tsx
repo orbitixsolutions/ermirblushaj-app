@@ -79,13 +79,20 @@ const FormMatchDate = ({
         )}
       />
 
-      <Button isIconOnly type='submit' color='success' isLoading={isPending}>
+      <Button
+        isIconOnly
+        type='submit'
+        color='success'
+        className='bg-custom-green'
+        isLoading={isPending}
+      >
         <IconCheck />
       </Button>
       <Button
         isIconOnly
         type='button'
         color='danger'
+        className='bg-custom-red'
         onPress={() => setIsOpen()}
       >
         <IconX />

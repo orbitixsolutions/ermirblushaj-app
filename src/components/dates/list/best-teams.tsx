@@ -1,7 +1,11 @@
+'use client'
+
 import { fetcher } from '@/helpers/fetcher'
-import { Avatar, Card, CardBody } from '@nextui-org/react'
+import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
 import { Team } from '@prisma/client'
 import useSWR from 'swr'
+import Loader from '../loader'
+import SkeletonError from '../skeleton/skeleton-error'
 
 const borderColors = {
   0: 'border-yellow-400',
@@ -11,22 +15,22 @@ const borderColors = {
 
 const BestTeams = () => {
   const {
-    data: bestTeams,
+    data: data_bestteams,
     isLoading,
     error
   } = useSWR<Team[]>('/api/matches/keys/top', fetcher)
 
-  if (error) return <p>Error</p>
-  if (isLoading) return <p>Loading...</p>
+  if (error) return <SkeletonError />
+  if (isLoading) return <Loader />
 
   const EMPTY_BEST_TEAMS = 0
-  if (bestTeams?.length === EMPTY_BEST_TEAMS) return
+  if (data_bestteams?.length === EMPTY_BEST_TEAMS) return
 
   return (
     <div>
       <h2 className='text-3xl font-bold text-center'>Best Teams</h2>
       <ol className='w-full flex justify-center gap-4 my-8'>
-        {bestTeams?.map((team, index) => (
+        {data_bestteams?.map((team, index) => (
           <li key={team.id} className='flex'>
             <Card
               className={`bg-custom-darkblue border-2 ${

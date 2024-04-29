@@ -133,7 +133,7 @@ const PopoverEighthTeam = ({
             <Button
               fullWidth
               onPress={toggleOpen}
-              className='font-bold bg-custom-darkblue'
+              className='font-bold bg-custom-darkblue text-custom-white'
             >
               No date
             </Button>
@@ -141,7 +141,7 @@ const PopoverEighthTeam = ({
             <Button
               fullWidth
               onPress={toggleOpen}
-              className='font-bold bg-custom-darkblue'
+              className='font-bold bg-custom-darkblue text-custom-white'
             >
               {match.playStartDate.replaceAll('-', '/')}
             </Button>

@@ -60,7 +60,6 @@ const FormDateMatches = ({ match }: { match: ExtendedMatch }) => {
             type='datetime-local'
             placeholder='Enter date play'
             isDisabled={isPending}
-            className='text-slate-950'
             {...field}
           />
         )}

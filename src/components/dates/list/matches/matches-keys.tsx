@@ -1,12 +1,16 @@
+'use client'
+
 import { fetcher } from '@/helpers/fetcher'
 import { MatchKey, Team } from '@prisma/client'
-import useSWR from 'swr'
 import MatchesEighths from '@/components/dates/list/matches/matches-eighths'
 import MatchesQuarters from '@/components/dates/list/matches/matches-quarters'
 import MatchesSemifinals from '@/components/dates/list/matches/matches-semifinals'
 import MatchesFinal from '@/components/dates/list/matches/matches-final'
 import ButtonDeleteKeyMatches from '@/components/dates/buttons/options/delete/button-delete-key-matches'
 import ButtonOptionsKeys from '@/components/dates/buttons/options/button-options-keys'
+import Loader from '@/components/dates/loader'
+import useSWR from 'swr'
+import SkeletonError from '../../skeleton/skeleton-error'
 
 type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
@@ -21,11 +25,11 @@ const MatchesKeys = () => {
   } = useSWR<ExtendedMatchKey[]>('/api/matches/keys', fetcher)
 
   if (error) {
-    return <p>An ocurred a error!</p>
+    return <SkeletonError />
   }
 
   if (isLoading) {
-    return <p>Loading...</p>
+    return <Loader />
   }
 
   return (

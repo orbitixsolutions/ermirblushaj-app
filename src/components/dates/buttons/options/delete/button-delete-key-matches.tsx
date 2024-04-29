@@ -31,6 +31,7 @@ const ButtonDeleteKeyMatches = () => {
     <Button
       onPress={handleDeleteKeyMatchup}
       isLoading={isPending}
+      color='danger'
       className='mx-auto bg-custom-red font-bold'
     >
       Delete Matches
