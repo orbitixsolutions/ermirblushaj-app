@@ -17,10 +17,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en'>
+    <html lang='en' className='bg-custom-navy'>
       <body
         id='body'
-        className={`${DM_SANS_FONT.className}`}
+        className={`${DM_SANS_FONT.className} container mx-auto transition-all duration-300 ease-in-out`}
       >
         <Toaster position='bottom-right' richColors />
         <Providers>{children}</Providers>

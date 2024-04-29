@@ -5,7 +5,7 @@ import DateTeams from '@/components/dates/list/date-teams'
 
 const DatePage = () => {
   return (
-    <section className='w-full container mx-auto py-20 space-y-20'>
+    <section className='w-full py-20 space-y-20'>
       <GroupTeams />
       <MatchesKeys />
       <BestTeams />

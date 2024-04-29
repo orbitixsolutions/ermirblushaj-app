@@ -9,7 +9,7 @@ const signOutSession = async () => {
 const SignupButton = async () => {
   const session = await auth()
 
-  if (session && session.user) {
+  if (session?.user) {
     return (
       <form action={signOutSession}>
         <Button type='submit' size='md' color='danger' radius='lg'>

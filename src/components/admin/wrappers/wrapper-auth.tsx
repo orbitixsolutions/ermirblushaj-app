@@ -24,7 +24,16 @@ const WrapperAuth = ({ children }: { children: React.ReactNode }) => {
     }
   }, [users])
 
-  if (error) return <p>An occurred an error!</p>
+  if (error)
+    return (
+      <div className='absolute top-[50%] left-0 w-full -translate-y-[50%]  text-center'>
+        <div>
+          <h2 className='text-4xl font-bold text-custom-red'>501</h2>
+          <p className='text-2xl font-bold'>An occurred an error.</p>
+          <p className='text-2xl font-bold'>Try more later.</p>
+        </div>
+      </div>
+    )
   if (isLoading) return <Loading />
 
   return <>{children}</>

@@ -1,15 +1,32 @@
 'use client'
 
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarMenuItem,
+  Link,
+  Button,
+  Tooltip
+} from '@nextui-org/react'
 import { useCurrentUser } from '@/hooks/auth/use-current-user'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useState } from 'react'
+import { signOut } from 'next-auth/react'
+import { IconArrowBarRight } from '@tabler/icons-react'
 
 const NavigationMenu = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
 
-  const user = useCurrentUser()
+  const signOutSession = async () => {
+    await signOut()
+  }
 
-  const items = [
+  const menuItems = [
     { url: '/dashboard', name: 'Home', role: 'ADMIN' },
     { url: '/dashboard/new', name: 'Teams/Players', role: 'ADMIN' },
     { url: '/dashboard/gallery', name: 'Gallery', role: 'ADMIN' },
@@ -18,34 +35,68 @@ const NavigationMenu = () => {
   ]
 
   return (
-    <header>
-      <nav className='flex justify-center'>
-        <ul className='bg-custom-green flex p-8 gap-4 rounded-xl'>
-          {items.map((links) => {
-            if (links.role === 'OWNER' && user?.role !== 'OWNER') {
-              return null
-            }
-            return (
-              <li key={links.name}>
-                {}
+    <Navbar
+      shouldHideOnScroll
+      className='bg-custom-green rounded-2xl'
+      onMenuOpenChange={setIsMenuOpen}
+    >
+      <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          className='sm:hidden'
+        />
+        <NavbarBrand>
+          <p className='font-bold text-inherit'>Ermirblushaj</p>
+        </NavbarBrand>
+      </NavbarContent>
 
-                <Link
-                  className={`px-8 py-4 rounded-xl text-xl ${
-                    links.url === pathname
-                      ? 'bg-blue-500'
-                      : 'border-[1px] border-white'
-                  }`}
-                  key={links.name}
-                  href={links.url}
-                >
-                  {links.name}
-                </Link>
-              </li>
-            )
-          })}
-        </ul>
-      </nav>
-    </header>
+      <NavbarContent className='hidden sm:flex gap-4' justify='center'>
+        {menuItems.map((items) => (
+          <NavbarItem key={`${items.url}`}>
+            <Link
+              className={`text-custom-white ${
+                pathname === items.url ? 'underline' : ''
+              } `}
+              href={items.url}
+              size='lg'
+            >
+              {items.name}
+            </Link>
+          </NavbarItem>
+        ))}
+      </NavbarContent>
+
+      <NavbarContent justify='end'>
+        <NavbarItem>
+          <Tooltip content='Logout'>
+            <Button
+              isIconOnly
+              onPress={() => signOutSession}
+              color='danger'
+              href='#'
+              variant='flat'
+            >
+              <IconArrowBarRight />
+            </Button>
+          </Tooltip>
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarMenu className='bg-custom-darkblue text-custom-white mt-2'>
+        {menuItems.map((items) => (
+          <NavbarMenuItem key={`${items.url}`}>
+            <Link
+              className={`text-custom-white ${
+                pathname === items.url ? 'text-custom-green' : ''
+              } `}
+              href={items.url}
+              size='lg'
+            >
+              {items.name}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
+    </Navbar>
   )
 }
 

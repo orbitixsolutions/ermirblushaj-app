@@ -22,56 +22,60 @@ const TableGroup = ({ group }: { group: ExtendedGroups }) => {
       case 'team':
         return (
           <div className='flex items-center gap-2'>
-            <Avatar size='sm' src={item.logo || ''} />
-            <h2 className='text-sm'>{item.name}</h2>
+            <Avatar size='sm' src={item.logo!} />
+            <h2 className='text-xs md:text-sm line-clamp-1'>{item.name}</h2>
           </div>
         )
       case 'gp':
         return (
           <div>
-            <h2 className='text-sm'>{item.teamStats.matchPlayed}</h2>
+            <h2 className='text-xs md:text-sm'>{item.teamStats.matchPlayed}</h2>
           </div>
         )
       case 'gw':
         return (
           <div>
-            <h2 className='text-sm'>{item.teamStats.matchWin}</h2>
+            <h2 className='text-xs md:text-sm'>{item.teamStats.matchWin}</h2>
           </div>
         )
       case 'gl':
         return (
           <div>
-            <h2 className='text-sm'>{item.teamStats.matchLoss}</h2>
+            <h2 className='text-xs md:text-sm'>{item.teamStats.matchLoss}</h2>
           </div>
         )
       case 'gd':
         return (
           <div>
-            <h2 className='text-sm'>{item.teamStats.matchDraw}</h2>
+            <h2 className='text-xs md:text-sm'>{item.teamStats.matchDraw}</h2>
           </div>
         )
       case 'gs':
         return (
           <div>
-            <h2 className='text-sm'>{item.teamStats.goalsFor}</h2>
+            <h2 className='text-xs md:text-sm'>{item.teamStats.goalsFor}</h2>
           </div>
         )
       case 'ga':
         return (
           <div>
-            <h2 className='text-sm'>{item.teamStats.goalsAgainst}</h2>
+            <h2 className='text-xs md:text-sm'>
+              {item.teamStats.goalsAgainst}
+            </h2>
           </div>
         )
       case 'dg':
         return (
           <div>
-            <h2 className='text-sm'>{item.teamStats.goalDifference}</h2>
+            <h2 className='text-xs md:text-sm'>
+              {item.teamStats.goalDifference}
+            </h2>
           </div>
         )
       case 'pts':
         return (
           <div>
-            <h2 className='text-sm'>{item.teamStats.points}</h2>
+            <h2 className='text-xs md:text-sm'>{item.teamStats.points}</h2>
           </div>
         )
       case 'history':
