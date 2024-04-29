@@ -17,13 +17,14 @@ const ListTournamentGallery = () => {
     error
   } = useSWR<TournamentGallery[]>('/api/tournament-gallery', fetcher)
 
-  if (error) return <p>An ocurred a error</p>
-  if (tournamentGallery && tournamentGallery.length === EMPTY_ITEMS) {
+  if (error) return <h2>Data could not be loaded.</h2>
+  
+  if (tournamentGallery?.length === EMPTY_ITEMS) {
     return <NoItems />
   }
 
   if (isLoading) {
-    return <SkeletonGallery isLoaded={isLoading} />
+    return <SkeletonGallery />
   }
 
   return (

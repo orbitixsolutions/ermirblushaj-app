@@ -11,17 +11,20 @@ import GalleryWrapper from '@/components/gallery/wrappers/wrapper-gallery'
 const ListTributeGallery = () => {
   const EMPTY_ITEMS = 0
 
-  const { data: tribute_gallery, isLoading, error } = useSWR<TributeGallery[]>(
-    '/api/tribute-gallery', fetcher)
+  const {
+    data: tribute_gallery,
+    isLoading,
+    error
+  } = useSWR<TributeGallery[]>('/api/tribute-gallery', fetcher)
 
-  if (error) return <p>An ocurred a error</p>
-
-  if (tribute_gallery && tribute_gallery.length === EMPTY_ITEMS) {
+  if (error) return <h2>Data could not be loaded.</h2>
+  
+  if (tribute_gallery?.length === EMPTY_ITEMS) {
     return <NoItems />
   }
 
   if (isLoading) {
-    return <SkeletonGallery isLoaded={isLoading} />
+    return <SkeletonGallery />
   }
 
   return (

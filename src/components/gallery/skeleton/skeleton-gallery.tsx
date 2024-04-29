@@ -1,7 +1,7 @@
 import { Skeleton } from '@nextui-org/react'
 import WrapperGallery from '@/components/gallery/wrappers/wrapper-gallery'
 
-const SkeletonGallery = ({ isLoaded }: { isLoaded: boolean }) => {
+const SkeletonGallery = () => {
   const arrayNumber = 5
   const skeletonArray = Array(arrayNumber).fill(null)
 
@@ -10,7 +10,6 @@ const SkeletonGallery = ({ isLoaded }: { isLoaded: boolean }) => {
       {skeletonArray.map((i) => (
         <Skeleton
           key={i}
-          isLoaded={isLoaded}
           className='bg-custom-navy before:bg-gradient-r before:from-custom-navy before:border-custom-navy before:via-custom-darkblue before:to-custom-navy aspect-square rounded-lg'
         />
       ))}
