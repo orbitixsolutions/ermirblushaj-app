@@ -3,6 +3,8 @@
 import { fetcher } from '@/helpers/fetcher'
 import { Card, Image } from '@nextui-org/react'
 import { Group, Team } from '@prisma/client'
+import SkeletonGroups from '@/components/dates/skeleton/skeleton-groups'
+import SkeletonError from '@/components/dates/skeleton/skeleton-error'
 import useSWR from 'swr'
 
 type extendedGroups = Group & {
@@ -11,22 +13,22 @@ type extendedGroups = Group & {
 
 const GroupTeams = () => {
   const {
-    data: getGroups,
+    data: data_groups,
     isLoading,
     error
   } = useSWR<extendedGroups[]>('/api/groups', fetcher)
 
   if (error) {
-    return <p>An ocurred a error!</p>
+    return <SkeletonError />
   }
 
   if (isLoading) {
-    return <p>Loading...</p>
+    return <SkeletonGroups />
   }
 
   return (
     <ol className='grid grid-cols-8 gap-4 py-4'>
-      {getGroups?.map((group) => (
+      {data_groups?.map((group) => (
         <li
           className='col-span-4 bg-custom-darknavy p-5 rounded-lg'
           key={group.id}
