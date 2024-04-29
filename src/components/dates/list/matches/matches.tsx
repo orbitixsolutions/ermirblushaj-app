@@ -2,18 +2,13 @@
 
 import { fetcher } from '@/helpers/fetcher'
 import { Match, MatchKey, Team } from '@prisma/client'
-import { Avatar, Divider } from '@nextui-org/react'
+import { Divider } from '@nextui-org/react'
 import useSWR from 'swr'
 import CardMatchup from '@/components/dates/cards/card-matchup'
 import DateGeneralOptions from '@/components/dates/options/date-general-options'
 import DateOwnerOptions from '../../options/date-owner-options'
-import PopoverDateTeam from '../../popover/popover-eighth-team'
 import ButtonDeleteKeyMatches from '../../buttons/options/button-delete-key-matches'
-import ImagesMatchesKeys from '../../image/images-matches-keys'
 import ButtonOptionsKeys from '../../buttons/options/button-options-keys'
-import PopoverQuarterMatches from '../../popover/popover-quarters-team'
-import PopoverSemifinalsMatches from '../../popover/popover-semifinals-team'
-import PopoverFinalsMatches from '../../popover/popover-finals-team'
 import BestTeams from '../best-teams'
 import MatchesEighths from './matches-eighths'
 import MatchesQuarters from './matches-quarters'
@@ -32,16 +27,16 @@ type ExtendedMatchKey = MatchKey & {
 
 const Matches = () => {
   const {
-    data: getMatches,
+    data: data_matches,
     isLoading,
     error
   } = useSWR<ExtendedMatch[]>('/api/matches', fetcher)
 
-  const { data: matches } = useSWR<ExtendedMatchKey[]>(
+  const { data: key_matches } = useSWR<ExtendedMatchKey[]>(
     '/api/matches/keys',
     fetcher
   )
-  
+
   if (error) {
     return <p>An ocurred a error!</p>
   }
@@ -52,7 +47,7 @@ const Matches = () => {
 
   return (
     <div className='space-y-20'>
-      {matches?.length !== 0 && (
+      {key_matches?.length !== 0 && (
         <div className='w-[968px] mx-auto'>
           <h2 className='text-5xl font-bold mb-5 text-center'>Keys</h2>
 
@@ -85,7 +80,7 @@ const Matches = () => {
           <h2 className='text-5xl font-bold mb-5 text-center'>Dates</h2>
 
           <ol className='w-full'>
-            {getMatches?.map((matchup) => (
+            {data_matches?.map((matchup) => (
               <>
                 <li
                   key={matchup.id}

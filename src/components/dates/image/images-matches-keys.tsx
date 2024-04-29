@@ -15,7 +15,7 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
         <Tooltip
           content={
             <div className='flex flex-col gap-2 text-center'>
-              <p>Name: {teamKeyA.name}</p>
+              <p>{teamKeyA.name}</p>
             </div>
           }
         >
@@ -24,7 +24,7 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
               teamKeyA.stageStatus === 'LOSER'
                 ? 'border-custom-red'
                 : teamKeyA.phase === 'FINAL'
-                ? 'border-yellow-600'
+                ? 'border-yellow-400'
                 : teamKeyA.stageStatus === 'WINNER'
                 ? 'border-custom-green'
                 : 'border-gray-600'

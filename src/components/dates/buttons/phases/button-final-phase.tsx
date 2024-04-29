@@ -5,6 +5,7 @@ import { Button } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
+import JSConfetti from 'js-confetti'
 import useSWR from 'swr'
 
 type ExtendedMatchKey = MatchKey & {
@@ -13,6 +14,7 @@ type ExtendedMatchKey = MatchKey & {
 }
 
 const ButtonFinalPhase = () => {
+  const Confetti = new JSConfetti()
   const [isPending, startTransition] = useTransition()
 
   const { data: matchesKey } = useSWR<ExtendedMatchKey[]>(
@@ -36,6 +38,7 @@ const ButtonFinalPhase = () => {
       const { status, message } = await finishMatchFinal()
       if (status === 200) {
         toast.success(message)
+        Confetti.addConfetti()
         updatedData()
         return
       }

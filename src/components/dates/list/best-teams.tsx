@@ -19,13 +19,13 @@ const BestTeams = () => {
   if (error) return <p>Error</p>
   if (isLoading) return <p>Loading...</p>
 
-  if (bestTeams?.length === 0) return
-
+  const EMPTY_BEST_TEAMS = 0
+  if (bestTeams?.length === EMPTY_BEST_TEAMS) return
 
   return (
     <div>
       <h2 className='text-3xl font-bold text-center'>Best Teams</h2>
-      <ol className='w-full flex flex-col items-center gap-4 my-8'>
+      <ol className='w-full flex justify-center gap-4 my-8'>
         {bestTeams?.map((team, index) => (
           <li key={team.id} className='flex'>
             <Card

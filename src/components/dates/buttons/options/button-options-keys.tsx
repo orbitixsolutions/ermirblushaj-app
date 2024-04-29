@@ -27,7 +27,9 @@ const ButtonOptionsKeys = () => {
   )
 
   if (finishedTournament)
-    return <p className='text-center'>Tournament is finished</p>
+    return (
+      <p className='text-center text-4xl font-bold'>Tournament is finished!</p>
+    )
 
   return (
     <>
