@@ -27,7 +27,7 @@ const FormAdmin = () => {
 
   const styleInput = {
     label:
-      'text-white text-xl group-data-[filled-within=true]:text-white group-data-[filled=true]:text-white'
+      'text-white text-sm md:text-xl group-data-[filled-within=true]:text-white group-data-[filled=true]:text-white'
   }
 
   const onSubmit = handleSubmit(async (data) => {
@@ -58,7 +58,6 @@ const FormAdmin = () => {
           render={({ field }) => (
             <Input
               type='text'
-              size='lg'
               isDisabled={isPending}
               radius='md'
               labelPlacement='outside'
@@ -75,7 +74,6 @@ const FormAdmin = () => {
           render={({ field }) => (
             <Input
               type='text'
-              size='lg'
               isDisabled={isPending}
               radius='md'
               labelPlacement='outside'
@@ -92,7 +90,6 @@ const FormAdmin = () => {
           render={({ field }) => (
             <Input
               type='password'
-              size='lg'
               isDisabled={isPending}
               radius='md'
               labelPlacement='outside'
@@ -108,7 +105,6 @@ const FormAdmin = () => {
           control={control}
           render={({ field }) => (
             <Select
-              size='lg'
               isDisabled={isPending}
               radius='md'
               labelPlacement='outside'
@@ -131,7 +127,7 @@ const FormAdmin = () => {
       <Button
         isLoading={isPending}
         type='submit'
-        className='bg-custom-green font-bold uppercase text-xl w-full'
+        className='bg-custom-green font-bold uppercase text-sm md:Ftext-xl w-full'
       >
         Create
       </Button>

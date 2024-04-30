@@ -11,17 +11,16 @@ const AdminPage = async () => {
   if (role === 'OWNER') {
     return (
       <WrapperSection>
-        <div className='col-span-5'>
+        <div className='col-span-11 lg:col-span-5'>
           <h2 className='text-2xl font-bold mb-5 uppercase'>Admin users</h2>
           <TableAdmin />
         </div>
         <Divider
-          className='col-span-1 bg-custom-gray mx-auto'
+          className='col-span-1 hidden lg:block bg-custom-gray mx-auto'
           orientation='vertical'
-        />
-        <div className='col-span-5'>
+        /> 
+        <div className='col-span-11 lg:col-span-5'>
           <h2 className='text-2xl font-bold mb-5 uppercase'>Create admin</h2>
-
           <FormAdmin />
         </div>
       </WrapperSection>
