@@ -1,3 +1,5 @@
+import { fetcher } from '@/helpers/fetcher'
+import { Match } from '@prisma/client'
 import {
   Card,
   CardBody,
@@ -7,11 +9,9 @@ import {
 } from '@nextui-org/react'
 import ButtonCreateGroups from '@/components/dates/buttons/options/create/button-create-groups'
 import ButtonCreateMatches from '@/components/dates/buttons/options/create/button-create-matches'
-import ButtonCreateKeys from '../buttons/options/create/button-create-keys'
+import ButtonCreateKeys from '@/components/dates/buttons/options/create/button-create-keys'
 import useSWR from 'swr'
-import { fetcher } from '@/helpers/fetcher'
-import { Match } from '@prisma/client'
-import ButtonFinishGroupStage from '../buttons/options/button-finish-group-stage'
+import ButtonFinishGroupStage from '@/components/dates/buttons/options/button-finish-group-stage'
 
 const DateGeneralOptions = () => {
   const {
@@ -29,9 +29,9 @@ const DateGeneralOptions = () => {
 
   return (
     <div className='flex flex-col gap-5'>
-      <Card className='w-[400px] bg-custom-darkblue text-custom-white'>
+      <Card className='w-full xl:w-[325px] bg-custom-darkblue text-custom-white'>
         <CardHeader>
-          <h3 className='mx-auto text-4xl font-bold'>Groups Fase</h3>
+          <h3 className='mx-auto text-2xl xl:text-4xl font-bold'>Groups Fase</h3>
         </CardHeader>
         <CardBody>
           <p className='text-center'>Automatically organize groups</p>
@@ -41,9 +41,9 @@ const DateGeneralOptions = () => {
           <ButtonCreateGroups />
         </CardFooter>
       </Card>
-      <Card className='w-[400px] bg-custom-darkblue text-custom-white'>
+      <Card className='w-full xl:w-[325px] bg-custom-darkblue text-custom-white'>
         <CardHeader>
-          <h3 className='mx-auto text-4xl font-bold'>Generate Dates</h3>
+          <h3 className='mx-auto text-2xl xl:text-4xl font-bold'>Generate Dates</h3>
         </CardHeader>
         <CardBody>
           <p className='text-center'>Create matches in an organized way</p>
@@ -54,9 +54,9 @@ const DateGeneralOptions = () => {
         </CardFooter>
       </Card>
       {!ALL_MATCHES_COMPLETED && (
-        <Card className='w-[400px] bg-custom-darkblue text-custom-white'>
+        <Card className='w-full xl:w-[325px] bg-custom-darkblue text-custom-white'>
           <CardHeader>
-            <h3 className='mx-auto text-4xl font-bold'>Finished Stage</h3>
+            <h3 className='mx-auto text-2xl xl:text-4xl font-bold'>Finished Stage</h3>
           </CardHeader>
           <CardBody>
             <p className='text-center'>This will end the group</p>
@@ -68,9 +68,9 @@ const DateGeneralOptions = () => {
         </Card>
       )}
       {ALL_MATCHES_COMPLETED && (
-        <Card className='w-[400px] bg-custom-darkblue text-custom-white'>
+        <Card className='w-full xl:w-[325px] bg-custom-darkblue text-custom-white'>
           <CardHeader>
-            <h3 className='mx-auto text-4xl font-bold'>Generate Key</h3>
+            <h3 className='mx-auto text-2xl xl:text-4xl font-bold'>Generate Key</h3>
           </CardHeader>
           <CardBody>
             <p className='text-center'>Generates keys in an organized way</p>

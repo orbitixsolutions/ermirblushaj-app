@@ -31,11 +31,11 @@ const DateTeams = () => {
   }
 
   return (
-    <div className='flex flex-wrap-reverse  justify-between'>
-      <div className='w-[400px]'>
+    <div className='grid grid-cols-8 space-y-20 xl:space-y-0'>
+      <div className='col-span-8 xl:col-span-2'>
         <h2 className='text-5xl font-bold mb-5 text-center'>Dates</h2>
 
-        <ol className='w-full'>
+        <ol>
           {data_matches?.map((matchup) => (
             <>
               <li
@@ -50,11 +50,9 @@ const DateTeams = () => {
         </ol>
       </div>
 
-      <div className='flex flex-col gap-5 pt-20'>
-        <div className='grid grid-cols-2 gap-5 top-[20px]'>
-          <DateGeneralOptions />
-          <DateOwnerOptions />
-        </div>
+      <div className='col-span-8 xl:col-span-6 flex-col xl:flex-row flex gap-4 justify-end space-y-8 xl:space-y-0'>
+        <DateGeneralOptions />
+        <DateOwnerOptions />
       </div>
     </div>
   )

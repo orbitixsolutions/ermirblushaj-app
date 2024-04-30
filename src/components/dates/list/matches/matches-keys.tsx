@@ -35,7 +35,7 @@ const MatchesKeys = () => {
   return (
     <>
       {key_matches?.length !== 0 && (
-        <div className='w-[968px] mx-auto'>
+        <div className='max-w-[968px] mx-auto'>
           <h2 className='text-5xl font-bold text-center'>Keys</h2>
 
           <div className='flex justify-between mx-auto relative'>

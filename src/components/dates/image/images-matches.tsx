@@ -17,7 +17,9 @@ const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
         <Card className=' bg-custom-darkblue text-custom-white'>
           <CardFooter className='space-x-3'>
             <Avatar src={teamA.logo!} alt={`Team ${teamA.name}`} />
-            <h2 className='text-sm font-medium line-clamp-2'>{teamA.name}</h2>
+            <h2 className='text-xs md:text-sm font-medium line-clamp-1'>
+              {teamA.name}
+            </h2>
           </CardFooter>
         </Card>
         {match.status === 'LIVE' && (
@@ -36,7 +38,9 @@ const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
         <Card className='bg-custom-darkblue text-custom-white'>
           <CardFooter className='space-x-3'>
             <Avatar src={teamB.logo!} alt={`Team ${teamA.name}`} />
-            <h2 className='text-sm font-medium line-clamp-2'>{teamB.name}</h2>
+            <h2 className='text-xs md:text-sm font-medium line-clamp-1'>
+              {teamB.name}
+            </h2>
           </CardFooter>
         </Card>
         {match.status === 'LIVE' && (
