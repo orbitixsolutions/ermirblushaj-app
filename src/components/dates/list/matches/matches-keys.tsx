@@ -8,9 +8,9 @@ import MatchesSemifinals from '@/components/dates/list/matches/matches-semifinal
 import MatchesFinal from '@/components/dates/list/matches/matches-final'
 import ButtonDeleteKeyMatches from '@/components/dates/buttons/options/delete/button-delete-key-matches'
 import ButtonOptionsKeys from '@/components/dates/buttons/options/button-options-keys'
+import SkeletonError from '@/components/dates/skeleton/skeleton-error'
 import Loader from '@/components/dates/loader'
 import useSWR from 'swr'
-import SkeletonError from '../../skeleton/skeleton-error'
 
 type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
@@ -36,7 +36,7 @@ const MatchesKeys = () => {
     <>
       {key_matches?.length !== 0 && (
         <div className='w-[968px] mx-auto'>
-          <h2 className='text-5xl font-bold mb-5 text-center'>Keys</h2>
+          <h2 className='text-5xl font-bold text-center'>Keys</h2>
 
           <div className='flex justify-between mx-auto relative'>
             {/* Column A */}
@@ -53,7 +53,7 @@ const MatchesKeys = () => {
             <MatchesFinal column='none' phase='final' />
           </div>
 
-          <div className='flex flex-col gap-4 py-5 justify-center'>
+          <div className='flex flex-col gap-4 justify-center'>
             <ButtonDeleteKeyMatches />
             <ButtonOptionsKeys />
           </div>

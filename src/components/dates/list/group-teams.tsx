@@ -27,23 +27,26 @@ const GroupTeams = () => {
   }
 
   return (
-    <ol className='grid grid-cols-8 gap-4 py-4'>
+    <ol className='grid grid-cols-8 gap-4'>
       {data_groups?.map((group) => (
         <li
-          className='col-span-4 bg-custom-darknavy p-5 rounded-lg'
+          className='col-span-8 lg:col-span-4 bg-custom-darknavy p-5 rounded-lg'
           key={group.id}
         >
-          <h3 className='text-3xl font-bold uppercase text-custom-green mb-4'>
+          <h3 className='text-xl md:text-3xl font-bold uppercase text-custom-green mb-4'>
             {group.name}
           </h3>
 
-          <ol className='grid grid-cols-5 gap-4'>
+          <ol className='grid grid-cols-6 md:grid-cols-5 gap-4'>
             {group.teams.map((team) => (
-              <li key={team.id}>
-                <Card className='bg-custom-navy p-4 aspect-square'>
+              <li
+                key={team.id}
+                className='col-span-3 xs:col-span-2 md:col-span-1'
+              >
+                <Card className='bg-custom-navy p-2 md:p-4 aspect-square'>
                   <Image src={team.logo!} alt={`Team ${team.name}`} />
                 </Card>
-                <h2 className='text-lg text-center line-clamp-1 mt-2'>
+                <h2 className='text-sm md:text-lg text-center line-clamp-1 mt-2'>
                   {team.name}
                 </h2>
               </li>

@@ -31,32 +31,32 @@ const DateTeams = () => {
   }
 
   return (
-    <div className='flex justify-between'>
-        <div className='w-[400px]'>
-          <h2 className='text-5xl font-bold mb-5 text-center'>Dates</h2>
+    <div className='flex flex-wrap-reverse  justify-between'>
+      <div className='w-[400px]'>
+        <h2 className='text-5xl font-bold mb-5 text-center'>Dates</h2>
 
-          <ol className='w-full'>
-            {data_matches?.map((matchup) => (
-              <>
-                <li
-                  key={matchup.id}
-                  className='rounded-lg flex flex-col items-start gap-4 py-4'
-                >
-                  <CardMatchup match={matchup} />
-                </li>
-                <Divider className='bg-custom-lightgray' />
-              </>
-            ))}
-          </ol>
-        </div>
+        <ol className='w-full'>
+          {data_matches?.map((matchup) => (
+            <>
+              <li
+                key={matchup.id}
+                className='rounded-lg flex flex-col items-start gap-4 py-4'
+              >
+                <CardMatchup match={matchup} />
+              </li>
+              <Divider className='bg-custom-lightgray' />
+            </>
+          ))}
+        </ol>
+      </div>
 
-        <div className='flex flex-col gap-5 pt-20'>
-          <div className='grid grid-cols-2 gap-5 top-[20px]'>
-            <DateGeneralOptions />
-            <DateOwnerOptions />
-          </div>
+      <div className='flex flex-col gap-5 pt-20'>
+        <div className='grid grid-cols-2 gap-5 top-[20px]'>
+          <DateGeneralOptions />
+          <DateOwnerOptions />
         </div>
       </div>
+    </div>
   )
 }
 

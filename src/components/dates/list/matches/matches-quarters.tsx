@@ -55,9 +55,7 @@ const MatchesQuarters = ({
                   />
                 </div>
 
-                <div className='my-64'>
-                  <ImagesMatchesKeys match={matchKey} />
-                </div>
+                <ImagesMatchesKeys match={matchKey} />
               </li>
             ))
           ) : (
@@ -67,7 +65,7 @@ const MatchesQuarters = ({
                 .map((_, index) => (
                   <Card
                     key={index}
-                    className='bg-custom-darkblue text-custom-white my-32'
+                    className='bg-custom-darkblue text-custom-white mb-32'
                   >
                     <CardBody>
                       <Avatar />
