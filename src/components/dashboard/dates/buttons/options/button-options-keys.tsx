@@ -1,5 +1,5 @@
 import { fetcher } from '@/helpers/fetcher'
-import { Spinner } from '@nextui-org/react'
+import { Card, CardBody, Spinner } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
 import ButtonEighthPhase from '@/components/dashboard/dates/buttons/phases/button-eighth-phase'
 import ButtonQuaterPhase from '@/components/dashboard/dates/buttons/phases/button-quarter-phase'
@@ -33,9 +33,13 @@ const ButtonOptionsKeys = () => {
 
   if (finishedTournament)
     return (
-      <h2 className='text-center text-4xl font-bold'>
-        Tournament is finished!
-      </h2>
+      <Card className='bg-custom-green/30 border-2 border-custom-green p-4'>
+        <CardBody>
+          <h2 className='text-center text-custom-green/75 text-4xl text-balance font-bold'>
+            Tournament is finished
+          </h2>
+        </CardBody>
+      </Card>
     )
 
   return (

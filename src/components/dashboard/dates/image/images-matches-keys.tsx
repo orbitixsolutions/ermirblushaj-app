@@ -13,7 +13,7 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
     <>
       <Tooltip
         content={
-          <div className='flex flex-col gap-2 text-center'>
+          <div className='text-center'>
             <p>{teamKeyA.name}</p>
           </div>
         }
@@ -39,7 +39,7 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
 
       <Tooltip
         content={
-          <div className='flex flex-col gap-2 text-center'>
+          <div className='text-center'>
             <p>{teamKeyB.name}</p>
           </div>
         }
