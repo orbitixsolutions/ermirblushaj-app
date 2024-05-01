@@ -39,7 +39,7 @@ const MatchesEighths = ({
             <PopoverEighthTeam column={column} phase={phase} match={matchKey} />
           </div>
 
-          <WrapperImage className=''>
+          <WrapperImage>
             <ImagesMatchesKeys match={matchKey} />
           </WrapperImage>
         </li>

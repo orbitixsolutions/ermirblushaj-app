@@ -27,7 +27,7 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
               : 'border-gray-600'
           }`}
         >
-          <CardFooter className='space-x-3'>
+          <CardFooter>
             <Avatar
               size='sm'
               src={teamKeyA.logo!}
@@ -53,7 +53,7 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
               : 'border-gray-600'
           }`}
         >
-          <CardFooter className='space-x-3'>
+          <CardFooter>
             <Avatar
               size='sm'
               src={teamKeyB.logo!}
