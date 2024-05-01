@@ -33,7 +33,9 @@ const DateTeams = () => {
   return (
     <div className='grid grid-cols-8 space-y-20 xl:space-y-0'>
       <div className='col-span-8 xl:col-span-2'>
-        <h2 className='text-5xl font-bold mb-5 text-center'>Dates</h2>
+        <h2 className='text-2xl xl:text-5xl font-bold mb-5 text-center'>
+          Dates
+        </h2>
 
         <ol>
           {data_matches?.map((matchup) => (

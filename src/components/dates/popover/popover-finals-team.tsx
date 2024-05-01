@@ -93,7 +93,7 @@ const PopoverFinalsTeam = ({
                     Today
                   </Button>
 
-                  <h2 className='font-semibold text-center text-xl'>
+                  <h2 className='font-semibold text-center text-xl text-custom-white'>
                     Select Winner
                   </h2>
                   <div className='flex gap-4'>

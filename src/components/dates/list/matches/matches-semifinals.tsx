@@ -1,10 +1,10 @@
-import { fetcher } from '@/helpers/fetcher'
-import { Avatar, Card, CardBody } from '@nextui-org/react'
+import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
-import ImagesMatchesKeys from '../../image/images-matches-keys'
-import PopoverQuarterMatches from '../../popover/popover-quarters-team'
+import { fetcher } from '@/helpers/fetcher'
+import PopoverSemifinalsMatches from '@/components/dates/popover/popover-semifinals-team'
+import ImagesMatchesKeys from '@/components/dates/image/images-matches-keys'
+import WrapperImage from '@/components/dates/image/wrapper-images'
 import useSWR from 'swr'
-import PopoverSemifinalsMatches from '../../popover/popover-semifinals-team'
 
 type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
@@ -17,8 +17,8 @@ const columnPopover = {
 }
 
 const columnClass = {
-  a: 'left-64',
-  b: 'right-64'
+  a: 'left-48',
+  b: 'right-48'
 }
 
 const MatchesSemifinals = ({
@@ -45,9 +45,7 @@ const MatchesSemifinals = ({
             matches?.map((matchKey) => (
               <li key={matchKey.id} className='relative'>
                 <div
-                  className={`absolute top-0 h-full flex justify-center items-center ${
-                    columnPopover[column as keyof typeof columnPopover] || ''
-                  }`}
+                  className='absolute w-full h-full flex justify-center items-center'
                 >
                   <PopoverSemifinalsMatches
                     column={column}
@@ -56,9 +54,16 @@ const MatchesSemifinals = ({
                   />
                 </div>
 
-                <div className='my-64'>
-                  <ImagesMatchesKeys match={matchKey} />
+                <div className='absolute w-full h-full flex justify-center items-center'>
+                  <Divider
+                    orientation='vertical'
+                    className='bg-custom-lightgray h-80'
+                  />
                 </div>
+
+                <WrapperImage className='space-y-[275px]'>
+                  <ImagesMatchesKeys match={matchKey} />
+                </WrapperImage>
               </li>
             ))
           ) : (
@@ -71,7 +76,7 @@ const MatchesSemifinals = ({
                     className='bg-custom-darkblue text-custom-white my-72'
                   >
                     <CardBody>
-                      <Avatar />
+                      <Avatar size='sm' />
                     </CardBody>
                   </Card>
                 ))}

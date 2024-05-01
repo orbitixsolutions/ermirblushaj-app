@@ -52,7 +52,8 @@ const ButtonEighthPhase = () => {
       onPress={() => handleFinish()}
       isLoading={isPending}
       color='danger'
-      className='mx-auto bg-custom-red font-bold'
+      fullWidth
+      className='mx-auto bg-custom-blue font-bold'
     >
       Finish Eights
     </Button>

@@ -35,8 +35,8 @@ const MatchesKeys = () => {
   return (
     <>
       {key_matches?.length !== 0 && (
-        <div className='max-w-[968px] mx-auto'>
-          <h2 className='text-5xl font-bold text-center'>Keys</h2>
+        <div className='hidden md:block lg:max-w-[720px] xl:w-[968px] mx-auto'>
+          <h2 className='text-2xl xl:text-5xl font-bold text-center'>Keys</h2>
 
           <div className='flex justify-between mx-auto relative'>
             {/* Column A */}
@@ -53,9 +53,9 @@ const MatchesKeys = () => {
             <MatchesFinal column='none' phase='final' />
           </div>
 
-          <div className='flex flex-col gap-4 justify-center'>
-            <ButtonDeleteKeyMatches />
+          <div className='max-w-[400px] mx-auto grid gap-3'>
             <ButtonOptionsKeys />
+            <ButtonDeleteKeyMatches />
           </div>
         </div>
       )}

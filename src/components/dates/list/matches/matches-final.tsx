@@ -1,9 +1,10 @@
 import { fetcher } from '@/helpers/fetcher'
-import { Avatar, Card, CardBody } from '@nextui-org/react'
+import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
-import ImagesMatchesKeys from '../../image/images-matches-keys'
+import ImagesMatchesKeys from '@/components/dates/image/images-matches-keys'
+import PopoverFinalsTeam from '@/components/dates/popover/popover-finals-team'
+import WrapperImage from '@/components/dates/image/wrapper-images'
 import useSWR from 'swr'
-import PopoverFinalsTeam from '../../popover/popover-finals-team'
 
 type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
@@ -15,7 +16,7 @@ const columnPopover = {
 }
 
 const columnClass = {
-  none: 'left-[28rem]'
+  none: ''
 }
 
 const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
@@ -26,7 +27,7 @@ const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
 
   return (
     <div
-      className={`absolute top-0 h-full flex justify-center items-center ${
+      className={`absolute top-0 h-full flex mx-auto w-full justify-center items-center ${
         columnClass[column as keyof typeof columnClass] || ''
       }`}
     >
@@ -36,7 +37,7 @@ const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
             matches?.map((matchKey) => (
               <li key={matchKey.id} className='relative'>
                 <div
-                  className={`absolute top-32 w-full h-full flex justify-center items-center ${
+                  className={`absolute w-full h-full flex justify-center items-center ${
                     columnPopover[column as keyof typeof columnPopover] || ''
                   }`}
                 >
@@ -47,9 +48,16 @@ const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
                   />
                 </div>
 
-                <div className='my-28'>
-                  <ImagesMatchesKeys match={matchKey} />
+                <div className='absolute w-full h-full flex justify-center items-center'>
+                  <Divider
+                    orientation='vertical'
+                    className='bg-custom-lightgray h-32'
+                  />
                 </div>
+
+                <WrapperImage className='space-y-16'>
+                  <ImagesMatchesKeys match={matchKey} />
+                </WrapperImage>
               </li>
             ))
           ) : (
@@ -62,7 +70,7 @@ const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
                     className='bg-custom-darkblue text-custom-white my-4'
                   >
                     <CardBody>
-                      <Avatar />
+                      <Avatar size='sm' />
                     </CardBody>
                   </Card>
                 ))}

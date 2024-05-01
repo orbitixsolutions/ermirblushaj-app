@@ -1,11 +1,11 @@
 import { fetcher } from '@/helpers/fetcher'
 import { Spinner } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
+import ButtonEighthPhase from '@/components/dates/buttons/phases/button-eighth-phase'
+import ButtonQuaterPhase from '@/components/dates/buttons/phases/button-quarter-phase'
+import ButtonSemifinalPhase from '@/components/dates/buttons/phases/button-semifinal-phase'
+import ButtonFinalPhase from '@/components/dates/buttons/phases/button-final-phase'
 import useSWR from 'swr'
-import ButtonEighthPhase from '../phases/button-eighth-phase'
-import ButtonQuaterPhase from '../phases/button-quarter-phase'
-import ButtonSemifinalPhase from '../phases/button-semifinal-phase'
-import ButtonFinalPhase from '../phases/button-final-phase'
 
 type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
@@ -19,7 +19,12 @@ const ButtonOptionsKeys = () => {
     error
   } = useSWR<ExtendedMatchKey[]>('/api/matches/keys', fetcher)
 
-  if (error) return <p>Error</p>
+  if (error)
+    return (
+      <h2 className='text-2xl text-center text-custom-red'>
+        An ocurred a error.
+      </h2>
+    )
   if (isLoading) return <Spinner size='lg' />
 
   const finishedTournament = matchesKey?.every(
@@ -28,7 +33,9 @@ const ButtonOptionsKeys = () => {
 
   if (finishedTournament)
     return (
-      <p className='text-center text-4xl font-bold'>Tournament is finished!</p>
+      <h2 className='text-center text-4xl font-bold'>
+        Tournament is finished!
+      </h2>
     )
 
   return (

@@ -1,8 +1,9 @@
-import { fetcher } from '@/helpers/fetcher'
-import { Avatar, Card, CardBody } from '@nextui-org/react'
+import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
-import ImagesMatchesKeys from '../../image/images-matches-keys'
-import PopoverQuarterMatches from '../../popover/popover-quarters-team'
+import { fetcher } from '@/helpers/fetcher'
+import ImagesMatchesKeys from '@/components/dates/image/images-matches-keys'
+import PopoverQuarterMatches from '@/components/dates/popover/popover-quarters-team'
+import WrapperImage from '@/components/dates/image/wrapper-images'
 import useSWR from 'swr'
 
 type ExtendedMatchKey = MatchKey & {
@@ -16,8 +17,8 @@ const columnPopover = {
 }
 
 const columnClass = {
-  a: 'left-32',
-  b: 'right-32'
+  a: 'left-28',
+  b: 'right-28'
 }
 
 const MatchesQuarters = ({
@@ -42,12 +43,8 @@ const MatchesQuarters = ({
         <ol>
           {matches?.length !== 0 ? (
             matches?.map((matchKey) => (
-              <li key={matchKey.id} className='relative'>
-                <div
-                  className={`absolute top-0 h-full flex justify-center items-center ${
-                    columnPopover[column as keyof typeof columnPopover] || ''
-                  }`}
-                >
+              <li key={matchKey.id} className='relative my-16'>
+                <div className='absolute w-full h-full flex justify-center items-center'>
                   <PopoverQuarterMatches
                     column={column}
                     phase={phase}
@@ -55,7 +52,16 @@ const MatchesQuarters = ({
                   />
                 </div>
 
-                <ImagesMatchesKeys match={matchKey} />
+                <div className='absolute w-full h-full flex justify-center items-center'>
+                  <Divider
+                    orientation='vertical'
+                    className='bg-custom-lightgray h-32'
+                  />
+                </div>
+
+                <WrapperImage className='space-y-28'>
+                  <ImagesMatchesKeys match={matchKey} />
+                </WrapperImage>
               </li>
             ))
           ) : (
@@ -65,10 +71,10 @@ const MatchesQuarters = ({
                 .map((_, index) => (
                   <Card
                     key={index}
-                    className='bg-custom-darkblue text-custom-white mb-32'
+                    className='bg-custom-darkblue text-custom-white my-28'
                   >
                     <CardBody>
-                      <Avatar />
+                      <Avatar size='sm' />
                     </CardBody>
                   </Card>
                 ))}

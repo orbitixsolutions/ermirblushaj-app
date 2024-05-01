@@ -1,8 +1,9 @@
 import { fetcher } from '@/helpers/fetcher'
 import { MatchKey, Team } from '@prisma/client'
+import ImagesMatchesKeys from '@/components/dates/image/images-matches-keys'
+import PopoverEighthTeam from '@/components/dates/popover/popover-eighth-team'
+import WrapperImage from '@/components/dates/image/wrapper-images'
 import useSWR from 'swr'
-import ImagesMatchesKeys from '../../image/images-matches-keys'
-import PopoverEighthTeam from '../../popover/popover-eighth-team'
 
 type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
@@ -38,7 +39,9 @@ const MatchesEighths = ({
             <PopoverEighthTeam column={column} phase={phase} match={matchKey} />
           </div>
 
-          <ImagesMatchesKeys match={matchKey} />
+          <WrapperImage className=''>
+            <ImagesMatchesKeys match={matchKey} />
+          </WrapperImage>
         </li>
       ))}
     </ol>
