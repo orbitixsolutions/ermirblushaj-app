@@ -33,14 +33,20 @@ const PopoverEighthTeam = ({
   const [isOpen, setIsOpen] = useState(false)
 
   const isCurrentDate = (date: string) => {
+    if (!date) return
+
     const current = new Date()
     const target = new Date(date)
 
-    return (
-      current.getFullYear() === target.getFullYear() &&
-      current.getMonth() + 1 === target.getMonth() + 1 &&
-      current.getDate() === target.getDate() + 1
-    )
+    const targetDate = `${target.getUTCFullYear()}-${
+      target.getUTCMonth() + 1
+    }-${target.getUTCDate()}`
+
+    const currentDate = `${current.getFullYear()}-${
+      current.getMonth() + 1
+    }-${current.getDate()}`
+
+    return targetDate === currentDate
   }
 
   const toggleOpen = () => {

@@ -27,7 +27,7 @@ const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
 
   return (
     <div
-      className={`absolute top-0 h-full flex mx-auto w-full justify-center items-center ${
+      className={`absolute top-0 left-[50%] -translate-x-[50%] h-full flex mx-auto justify-center items-center ${
         columnClass[column as keyof typeof columnClass] || ''
       }`}
     >

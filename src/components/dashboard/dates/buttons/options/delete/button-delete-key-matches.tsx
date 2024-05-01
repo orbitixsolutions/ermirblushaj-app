@@ -73,6 +73,7 @@ const ButtonDeleteKeyMatches = () => {
                 </Button>
                 <Button
                   color='success'
+                  isLoading={isPending}
                   className='bg-custom-green font-bold'
                   onPress={handleDeleteKeyMatchup}
                 >
