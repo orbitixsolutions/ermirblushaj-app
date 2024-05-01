@@ -18,13 +18,11 @@ const GroupTeams = () => {
     error
   } = useSWR<extendedGroups[]>('/api/groups', fetcher)
 
-  if (error) {
-    return <SkeletonError />
-  }
+  const EMPTY_GROUPS = 0
+  if (data_groups?.length === EMPTY_GROUPS) return
 
-  if (isLoading) {
-    return <SkeletonGroups />
-  }
+  if (error) return <SkeletonError />
+  if (isLoading) return <SkeletonGroups />
 
   return (
     <ol className='grid grid-cols-8 gap-4'>

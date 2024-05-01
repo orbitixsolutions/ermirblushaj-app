@@ -24,13 +24,11 @@ const MatchesKeys = () => {
     error
   } = useSWR<ExtendedMatchKey[]>('/api/matches/keys', fetcher)
 
-  if (error) {
-    return <SkeletonError />
-  }
+  const EMPTY_KEY_MATCHES = 0
+  if (EMPTY_KEY_MATCHES) return
 
-  if (isLoading) {
-    return <Loader />
-  }
+  if (error) return <SkeletonError />
+  if (isLoading) return <Loader />
 
   return (
     <>

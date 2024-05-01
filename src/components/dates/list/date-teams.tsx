@@ -22,13 +22,11 @@ const DateTeams = () => {
     error
   } = useSWR<ExtendedMatch[]>('/api/matches', fetcher)
 
-  if (error) {
-    return <SkeletonError />
-  }
+  const EMPTY_MATCHES = data_matches?.length === 0
+  if (EMPTY_MATCHES) return
 
-  if (isLoading) {
-    return <SkeletonDates />
-  }
+  if (error) return <SkeletonError />
+  if (isLoading) return <SkeletonDates />
 
   return (
     <div className='grid grid-cols-8 space-y-20 xl:space-y-0'>
