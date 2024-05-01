@@ -16,6 +16,7 @@ import { toast } from 'sonner'
 import { deleteImage } from '@/helpers/delete-image'
 import { useTransition } from 'react'
 import { mutate } from 'swr'
+import { useActiveTournament } from '@/store/use-active-tournament'
 
 interface Props {
   player: Player
@@ -23,6 +24,10 @@ interface Props {
 
 const DropdownPlayer = ({ player }: Props) => {
   const [isPending, startTransition] = useTransition()
+
+  const activeTournament = useActiveTournament(
+    (state) => state.activeTournament
+  )
 
   const { onPlayerModalEdit } = useModalPlayerStore((state) => ({
     onPlayerModalEdit: state.onPlayerModalEdit
@@ -54,6 +59,7 @@ const DropdownPlayer = ({ player }: Props) => {
         <DropdownTrigger>
           <Button
             isLoading={isPending}
+            isDisabled={activeTournament}
             isIconOnly
             radius='full'
             className='bg-custom-green'

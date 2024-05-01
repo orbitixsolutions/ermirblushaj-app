@@ -22,9 +22,16 @@ import { useModalPlayerStore } from '@/store/modal/use-modal-player-store'
 import { useTransition } from 'react'
 import { deleteImage } from '@/helpers/delete-image'
 import { mutate } from 'swr'
+import { useActiveTournament } from '@/store/use-active-tournament'
 
 const DropdownTeam = ({ team }: { team: Team }) => {
   const [isPending, startTransition] = useTransition()
+
+  const activeTournament = useActiveTournament(
+    (state) => state.activeTournament
+  )
+
+  console.log(activeTournament)
 
   const { onPlayerOpenId } = useModalPlayerStore((state) => ({
     onPlayerOpenId: state.onPlayerModalOpenId
@@ -59,6 +66,7 @@ const DropdownTeam = ({ team }: { team: Team }) => {
       <DropdownTrigger>
         <Button
           isLoading={isPending}
+          isDisabled={activeTournament}
           isIconOnly
           radius='full'
           className='bg-custom-green'

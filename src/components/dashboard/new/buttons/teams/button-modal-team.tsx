@@ -1,5 +1,6 @@
 'use client'
 
+import { useActiveTournament } from '@/store/use-active-tournament'
 import { useModalTeamStore } from '@/store/modal/use-modal-team-store'
 import { Button, Tooltip } from '@nextui-org/react'
 import { IconPlus } from '@tabler/icons-react'
@@ -7,6 +8,9 @@ import { toast } from 'sonner'
 import axios from 'axios'
 
 const ButtonModalTeam = () => {
+  const activeTournament = useActiveTournament(
+    (state) => state.activeTournament
+  )
   const openModal = useModalTeamStore((state) => state.onTeamModalOpen)
 
   const handleOpenModal = async () => {
@@ -21,14 +25,17 @@ const ButtonModalTeam = () => {
   }
 
   return (
-    <Button
-      isIconOnly
-      radius='full'
-      onPress={() => handleOpenModal()}
-      className='bg-transparent border-[1px] border-custom-green'
-    >
-      <IconPlus size={24} className='text-custom-green' />
-    </Button>
+    <Tooltip content='Create team'>
+      <Button
+        isIconOnly
+        radius='full'
+        onPress={() => handleOpenModal()}
+        isDisabled={activeTournament}
+        className='bg-transparent border-[1px] border-custom-green'
+      >
+        <IconPlus size={24} className='text-custom-green' />
+      </Button>
+    </Tooltip>
   )
 }
 
