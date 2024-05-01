@@ -1,5 +1,5 @@
-import WrapperAuth from '@/components/admin/wrappers/wrapper-auth'
-import NavigationMenu from '@/components/navigation/navigation-menu'
+import WrapperAuth from '@/components/dashboard/admin/wrappers/wrapper-auth'
+import NavigationMenu from '@/components/dashboard/navigation/navigation-menu'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (

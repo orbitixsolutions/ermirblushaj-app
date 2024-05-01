@@ -1,9 +1,9 @@
 import { Divider } from '@nextui-org/divider'
-import ListTournamentGallery from '@/components/gallery/lists/tournament/tournament-gallery'
-import ButtonAddImageTournament from '@/components/gallery/buttons/tournament/button-add-image-tournament'
-import ButtonAddImageTribute from '@/components/gallery/buttons/tribute/button-add-image-tribute'
-import ListTributeGallery from '@/components/gallery/lists/tribute/tribute-gallery'
-import WrapperSection from '@/components/gallery/wrappers/wrapper-section'
+import ListTournamentGallery from '@/components/dashboard/gallery/lists/tournament/tournament-gallery'
+import ButtonAddImageTournament from '@/components/dashboard/gallery/buttons/tournament/button-add-image-tournament'
+import ButtonAddImageTribute from '@/components/dashboard/gallery/buttons/tribute/button-add-image-tribute'
+import ListTributeGallery from '@/components/dashboard/gallery/lists/tribute/tribute-gallery'
+import WrapperSection from '@/components/dashboard/gallery/wrappers/wrapper-section'
 
 const GalleryPage = () => {
   return (

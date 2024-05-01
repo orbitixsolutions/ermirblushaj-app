@@ -1,11 +1,11 @@
 import { Divider } from '@nextui-org/divider'
-import WrapperSection from '@/components/new/wrappers/wrapper-section'
-import ButtonModalPlayer from '@/components/new/buttons/players/button-modal-player'
-import ButtonModalTeam from '@/components/new/buttons/teams/button-modal-team'
-import Players from '@/components/new/lists/player/players'
-import Teams from '@/components/new/lists/team/teams'
-import ModalPlayer from '@/components/new/modals/players/modal-player'
-import ModalTeam from '@/components/new/modals/teams/modal-team'
+import WrapperSection from '@/components/dashboard/new/wrappers/wrapper-section'
+import ButtonModalPlayer from '@/components/dashboard/new/buttons/players/button-modal-player'
+import ButtonModalTeam from '@/components/dashboard/new/buttons/teams/button-modal-team'
+import Players from '@/components/dashboard/new/lists/player/players'
+import Teams from '@/components/dashboard/new/lists/team/teams'
+import ModalPlayer from '@/components/dashboard/new/modals/players/modal-player'
+import ModalTeam from '@/components/dashboard/new/modals/teams/modal-team'
 
 const NewPage = () => {
   return (

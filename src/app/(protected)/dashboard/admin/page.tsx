@@ -1,9 +1,9 @@
 import { currentRole } from '@/libs/auth'
 import { Divider } from '@nextui-org/react'
 import { redirect } from 'next/navigation'
-import TableAdmin from '@/components/admin/table/table-admin'
-import WrapperSection from '@/components/admin/wrappers/wrapper-section'
-import FormAdmin from '@/components/admin/form/form-admin'
+import TableAdmin from '@/components/dashboard/admin/table/table-admin'
+import WrapperSection from '@/components/dashboard/admin/wrappers/wrapper-section'
+import FormAdmin from '@/components/dashboard/admin/form/form-admin'
 
 const AdminPage = async () => {
   const role = await currentRole()

@@ -1,7 +1,7 @@
-import GroupTeams from '@/components/dates/list/group-teams'
-import MatchesKeys from '@/components/dates/list/matches/matches-keys'
-import BestTeams from '@/components/dates/list/best-teams'
-import DateTeams from '@/components/dates/list/date-teams'
+import GroupTeams from '@/components/dashboard/dates/list/group-teams'
+import MatchesKeys from '@/components/dashboard/dates/list/matches/matches-keys'
+import BestTeams from '@/components/dashboard/dates/list/best-teams'
+import DateTeams from '@/components/dashboard/dates/list/date-teams'
 
 const DatePage = () => {
   return (

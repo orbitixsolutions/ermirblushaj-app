@@ -1,4 +1,4 @@
-import GroupsResume from '@/components/home/list/groups-resumen'
+import GroupsResume from '@/components/dashboard/home/list/groups-resumen'
 
 const DashboardPage = async () => {
   return (
