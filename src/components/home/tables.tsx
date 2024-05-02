@@ -18,20 +18,22 @@ const Tables = () => {
   if (isLoading) return <TableSkeleton />
 
   return (
-    <ol className='max-w-[320px] mx-auto grid grid-cols-8 gap-4 py-8 text-custom-white'>
-      {data_groups?.map((group) => (
-        <li
-          className='col-span-8 md:col-span-4 border-[1px] border-custom-lightgray rounded-lg overflow-hidden'
-          key={group.id}
-        >
-          <h3 className='text-base md:text-xl font-bold uppercase w-full bg-custom-green py-3 px-4 text-center '>
-            Group {group.name}
-          </h3>
+    <section className='max-w-[1024px] mx-auto py-8 md:py-24 px-5 flex flex-wrap'>
+      <ol className='grid grid-cols-8 gap-4 py-8 text-custom-white'>
+        {data_groups?.map((group) => (
+          <li
+            className='col-span-8 md:col-span-4 border-[1px] border-custom-lightgray rounded-lg overflow-hidden'
+            key={group.id}
+          >
+            <h3 className='text-base md:text-xl font-bold uppercase w-full bg-custom-green py-3 px-4 text-center '>
+              Group {group.name}
+            </h3>
 
-          <TableGroup group={group} />
-        </li>
-      ))}
-    </ol>
+            <TableGroup group={group} />
+          </li>
+        ))}
+      </ol>
+    </section>
   )
 }
 

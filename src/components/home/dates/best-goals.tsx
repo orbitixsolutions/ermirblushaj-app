@@ -4,6 +4,9 @@ import { Player, PlayerStats, TeamStats } from '@prisma/client'
 import ItemFirstPlayer from './item/item-first-player'
 import ItemPlayer from './item/item-player'
 import useSWR from 'swr'
+import NoItems from './errors/no-items'
+import ErrorAlert from './errors/error-alert'
+import Loader from './loader/loader'
 
 type ExtendedPlayer = Player & {
   team: {
@@ -21,21 +24,22 @@ const BestGoals = () => {
   } = useSWR<ExtendedPlayer[]>('/api/players/best', fetcher)
 
   const EMPTY_PLAYERS = 0
-  if (data_player?.length === EMPTY_PLAYERS) return
+  if (data_player?.length === EMPTY_PLAYERS)
+    return <NoItems message='No scorers to show' />
 
-  if (error) return <div>Failed to load</div>
-  if (isLoading) return <div>Loading...</div>
+  if (error) return <ErrorAlert message='An ocurred a error.' />
+  if (isLoading) return <Loader />
 
   return (
-    <div className='space-y-2'>
-      <Card radius='sm' className='bg-custom-blue w-full py-2'>
+    <div className='col-span-12 lg:col-span-6 xl:col-span-4 space-y-2'>
+      <Card radius='sm' className='bg-custom-blue py-2'>
         <h2 className='text-lg text-center font-bold text-custom-white'>
           Best Goals
         </h2>
       </Card>
       <Card
         radius='sm'
-        className='max-w-[320px] border-[1px] border-custom-lightgray mx-auto bg-transparent'
+        className='border-[1px] border-custom-lightgray mx-auto bg-transparent'
       >
         <ol className='flex flex-col text-custom-lightgray'>
           {data_player?.map((player, index) => {

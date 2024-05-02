@@ -1,14 +1,11 @@
-import prisma from '@/libs/prisma'
 import { NextResponse } from 'next/server'
+import prisma from '@/libs/prisma'
 
 export async function GET() {
   const matches = await prisma.match.findMany({
     where: {
       playStartDate: {
         notIn: null
-      },
-      status: {
-        equals: 'LIVE'
       }
     },
     include: {
