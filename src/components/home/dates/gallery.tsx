@@ -34,12 +34,12 @@ const Gallery = () => {
         <ol className='grid grid-cols-3'>
           {tournament_images?.map((image) => (
             <li key={image.id}>
-              <Card radius='none' className='col-span-1 aspect-square'>
+              <Card radius='none' className='col-span-1 size-full aspect-square'>
                 <Image
+                  radius='none'
                   src={image.url}
                   alt={image.id}
-                  radius='none'
-                  className='object-cover aspect-square'
+                  className='object-cover'
                 />
               </Card>
             </li>
