@@ -27,17 +27,22 @@ const BestGoals = () => {
   return (
     <div className='space-y-2'>
       <Card radius='sm' className='bg-custom-blue w-full py-2'>
-        <h2 className='text-xs text-center font-bold text-slate-950'>
+        <h2 className='text-lg text-center font-bold text-custom-white'>
           Best Goals
         </h2>
       </Card>
       <Card
         radius='sm'
-        className='w-[320px] border-[1px] border-custom-lightgray mx-auto bg-transparent'
+        className='max-w-[320px] border-[1px] border-custom-lightgray mx-auto bg-transparent'
       >
         <ol className='flex flex-col text-custom-lightgray'>
           {data_player?.map((player, index) => {
             const position = index + 1
+
+            const formatNumber = (number: string | number) => {
+              const stringNumber = Number(number)
+              return stringNumber >= 10 ? stringNumber : `0${stringNumber}`
+            }
 
             const firstPlace = position === 1
             if (firstPlace)
@@ -72,18 +77,20 @@ const BestGoals = () => {
                       </h2>
                     </div>
 
-                    <div className='col-span-1 grid-cols-3 flex items-center gap-2'>
+                    <div className='col-span-1 grid-cols-3 flex items-center gap-0.5 text-xs'>
                       <div>
-                        <h2 className='text-sm font-bold'>PJ</h2>
-                        <p>{player.number}</p>
+                        <h2 className='font-bold'>PJ</h2>
+                        <p>{formatNumber(player.number!)}</p>
                       </div>
                       <div>
-                        <h2 className='text-sm font-bold'>G</h2>
-                        <p>{player.team.teamStats.matchPlayed}</p>
+                        <h2 className='font-bold'>PG</h2>
+                        <p>
+                          {formatNumber(player.team.teamStats.matchPlayed!)}
+                        </p>
                       </div>
                       <div>
-                        <h2 className='text-sm font-bold'>G</h2>
-                        <p>{player.playerStatus.goals}</p>
+                        <h2 className='font-bold'>G</h2>
+                        <p>{formatNumber(player.playerStatus.goals!)}</p>
                       </div>
                     </div>
                   </div>
@@ -125,7 +132,7 @@ const BestGoals = () => {
                     <h2 className='text-sm font-bold'>
                       G{' '}
                       <span className='text-lg'>
-                        {player.playerStatus.goals}
+                        {formatNumber(player.playerStatus.goals!)}
                       </span>
                     </h2>
                   </div>

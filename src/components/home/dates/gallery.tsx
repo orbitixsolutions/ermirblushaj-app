@@ -21,7 +21,7 @@ const Gallery = () => {
   if (isLoading) return <SkeletonGallery />
 
   return (
-    <div className='w-[320px] mx-auto rounded-md overflow-hidden'>
+    <div className='max-w-[320px] mx-auto rounded-md overflow-hidden'>
       <div className='bg-custom-green w-full py-2'>
         <h2 className='text-xs text-center font-bold text-slate-950'>
           Gallery

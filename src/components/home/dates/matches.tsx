@@ -25,7 +25,7 @@ const Matches = () => {
   if (isLoading) return <SkeletonMatches />
 
   return (
-    <div className='w-[320px] mx-auto'>
+    <div className='max-w-[320px] mx-auto'>
       <h2 className='text-center font-bold'>Matches</h2>
       <ol className='grid grid-cols-3 py-5 gap-3'>
         {matches?.map((match) => {
