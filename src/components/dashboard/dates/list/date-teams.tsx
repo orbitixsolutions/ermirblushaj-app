@@ -22,9 +22,6 @@ const DateTeams = () => {
     error
   } = useSWR<ExtendedMatch[]>('/api/matches', fetcher)
 
-  const EMPTY_MATCHES = data_matches?.length === 0
-  if (EMPTY_MATCHES) return
-
   if (error) return <SkeletonError />
   if (isLoading) return <SkeletonDates />
 

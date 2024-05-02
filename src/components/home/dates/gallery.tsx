@@ -14,6 +14,9 @@ const Gallery = () => {
     error
   } = useSWR<TournamentGallery[]>('/api/tournament-gallery', fetcher)
 
+  const EMPTY_GALLERY = 0
+  if (tournament_images?.length === EMPTY_GALLERY) return
+
   if (error) return <ErrorGallery />
   if (isLoading) return <SkeletonGallery />
 
