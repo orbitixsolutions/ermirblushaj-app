@@ -3,7 +3,6 @@
 import { fetcher } from '@/helpers/fetcher'
 import { Button, Card, Image } from '@nextui-org/react'
 import { TournamentGallery } from '@prisma/client'
-import SkeletonGallery from '@/components/home/skeleton/skeleton-gallery'
 import useSWR from 'swr'
 import NoItems from './errors/no-items'
 import ErrorAlert from './errors/error-alert'

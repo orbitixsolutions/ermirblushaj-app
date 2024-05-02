@@ -14,12 +14,16 @@ const Tables = () => {
     error
   } = useSWR<ExtendedGroups[]>('/api/groups', fetcher)
 
+  const EMPTY_GROUPS = 0
+  if (data_groups?.length === EMPTY_GROUPS) return
+
   if (error) return <TableErrorSkeleton />
   if (isLoading) return <TableSkeleton />
 
   return (
-    <section className='max-w-[1024px] mx-auto py-8 md:py-24 px-5 flex flex-wrap'>
-      <ol className='grid grid-cols-8 gap-4 py-8 text-custom-white'>
+    <section className='max-w-[1440px] mx-auto py-8 md:py-24 px-5 flex flex-wrap text-custom-white'>
+      <h2 className='w-full text-center font-bold'>Matches</h2>
+      <ol className='grid grid-cols-8 gap-4 py-8 '>
         {data_groups?.map((group) => (
           <li
             className='col-span-8 md:col-span-4 border-[1px] border-custom-lightgray rounded-lg overflow-hidden'
