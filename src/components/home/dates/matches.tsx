@@ -4,8 +4,8 @@ import { fetcher } from '@/helpers/fetcher'
 import { Avatar, Card, CardBody } from '@nextui-org/react'
 import { Match, Team } from '@prisma/client'
 import useSWR from 'swr'
-import NoItems from './errors/no-items'
-import ErrorAlert from './errors/error-alert'
+import NoItems from '../errors/no-items'
+import ErrorDates from '../errors/error-dates'
 import Loader from './loader/loader'
 
 type ExtendedMatches = Match & {
@@ -24,7 +24,7 @@ const Matches = () => {
   if (matches?.length === EMPTY_MATCHES)
     return <NoItems message='Comming Soon...' />
 
-  if (error) return <ErrorAlert message='An ocurred a error.'/>
+  if (error) return <ErrorDates message='An ocurred a error.'/>
   if (isLoading) return <Loader />
 
   return (

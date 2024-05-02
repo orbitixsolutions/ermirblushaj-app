@@ -26,7 +26,7 @@ const SkeletonTeams = () => {
                 >
                   <Avatar />
                 </Card>
-                <Skeleton className='h-3 rounded-none bg-custom-navy before:bg-gradient-r before:from-custom-navy before:border-custom-navy before:via-custom-darkblue before:to-custom-navy' />
+                <Skeleton className='h-5 rounded-none bg-custom-navy before:bg-gradient-r before:from-custom-navy before:border-custom-navy before:via-custom-darkblue before:to-custom-navy' />
               </li>
             )
           })}

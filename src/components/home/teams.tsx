@@ -5,6 +5,7 @@ import { Avatar, Card, Skeleton } from '@nextui-org/react'
 import { Team } from '@prisma/client'
 import useSWR from 'swr'
 import SkeletonTeams from './skeleton/skeleton-teams'
+import ErrorTeams from './errors/error-teams'
 
 const Teams = () => {
   const {
@@ -13,8 +14,8 @@ const Teams = () => {
     error
   } = useSWR<Team[]>('/api/teams/full', fetcher)
 
-  if (error) return <div>Error loading teams</div>
-  if (!isLoading) return <SkeletonTeams />
+  if (error) return <ErrorTeams message='Error load teams.'/>
+  if (isLoading) return <SkeletonTeams />
 
   return (
     <section className='max-w-[1200px] mx-auto py-8 md:py-24 px-5 text-custom-white space-y-4'>

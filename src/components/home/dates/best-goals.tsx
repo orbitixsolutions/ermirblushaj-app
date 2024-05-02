@@ -4,8 +4,8 @@ import { Player, PlayerStats, TeamStats } from '@prisma/client'
 import ItemFirstPlayer from './item/item-first-player'
 import ItemPlayer from './item/item-player'
 import useSWR from 'swr'
-import NoItems from './errors/no-items'
-import ErrorAlert from './errors/error-alert'
+import NoItems from '../errors/no-items'
+import ErrorDates from '../errors/error-dates'
 import Loader from './loader/loader'
 
 type ExtendedPlayer = Player & {
@@ -27,7 +27,7 @@ const BestGoals = () => {
   if (data_player?.length === EMPTY_PLAYERS)
     return <NoItems message='No scorers to show' />
 
-  if (error) return <ErrorAlert message='An ocurred a error.' />
+  if (error) return <ErrorDates message='An ocurred a error.' />
   if (isLoading) return <Loader />
 
   return (

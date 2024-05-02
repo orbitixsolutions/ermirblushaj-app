@@ -4,8 +4,8 @@ import { fetcher } from '@/helpers/fetcher'
 import { Button, Card, Image } from '@nextui-org/react'
 import { TournamentGallery } from '@prisma/client'
 import useSWR from 'swr'
-import NoItems from './errors/no-items'
-import ErrorAlert from './errors/error-alert'
+import NoItems from '../errors/no-items'
+import ErrorDates from '../errors/error-dates'
 import Loader from './loader/loader'
 
 const Gallery = () => {
@@ -19,7 +19,7 @@ const Gallery = () => {
   if (tournament_images?.length === EMPTY_GALLERY)
     return <NoItems message='No there images to display...' />
 
-  if (error) return <ErrorAlert message='An ocurred a error.' />
+  if (error) return <ErrorDates message='An ocurred a error.' />
   if (isLoading) return <Loader />
 
   return (
