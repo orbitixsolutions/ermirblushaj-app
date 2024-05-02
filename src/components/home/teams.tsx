@@ -1,5 +1,4 @@
-import React from 'react'
-
+' use client'
 const Teams = () => {
   return <div>Teams</div>
 }

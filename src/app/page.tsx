@@ -6,7 +6,7 @@ import Guide from '@/components/home/guide'
 import Header from '@/components/home/header'
 import Main from '@/components/home/main'
 import Sponsors from '@/components/home/sponsors'
-import Tables from '@/components/home/tables'
+import TablesGroup from '@/components/home/tables'
 import Teams from '@/components/home/teams'
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
         <Sponsors />
         <Guide />
         <Dates />
-        <Tables />
+        <TablesGroup />
         <Teams />
       </main>
       <Footer />
