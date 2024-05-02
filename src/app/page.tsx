@@ -1,7 +1,27 @@
+'use client'
+
+import Dates from '@/components/home/dates'
+import Footer from '@/components/home/footer'
+import Guide from '@/components/home/guide'
+import Header from '@/components/home/header'
+import Main from '@/components/home/main'
+import Sponsors from '@/components/home/sponsors'
+import Tables from '@/components/home/tables'
+import Teams from '@/components/home/teams'
+
 export default function Home() {
   return (
-    <main>
-      <h1>Hello World</h1>
-    </main>
+    <>
+      <Header />
+      <main>
+        <Main />
+        <Sponsors />
+        <Guide />
+        <Dates />
+        <Tables />
+        <Teams />
+      </main>
+      <Footer />
+    </>
   )
 }

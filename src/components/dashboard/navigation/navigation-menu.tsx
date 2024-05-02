@@ -16,9 +16,11 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { signOut } from 'next-auth/react'
 import { IconArrowBarRight } from '@tabler/icons-react'
+import { useCurrentUser } from '@/hooks/auth/use-current-user'
 
 const NavigationMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const user = useCurrentUser()
   const pathname = usePathname()
 
   const signOutSession = async () => {
@@ -50,19 +52,25 @@ const NavigationMenu = () => {
       </NavbarContent>
 
       <NavbarContent className='hidden sm:flex gap-4' justify='center'>
-        {menuItems.map((items) => (
-          <NavbarItem key={`${items.url}`}>
-            <Link
-              className={`text-custom-white ${
-                pathname === items.url ? 'underline' : ''
-              } `}
-              href={items.url}
-              size='lg'
-            >
-              {items.name}
-            </Link>
-          </NavbarItem>
-        ))}
+        {menuItems.map((items) => {
+          if (items.role === 'OWNER' && user?.role !== 'OWNER') {
+            return null
+          }
+
+          return (
+            <NavbarItem key={`${items.url}`}>
+              <Link
+                className={`text-custom-white ${
+                  pathname === items.url ? 'underline' : ''
+                } `}
+                href={items.url}
+                size='lg'
+              >
+                {items.name}
+              </Link>
+            </NavbarItem>
+          )
+        })}
       </NavbarContent>
 
       <NavbarContent justify='end'>
