@@ -10,13 +10,11 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   Link,
-  Avatar,
   Button,
   Image
 } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
-
-import BrandLogo from '@/assets/svg/brand-logo.svg'
+import { BrandLogo } from '@/assets/images'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -42,7 +40,7 @@ const Header = () => {
             className='sm:hidden'
           />
           <NavbarBrand className='space-x-4'>
-            <Image src={BrandLogo.src} alt='Logo' />
+            <Image radius='none' src={BrandLogo.src} alt='Logo' className='w-32 md:w-40' />
           </NavbarBrand>
         </NavbarContent>
 
