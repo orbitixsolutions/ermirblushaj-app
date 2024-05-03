@@ -21,9 +21,11 @@ const Tables = () => {
   if (isLoading) return <TableSkeleton />
 
   return (
-    <section className='max-w-[1440px] mx-auto py-8 md:py-24 px-5 flex flex-wrap text-custom-white'>
-      <h2 className='w-full text-center font-bold'>Matches</h2>
-      <ol className='grid grid-cols-8 gap-4 py-8 '>
+    <section className='max-w-[1440px] mx-auto py-8 md:py-16 px-5 flex flex-wrap text-custom-white'>
+      <h2 className='w-full text-center text-lg md:text-2xl font-bold'>
+        Groups Stage
+      </h2>
+      <ol className='grid grid-cols-8 gap-4 py-8 w-full'>
         {data_groups?.map((group) => (
           <li
             className='col-span-8 md:col-span-4 border-[1px] border-custom-lightgray rounded-lg overflow-hidden'

@@ -32,7 +32,7 @@ const ItemFirstPlayer = ({
         index === data.length - 1 ? '' : 'border-b-[1px]'
       }`}
     >
-      <span className='col-span-1 font-bold text-lg size-full grid place-items-center border-r-[1px]'>
+      <span className='col-span-1 font-bold text-2xl md:text-5xl size-full grid place-items-center border-r-[1px]'>
         {position}
       </span>
       <div className='col-span-3 size-full grid grid-cols-4 px-4'>
