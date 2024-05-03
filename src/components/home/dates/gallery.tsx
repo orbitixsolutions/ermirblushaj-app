@@ -3,17 +3,17 @@
 import { fetcher } from '@/helpers/fetcher'
 import { Button, Card, Image } from '@nextui-org/react'
 import { TournamentGallery } from '@prisma/client'
+import NoItems from '@/components/home/errors/no-items'
+import ErrorDates from '@/components/home/errors/error-dates'
+import Loader from '@/components/home/dates/loader/loader'
 import useSWR from 'swr'
-import NoItems from '../errors/no-items'
-import ErrorDates from '../errors/error-dates'
-import Loader from './loader/loader'
 
 const Gallery = () => {
   const {
     data: tournament_images,
     isLoading,
     error
-  } = useSWR<TournamentGallery[]>('/api/tournament-gallery', fetcher)
+  } = useSWR<TournamentGallery[]>('/api/tournament-gallery/images', fetcher)
 
   const EMPTY_GALLERY = 0
   if (tournament_images?.length === EMPTY_GALLERY)
@@ -33,7 +33,10 @@ const Gallery = () => {
         <ol className='grid grid-cols-3'>
           {tournament_images?.map((image) => (
             <li key={image.id}>
-              <Card radius='none' className='col-span-1 size-full aspect-square'>
+              <Card
+                radius='none'
+                className='col-span-1 size-full aspect-square'
+              >
                 <Image
                   radius='none'
                   src={image.url}

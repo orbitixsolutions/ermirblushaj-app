@@ -1,12 +1,12 @@
 import { fetcher } from '@/helpers/fetcher'
 import { Card } from '@nextui-org/react'
 import { Player, PlayerStats, TeamStats } from '@prisma/client'
-import ItemFirstPlayer from './item/item-first-player'
-import ItemPlayer from './item/item-player'
+import ItemFirstPlayer from '@/components/home/dates/item/item-first-player'
+import ItemPlayer from '@/components/home/dates/item/item-player'
+import NoItems from '@/components/home/errors/no-items'
+import ErrorDates from '@/components/home/errors/error-dates'
+import Loader from '@/components/home/dates/loader/loader'
 import useSWR from 'swr'
-import NoItems from '../errors/no-items'
-import ErrorDates from '../errors/error-dates'
-import Loader from './loader/loader'
 
 type ExtendedPlayer = Player & {
   team: {

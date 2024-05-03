@@ -1,4 +1,5 @@
 'use client'
+
 import { ExtendedGroups, Team } from '@/actions/types'
 
 import {

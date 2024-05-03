@@ -3,8 +3,8 @@
 import { ExtendedGroups } from '@/actions/types'
 import { fetcher } from '@/helpers/fetcher'
 import TableGroup from '@/components/dashboard/home/tables/table-group'
-import TableSkeleton from '@/components/dashboard/home/skeletons/table-skeleton'
 import TableErrorSkeleton from '@/components/dashboard/home/skeletons/table-error-skeleton'
+import SkeletonTables from '@/components/home/skeleton/skeleton-tables'
 import useSWR from 'swr'
 
 const Tables = () => {
@@ -18,10 +18,10 @@ const Tables = () => {
   if (data_groups?.length === EMPTY_GROUPS) return
 
   if (error) return <TableErrorSkeleton />
-  if (isLoading) return <TableSkeleton />
+  if (isLoading) return <SkeletonTables />
 
   return (
-    <section className='max-w-[1440px] mx-auto py-8 md:py-16 px-5 flex flex-wrap text-custom-white'>
+    <section className='max-w-[1440px] mx-auto py-8 md:py-16 px-5 text-custom-white'>
       <h2 className='w-full text-center text-lg md:text-2xl font-bold'>
         Groups Stage
       </h2>

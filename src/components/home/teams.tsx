@@ -1,11 +1,11 @@
 ' use client'
 
 import { fetcher } from '@/helpers/fetcher'
-import { Avatar, Card, Skeleton } from '@nextui-org/react'
+import { Avatar, Card } from '@nextui-org/react'
 import { Team } from '@prisma/client'
+import SkeletonTeams from '@/components/home/skeleton/skeleton-teams'
+import ErrorTeams from '@/components/home/errors/error-teams'
 import useSWR from 'swr'
-import SkeletonTeams from './skeleton/skeleton-teams'
-import ErrorTeams from './errors/error-teams'
 
 const Teams = () => {
   const {

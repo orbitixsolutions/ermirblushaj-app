@@ -3,10 +3,10 @@
 import { fetcher } from '@/helpers/fetcher'
 import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
 import { Match, Team } from '@prisma/client'
+import NoItems from '@/components/home/errors/no-items'
+import ErrorDates from '@/components/home/errors/error-dates'
+import Loader from '@/components/home/dates/loader/loader'
 import useSWR from 'swr'
-import NoItems from '../errors/no-items'
-import ErrorDates from '../errors/error-dates'
-import Loader from './loader/loader'
 
 type ExtendedMatches = Match & {
   teamA: Team
