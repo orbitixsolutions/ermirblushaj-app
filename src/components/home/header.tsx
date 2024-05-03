@@ -24,13 +24,13 @@ const Header = () => {
     { url: '#keys', name: 'Keys' },
     { url: '#teams', name: 'Teams' },
     { url: '#dates', name: 'Dates' },
-    { url: '#tables', name: 'Table of positions' },
-    { url: '#tribute', name: 'Tribute' }
+    { url: '#tables', name: 'Table of positions' }
   ]
 
   return (
     <header>
       <Navbar
+        shouldHideOnScroll
         onMenuOpenChange={setIsMenuOpen}
         className='bg-custom-navy border-b-[1px] border-custom-lightgray/50 text-custom-white py-5'
       >
@@ -40,27 +40,44 @@ const Header = () => {
             className='sm:hidden'
           />
           <NavbarBrand className='space-x-4'>
-            <Image radius='none' src={BrandLogo.src} alt='Logo' className='w-32 md:w-40' />
+            <Image
+              radius='none'
+              src={BrandLogo.src}
+              alt='Logo'
+              className='w-32 md:w-40'
+            />
           </NavbarBrand>
         </NavbarContent>
 
         <NavbarContent className='hidden sm:flex gap-4' justify='center'>
-          {menuItems.map((items) => (
-            <NavbarItem key={`${items.url}`}>
-              <Link
-                className={`text-custom-white ${
-                  pathname === items.url ? 'underline' : ''
-                } `}
-                href={items.url}
-                size='lg'
-              >
-                {items.name}
-              </Link>
-            </NavbarItem>
-          ))}
+          {menuItems.map((items) => {
+            return (
+              <NavbarItem key={`${items.url}`}>
+                <Link
+                  className={`text-custom-white ${
+                    pathname === items.url ? 'underline' : ''
+                  } `}
+                  href={items.url}
+                  size='lg'
+                >
+                  {items.name}
+                </Link>
+              </NavbarItem>
+            )
+          })}
         </NavbarContent>
 
         <NavbarContent justify='end'>
+          <NavbarItem>
+            <Button
+              as={Link}
+              href='/tribute'
+              radius='sm'
+              className='bg-custom-green font-bold'
+            >
+              Tribute
+            </Button>
+          </NavbarItem>
           <NavbarItem>
             <Button radius='full' isIconOnly></Button>
           </NavbarItem>
