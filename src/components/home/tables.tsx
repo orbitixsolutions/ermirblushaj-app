@@ -1,24 +1,39 @@
-'use client'
-
 import { ExtendedGroups } from '@/actions/types'
-import { fetcher } from '@/helpers/fetcher'
 import TableGroup from '@/components/dashboard/home/tables/table-group'
-import TableErrorSkeleton from '@/components/dashboard/home/skeletons/table-error-skeleton'
-import SkeletonTables from '@/components/home/skeleton/skeleton-tables'
-import useSWR from 'swr'
+import prisma from '@/libs/prisma'
 
-const Tables = () => {
-  const {
-    data: data_groups,
-    isLoading,
-    error
-  } = useSWR<ExtendedGroups[]>('/api/groups', fetcher)
+const getGroups = async () => {
+  const groups = await prisma.group.findMany({
+    include: {
+      teams: {
+        orderBy: [
+          {
+            teamStats: {
+              points: 'desc'
+            }
+          },
+          {
+            teamStats: {
+              goalsFor: 'desc'
+            }
+          }
+        ],
 
-  const EMPTY_GROUPS = 0
-  if (data_groups?.length === EMPTY_GROUPS) return
+        include: {
+          teamStats: true,
+          matchHistory: true
+        }
+      }
+    },
+    orderBy: {
+      name: 'asc'
+    }
+  })
+  return groups as ExtendedGroups[]
+}
 
-  if (error) return <TableErrorSkeleton />
-  if (isLoading) return <SkeletonTables />
+const Tables = async () => {
+  const groups = await getGroups()
 
   return (
     <section className='max-w-[1440px] mx-auto py-8 md:py-16 px-5 text-custom-white'>
@@ -26,7 +41,7 @@ const Tables = () => {
         Groups Stage
       </h2>
       <ol className='grid grid-cols-8 gap-4 py-8 w-full'>
-        {data_groups?.map((group) => (
+        {groups?.map((group) => (
           <li
             className='col-span-8 md:col-span-4 border-[1px] border-custom-lightgray rounded-lg overflow-hidden'
             key={group.id}

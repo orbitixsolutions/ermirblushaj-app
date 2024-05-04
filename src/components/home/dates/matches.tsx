@@ -1,6 +1,8 @@
 import prisma from '@/libs/prisma'
 import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
 
+export const dynamic = 'force-dynamic'
+
 const getMatches = async () => {
   const matches = await prisma.match.findMany({
     where: {
@@ -12,7 +14,6 @@ const getMatches = async () => {
       teamA: true,
       teamB: true
     }
-    // take: 10
   })
   return matches
 }

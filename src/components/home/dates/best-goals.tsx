@@ -1,14 +1,8 @@
-'use client'
-
-import { fetcher } from '@/helpers/fetcher'
-import { Card } from '@nextui-org/react'
 import { Player, PlayerStats, TeamStats } from '@prisma/client'
+import { Card } from '@nextui-org/react'
 import ItemFirstPlayer from '@/components/home/dates/item/item-first-player'
 import ItemPlayer from '@/components/home/dates/item/item-player'
-import NoItems from '@/components/home/errors/no-items'
-import ErrorDates from '@/components/home/errors/error-dates'
-import Loader from '@/components/home/dates/loader/loader'
-import useSWR from 'swr'
+import prisma from '@/libs/prisma'
 
 type ExtendedPlayer = Player & {
   team: {
@@ -18,19 +12,33 @@ type ExtendedPlayer = Player & {
   playerStatus: PlayerStats
 }
 
-const BestGoals = () => {
-  const {
-    data: data_player,
-    isLoading,
-    error
-  } = useSWR<ExtendedPlayer[]>('/api/players/best', fetcher)
+export const dynamic = 'force-dynamic'
 
-  const EMPTY_PLAYERS = 0
-  if (data_player?.length === EMPTY_PLAYERS)
-    return <NoItems message='No scorers to show' />
+const getBestGoals = async () => {
+  const players = await prisma.player.findMany({
+    orderBy: [
+      {
+        playerStatus: {
+          goals: 'desc'
+        }
+      }
+    ],
+    include: {
+      playerStatus: true,
+      team: {
+        select: {
+          logo: true,
+          teamStats: true
+        }
+      }
+    }
+  })
 
-  if (error) return <ErrorDates message='An ocurred a error.' />
-  if (isLoading) return <Loader />
+  return players as ExtendedPlayer[]
+}
+
+const BestGoals = async () => {
+  const players = await getBestGoals()
 
   return (
     <div className='col-span-12 lg:col-span-6 xl:col-span-4 space-y-2'>
@@ -44,7 +52,7 @@ const BestGoals = () => {
         className='border-[1px] border-custom-lightgray mx-auto bg-transparent'
       >
         <ol className='flex flex-col text-custom-lightgray'>
-          {data_player?.map((player, index) => {
+          {players?.slice(0, 10).map((player, index) => {
             const position = index + 1
             const firstPlace = position === 1
 
@@ -52,7 +60,7 @@ const BestGoals = () => {
               return (
                 <ItemFirstPlayer
                   key={player.id}
-                  data={data_player}
+                  data={players}
                   index={index}
                   player={player}
                 />
@@ -61,7 +69,7 @@ const BestGoals = () => {
             return (
               <ItemPlayer
                 key={player.id}
-                data={data_player}
+                data={players}
                 index={index}
                 player={player}
               />

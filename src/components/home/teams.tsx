@@ -1,21 +1,13 @@
-'use client'
-
-import { fetcher } from '@/helpers/fetcher'
 import { Avatar, Card } from '@nextui-org/react'
-import { Team } from '@prisma/client'
-import SkeletonTeams from '@/components/home/skeleton/skeleton-teams'
-import ErrorTeams from '@/components/home/errors/error-teams'
-import useSWR from 'swr'
+import prisma from '@/libs/prisma'
 
-const Teams = () => {
-  const {
-    data: teams,
-    isLoading,
-    error
-  } = useSWR<Team[]>('/api/teams/full', fetcher)
+const getTeams = async () => {
+  const teams = await prisma.team.findMany()
+  return teams
+}
 
-  if (error) return <ErrorTeams message='Error load teams.' />
-  if (isLoading) return <SkeletonTeams />
+const Teams = async () => {
+  const teams = await getTeams()
 
   return (
     <section className='max-w-[940px] mx-auto py-8 md:py-16 px-5 text-custom-white space-y-4'>
