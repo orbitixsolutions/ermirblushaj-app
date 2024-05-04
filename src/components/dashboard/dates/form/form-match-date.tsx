@@ -25,11 +25,16 @@ const FormMatchDate = ({
   column: string
   setIsOpen: () => void
 }) => {
+  const matchId = match.id
+  const date = match.playStartDate
+
   const [isPending, startTransition] = useTransition()
   const { handleSubmit, control, setValue } = useForm()
 
   useEffect(() => {
-    if (match.id) {
+    if (!date) return
+
+    if (matchId) {
       startTransition(() => {
         dataMatchesKeysById(match.id).then((res) => {
           const data = res.data!
@@ -40,7 +45,7 @@ const FormMatchDate = ({
         })
       })
     }
-  }, [match])
+  }, [])
 
   const onSubmit = handleSubmit((data) => {
     const matchId = match.id

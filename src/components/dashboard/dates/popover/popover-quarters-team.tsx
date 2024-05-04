@@ -15,6 +15,7 @@ import {
 import { IconCheck, IconSettings } from '@tabler/icons-react'
 import { updatedData } from '@/helpers/updated-data'
 import FormMatchDate from '@/components/dashboard/dates/form/form-match-date'
+import { isCurrentDate } from '@/helpers/is-today'
 
 type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
@@ -31,23 +32,6 @@ const PopoverQuarterMatches = ({
 }) => {
   const [isPending, startTransition] = useTransition()
   const [isOpen, setIsOpen] = useState(false)
-
-  const isCurrentDate = (date: string) => {
-    if (!date) return
-
-    const current = new Date()
-    const target = new Date(date)
-
-    const targetDate = `${target.getUTCFullYear()}-${
-      target.getUTCMonth() + 1
-    }-${target.getUTCDate()}`
-
-    const currentDate = `${current.getFullYear()}-${
-      current.getMonth() + 1
-    }-${current.getDate()}`
-
-    return targetDate === currentDate
-  }
 
   const toggleOpen = () => {
     if (isCurrentDate(match.playStartDate!)) return
