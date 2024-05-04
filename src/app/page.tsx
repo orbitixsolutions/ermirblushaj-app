@@ -18,8 +18,8 @@ export default function Home() {
         <Sponsors />
         <Guide />
         <Dates />
-        {/* <TablesGroup /> */}
-        {/* <Teams /> */}
+        <TablesGroup />
+        <Teams />
       </main>
       <Footer />
     </>
