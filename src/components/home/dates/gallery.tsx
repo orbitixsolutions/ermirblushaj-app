@@ -2,13 +2,13 @@ import { Button, Card, Image } from '@nextui-org/react'
 import prisma from '@/libs/prisma'
 
 const getImagesTournament = async () => {
-  const tournamentGallery = await prisma.tournamentGallery.findMany({ take: 9 })
+  const tournamentGallery = await prisma.tournamentGallery.findMany()
   return tournamentGallery
 }
 
 const Gallery = async () => {
   const images = await getImagesTournament()
-  
+
   return (
     <div className='col-span-12 lg:col-span-12 xl:col-span-4'>
       <div className='border-[1px] border-custom-lightgray rounded-md overflow-hidden'>
