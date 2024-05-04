@@ -1,36 +1,29 @@
-'use client'
-
-import { fetcher } from '@/helpers/fetcher'
+import prisma from '@/libs/prisma'
 import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
-import { Match, Team } from '@prisma/client'
-import NoItems from '@/components/home/errors/no-items'
-import ErrorDates from '@/components/home/errors/error-dates'
-import Loader from '@/components/home/dates/loader/loader'
-import useSWR from 'swr'
 
-type ExtendedMatches = Match & {
-  teamA: Team
-  teamB: Team
+const getMatches = async () => {
+  const matches = await prisma.match.findMany({
+    where: {
+      playStartDate: {
+        notIn: null
+      }
+    },
+    include: {
+      teamA: true,
+      teamB: true
+    }
+    // take: 10
+  })
+  return matches
 }
 
-const Matches = () => {
-  const {
-    data: matches,
-    isLoading,
-    error
-  } = useSWR<ExtendedMatches[]>('/api/matches/play', fetcher)
-
-  const EMPTY_MATCHES = 0
-  if (matches?.length === EMPTY_MATCHES)
-    return <NoItems message='Comming Soon...' />
-
-  if (error) return <ErrorDates message='An ocurred a error.' />
-  if (isLoading) return <Loader />
+const Matches = async () => {
+  const matches = await getMatches()
 
   return (
     <div className='col-span-12 lg:col-span-6 xl:col-span-4'>
       <ol className='grid grid-cols-3 gap-3'>
-        {matches?.map((match) => {
+        {matches?.slice(0, 10).map((match) => {
           const date = match.playStartDate?.replaceAll('-', '/').split('T')[0]
           return (
             <>
