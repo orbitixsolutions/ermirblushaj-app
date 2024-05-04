@@ -13,8 +13,8 @@ const Gallery = () => {
     error
   } = useSWR<TournamentGallery[]>('/api/tournament-gallery/images', fetcher)
 
-  const EMPTY_GALLERY = tournament_images?.length === 0
-  if (EMPTY_GALLERY)
+  const EMPTY_GALLERY = 0
+  if (tournament_images?.length === EMPTY_GALLERY)
     return <NoItems message='No there images to display...' />
 
   if (error) return <ErrorDates message='An ocurred a error.' />
@@ -29,9 +29,19 @@ const Gallery = () => {
           </h2>
         </div>
         <ol className='grid grid-cols-3'>
-          {tournament_images?.map((image) => (
+          {tournament_images?.slice(0, 9).map((image) => (
             <li key={image.id}>
-              Imagen
+              <Card
+                radius='none'
+                className='col-span-1 size-full aspect-square'
+              >
+                <Image
+                  radius='none'
+                  src={image.url}
+                  alt={image.id}
+                  className='object-cover'
+                />
+              </Card>
             </li>
           ))}
         </ol>
