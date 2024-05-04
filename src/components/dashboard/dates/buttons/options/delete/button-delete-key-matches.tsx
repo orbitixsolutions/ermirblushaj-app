@@ -1,4 +1,5 @@
 import { deleteKeyMatches } from '@/actions/services/delete'
+import { fetcher } from '@/helpers/fetcher'
 import { updatedData } from '@/helpers/updated-data'
 import {
   Button,
@@ -9,15 +10,24 @@ import {
   ModalFooter,
   useDisclosure
 } from '@nextui-org/react'
+import { Match } from '@prisma/client'
 import { IconAlertOctagon } from '@tabler/icons-react'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
+import useSWR from 'swr'
 
 const ButtonDeleteKeyMatches = () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
   const [isPending, startTransition] = useTransition()
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+
+  const { data: key_matches } = useSWR<Match[]>('/api/matches/keys', fetcher)
+  const EMPTY_KEY_MATCHES = !key_matches?.length
 
   const handleDeleteKeyMatchup = () => {
+    if (EMPTY_KEY_MATCHES) {
+      return toast.error('There are not key matches created!')
+    }
+
     startTransition(async () => {
       const { status, message } = await deleteKeyMatches()
 
@@ -40,10 +50,11 @@ const ButtonDeleteKeyMatches = () => {
   return (
     <>
       <Button
+        fullWidth
+        color='danger'
         onPress={onOpen}
         isLoading={isPending}
-        color='danger'
-        fullWidth
+        isDisabled={EMPTY_KEY_MATCHES}
         startContent={<IconAlertOctagon />}
         className='mx-auto bg-custom-red font-bold'
       >

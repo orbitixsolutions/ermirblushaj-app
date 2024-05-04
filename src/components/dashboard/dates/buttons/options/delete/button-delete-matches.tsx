@@ -13,8 +13,10 @@ const ButtonDeleteMatches = () => {
   const [isPending, starTransition] = useTransition()
   const { data: matches } = useSWR<Match[]>('/api/matches', fetcher)
 
+  const EMPTY_MATCHES = !matches?.length
+
   const handleDeleteMatches = async () => {
-    if (!matches?.length) {
+    if (EMPTY_MATCHES) {
       return toast.error('There are not matches created!')
     }
 
@@ -33,10 +35,11 @@ const ButtonDeleteMatches = () => {
 
   return (
     <Button
-      onPress={() => handleDeleteMatches()}
-      isLoading={isPending}
-      color='danger'
       fullWidth
+      color='danger'
+      isLoading={isPending}
+      isDisabled={EMPTY_MATCHES}
+      onPress={() => handleDeleteMatches()}
       className='text-2xl font-semibold bg-custom-red'
     >
       Delete

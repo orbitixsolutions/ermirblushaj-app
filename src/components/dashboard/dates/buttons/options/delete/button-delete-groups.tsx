@@ -12,8 +12,10 @@ const ButtonDeleteGroups = () => {
   const [isPending, starTransition] = useTransition()
   const { data: groups } = useSWR<Group[]>('/api/groups', fetcher)
 
+  const EMPTY_GROUPS = !groups?.length
+
   const handleDeleteGroups = async () => {
-    if (!groups?.length) {
+    if (EMPTY_GROUPS) {
       return toast.error('There are not groups created!')
     }
 
@@ -32,10 +34,11 @@ const ButtonDeleteGroups = () => {
 
   return (
     <Button
-      onPress={handleDeleteGroups}
-      isLoading={isPending}
-      color='danger'
       fullWidth
+      color='danger'
+      isLoading={isPending}
+      isDisabled={EMPTY_GROUPS}
+      onPress={handleDeleteGroups}
       className='text-2xl font-semibold bg-custom-red'
     >
       Delete
