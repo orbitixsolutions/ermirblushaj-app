@@ -28,7 +28,7 @@ const Gallery = () => {
             Gallery
           </h2>
         </div>
-        {/* <ol className='grid grid-cols-3'>
+        <ol className='grid grid-cols-3'>
           {tournament_images?.map((image) => (
             <li key={image.id}>
               <Card
@@ -44,7 +44,7 @@ const Gallery = () => {
               </Card>
             </li>
           ))}
-        </ol> */}
+        </ol>
         <Button
           fullWidth
           radius='none'
