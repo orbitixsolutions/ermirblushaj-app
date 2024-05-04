@@ -1,9 +1,9 @@
 import { Button } from '@nextui-org/react'
 import { Match, Team } from '@prisma/client'
 import { IconCheck, IconPointFilled } from '@tabler/icons-react'
+import { isCurrentDate } from '@/helpers/is-today'
 import useMatches from '@/hooks/matches-hooks/use-matches'
 import ButtonFinishMatchup from '@/components/dashboard/dates/buttons/button-finish-matchup'
-import { isCurrentDate } from '@/helpers/is-today'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -12,10 +12,9 @@ type ExtendedMatch = Match & {
 
 const ButtonDateMatchup = ({ match }: { match: ExtendedMatch }) => {
   const { id, playStartDate, status } = match
-  const dateFormatted = playStartDate?.replaceAll('-', '/')
 
+  const dateFormatted = playStartDate?.replaceAll('-', '/')
   const isCompleted = status === 'COMPLETED'
-  const isLived = status === 'LIVE'
 
   const { updatedId } = useMatches()
 
