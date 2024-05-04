@@ -20,8 +20,6 @@ const Gallery = () => {
   if (error) return <ErrorDates message='An ocurred a error.' />
   if (isLoading) return <Loader />
 
-  return
-
   return (
     <div className='col-span-12 lg:col-span-12 xl:col-span-4'>
       <div className='border-[1px] border-custom-lightgray rounded-md overflow-hidden'>
@@ -30,7 +28,7 @@ const Gallery = () => {
             Gallery
           </h2>
         </div>
-        <ol className='grid grid-cols-3'>
+        {/* <ol className='grid grid-cols-3'>
           {tournament_images?.map((image) => (
             <li key={image.id}>
               <Card
@@ -46,7 +44,7 @@ const Gallery = () => {
               </Card>
             </li>
           ))}
-        </ol>
+        </ol> */}
         <Button
           fullWidth
           radius='none'
