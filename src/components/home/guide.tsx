@@ -6,7 +6,7 @@ const Guide = () => {
       <h2 className='text-xl md:text-2xl w-full font-bold text-center mb-8'>
         How the tournament works?
       </h2>
-      <div className='space-y-12 md:space-y-0 w-full flex flex-wrap justify-center md:justify-between items-center'>
+      <div className='space-y-12 md:space-y-0 w-full gap-x-16 lg:gap-8 flex flex-wrap justify-center lg:justify-between items-center'>
         <div className='space-y-4 max-w-[300px]'>
           <Avatar className='mx-auto' />
           <h2 className='text-sm md:text-xl text-center font-bold'>Keys</h2>

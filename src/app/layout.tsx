@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang='en' className='bg-custom-navy'>
       <body
         id='body'
-        className={`${DM_SANS_FONT.className} container mx-auto transition-all duration-300 ease-in-out`}
+        className={`${DM_SANS_FONT.className}`}
       >
         <Toaster position='bottom-right' richColors />
         <Providers>{children}</Providers>

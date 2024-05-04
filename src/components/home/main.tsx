@@ -3,7 +3,7 @@ import { Button, Image, Link } from '@nextui-org/react'
 
 const Main = () => {
   return (
-    <section className='flex max-w-[1024px] mx-auto py-8 md:py-24 px-5 justify-center md:justify-between flex-wrap'>
+    <section className='flex max-w-[1024px] mx-auto py-8 md:py-24 px-5 justify-center lg:justify-between flex-wrap'>
       <div className='max-w-[620px]'>
         <h1 className='text-lg md:text-4xl lg:text-5xl font-bold text-center md:text-start text-custom-green'>
           Memorial Ermir Blushaj

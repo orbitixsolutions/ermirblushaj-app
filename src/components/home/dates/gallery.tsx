@@ -1,13 +1,26 @@
 import { Button, Card, Image } from '@nextui-org/react'
+import ErrorDates from '@/components/home/errors/error-dates'
 import prisma from '@/libs/prisma'
 
 const getImagesTournament = async () => {
-  const images = prisma.tournamentGallery.findMany()
-  return images
+  try {
+    const images = await prisma.tournamentGallery.findMany()
+    return {
+      data: images,
+      status: 200,
+      message: 'Success'
+    }
+  } catch (error: any) {
+    return { data: null, status: 500, message: error.message }
+  }
 }
 
 const Gallery = async () => {
-  const gallery = await getImagesTournament()
+  const { data: gallery, status } = await getImagesTournament()
+
+  if (status === 500) {
+    return <ErrorDates message='Error loading data.' />
+  }
 
   return (
     <div className='col-span-12 lg:col-span-12 xl:col-span-4'>

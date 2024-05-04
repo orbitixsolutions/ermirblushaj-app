@@ -3,6 +3,7 @@ import { Card } from '@nextui-org/react'
 import ItemFirstPlayer from '@/components/home/dates/item/item-first-player'
 import ItemPlayer from '@/components/home/dates/item/item-player'
 import prisma from '@/libs/prisma'
+import ErrorDates from '@/components/home/errors/error-dates'
 
 type ExtendedPlayer = Player & {
   team: {
@@ -13,30 +14,42 @@ type ExtendedPlayer = Player & {
 }
 
 const getBestGoals = async () => {
-  const players = await prisma.player.findMany({
-    orderBy: [
-      {
-        playerStatus: {
-          goals: 'desc'
+  try {
+    const players = await prisma.player.findMany({
+      orderBy: [
+        {
+          playerStatus: {
+            goals: 'desc'
+          }
+        }
+      ],
+      include: {
+        playerStatus: true,
+        team: {
+          select: {
+            logo: true,
+            teamStats: true
+          }
         }
       }
-    ],
-    include: {
-      playerStatus: true,
-      team: {
-        select: {
-          logo: true,
-          teamStats: true
-        }
-      }
-    }
-  })
+    })
 
-  return players as ExtendedPlayer[]
+    return {
+      data: players as ExtendedPlayer[],
+      status: 200,
+      message: 'Success'
+    }
+  } catch (error: any) {
+    return { data: null, status: 500, message: error.message }
+  }
 }
 
 const BestGoals = async () => {
-  const players = await getBestGoals()
+  const { data: players, status } = await getBestGoals()
+
+  if (status === 500) {
+    return <ErrorDates message='Error loading data.' />
+  }
 
   return (
     <div className='col-span-12 lg:col-span-6 xl:col-span-4 space-y-2'>
