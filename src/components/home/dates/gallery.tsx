@@ -1,13 +1,24 @@
+import { fetcher } from '@/helpers/fetcher'
 import { Button, Card, Image } from '@nextui-org/react'
-import prisma from '@/libs/prisma'
+import { TournamentGallery } from '@prisma/client'
+import NoItems from '@/components/home/errors/no-items'
+import ErrorDates from '@/components/home/errors/error-dates'
+import Loader from '@/components/home/dates/loader/loader'
+import useSWR from 'swr'
 
-const getImagesTournament = async () => {
-  const tournamentGallery = await prisma.tournamentGallery.findMany()
-  return tournamentGallery
-}
+const Gallery = () => {
+  const {
+    data: tournament_images,
+    isLoading,
+    error
+  } = useSWR<TournamentGallery[]>('/api/tournament-gallery/images', fetcher)
 
-const Gallery = async () => {
-  const images = await getImagesTournament()
+  const EMPTY_GALLERY = tournament_images?.length === 0
+  if (EMPTY_GALLERY)
+    return <NoItems message='No there images to display...' />
+
+  if (error) return <ErrorDates message='An ocurred a error.' />
+  if (isLoading) return <Loader />
 
   return (
     <div className='col-span-12 lg:col-span-12 xl:col-span-4'>
@@ -18,7 +29,7 @@ const Gallery = async () => {
           </h2>
         </div>
         <ol className='grid grid-cols-3'>
-          {images?.map((image) => (
+          {tournament_images?.slice(0, 9).map((image) => (
             <li key={image.id}>
               <Card
                 radius='none'
