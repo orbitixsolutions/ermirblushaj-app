@@ -1,8 +1,6 @@
 import { Button, Card, Image } from '@nextui-org/react'
 import prisma from '@/libs/prisma'
 
-export const dynamic = 'force-dynamic'
-
 const getImagesTournament = async () => {
   const images = prisma.tournamentGallery.findMany()
   return images

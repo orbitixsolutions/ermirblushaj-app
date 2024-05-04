@@ -1,7 +1,5 @@
-import prisma from '@/libs/prisma'
 import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
-
-export const dynamic = 'force-dynamic'
+import prisma from '@/libs/prisma'
 
 const getMatches = async () => {
   const matches = await prisma.match.findMany({

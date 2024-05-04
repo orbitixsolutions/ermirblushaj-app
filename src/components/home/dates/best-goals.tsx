@@ -12,8 +12,6 @@ type ExtendedPlayer = Player & {
   playerStatus: PlayerStats
 }
 
-export const dynamic = 'force-dynamic'
-
 const getBestGoals = async () => {
   const players = await prisma.player.findMany({
     orderBy: [
