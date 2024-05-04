@@ -1,4 +1,4 @@
-' use client'
+'use client'
 
 import { fetcher } from '@/helpers/fetcher'
 import { Avatar, Card } from '@nextui-org/react'

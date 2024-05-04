@@ -1,3 +1,5 @@
+'use client'
+
 import { fetcher } from '@/helpers/fetcher'
 import { Card } from '@nextui-org/react'
 import { Player, PlayerStats, TeamStats } from '@prisma/client'

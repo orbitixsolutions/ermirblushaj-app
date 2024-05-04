@@ -1,5 +1,3 @@
-'use client'
-
 import Dates from '@/components/home/dates'
 import Footer from '@/components/home/footer'
 import Guide from '@/components/home/guide'
@@ -17,7 +15,9 @@ export default function Home() {
         <Main />
         <Sponsors />
         <Guide />
-        <Dates />
+        {/* <Dates />
+        <TablesGroup />
+        <Teams /> */}
       </main>
       <Footer />
     </>
