@@ -18,7 +18,7 @@ const GroupsResume = () => {
   if (isLoading) return <TableSkeleton />
 
   return (
-    <ol className='grid grid-cols-8 gap-4 py-8'>
+    <ol className='col-span-11 grid grid-cols-8 gap-4 py-8'>
       {data_groups?.map((group) => (
         <li
           className='col-span-8 md:col-span-4 border-[1px] border-custom-lightgray rounded-lg overflow-hidden'

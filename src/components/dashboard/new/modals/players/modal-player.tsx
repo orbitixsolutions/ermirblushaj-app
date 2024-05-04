@@ -15,8 +15,8 @@ import { Controller } from 'react-hook-form'
 import { usePlayerModal } from '@/hooks/player-hooks/use-player-modal'
 import { Team } from '@prisma/client'
 import { fetcher } from '@/helpers/fetcher'
-import useSWR from 'swr'
 import ImageDropzonePlayer from '@/components/dashboard/new/image/players/image-dropzone-player'
+import useSWR from 'swr'
 
 const ModalPlayer = () => {
   const { data: teams } = useSWR<Team[]>('/api/teams', fetcher)

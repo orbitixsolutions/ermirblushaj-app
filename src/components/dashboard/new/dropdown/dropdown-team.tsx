@@ -31,8 +31,6 @@ const DropdownTeam = ({ team }: { team: Team }) => {
     (state) => state.activeTournament
   )
 
-  console.log(activeTournament)
-
   const { onPlayerOpenId } = useModalPlayerStore((state) => ({
     onPlayerOpenId: state.onPlayerModalOpenId
   }))

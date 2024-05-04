@@ -6,6 +6,7 @@ import WrapperNew from '@/components/dashboard/new/wrappers/wrapper-new'
 import CardTeamImage from '@/components/dashboard/new/cards/teams/card-team-image'
 import NoItems from '@/components/dashboard/new/lists/no-items'
 import SkeletonNew from '@/components/dashboard/new/skeleton/skeleton-new'
+import CardError from '@/components/dashboard/new/errors/card-error'
 import useSWR from 'swr'
 
 const Teams = () => {
@@ -17,11 +18,11 @@ const Teams = () => {
     error
   } = useSWR<Team[]>('/api/teams', fetcher)
 
-  if (error) return <h2>Data could not be loaded.</h2>
-
   if (teams?.length === EMPTY_ITEMS) {
     return <NoItems />
   }
+
+  if (error) return <CardError message='Data could not be loaded.' />
 
   if (isLoading) {
     return <SkeletonNew />

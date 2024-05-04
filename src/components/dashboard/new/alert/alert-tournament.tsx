@@ -27,10 +27,9 @@ const AlertTournament = () => {
   return (
     <Card className='bg-custom-red/30 p-8 col-span-11 border-2 border-custom-red'>
       <CardBody>
-        <h3 className='text-center text-2xl text-custom-red/75 '>
+        <h3 className='text-center text-2xl text-custom-red/75'>
           There is an active Tournament. You cannot{' '}
-          <span className='underline font-bold'>create/delete/edit</span> teams
-          and players at the moment.
+          <span className='underline font-bold'>create/delete/edit</span> teams at the moment.
         </h3>
       </CardBody>
     </Card>
