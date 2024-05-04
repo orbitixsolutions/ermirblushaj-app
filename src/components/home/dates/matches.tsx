@@ -1,4 +1,4 @@
-import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
+import { Avatar, Card, CardBody, CardFooter, Divider } from '@nextui-org/react'
 import ErrorDates from '@/components/home/errors/error-dates'
 import prisma from '@/libs/prisma'
 
@@ -29,38 +29,40 @@ const Matches = async () => {
   }
 
   return (
-    <div className='col-span-12 lg:col-span-6 xl:col-span-4'>
+    <div className='mx-auto max-w-[480px] md:max-w-[640px] xl:max-w-full col-span-12 xl:col-span-4'>
       <ol className='grid grid-cols-4 gap-3'>
         {matches?.slice(0, 10).map((match) => {
           const date = match.playStartDate?.replaceAll('-', '/').split('T')[0]
           return (
             <li key={match.id} className='col-span-12'>
-              <div className='grid grid-cols-3 gap-3'>
-                <Card className='bg-custom-darkblue aspect-square grid place-items-center text-custom-white'>
-                  <CardBody className='space-y-2'>
+              <div className='grid grid-cols-3 gap-1 md:gap-3'>
+                <Card className='bg-custom-darkblue text-custom-white p-2 sm:p-8 md:p-4'>
+                  <CardBody>
                     <Avatar
+                      size='lg'
                       src={match.teamA.logo!}
-                      className='mx-auto w-16 xs:h-16'
+                      className='w-full h-full'
                     />
-                    <h2 className='text-xs md:text-lg font-bold text-center'>
-                      {match.teamA.name}
-                    </h2>
                   </CardBody>
+                  <h2 className='text-center text-sm md:text-lg font-medium w-full'>
+                    {match.teamA.name}
+                  </h2>
                 </Card>
                 <div className='flex flex-col items-center justify-center'>
                   <p className='text-xs md:text-lg text-custom-green'>{date}</p>
                   <p className='text-center font-bold'>VS</p>
                 </div>
-                <Card className='bg-custom-darkblue aspect-square grid place-items-center text-custom-white'>
-                  <CardBody className='space-y-2'>
+                <Card className='bg-custom-darkblue text-custom-white p-2 sm:p-8 md:p-4'>
+                  <CardBody>
                     <Avatar
+                      size='lg'
                       src={match.teamB.logo!}
-                      className='mx-auto w-16 xs:h-16'
+                      className='w-full h-full'
                     />
-                    <h2 className='text-xs md:text-lg font-bold text-center'>
-                      {match.teamA.name}
-                    </h2>
                   </CardBody>
+                  <h2 className='text-center text-sm md:text-lg font-medium w-full'>
+                    {match.teamB.name}
+                  </h2>
                 </Card>
               </div>
               <Divider

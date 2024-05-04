@@ -52,7 +52,7 @@ const BestGoals = async () => {
   }
 
   return (
-    <div className='col-span-12 lg:col-span-6 xl:col-span-4 space-y-2'>
+    <div className='mx-auto max-w-[480px] md:max-w-[640px] xl:max-w-full col-span-12 xl:col-span-4 space-y-2'>
       <Card radius='sm' className='bg-custom-blue py-2'>
         <h2 className='text-lg text-center font-bold text-custom-white'>
           Best Goals

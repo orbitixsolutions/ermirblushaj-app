@@ -27,7 +27,7 @@ const Teams = async () => {
             >
               <Card
                 radius='none'
-                className={`bg-transparent size-full grid place-items-center ${
+                className={`bg-transparent size-full p-3 xs:p-5 md:p-8  ${
                   index >= teams.length - 20 && index <= teams.length - 16
                     ? 'border-b-[1px]'
                     : 'border-b-[1px] border-t-[1px]'
@@ -36,7 +36,7 @@ const Teams = async () => {
                 <Avatar
                   src={team.logo!}
                   alt={`Team: ${team.name}`}
-                  className='sm:w-16 sm:h-16 md:w-28 md:h-28'
+                  className='w-full h-full'
                 />
               </Card>
               <h2 className='text-xs md:text-lg text-center font-light line-clamp-1 py-1.5'>

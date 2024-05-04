@@ -23,7 +23,7 @@ const Gallery = async () => {
   }
 
   return (
-    <div className='col-span-12 lg:col-span-12 xl:col-span-4'>
+    <div className='mx-auto max-w-[480px] md:max-w-[640px] xl:max-w-full col-span-12 xl:col-span-4'>
       <div className='border-[1px] border-custom-lightgray rounded-md overflow-hidden'>
         <div className='bg-custom-green w-full py-2'>
           <h2 className='text-xs text-center font-bold text-slate-950'>
