@@ -2,6 +2,7 @@ import { Match, Team } from '@prisma/client'
 import { Avatar, Card, CardFooter } from '@nextui-org/react'
 import { DropdownTeamA } from '@/components/dashboard/dates/dropdown/teams/dropdown-team-a'
 import { DropdownTeamB } from '@/components/dashboard/dates/dropdown/teams/dropdown-team-b'
+import { isCurrentDate } from '@/helpers/is-today'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -9,7 +10,7 @@ type ExtendedMatch = Match & {
 }
 
 const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
-  const { teamA, teamB } = match
+  const { teamA, teamB, playStartDate } = match
 
   return (
     <div className='flex w-full gap-3'>
@@ -22,7 +23,7 @@ const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
             </h2>
           </CardFooter>
         </Card>
-        {match.status === 'LIVE' && (
+        {match.status === 'LIVE' && isCurrentDate(playStartDate!) && (
           <div className='flex flex-col absolute gap-1 top-0 left-[-4rem]'>
             <h3>Goals</h3>
             <DropdownTeamA match={match} />
@@ -43,7 +44,7 @@ const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
             </h2>
           </CardFooter>
         </Card>
-        {match.status === 'LIVE' && (
+        {match.status === 'LIVE' && isCurrentDate(playStartDate!) && (
           <div className='flex flex-col absolute gap-1 top-0 right-[-4rem]'>
             <h3>Goals</h3>
             <DropdownTeamB match={match} />

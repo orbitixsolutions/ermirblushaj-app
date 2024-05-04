@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/libs/prisma'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   const matches = await prisma.match.findMany({
     where: {

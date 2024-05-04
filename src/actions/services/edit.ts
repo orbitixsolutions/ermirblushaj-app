@@ -116,10 +116,7 @@ export const editPlayer = async (
   }
 }
 
-export const setDatePlay = async (
-  matchesId: string,
-  values: z.infer<typeof MatchesSchemas>
-) => {
+export const setDatePlay = async (matchesId: string, date: any) => {
   const role = await currentRole()
 
   if (role !== 'ADMIN' && role !== 'OWNER') {
@@ -127,23 +124,17 @@ export const setDatePlay = async (
   }
 
   try {
-    const validateFields = MatchesSchemas.safeParse(values)
-    if (!validateFields.success) {
-      return { error: 'Fields invalid!' }
-    }
-
-    const { play_start_date } = validateFields.data
-
     await prisma.match.update({
       where: {
         id: matchesId
       },
       data: {
-        playStartDate: play_start_date
+        status: 'LIVE',
+        playStartDate: date
       }
     })
 
-    return { success: 'Chages saved!', status: 200 }
+    return { message: 'Chages saved!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
   }

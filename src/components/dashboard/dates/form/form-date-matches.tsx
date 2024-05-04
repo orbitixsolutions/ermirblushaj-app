@@ -1,12 +1,14 @@
 import { setDatePlay } from '@/actions/services/edit'
-import { Button, Input } from '@nextui-org/react'
+import { Button, DatePicker } from '@nextui-org/react'
 import { IconCheck, IconX } from '@tabler/icons-react'
-import { Controller } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Match, Team } from '@prisma/client'
-import { useEffect, useState } from 'react'
+import { useEffect, useTransition } from 'react'
+import { dataMatchesById } from '@/actions/services/data'
+import { mutate } from 'swr'
 import useMatches from '@/hooks/matches-hooks/use-matches'
-import axios from 'axios'
+import { parseDate } from '@internationalized/date'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -14,61 +16,65 @@ type ExtendedMatch = Match & {
 }
 
 const FormDateMatches = ({ match }: { match: ExtendedMatch }) => {
-  const [isPending, setIsPending] = useState(false)
+  const matchId = match.id
+  const date = match.playStartDate
 
-  const { control, handleSubmit, handleClear, disableIsActive, setValue } =
-    useMatches()
+  const [isPending, startTransition] = useTransition()
+  const { control, handleSubmit, setValue } = useForm()
+
+  const { disableIsActive } = useMatches()
 
   useEffect(() => {
-    if (match.id) {
-      setIsPending(true)
-      axios.get(`/api/matches/${match.id}`).then((res) => {
-        const playStartDate = res.data.playStartDate
-        const value = playStartDate ? playStartDate : ''
+    if (!date) return
 
-        setValue('play_start_date', value)
-        setIsPending(false)
+    if (matchId) {
+      startTransition(() => {
+        dataMatchesById(match.id).then((res) => {
+          const data = res.data!
+          if (!data.playStartDate) return
+
+          const date = parseDate(data.playStartDate!)
+          setValue('date', date)
+        })
       })
     }
   }, [])
 
   const onSubmit = handleSubmit(async (data) => {
-    if (data.play_start_date === '') {
-      return toast.info('Set a date play!')
-    }
-    setIsPending(true)
-    const res = await setDatePlay(match.id, data)
+    const { date } = data
+    const { year, month, day } = date
 
-    if (res.status === 200) {
-      handleClear()
-      setIsPending(false)
-      return toast.success('Changes saved!')
-    }
+    const newDate = new Date(year, month - 1, day)
+    const formattedDate = newDate.toISOString().split('T')[0]
 
-    handleClear()
-    return toast.error('An ocurred a error!')
+    startTransition(async () => {
+      const { status, message } = await setDatePlay(matchId, formattedDate)
+      disableIsActive()
+
+      if (status === 200) {
+        mutate('/api/matches')
+        toast.success(message)
+        return
+      }
+
+      toast.error(message)
+      return
+    })
   })
 
   return (
     <form onSubmit={onSubmit} className='w-full flex space-x-2'>
       <Controller
-        name='play_start_date'
+        name='date'
         control={control}
         render={({ field }) => (
-          <Input
-            size='sm'
-            type='datetime-local'
-            placeholder='Enter date play'
-            isDisabled={isPending}
-            {...field}
-          />
+          <DatePicker isDisabled={isPending} className='flex-1' {...field} />
         )}
       />
 
       <Button
         isIconOnly
         isLoading={isPending}
-        size='sm'
         type='submit'
         className='bg-custom-green text-xl font-bold'
       >
@@ -77,7 +83,6 @@ const FormDateMatches = ({ match }: { match: ExtendedMatch }) => {
       <Button
         onPress={() => disableIsActive()}
         isIconOnly
-        size='sm'
         className='bg-custom-red text-xl font-bold'
       >
         <IconX size={20} />

@@ -1,12 +1,9 @@
-import { formattedDate } from '@/helpers/get-formated-date'
 import { Button } from '@nextui-org/react'
 import { Match, Team } from '@prisma/client'
-import { useEffect, useState } from 'react'
-import { updateStatusMatches } from '@/actions/services/edit'
-import { IconPointFilled } from '@tabler/icons-react'
+import { IconCheck, IconPointFilled } from '@tabler/icons-react'
 import useMatches from '@/hooks/matches-hooks/use-matches'
 import ButtonFinishMatchup from '@/components/dashboard/dates/buttons/button-finish-matchup'
-import axios from 'axios'
+import { isCurrentDate } from '@/helpers/is-today'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -15,85 +12,47 @@ type ExtendedMatch = Match & {
 
 const ButtonDateMatchup = ({ match }: { match: ExtendedMatch }) => {
   const { id, playStartDate, status } = match
-  const [matchId, setGameId] = useState('')
-  const gameId = matchId === match.id
+  const dateFormatted = playStartDate?.replaceAll('-', '/')
 
-  const isLived = status === 'LIVE'
   const isCompleted = status === 'COMPLETED'
+  const isLived = status === 'LIVE'
 
   const { updatedId } = useMatches()
-
-  const playDateFomatted = formattedDate({
-    date: playStartDate || '',
-    mode: { time: 'full-date' }
-  })
 
   const handleClickDate = () => {
     if (isCompleted) return
     updatedId(id)
   }
 
-  useEffect(() => {
-    if (isCompleted) return
+  if (isCompleted)
+    return (
+      <Button
+        fullWidth
+        startContent={<IconCheck />}
+        className='bg-custom-darkblue text-custom-green font-bold'
+      >
+        Finished
+      </Button>
+    )
 
-    const checkMatchIsToday = () => {
-      const playDate = new Date(playStartDate || '')
-      const currentDate = new Date()
-
-      const isTodayDate = playDate.toDateString() === currentDate.toDateString()
-
-      if (id) {
-        if (isTodayDate) {
-          axios.get(`/api/matches/${id}`).then((res) => {
-            const data = res.data
-
-            setGameId(data.id)
-            updateStatusMatches(data.id, 'LIVE')
-          })
-        } else if (isLived) {
-          axios.get(`/api/matches/${id}`).then((res) => {
-            const data = res.data
-
-            setGameId(data.id)
-            updateStatusMatches(data.id, 'LIVE')
-          })
-        }
-      }
-    }
-
-    checkMatchIsToday()
-  }, [status])
+  if (isCurrentDate(dateFormatted!))
+    return <ButtonFinishMatchup match={match} />
 
   return (
-    <>
-      {gameId && isLived ? (
-        <ButtonFinishMatchup match={match} />
-      ) : (
-        <div className='w-full flex'>
-          <Button
-            onPress={() => handleClickDate()}
-            size='sm'
-            fullWidth
-            className='bg-custom-darkblue rounded-lg cursor-pointer text-white text-sm font-bold'
-          >
-            {status === 'COMPLETED' ? (
-              <span className='text-lime-500'>Finished</span>
-            ) : !playStartDate ? (
-              'No date'
-            ) : (
-              playDateFomatted
-            )}
-          </Button>
+    <div className='flex items-center w-full'>
+      <Button
+        fullWidth
+        onPress={handleClickDate}
+        className='bg-custom-darkblue text-custom-white font-bold'
+      >
+        {dateFormatted ? dateFormatted : 'No date'}
+      </Button>
 
-          {status === 'PENDING' && (
-            <div className='flex items-center'>
-              <IconPointFilled className='text-custom-red animate-pulse' />
-              <p>Pending</p>
-            </div>
-          )}
-        </div>
-      )}
-    </>
+      <div className='flex'>
+        <IconPointFilled className='text-custom-red animate-pulse' />
+        <p>Penidng</p>
+      </div>
+    </div>
   )
 }
 

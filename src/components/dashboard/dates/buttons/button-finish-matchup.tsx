@@ -4,8 +4,9 @@ import { Button } from '@nextui-org/react'
 import { IconPointFilled } from '@tabler/icons-react'
 import { toast } from 'sonner'
 import { useTransition } from 'react'
-import { formattedDate } from '@/helpers/get-formated-date'
 import { mutate } from 'swr'
+import { isCurrentDate } from '@/helpers/is-today'
+import useMatches from '@/hooks/matches-hooks/use-matches'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -14,16 +15,16 @@ type ExtendedMatch = Match & {
 
 const ButtonFinishMatchup = ({ match }: { match: ExtendedMatch }) => {
   const [isPending, starTransition] = useTransition()
-  const { playStartDate, status } = match
+  const { id, playStartDate, status } = match
 
-  const playDate = new Date(playStartDate!)
-  const currentDate = new Date()
-  const isTodayDate = playDate.toDateString() === currentDate.toDateString()
+  const isCompleted = status === 'COMPLETED'
+  const { updatedId } = useMatches()
 
-  const playDateFomatted = formattedDate({
-    date: playStartDate!,
-    mode: { time: 'full-date' }
-  })
+  const handleClickDate = () => {
+    if (isCompleted) return
+
+    updatedId(id)
+  }
 
   const finishMatchup = () => {
     starTransition(async () => {
@@ -39,21 +40,32 @@ const ButtonFinishMatchup = ({ match }: { match: ExtendedMatch }) => {
     })
   }
 
+  if (!isCurrentDate(playStartDate!))
+    return (
+      <div className='w-full flex items-center'>
+        <Button
+          fullWidth
+          onPress={() => handleClickDate()}
+          className='bg-custom-darkblue text-custom-white text-sm font-bold'
+        >
+          {playStartDate?.replaceAll('-', '/')}
+        </Button>
+        <div className='flex'>
+          <IconPointFilled className='text-custom-green animate-pulse' />
+          <p>Live</p>
+        </div>
+      </div>
+    )
+
   return (
     <div className='w-full grid grid-cols-2 gap-2'>
       <div className='col-span-2 flex items-center'>
         <Button
-          size='sm'
           fullWidth
+          onPress={() => handleClickDate()}
           className='bg-custom-darkblue text-custom-white text-sm font-bold'
         >
-          {status === 'COMPLETED' ? (
-            <span className='text-lime-500'>Finished</span>
-          ) : isTodayDate ? (
-            'Today'
-          ) : (
-            playDateFomatted
-          )}
+          {playStartDate?.replaceAll('-', '/')}
         </Button>
         <div className='flex'>
           <IconPointFilled className='text-custom-green animate-pulse' />
@@ -61,13 +73,12 @@ const ButtonFinishMatchup = ({ match }: { match: ExtendedMatch }) => {
         </div>
       </div>
       <Button
+        fullWidth
         isLoading={isPending}
         onPress={() => finishMatchup()}
-        size='sm'
-        fullWidth
         className='col-span-2 bg-custom-green w-full rounded-lg cursor-pointer text-sm font-bold'
       >
-        Finish matchup
+        Finish match
       </Button>
     </div>
   )

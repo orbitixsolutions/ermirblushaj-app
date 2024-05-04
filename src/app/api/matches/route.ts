@@ -18,9 +18,14 @@ export async function GET(request: Request) {
         }
       }
     },
-    orderBy: {
-      playStartDate: 'asc'
-    }
+    orderBy: [
+      {
+        playStartDate: 'asc'
+      },
+      {
+        status: 'desc'
+      }
+    ]
   })
 
   return NextResponse.json(matches, { status: 200 })
