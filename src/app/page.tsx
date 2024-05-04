@@ -15,9 +15,9 @@ export default function Home() {
         <Main />
         <Sponsors />
         <Guide />
-        {/* <Dates />
-        <TablesGroup />
-        <Teams /> */}
+        <Dates />
+        {/* <TablesGroup /> */}
+        {/* <Teams /> */}
       </main>
       <Footer />
     </>
