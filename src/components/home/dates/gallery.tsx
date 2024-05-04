@@ -1,5 +1,3 @@
-'use client'
-
 import { fetcher } from '@/helpers/fetcher'
 import { Button, Card, Image } from '@nextui-org/react'
 import { TournamentGallery } from '@prisma/client'

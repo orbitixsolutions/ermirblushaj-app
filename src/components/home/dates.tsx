@@ -1,3 +1,5 @@
+'use client'
+
 import BestGoals from '@/components/home/dates/best-goals'
 import Matches from '@/components/home/dates/matches'
 import Gallery from '@/components/home/dates/gallery'
