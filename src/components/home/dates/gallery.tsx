@@ -36,16 +36,16 @@ const Gallery = async ({ t }: { t: any }) => {
         </div>
         <ol className='grid grid-cols-3'>
           {gallery?.slice(0, 9).map((image) => (
-            <li key={image.id}>
+            <li key={image.id} className='col-span-1'>
               <Card
                 radius='none'
-                className='col-span-1 size-full aspect-square'
+                className='w-full h-full bg-custom-lightgray'
               >
                 <Image
                   radius='none'
                   src={image.url}
                   alt={image.id}
-                  className='object-cover'
+                  className='aspect-square size-full object-cover'
                 />
               </Card>
             </li>
