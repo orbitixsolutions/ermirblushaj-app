@@ -33,8 +33,10 @@ const MatchesKeys = () => {
   return (
     <>
       {key_matches?.length !== 0 && (
-        <div className='hidden md:block lg:max-w-[720px] xl:w-[968px]  mx-auto space-y-2'>
+        <div className='hidden md:block md:max-w-[640px] lg:max-w-[720px] xl:w-[968px] mx-auto space-y-2'>
           <h2 className='text-2xl xl:text-5xl font-bold text-center'>Keys</h2>
+
+        
 
           <div className='h-[668px] flex justify-between mx-auto relative'>
             {/* Column A */}
