@@ -1,8 +1,8 @@
-import { useTranslations } from 'next-intl'
 import { Button, Card, Image } from '@nextui-org/react'
 import ErrorDates from '@/components/home/errors/error-dates'
 import NoItems from '@/components/home/errors/no-items'
 import prisma from '@/libs/prisma'
+import ModalGallery from './modal/modal-gallery'
 
 const getImagesTournament = async () => {
   try {
@@ -37,10 +37,7 @@ const Gallery = async ({ t }: { t: any }) => {
         <ol className='grid grid-cols-3'>
           {gallery?.slice(0, 9).map((image) => (
             <li key={image.id} className='col-span-1'>
-              <Card
-                radius='none'
-                className='w-full h-full bg-custom-lightgray'
-              >
+              <Card radius='none' className='w-full h-full bg-custom-lightgray'>
                 <Image
                   radius='none'
                   src={image.url}
@@ -51,14 +48,7 @@ const Gallery = async ({ t }: { t: any }) => {
             </li>
           ))}
         </ol>
-        <Button
-          fullWidth
-          radius='none'
-          size='sm'
-          className='bg-custom-blue font-bold text-xs'
-        >
-          {t('gallery.button')}
-        </Button>
+        <ModalGallery gallery={gallery} content={t('gallery.button')} />
       </div>
     </div>
   )
