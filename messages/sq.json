@@ -10,25 +10,25 @@
   },
   "Main": {
     "title": "Memorial Ermir Blushaj",
-    "main_paragraph": "Ogni anno, Parma celebra con un campionato annuale il ricordo di Ermir Blushaj, una personalità significativa per la città. Questo evento non è solo una competizione, ma un'occasione per rafforzare i valori di comunità, integrità e amicizia.",
-    "main_button": "Mostra Altro"
+    "main_paragraph": "Çdo vit, Parma feston me një kampionat vjetor kujtimin e Ermir Blushaj, një personalitet i rëndësishëm për qytetin. Ky event nuk është thjesht një garë, por një rast për të forcuar vlerat e komunitetit, integritetit dhe miqësisë.",
+    "main_button": "Shiko më shumë"
   },
   "Guide": {
-    "title": "Come funziona il torneo?",
+    "title": "Si funksionon turneu?",
     "key": {
-      "title": "Chiavi",
-      "description": "In questa sezione sono presentate le fasi del torneo, iniziando dalla fase a gironi fino agli scontri diretti. Qui puoi seguire il progresso delle squadre e vedere chi avanza ai turni successivi.",
-      "button": "Chiavi"
+      "title": "Çelësat",
+      "description": "Në këtë seksion prezantohen fazat e turneut, duke filluar nga faza e grupeve deri te eliminatoret. Këtu mund të ndiqni përparimin e ekipeve dhe të shihni cilët kalojnë në raundet e ardhshme.",
+      "button": "Çelësat"
     },
     "team": {
-      "title": "Squadre",
-      "description": "Scopri le squadre partecipanti al torneo. Ogni squadra è composta da giocatori locali che rappresentano le loro comunità, dimostrando talento e passione per il calcio.",
-      "button": "Squadre"
+      "title": "Ekipet",
+      "description": "Zbuloni ekipet që marrin pjesë në turne. Çdo ekip është i formuar nga lojtarë lokalë që përfaqësojnë komunitetet e tyre, duke treguar talentin dhe pasionin për futbollin.",
+      "button": "Ekipet"
     },
     "date": {
-      "title": "Date",
-      "description": "Consulta il calendario del torneo per non perderti nessuna partita. Le partite sono programmate su diverse settimane, culminando in un'emozionante finale.",
-      "button": "Date"
+      "title": "Datat",
+      "description": "Kontrolloni kalendarin e turneut për të mos humbur asnjë ndeshje. Lojërat janë planifikuar gjatë disa javëve, duke kulmuar në një ndeshje finale emocionuese.",
+      "button": "Datat"
     }
   },
   "Dates": {
