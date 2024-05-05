@@ -1,11 +1,11 @@
 {
   "Header": {
     "navigation": {
-      "keys": "Chiavi",
-      "teams": "Squadre",
-      "date": "Date",
-      "positions": "Classifica",
-      "tribute": "Omaggio"
+      "keys": "Çelësat",
+      "teams": "Ekipet",
+      "date": "Datë",
+      "positions": "Klasifikimi",
+      "tribute": "Dhuratë"
     }
   },
   "Main": {
@@ -33,17 +33,17 @@
   },
   "Dates": {
     "gallery": {
-      "title": "Galleria",
-      "button": "Mostra Altro"
+      "title": "Galeri",
+      "button": "Shfaq më shumë"
     },
     "best_players": {
-      "title": "Miglior marcatore"
+      "title": "golashënuesit më të mirë"
     }
   },
   "Groups": {
-    "title": "Fase a gironi",
-    "group_title": "Gruppo",
-    "group_last_title": "Ultimo"
+    "title": "Faza në grup",
+    "group_title": "Grupi",
+    "group_last_title": "E fundit"
   },
   "Teams": {
     "title": "Squadre"
