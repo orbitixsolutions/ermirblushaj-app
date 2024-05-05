@@ -20,7 +20,7 @@
       "description": "In questa sezione sono presentate le fasi del torneo, iniziando dalla fase a gironi fino agli scontri diretti. Qui puoi seguire il progresso delle squadre e vedere chi avanza ai turni successivi.",
       "button": "Chiavi"
     },
-    "squadre": {
+    "team": {
       "title": "Squadre",
       "description": "Scopri le squadre partecipanti al torneo. Ogni squadra è composta da giocatori locali che rappresentano le loro comunità, dimostrando talento e passione per il calcio.",
       "button": "Squadre"
