@@ -26,9 +26,9 @@
       "button": "Ekipet"
     },
     "date": {
-      "title": "Datat",
+      "title": "Datë",
       "description": "Kontrolloni kalendarin e turneut për të mos humbur asnjë ndeshje. Lojërat janë planifikuar gjatë disa javëve, duke kulmuar në një ndeshje finale emocionuese.",
-      "button": "Datat"
+      "button": "Datë"
     }
   },
   "Dates": {
@@ -46,17 +46,17 @@
     "group_last_title": "E fundit"
   },
   "Teams": {
-    "title": "Squadre"
+    "title": "Ekipet"
   },
   "Footer": {
     "social": {
-      "title": "Sociali"
+      "title": "Sociale"
     },
     "contact": {
-      "title": "Contattaci"
+      "title": "Na kontaktoni"
     },
     "visit": {
-      "title": "Visitaci"
+      "title": "Na vizitoni"
     }
   }
 }
