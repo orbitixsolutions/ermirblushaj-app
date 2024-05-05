@@ -1,3 +1,4 @@
+import { Date, Key, Team } from '@/assets/svg'
 import { Avatar, Button } from '@nextui-org/react'
 import { useTranslations } from 'next-intl'
 
@@ -11,7 +12,7 @@ const Guide = () => {
       </h2>
       <div className='space-y-12 md:space-y-0 w-full gap-4 sm:gap-8 md:gap-16 lg:gap-8 flex flex-wrap justify-center lg:justify-between items-center'>
         <div className='space-y-4 max-w-[300px]'>
-          <Avatar className='mx-auto' />
+          <Avatar size='lg' src={Key.src} className='mx-auto bg-transparent' />
           <h2 className='text-sm md:text-xl text-center font-bold'>
             {t('key.title')}
           </h2>
@@ -27,7 +28,7 @@ const Guide = () => {
         </div>
 
         <div className='space-y-4 max-w-[300px]'>
-          <Avatar className='mx-auto' />
+          <Avatar size='lg' src={Team.src} className='mx-auto bg-transparent' />
 
           <h2 className='text-sm md:text-xl text-center font-bold'>
             {t('team.title')}
@@ -44,7 +45,7 @@ const Guide = () => {
         </div>
 
         <div className='space-y-4 max-w-[300px]'>
-          <Avatar className='mx-auto' />
+          <Avatar size='lg' src={Date.src} className='mx-auto bg-transparent' />
           <h2 className='text-sm md:text-xl text-center font-bold'>
             {t('date.title')}
           </h2>
