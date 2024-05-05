@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { DM_Sans } from 'next/font/google'
 import { Toaster } from 'sonner'
-import '../globals.css'
 import Providers from './Providers'
+import '../globals.css'
 
 const DM_SANS_FONT = DM_Sans({ subsets: ['latin'] })
 
@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang={locale} className='bg-custom-navy'>
       <body id='body' className={`${DM_SANS_FONT.className}`}>
         <Toaster position='bottom-right' richColors />
-        <Providers locale={locale}>{children}</Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
