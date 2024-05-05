@@ -1,4 +1,5 @@
 import { Avatar, Card } from '@nextui-org/react'
+import { getTranslations } from 'next-intl/server'
 import prisma from '@/libs/prisma'
 
 const getTeams = async () => {
@@ -7,12 +8,14 @@ const getTeams = async () => {
 }
 
 const Teams = async () => {
+  const content = await getTranslations('Teams')
+
   const teams = await getTeams()
 
   return (
     <section className='max-w-[940px] mx-auto py-8 md:py-16 px-5 text-custom-white space-y-4'>
       <h2 className='w-full text-center text-lg md:text-2xl font-bold'>
-        Teams
+        {content('title')}
       </h2>
       <ol className='grid grid-cols-5 rounded-md overflow-hidden border-[1px]'>
         {teams?.map((team, index) => {

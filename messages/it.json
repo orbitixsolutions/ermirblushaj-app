@@ -1,20 +1,12 @@
 {
   "Header": {
-    "navigation": [
-      {
-        "item": "Chiavi"
-      },
-      {
-        "item": "Squadre"
-      },
-      {
-        "item": "Date"
-      },
-      {
-        "item": "Classifica"
-      }
-    ],
-    "tribute": "Omaggio"
+    "navigation": {
+      "keys": "Chiavi",
+      "teams": "Squadre",
+      "date": "Date",
+      "positions": "Classifica",
+      "tribute": "Omaggio"
+    }
   },
   "Main": {
     "title": "Memorial Ermir Blushaj",

@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Button, Card, Image } from '@nextui-org/react'
 import ErrorDates from '@/components/home/errors/error-dates'
 import NoItems from '@/components/home/errors/no-items'
@@ -16,7 +17,7 @@ const getImagesTournament = async () => {
   }
 }
 
-const Gallery = async () => {
+const Gallery = async ({ t }: { t: any }) => {
   const { data: gallery, status } = await getImagesTournament()
 
   if (!gallery?.length) return <NoItems message='Comming Soon...' />
@@ -30,7 +31,7 @@ const Gallery = async () => {
       <div className='border-[1px] border-custom-lightgray rounded-md overflow-hidden'>
         <div className='bg-custom-green w-full py-2'>
           <h2 className='text-xs text-center font-bold text-slate-950'>
-            Gallery
+            {t('gallery.title')}
           </h2>
         </div>
         <ol className='grid grid-cols-3'>
@@ -56,7 +57,7 @@ const Gallery = async () => {
           size='sm'
           className='bg-custom-blue font-bold text-xs'
         >
-          See more
+          {t('gallery.button')}
         </Button>
       </div>
     </div>

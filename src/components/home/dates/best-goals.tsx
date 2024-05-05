@@ -45,7 +45,7 @@ const getBestGoals = async () => {
   }
 }
 
-const BestGoals = async () => {
+const BestGoals = async ({ t }: { t: any }) => {
   const { data: players, status } = await getBestGoals()
 
   if (!players?.length) return <NoItems message='Comming Soon...' />
@@ -58,7 +58,7 @@ const BestGoals = async () => {
     <div className='mx-auto max-w-full w-[480px] md:w-[640px] col-span-12 xl:col-span-4 space-y-2'>
       <Card radius='sm' className='bg-custom-blue py-2'>
         <h2 className='text-lg text-center font-bold text-custom-white'>
-          Best Goals
+          {t('best_players.title')}
         </h2>
       </Card>
       <Card

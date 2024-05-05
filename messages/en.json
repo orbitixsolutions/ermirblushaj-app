@@ -1,6 +1,62 @@
 {
+  "Header": {
+    "navigation": {
+      "keys": "Chiavi",
+      "teams": "Squadre",
+      "date": "Date",
+      "positions": "Classifica",
+      "tribute": "Omaggio"
+    }
+  },
   "Main": {
     "title": "Memorial Ermir Blushaj",
-    "main_paragraph": "Hello World!"
+    "main_paragraph": "Ogni anno, Parma celebra con un campionato annuale il ricordo di Ermir Blushaj, una personalità significativa per la città. Questo evento non è solo una competizione, ma un'occasione per rafforzare i valori di comunità, integrità e amicizia.",
+    "main_button": "Mostra Altro"
+  },
+  "Guide": {
+    "title": "Come funziona il torneo?",
+    "key": {
+      "title": "Chiavi",
+      "description": "In questa sezione sono presentate le fasi del torneo, iniziando dalla fase a gironi fino agli scontri diretti. Qui puoi seguire il progresso delle squadre e vedere chi avanza ai turni successivi.",
+      "button": "Chiavi"
+    },
+    "squadre": {
+      "title": "Squadre",
+      "description": "Scopri le squadre partecipanti al torneo. Ogni squadra è composta da giocatori locali che rappresentano le loro comunità, dimostrando talento e passione per il calcio.",
+      "button": "Squadre"
+    },
+    "date": {
+      "title": "Date",
+      "description": "Consulta il calendario del torneo per non perderti nessuna partita. Le partite sono programmate su diverse settimane, culminando in un'emozionante finale.",
+      "button": "Date"
+    }
+  },
+  "Dates": {
+    "gallery": {
+      "title": "Galleria",
+      "button": "Mostra Altro"
+    },
+    "best_players": {
+      "title": "Miglior marcatore"
+    }
+  },
+  "Groups": {
+    "title": "Fase a gironi",
+    "group_title": "Gruppo",
+    "group_last_title": "Ultimo"
+  },
+  "Teams": {
+    "title": "Squadre"
+  },
+  "Footer": {
+    "social": {
+      "title": "Sociali"
+    },
+    "contact": {
+      "title": "Contattaci"
+    },
+    "visit": {
+      "title": "Visitaci"
+    }
   }
 }

@@ -1,4 +1,13 @@
 {
+  "Header": {
+    "navigation": {
+      "keys": "Chiavi",
+      "teams": "Squadre",
+      "date": "Date",
+      "positions": "Classifica",
+      "tribute": "Omaggio"
+    }
+  },
   "Main": {
     "title": "Memorial Ermir Blushaj",
     "main_paragraph": "Ogni anno, Parma celebra con un campionato annuale il ricordo di Ermir Blushaj, una personalità significativa per la città. Questo evento non è solo una competizione, ma un'occasione per rafforzare i valori di comunità, integrità e amicizia.",

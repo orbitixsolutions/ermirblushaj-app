@@ -1,3 +1,5 @@
+
+
 export const columns = [
   { name: 'TEAM', id: 'team' },
 
@@ -10,5 +12,5 @@ export const columns = [
   { name: 'GA', id: 'ga' },
   { name: 'DG', id: 'dg' },
   { name: 'PTS', id: 'pts' },
-  { name: 'HISTORY', id: 'history' }
+  { name: 'LAST 5', id: 'history' }
 ]
