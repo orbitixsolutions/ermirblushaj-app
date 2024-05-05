@@ -1,5 +1,6 @@
-import { Avatar, Card, CardBody, CardFooter, Divider } from '@nextui-org/react'
+import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
 import ErrorDates from '@/components/home/errors/error-dates'
+import NoItems from '@/components/home/errors/no-items'
 import prisma from '@/libs/prisma'
 
 const getMatches = async () => {
@@ -24,12 +25,14 @@ const getMatches = async () => {
 const Matches = async () => {
   const { data: matches, status } = await getMatches()
 
+  if (!matches?.length) return <NoItems message='Comming Soon...' />
+
   if (status === 500) {
     return <ErrorDates message='Error loading data.' />
   }
 
   return (
-    <div className='mx-auto max-w-[480px] md:max-w-[640px] xl:max-w-full col-span-12 xl:col-span-4'>
+    <div className='mx-auto max-w-full w-[480px] md:w-[640px] col-span-12 xl:col-span-4'>
       <ol className='grid grid-cols-4 gap-3'>
         {matches?.slice(0, 10).map((match) => {
           const date = match.playStartDate?.replaceAll('-', '/').split('T')[0]

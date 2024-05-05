@@ -1,5 +1,6 @@
 import { Button, Card, Image } from '@nextui-org/react'
 import ErrorDates from '@/components/home/errors/error-dates'
+import NoItems from '@/components/home/errors/no-items'
 import prisma from '@/libs/prisma'
 
 const getImagesTournament = async () => {
@@ -18,12 +19,14 @@ const getImagesTournament = async () => {
 const Gallery = async () => {
   const { data: gallery, status } = await getImagesTournament()
 
+  if (!gallery?.length) return <NoItems message='Comming Soon...' />
+
   if (status === 500) {
     return <ErrorDates message='Error loading data.' />
   }
 
   return (
-    <div className='mx-auto max-w-[480px] md:max-w-[640px] xl:max-w-full col-span-12 xl:col-span-4'>
+    <div className='mx-auto max-w-full w-[480px] md:w-[640px] xl:max-w-full col-span-12 xl:col-span-4'>
       <div className='border-[1px] border-custom-lightgray rounded-md overflow-hidden'>
         <div className='bg-custom-green w-full py-2'>
           <h2 className='text-xs text-center font-bold text-slate-950'>

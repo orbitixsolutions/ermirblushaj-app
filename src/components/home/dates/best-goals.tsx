@@ -2,8 +2,9 @@ import { Player, PlayerStats, TeamStats } from '@prisma/client'
 import { Card } from '@nextui-org/react'
 import ItemFirstPlayer from '@/components/home/dates/item/item-first-player'
 import ItemPlayer from '@/components/home/dates/item/item-player'
-import prisma from '@/libs/prisma'
 import ErrorDates from '@/components/home/errors/error-dates'
+import NoItems from '@/components/home/errors/no-items'
+import prisma from '@/libs/prisma'
 
 type ExtendedPlayer = Player & {
   team: {
@@ -47,12 +48,14 @@ const getBestGoals = async () => {
 const BestGoals = async () => {
   const { data: players, status } = await getBestGoals()
 
+  if (!players?.length) return <NoItems message='Comming Soon...' />
+
   if (status === 500) {
     return <ErrorDates message='Error loading data.' />
   }
 
   return (
-    <div className='mx-auto max-w-[480px] md:max-w-[640px] xl:max-w-full col-span-12 xl:col-span-4 space-y-2'>
+    <div className='mx-auto max-w-full w-[480px] md:w-[640px] col-span-12 xl:col-span-4 space-y-2'>
       <Card radius='sm' className='bg-custom-blue py-2'>
         <h2 className='text-lg text-center font-bold text-custom-white'>
           Best Goals
@@ -60,7 +63,7 @@ const BestGoals = async () => {
       </Card>
       <Card
         radius='sm'
-        className='border-[1px] border-custom-lightgray mx-auto bg-transparent'
+        className='border-[1px] border-custom-lightgray bg-transparent'
       >
         <ol className='flex flex-col text-custom-lightgray'>
           {players?.slice(0, 10).map((player, index) => {
