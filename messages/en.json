@@ -1,62 +1,62 @@
 {
   "Header": {
     "navigation": {
-      "keys": "Chiavi",
-      "teams": "Squadre",
+      "keys": "Keys",
+      "teams": "Teams",
       "date": "Date",
-      "positions": "Classifica",
-      "tribute": "Omaggio"
+      "positions": "Classification",
+      "tribute": "tribute"
     }
   },
   "Main": {
     "title": "Memorial Ermir Blushaj",
-    "main_paragraph": "Ogni anno, Parma celebra con un campionato annuale il ricordo di Ermir Blushaj, una personalità significativa per la città. Questo evento non è solo una competizione, ma un'occasione per rafforzare i valori di comunità, integrità e amicizia.",
-    "main_button": "Mostra Altro"
+    "main_paragraph": "Every year, Parma celebrates the memory of Ermir Blushaj, a significant personality for the city, with an annual championship. This event is not just a competition, but an opportunity to strengthen the values of community, integrity and friendship.",
+    "main_button": "Show More"
   },
   "Guide": {
-    "title": "Come funziona il torneo?",
+    "title": "How does the tournament work?",
     "key": {
-      "title": "Chiavi",
-      "description": "In questa sezione sono presentate le fasi del torneo, iniziando dalla fase a gironi fino agli scontri diretti. Qui puoi seguire il progresso delle squadre e vedere chi avanza ai turni successivi.",
-      "button": "Chiavi"
+      "title": "Keys",
+      "description": "This section presents the phases of the tournament, starting from the group stage up to the head-to-head matches. Here you can follow the progress of the teams and see who advances to the next rounds.",
+      "button": "Keys"
     },
     "team": {
-      "title": "Squadre",
-      "description": "Scopri le squadre partecipanti al torneo. Ogni squadra è composta da giocatori locali che rappresentano le loro comunità, dimostrando talento e passione per il calcio.",
-      "button": "Squadre"
+      "title": "Team",
+      "description": "Discover the teams participating in the tournament. Each team is made up of local players who represent their communities, demonstrating talent and passion for football.",
+      "button": "Team"
     },
     "date": {
       "title": "Date",
-      "description": "Consulta il calendario del torneo per non perderti nessuna partita. Le partite sono programmate su diverse settimane, culminando in un'emozionante finale.",
+      "description": "Check the tournament calendar so you don't miss any matches. Matches are scheduled over several weeks, culminating in a thrilling final.",
       "button": "Date"
     }
   },
   "Dates": {
     "gallery": {
-      "title": "Galleria",
-      "button": "Mostra Altro"
+      "title": "Gallery",
+      "button": "Show More"
     },
     "best_players": {
-      "title": "Miglior marcatore"
+      "title": "Best scorer"
     }
   },
   "Groups": {
-    "title": "Fase a gironi",
-    "group_title": "Gruppo",
-    "group_last_title": "Ultimo"
+    "title": "Group stage",
+    "group_title": "Group",
+    "group_last_title": "Last"
   },
   "Teams": {
-    "title": "Squadre"
+    "title": "Team"
   },
   "Footer": {
     "social": {
-      "title": "Sociali"
+      "title": "Social"
     },
     "contact": {
-      "title": "Contattaci"
+      "title": "Contact us"
     },
     "visit": {
-      "title": "Visitaci"
+      "title": "Visit us"
     }
   }
 }
