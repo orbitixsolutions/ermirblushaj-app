@@ -4,7 +4,7 @@ import { ExtendedGroups } from '@/actions/types'
 import { fetcher } from '@/helpers/fetcher'
 import TableGroup from '@/components/dashboard/home/tables/table-group'
 import TableSkeleton from '@/components/dashboard/home/skeletons/table-skeleton'
-import TableErrorSkeleton from '@/components/dashboard/home/skeletons/table-error-skeleton'
+import ErrorTable from '@/components/dashboard/home/errors/error-table'
 import useSWR from 'swr'
 
 const GroupsResume = () => {
@@ -14,7 +14,7 @@ const GroupsResume = () => {
     error
   } = useSWR<ExtendedGroups[]>('/api/groups', fetcher)
 
-  if (error) return <TableErrorSkeleton />
+  if (error) return <ErrorTable />
   if (isLoading) return <TableSkeleton />
 
   return (

@@ -2,7 +2,7 @@ import { Skeleton } from '@nextui-org/react'
 
 const TableSkeleton = () => {
   return (
-    <ol className='grid grid-cols-8 gap-4 py-8'>
+    <ol className='col-span-11 grid grid-cols-8 gap-4 py-8'>
       {Array(4)
         .fill(0)
         .map((_, index) => (
