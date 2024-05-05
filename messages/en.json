@@ -6,6 +6,11 @@
       "date": "Date",
       "positions": "Classification",
       "tribute": "Tributte"
+    },
+    "dashboard": {
+      "title": "Signed is as",
+      "dashboard_item": "Dashboard",
+      "logout_item": "Logout"
     }
   },
   "Main": {

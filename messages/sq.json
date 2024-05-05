@@ -6,6 +6,11 @@
       "date": "Datë",
       "positions": "Klasifikimi",
       "tribute": "Dhuratë"
+    },
+    "dashboard": {
+      "title": "Identifikohu si",
+      "dashboard_item": "Paneli",
+      "logout_item": "Dil"
     }
   },
   "Main": {

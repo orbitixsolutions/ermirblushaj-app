@@ -10,7 +10,8 @@ import {
   NavbarMenuItem,
   Link,
   Button,
-  Tooltip
+  Tooltip,
+  Image
 } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
@@ -18,9 +19,12 @@ import { signOut } from 'next-auth/react'
 import { IconArrowBarRight } from '@tabler/icons-react'
 import { useCurrentUser } from '@/hooks/auth/use-current-user'
 import { useLocale } from 'next-intl'
+import { toast } from 'sonner'
+import { BrandLogo } from '@/assets/images'
 
 const NavigationMenu = () => {
   const locale = useLocale()
+  const urlHome = `/${locale}`
   const urlPrefix = `${locale}/dashboard`
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -28,7 +32,8 @@ const NavigationMenu = () => {
   const pathname = usePathname()
 
   const signOutSession = async () => {
-    await signOut()
+    toast.success('Logout successfully!')
+    return await signOut()
   }
 
   const menuItems = [
@@ -42,7 +47,7 @@ const NavigationMenu = () => {
   return (
     <Navbar
       shouldHideOnScroll
-      className='bg-custom-green rounded-2xl'
+      className='bg-custom-darkblue py-4 rounded-2xl'
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent>
@@ -50,8 +55,15 @@ const NavigationMenu = () => {
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           className='sm:hidden'
         />
-        <NavbarBrand>
-          <p className='font-bold text-inherit'>Ermirblushaj</p>
+        <NavbarBrand className='space-x-4'>
+          <Link href={`${urlHome}`}>
+            <Image
+              radius='none'
+              src={BrandLogo.src}
+              alt='Logo'
+              className='w-32 md:w-40'
+            />
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 
@@ -82,7 +94,7 @@ const NavigationMenu = () => {
           <Tooltip content='Logout'>
             <Button
               isIconOnly
-              onPress={() => signOutSession}
+              onPress={() => signOutSession()}
               color='danger'
               variant='flat'
             >

@@ -12,9 +12,15 @@ const Header = () => {
     tribute: content('navigation.tribute')
   }
 
+  const contentDashboard = {
+    title: content('dashboard.title'),
+    dashboard: content('dashboard.dashboard_item'),
+    logout: content('dashboard.logout_item')
+  }
+
   return (
     <header>
-      <NavBar contentItems={contentItems} />
+      <NavBar contentItems={contentItems} contentDashboard={contentDashboard} />
     </header>
   )
 }

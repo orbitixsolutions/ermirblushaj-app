@@ -4,7 +4,7 @@
  * @Type {string[]}
  */
 
-export const publicRoutes = ['/']
+export const publicRoutes = ['/', '/en', '/it', '/sq']
 
 /**
  * En este arreglo de rutas es para la autentificacion
@@ -12,7 +12,11 @@ export const publicRoutes = ['/']
  * @Type {string[]}
  */
 
-export const authRoutes = ['/admin/login', '/admin/register']
+export const authRoutes = [
+  '/en/admin/login',
+  '/it/admin/login',
+  '/sq/admin/login'
+]
 
 /**
  * Este es el prefix para la auntenticacion de las rutas API
@@ -27,4 +31,4 @@ export const apiAuthPrefix = '/api/auth'
  * @Type {string}
  */
 
-export const DEFAULT_LOGIN_REDIRECT = '/en/dashboard'
+export const DEFAULT_LOGIN_REDIRECT = '/it/dashboard'

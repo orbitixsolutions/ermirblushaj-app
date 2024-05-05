@@ -6,6 +6,11 @@
       "date": "Date",
       "positions": "Classifica",
       "tribute": "Omaggio"
+    },
+    "dashboard": {
+      "title": "Registrato come",
+      "dashboard_item": "Cruscotto",
+      "logout_item": "Esci"
     }
   },
   "Main": {

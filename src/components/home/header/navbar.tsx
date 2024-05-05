@@ -16,6 +16,7 @@ import {
 import { usePathname } from 'next/navigation'
 import { BrandLogo } from '@/assets/images'
 import LocalSwitcher from './local-switcher'
+import Dashboard from './dashboard'
 
 interface Props {
   contentItems: {
@@ -25,9 +26,15 @@ interface Props {
     tables: string
     tribute: string
   }
+
+  contentDashboard: {
+    title: string
+    dashboard: string
+    logout: string
+  }
 }
 
-const NavBar = ({ contentItems }: Props) => {
+const NavBar = ({ contentItems, contentDashboard }: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
 
@@ -78,7 +85,7 @@ const NavBar = ({ contentItems }: Props) => {
       </NavbarContent>
 
       <NavbarContent justify='end'>
-        <NavbarItem>
+        <NavbarItem className='flex items-center gap-3'>
           <Button
             as={Link}
             href='/tribute'
@@ -87,9 +94,8 @@ const NavBar = ({ contentItems }: Props) => {
           >
             {contentItems.tribute}
           </Button>
-        </NavbarItem>
-        <NavbarItem>
           <LocalSwitcher />
+          <Dashboard contentDashboard={contentDashboard} />
         </NavbarItem>
       </NavbarContent>
 
