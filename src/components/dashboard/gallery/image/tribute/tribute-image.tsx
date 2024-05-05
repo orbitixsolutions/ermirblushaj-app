@@ -6,13 +6,13 @@ import ButtonEditImageTribute from '@/components/dashboard/gallery/buttons/tribu
 const TributeImage = ({ gallery }: { gallery: TributeGallery }) => {
   return (
     <>
-      <Image
-        className='aspect-square object-cover'
-        src={gallery.url}
-        alt={`image-${gallery.id}`}
-      />
-      <Card className='absolute bottom-0 z-20 w-full rounded-none'>
-        <CardFooter className='p-1 justify-center gap-2 bg-custom-navy/50 '>
+      <Card className='w-full rounded-none'>
+        <Image
+          className='aspect-square size-full object-cover'
+          src={gallery.url}
+          alt={`image-${gallery.id}`}
+        />
+        <CardFooter className='absolute z-50 bottom-0 p-1 justify-center gap-1 bg-custom-navy/50'>
           <ButtonDeleteImageTribute gallery={gallery} />
           <ButtonEditImageTribute gallery={gallery} />
         </CardFooter>
