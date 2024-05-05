@@ -1,18 +1,19 @@
+import { useTranslations } from 'next-intl'
+
 import { ManBradImage, PlayerBrandImage } from '@/assets/images'
 import { Button, Image, Link } from '@nextui-org/react'
 
 const Main = () => {
+  const t = useTranslations('Main')
+
   return (
     <section className='flex max-w-[1024px] mx-auto py-8 md:py-24 px-5 justify-center lg:justify-between flex-wrap'>
       <div className='max-w-[620px]'>
         <h1 className='text-lg md:text-4xl lg:text-5xl font-bold text-center md:text-start text-custom-green'>
-          Memorial Ermir Blushaj
+          {t('title')}
         </h1>
         <p className='max-w-[400px] mt-4 text-xs md:text-lg text-custom-white text-center lg:text-start text-pretty'>
-          Ogni anno, Parma celebra con un campionato annuale il ricordo di Ermir
-          Blushaj, una personalità significativa per la città. Questo evento non
-          è solo una competizione, ma un'occasione per rafforzare i valori di
-          comunità, integrità e amicizia.
+          {t('main_paragraph')}
         </p>
 
         <div className='flex justify-center lg:justify-start my-8'>
@@ -23,7 +24,7 @@ const Main = () => {
             className='bg-custom-green font-bold'
             radius='full'
           >
-            See more
+            {t('main_button')}
           </Button>
         </div>
       </div>

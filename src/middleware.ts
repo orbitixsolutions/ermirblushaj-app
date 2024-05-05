@@ -1,11 +1,13 @@
 import authConfig from '@/auth.config'
 import NextAuth from 'next-auth'
+import createMiddleware from 'next-intl/middleware'
 import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
   publicRoutes
 } from '@/routes'
+import { NextRequest, NextResponse } from 'next/server'
 
 export const { auth } = NextAuth(authConfig)
 
@@ -35,6 +37,21 @@ export default auth(async (req) => {
   return undefined
 })
 
+export async function middleware(request: NextRequest) {
+  const initMiddleware: (request: NextRequest) => NextResponse<unknown> =
+    createMiddleware({
+      locales: ['it', 'sq', 'en'],
+      defaultLocale: 'it'
+    })
+
+  return initMiddleware(request)
+}
+
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)']
+  matcher: [
+    '/',
+    '/(it|sq|en)/((?!.+\\.[\\w]+$|_next).*)',
+    '/(it|sq|en)/(api|trpc)(.*)',
+    '/(it|sq|en)/:path*'
+  ]
 }

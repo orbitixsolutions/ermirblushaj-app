@@ -17,8 +17,12 @@ import { useState } from 'react'
 import { signOut } from 'next-auth/react'
 import { IconArrowBarRight } from '@tabler/icons-react'
 import { useCurrentUser } from '@/hooks/auth/use-current-user'
+import { useLocale } from 'next-intl'
 
 const NavigationMenu = () => {
+  const locale = useLocale()
+  const urlPrefix = `${locale}/dashboard`
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const user = useCurrentUser()
   const pathname = usePathname()
@@ -28,11 +32,11 @@ const NavigationMenu = () => {
   }
 
   const menuItems = [
-    { url: '/dashboard', name: 'Home', role: 'ADMIN' },
-    { url: '/dashboard/new', name: 'Teams/Players', role: 'ADMIN' },
-    { url: '/dashboard/gallery', name: 'Gallery', role: 'ADMIN' },
-    { url: '/dashboard/dates', name: 'Dates', role: 'ADMIN' },
-    { url: '/dashboard/admin', name: 'Admin', role: 'OWNER' }
+    { url: `/${urlPrefix}`, name: 'Home', role: 'ADMIN' },
+    { url: `/${urlPrefix}/new`, name: 'Teams/Players', role: 'ADMIN' },
+    { url: `/${urlPrefix}/gallery`, name: 'Gallery', role: 'ADMIN' },
+    { url: `/${urlPrefix}/dates`, name: 'Dates', role: 'ADMIN' },
+    { url: `/${urlPrefix}/admin`, name: 'Admin', role: 'OWNER' }
   ]
 
   return (
