@@ -11,14 +11,6 @@ type ExtendedMatchKey = MatchKey & {
   teamKeyB: Team
 }
 
-const columnPopover = {
-  none: ''
-}
-
-const columnClass = {
-  none: ''
-}
-
 const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
   const { data: matches } = useSWR<ExtendedMatchKey[]>(
     `/api/matches/keys?column=${column}&phase=${phase}`,
@@ -27,20 +19,16 @@ const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
 
   return (
     <div
-      className={`absolute top-0 left-[50%] -translate-x-[50%] h-full flex mx-auto justify-center items-center ${
-        columnClass[column as keyof typeof columnClass] || ''
-      }`}
+      className={
+        'absolute top-0 left-[50%] -translate-x-[50%] h-full flex mx-auto justify-center items-center'
+      }
     >
       <div className='w-[80px] flex justify-center items-center'>
         <ol>
           {matches?.length !== 0 ? (
             matches?.map((matchKey) => (
               <li key={matchKey.id} className='relative'>
-                <div
-                  className={`absolute w-full h-full flex justify-center items-center ${
-                    columnPopover[column as keyof typeof columnPopover] || ''
-                  }`}
-                >
+                <div className='absolute w-full h-full flex justify-center items-center'>
                   <PopoverFinalsTeam
                     column={column}
                     phase={phase}

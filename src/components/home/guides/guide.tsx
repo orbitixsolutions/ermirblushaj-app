@@ -1,6 +1,7 @@
 import { Date, Key, Team } from '@/assets/svg'
 import { Avatar, Button } from '@nextui-org/react'
 import { useTranslations } from 'next-intl'
+import ModalKey from './modal/modal-key'
 
 const Guide = () => {
   const t = useTranslations('Guide')
@@ -21,9 +22,7 @@ const Guide = () => {
           </p>
 
           <div className='flex justify-center'>
-            <Button radius='full' className='bg-custom-green font-bold'>
-              {t('key.button')}
-            </Button>
+            <ModalKey content={t('key.button')} />
           </div>
         </div>
 

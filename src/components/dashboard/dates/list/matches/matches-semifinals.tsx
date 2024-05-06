@@ -11,11 +11,6 @@ type ExtendedMatchKey = MatchKey & {
   teamKeyB: Team
 }
 
-const columnPopover = {
-  a: '-left-12',
-  b: '-right-12'
-}
-
 const columnClass = {
   a: 'left-48',
   b: 'right-48'
