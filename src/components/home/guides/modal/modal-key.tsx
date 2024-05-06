@@ -27,27 +27,35 @@ const ModalKey = ({ content }: { content: string }) => {
         {content}
       </Button>
       <Modal
-        className='bg-custom-darkblue text-custom-white'
+        className='bg-custom-darknavy text-custom-white'
         size='5xl'
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       >
-        <ModalContent>
+        <ModalContent className=''>
           {(onClose) => (
             <>
               <ModalHeader>
-                <h2 className='text-center w-full font-bold'>Keys</h2>
+                <h2 className='text-center text-2xl w-full font-bold'>
+                  Tournament Keys
+                </h2>
               </ModalHeader>
               <ModalBody>
-                <div className='w-full h-[668px] flex justify-between mx-auto relative'>
-                  {/* Column A */}
+                {/* TODO: Hacer las llaves responsive - Mobile 320px */}
+                <div className='w-full max-w-[700px] flex justify-between mx-auto relative'>
                   <MatchesEighths column='A' phase='EIGHTH' />
-
-                  {/* Column B */}
+                  <div className='flex mx-3 w-full h-full max-w-[500px] justify-between items-center translate-y-3'>
+                    <MatchesQuarters column='A' phase='QUARTER' />
+                    <div className='flex mx-3 w-full h-full max-w-[315px] justify-between items-center translate-y-1'>
+                      <MatchesSemifinals column='A' phase='SEMIFINALS' />
+                      <div className='flex mx-3 w-full h-full  max-w-[100px] justify-center items-center'>
+                        <MatchesFinal column='NONE' phase='final' />
+                      </div>
+                      <MatchesSemifinals column='B' phase='SEMIFINALS' />
+                    </div>
+                    <MatchesQuarters column='B' phase='QUARTER' />
+                  </div>
                   <MatchesEighths column='B' phase='EIGHTH' />
-
-                  {/* Final */}
-                  {/* <MatchesFinal column='NONE' phase='final' /> */}
                 </div>
               </ModalBody>
               <ModalFooter>

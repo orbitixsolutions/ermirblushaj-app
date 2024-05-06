@@ -11,11 +11,6 @@ type ExtendedMatchKey = MatchKey & {
   teamKeyB: Team
 }
 
-const columnClasses = {
-  a: '-left-12',
-  b: '-right-12'
-}
-
 const MatchesEighths = ({
   column,
   phase
@@ -32,12 +27,6 @@ const MatchesEighths = ({
     <ol>
       {matches?.map((matchKey) => (
         <li key={matchKey.id} className='relative'>
-          <div
-            className={`absolute top-0 h-full flex justify-center items-center ${
-              columnClasses[column as keyof typeof columnClasses] || ''
-            }`}
-          ></div>
-
           <WrapperImage>
             <ImagesMatchesKeys match={matchKey} />
           </WrapperImage>

@@ -12,11 +12,11 @@ const Main = () => {
         <h1 className='text-lg md:text-4xl lg:text-5xl font-bold text-center md:text-start text-custom-green'>
           {t('title')}
         </h1>
-        <p className='max-w-[400px] mt-4 text-xs md:text-lg text-custom-white text-center lg:text-start text-pretty'>
+        <p className='max-w-[400px] mt-4 text-xs md:text-lg text-custom-white text-center md:text-start text-pretty'>
           {t('main_paragraph')}
         </p>
 
-        <div className='flex justify-center lg:justify-start my-8'>
+        <div className='flex justify-center md:justify-start my-8'>
           <Button
             as={Link}
             href='#dates'

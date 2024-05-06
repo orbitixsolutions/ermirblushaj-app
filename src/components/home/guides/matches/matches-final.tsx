@@ -1,5 +1,63 @@
+import { fetcher } from '@/helpers/fetcher'
+import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
+import { MatchKey, Team } from '@prisma/client'
+import ImagesMatchesKeys from '@/components/dashboard/dates/image/images-matches-keys'
+import PopoverFinalsTeam from '@/components/dashboard/dates/popover/popover-finals-team'
+import WrapperImage from '@/components/dashboard/dates/image/wrapper-images'
+import useSWR from 'swr'
+
+type ExtendedMatchKey = MatchKey & {
+  teamKeyA: Team
+  teamKeyB: Team
+}
+
 const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
-  return <div>MatchesFinal</div>
+  const { data: matches } = useSWR<ExtendedMatchKey[]>(
+    `/api/matches/keys?column=${column}&phase=${phase}`,
+    fetcher
+  )
+
+  return (
+    <ol className='flex gap-2'>
+      {matches?.length !== 0 ? (
+        matches?.map((matchKey) => (
+          <li key={matchKey.id} className='relative'>
+            <div className='absolute w-full h-full flex justify-center items-center'>
+              <PopoverFinalsTeam
+                column={column}
+                phase={phase}
+                match={matchKey}
+              />
+            </div>
+
+            <div className='absolute w-full h-full flex justify-center items-center'>
+              <Divider
+                orientation='vertical'
+                className='bg-custom-lightgray h-32'
+              />
+            </div>
+
+            <WrapperImage className='space-y-16'>
+              <ImagesMatchesKeys match={matchKey} />
+            </WrapperImage>
+          </li>
+        ))
+      ) : (
+        <div className='flex flex-col'>
+          {Array(2)
+            .fill(0)
+            .map((_, index) => (
+              <Avatar
+                key={index}
+                radius='sm'
+                size='sm'
+                className='bg-custom-darkblue text-custom-white size-5'
+              />
+            ))}
+        </div>
+      )}
+    </ol>
+  )
 }
 
 export default MatchesFinal

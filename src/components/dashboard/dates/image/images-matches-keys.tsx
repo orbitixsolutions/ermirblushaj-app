@@ -1,5 +1,5 @@
 import { MatchKey, Team } from '@prisma/client'
-import { Avatar, Card, CardFooter, Tooltip } from '@nextui-org/react'
+import { Avatar, Tooltip } from '@nextui-org/react'
 
 type ExtendedMatch = MatchKey & {
   teamKeyA: Team
@@ -12,55 +12,49 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
   return (
     <>
       <Tooltip
+        className='bg-custom-teal text-custom-white'
         content={
           <div className='text-center'>
             <p>{teamKeyA.name}</p>
           </div>
         }
       >
-        <Card
-          className={`bg-custom-darkblue text-custom-white border-2 ${
+        <Avatar
+          size='sm'
+          radius='sm'
+          className={`bg-custom-darkblue text-custom-white size-8 p-1 border-2  ${
             teamKeyA.stageStatus === 'LOSER'
               ? 'border-custom-red'
               : teamKeyA.stageStatus === 'WINNER'
               ? 'border-custom-green'
               : 'border-gray-600'
           }`}
-        >
-          <CardFooter>
-            <Avatar
-              size='sm'
-              src={teamKeyA.logo!}
-              alt={`Team ${teamKeyA.name}`}
-            />
-          </CardFooter>
-        </Card>
+          src={teamKeyA.logo!}
+          alt={`Team ${teamKeyA.name}`}
+        />
       </Tooltip>
 
       <Tooltip
+        className='bg-custom-teal text-custom-white'
         content={
           <div className='text-center'>
             <p>{teamKeyB.name}</p>
           </div>
         }
       >
-        <Card
-          className={`bg-custom-darkblue text-custom-white border-2 ${
+        <Avatar
+          size='sm'
+          radius='sm'
+          className={`bg-custom-darkblue text-custom-white size-2 border-2 ${
             teamKeyB.stageStatus === 'LOSER'
               ? 'border-custom-red'
               : teamKeyB.stageStatus === 'WINNER'
               ? 'border-custom-green'
               : 'border-gray-600'
           }`}
-        >
-          <CardFooter>
-            <Avatar
-              size='sm'
-              src={teamKeyB.logo!}
-              alt={`Team ${teamKeyB.name}`}
-            />
-          </CardFooter>
-        </Card>
+          src={teamKeyB.logo!}
+          alt={`Team ${teamKeyB.name}`}
+        />
       </Tooltip>
     </>
   )
