@@ -30,7 +30,7 @@ const ModalKey = ({ content }: { content: string }) => {
         onOpenChange={onOpenChange}
       >
         <ModalContent className=''>
-          {(onClose) => (
+          {() => (
             <>
               <ModalHeader>
                 <h2 className='text-center text-2xl w-full font-bold'>
@@ -40,16 +40,6 @@ const ModalKey = ({ content }: { content: string }) => {
               <ModalBody>
                 <Matches />
               </ModalBody>
-              <ModalFooter>
-                <Button
-                  fullWidth
-                  color='danger'
-                  onPress={onClose}
-                  className='bg-custom-red font-bold text-xs'
-                >
-                  Close
-                </Button>
-              </ModalFooter>
             </>
           )}
         </ModalContent>
