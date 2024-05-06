@@ -17,6 +17,7 @@ import { usePathname } from 'next/navigation'
 import { BrandLogo } from '@/assets/images'
 import LocalSwitcher from './local-switcher'
 import Dashboard from './dashboard'
+import { useLocale } from 'next-intl'
 
 interface Props {
   contentItems: {
@@ -35,14 +36,15 @@ interface Props {
 }
 
 const NavBar = ({ contentItems, contentDashboard }: Props) => {
+  const locale = useLocale()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
 
   const menuItems = [
-    { url: '#keys', name: contentItems.keys },
-    { url: '#teams', name: contentItems.teams },
-    { url: '#dates', name: contentItems.dates },
-    { url: '#tables', name: contentItems.tables }
+    { url: `#keys`, name: contentItems.keys },
+    { url: `#teams`, name: contentItems.teams },
+    { url: `#dates`, name: contentItems.dates },
+    { url: `#classification`, name: contentItems.tables }
   ]
 
   return (

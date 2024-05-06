@@ -13,7 +13,7 @@ const Teams = async () => {
   const teams = await getTeams()
 
   return (
-    <section className='max-w-[940px] mx-auto py-8 md:py-16 px-5 text-custom-white space-y-4'>
+    <section id='teams' className='max-w-[940px] mx-auto py-8 md:py-16 px-5 text-custom-white space-y-4'>
       <h2 className='w-full text-center text-lg md:text-2xl font-bold'>
         {content('title')}
       </h2>

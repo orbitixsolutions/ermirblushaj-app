@@ -32,7 +32,7 @@ const Matches = async () => {
   }
 
   return (
-    <div className='mx-auto max-w-full w-[480px] md:w-[640px] col-span-12 xl:col-span-4'>
+    <div id='dates' className='mx-auto max-w-full w-[480px] md:w-[640px] col-span-12 xl:col-span-4'>
       <ol className='grid grid-cols-4 gap-3'>
         {matches?.slice(0, 10).map((match) => {
           const date = match.playStartDate?.replaceAll('-', '/').split('T')[0]

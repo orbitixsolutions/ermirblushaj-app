@@ -24,20 +24,18 @@ const ModalKey = ({ content }: { content: string }) => {
         {content}
       </Button>
       <Modal
-        className='bg-custom-darknavy text-custom-white'
+        className='absolute bg-custom-darknavy border-2 border-custom-green text-custom-white'
         size='5xl'
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       >
-        <ModalContent className=''>
+        <ModalContent>
           {() => (
             <>
-              <ModalHeader>
-                <h2 className='text-center text-2xl w-full font-bold'>
-                  Tournament Keys
+              <ModalBody className='h-full md:min-h-[670px] relative'>
+                <h2 className='text-xs sm:text-lg md:text-2xl font-bold left-[50%] -translate-x-[50%] absolute mt-2 text-custom-green'>
+                  Keys Tournament
                 </h2>
-              </ModalHeader>
-              <ModalBody>
                 <Matches />
               </ModalBody>
             </>

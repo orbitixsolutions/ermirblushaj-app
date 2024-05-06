@@ -22,13 +22,13 @@ const Matches = () => {
 
   if (isLoading)
     return (
-      <div className='aspect-square size-full grid place-items-center'>
+      <div className='aspect-video size-full grid place-items-center'>
         <Spinner size='lg' className='scale-150' />
       </div>
     )
 
   return (
-    <div className='w-full h-full max-w-[700px] min-h-[455px] flex items-center justify-between mx-auto relative'>
+    <div className='w-full max-w-[700px] flex items-center justify-between mx-auto'>
       <MatchesEighths column='A' phase='EIGHTH' />
 
       <div className='flex justify-between items-center size-full max-w-[500px] px-3'>

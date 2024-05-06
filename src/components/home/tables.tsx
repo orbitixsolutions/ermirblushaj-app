@@ -49,7 +49,10 @@ const Tables = async () => {
   }
 
   return (
-    <section className='max-w-[1440px] mx-auto py-8 md:py-16 px-5 text-custom-white'>
+    <section
+      id='classification'
+      className='max-w-[1440px] mx-auto py-8 md:py-16 px-5 text-custom-white'
+    >
       <h2 className='w-full text-center text-lg md:text-2xl font-bold'>
         {content('title')}
       </h2>

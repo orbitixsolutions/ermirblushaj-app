@@ -11,7 +11,10 @@ const Guide = () => {
       <h2 className='text-xl md:text-2xl w-full font-bold text-center mb-8'>
         {t('title')}
       </h2>
-      <div className='space-y-8 sm:space-y-0 w-full gap-4 sm:gap-8 md:gap-16 lg:gap-8 flex flex-wrap justify-center lg:justify-between items-start'>
+      <div
+        id='keys'
+        className='space-y-8 sm:space-y-0 w-full gap-4 sm:gap-8 md:gap-16 lg:gap-8 flex flex-wrap justify-center lg:justify-between items-start'
+      >
         <div className='space-y-4 max-w-[300px]'>
           <Avatar size='lg' src={Key.src} className='mx-auto bg-transparent' />
           <h2 className='text-lg md:text-2xl text-center font-bold'>
