@@ -1,5 +1,5 @@
 import { Date, Key, Team } from '@/assets/svg'
-import { Avatar, Button } from '@nextui-org/react'
+import { Avatar, Button, Link } from '@nextui-org/react'
 import { useTranslations } from 'next-intl'
 import ModalKey from './modal/modal-key'
 
@@ -39,7 +39,12 @@ const Guide = () => {
           </p>
 
           <div className='flex justify-center'>
-            <Button radius='full' className='bg-custom-green font-bold'>
+            <Button
+              as={Link}
+              href='#teams'
+              radius='full'
+              className='bg-custom-green font-bold'
+            >
               {t('team.button')}
             </Button>
           </div>
@@ -55,7 +60,8 @@ const Guide = () => {
           </p>
 
           <div className='flex justify-center'>
-            <Button radius='full' className='bg-custom-green font-bold'>
+            <Button as={Link}
+              href='#dates' radius='full' className='bg-custom-green font-bold'>
               {t('date.button')}
             </Button>
           </div>
