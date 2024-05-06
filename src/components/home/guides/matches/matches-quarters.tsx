@@ -10,6 +10,16 @@ type ExtendedMatchKey = MatchKey & {
   teamKeyB: Team
 }
 
+const skeletonClasses = {
+  0: '-translate-y-[7.95rem] xs:-translate-y-[9.5rem] sm:-translate-y-[11rem]',
+  1: '-translate-y-[2.55rem] xs:-translate-y-[3.4rem] sm:-translate-y-[3.85rem]',
+  2: 'translate-y-[2.55rem] xs:translate-y-[3rem] sm:translate-y-[3.85rem]',
+  3: 'translate-y-[7.95rem] xs:translate-y-[9.5rem] sm:translate-y-[11rem]'
+}
+
+const avatarSkeleton =
+  'bg-custom-darkblue text-custom-white size-5 xs:size-12 sm:size-16'
+
 const MatchesQuarters = ({
   column,
   phase
@@ -37,11 +47,13 @@ const MatchesQuarters = ({
           {Array(4)
             .fill(0)
             .map((_, index) => (
-                <Avatar
+              <Avatar
                 key={index}
                 radius='sm'
                 size='sm'
-                className='bg-custom-darkblue text-custom-white size-5 my-16'
+                className={`${avatarSkeleton} ${
+                  skeletonClasses[index as keyof typeof skeletonClasses]
+                }`}
               />
             ))}
         </>

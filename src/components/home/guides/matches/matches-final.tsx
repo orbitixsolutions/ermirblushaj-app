@@ -1,5 +1,5 @@
 import { fetcher } from '@/helpers/fetcher'
-import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
+import { Avatar, Divider } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
 import ImagesMatchesKeys from '@/components/dashboard/dates/image/images-matches-keys'
 import PopoverFinalsTeam from '@/components/dashboard/dates/popover/popover-finals-team'
@@ -10,6 +10,9 @@ type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
   teamKeyB: Team
 }
+
+const avatarSkeleton =
+  'bg-custom-darkblue text-custom-white size-5 xs:size-12 sm:size-16 my-4'
 
 const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
   const { data: matches } = useSWR<ExtendedMatchKey[]>(
@@ -43,15 +46,15 @@ const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
           </li>
         ))
       ) : (
-        <div className='flex flex-col'>
+        <div>
           {Array(2)
             .fill(0)
             .map((_, index) => (
               <Avatar
                 key={index}
-                radius='sm'
                 size='sm'
-                className='bg-custom-darkblue text-custom-white size-5'
+                radius='sm'
+                className={avatarSkeleton}
               />
             ))}
         </div>

@@ -6,6 +6,9 @@ type ExtendedMatch = MatchKey & {
   teamKeyB: Team
 }
 
+const avatarStyles =
+  'bg-custom-darkblue text-custom-white size-8 xs:size-12 sm:size-16 p-1 border-2'
+
 const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
   const { teamKeyA, teamKeyB } = match
 
@@ -22,7 +25,7 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
         <Avatar
           size='sm'
           radius='sm'
-          className={`bg-custom-darkblue text-custom-white size-8 p-1 border-2  ${
+          className={`${avatarStyles} ${
             teamKeyA.stageStatus === 'LOSER'
               ? 'border-custom-red'
               : teamKeyA.stageStatus === 'WINNER'
@@ -45,7 +48,7 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
         <Avatar
           size='sm'
           radius='sm'
-          className={`bg-custom-darkblue text-custom-white size-2 border-2 ${
+          className={`${avatarStyles} ${
             teamKeyB.stageStatus === 'LOSER'
               ? 'border-custom-red'
               : teamKeyB.stageStatus === 'WINNER'

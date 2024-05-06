@@ -1,4 +1,4 @@
-import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
+import { Avatar, Divider } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
 import { fetcher } from '@/helpers/fetcher'
 import PopoverSemifinalsMatches from '@/components/dashboard/dates/popover/popover-semifinals-team'
@@ -10,6 +10,14 @@ type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
   teamKeyB: Team
 }
+
+const skeletonClasses = {
+  0: '-translate-y-[6.38rem] xs:-translate-y-[7.95rem] sm:-translate-y-[9.25rem]',
+  1: 'translate-y-[6.38rem] xs:translate-y-[7.95rem] sm:translate-y-[9.25rem]'
+}
+
+const avatarSkeleton =
+  'bg-custom-darkblue text-custom-white size-5 xs:size-12 sm:size-16'
 
 const MatchesSemifinals = ({
   column,
@@ -57,7 +65,9 @@ const MatchesSemifinals = ({
                 key={index}
                 radius='sm'
                 size='sm'
-                className='bg-custom-darkblue text-custom-white size-5'
+                className={`${avatarSkeleton} ${
+                  skeletonClasses[index as keyof typeof skeletonClasses]
+                }`}
               />
             ))}
         </>

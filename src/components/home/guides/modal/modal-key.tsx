@@ -42,19 +42,25 @@ const ModalKey = ({ content }: { content: string }) => {
               </ModalHeader>
               <ModalBody>
                 {/* TODO: Hacer las llaves responsive - Mobile 320px */}
-                <div className='w-full max-w-[700px] flex justify-between mx-auto relative'>
+                <div className='w-full max-w-[700px] flex items-center justify-between mx-auto relative'>
                   <MatchesEighths column='A' phase='EIGHTH' />
-                  <div className='flex mx-3 w-full h-full max-w-[500px] justify-between items-center translate-y-3'>
+
+                  <div className='flex justify-between items-center size-full max-w-[500px] px-3'>
                     <MatchesQuarters column='A' phase='QUARTER' />
-                    <div className='flex mx-3 w-full h-full max-w-[315px] justify-between items-center translate-y-1'>
+
+                    <div className='flex justify-between items-center size-full max-w-[300px] px-2 xs:px-4'>
                       <MatchesSemifinals column='A' phase='SEMIFINALS' />
-                      <div className='flex mx-3 w-full h-full  max-w-[100px] justify-center items-center'>
-                        <MatchesFinal column='NONE' phase='final' />
+
+                      <div className='flex justify-center size-full max-w-[150px] px-2 xs:px-4'>
+                        <MatchesFinal column='NONE' phase='FINAL' />
                       </div>
+
                       <MatchesSemifinals column='B' phase='SEMIFINALS' />
                     </div>
+
                     <MatchesQuarters column='B' phase='QUARTER' />
                   </div>
+
                   <MatchesEighths column='B' phase='EIGHTH' />
                 </div>
               </ModalBody>
