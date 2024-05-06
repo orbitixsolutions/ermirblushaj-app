@@ -1,6 +1,6 @@
 import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
 import ErrorDates from '@/components/home/errors/error-dates'
-import NoItems from '@/components/home/errors/no-items'
+import NoItems from '@/components/home/empty-items/no-items'
 import prisma from '@/libs/prisma'
 
 const getMatches = async () => {

@@ -3,7 +3,7 @@ import { Card } from '@nextui-org/react'
 import ItemFirstPlayer from '@/components/home/dates/item/item-first-player'
 import ItemPlayer from '@/components/home/dates/item/item-player'
 import ErrorDates from '@/components/home/errors/error-dates'
-import NoItems from '@/components/home/errors/no-items'
+import NoItems from '@/components/home/empty-items/no-items'
 import prisma from '@/libs/prisma'
 
 type ExtendedPlayer = Player & {
