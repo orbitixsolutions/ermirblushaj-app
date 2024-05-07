@@ -9,9 +9,9 @@ import { uploadImage } from '@/helpers/upload-image'
 import { toast } from 'sonner'
 import { editTeam } from '@/actions/services/edit'
 import { useModalTeamStore } from '@/store/modal/use-modal-team-store'
-import axios from 'axios'
 import { createTeam } from '@/actions/services/create'
 import { mutate } from 'swr'
+import axios from 'axios'
 
 export const useTeamModal = () => {
   const [isPending, setIsPending] = useState(false)

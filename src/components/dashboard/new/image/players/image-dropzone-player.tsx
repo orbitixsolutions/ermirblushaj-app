@@ -29,7 +29,7 @@ const ImageDropzonePlayer = () => {
 
   return (
     <div
-      className={`bg-custom-lightgray w-full h-52 grid place-items-center rounded-xl cursor-pointer text-center text-2xl text-slate-900/40 ${
+      className={`bg-custom-lightgray overflow-hidden w-full aspect-video md:aspect-square grid place-items-center rounded-xl cursor-pointer text-center text-2xl text-slate-900/40 ${
         isDragActive ? 'border-4 border-custom-blue' : 'border-2'
       }`}
       {...getRootProps()}
@@ -39,11 +39,12 @@ const ImageDropzonePlayer = () => {
         <p>Drop the images here ...</p>
       ) : imagePlayer.imgFile ? (
         <Image
+          className=''
           src={URL.createObjectURL(imagePlayer.imgFile)}
           alt='New image preview'
         />
       ) : imagePlayer.imgPreview ? (
-        <Image src={imagePlayer.imgPreview} alt='Player image' />
+        <Image className='w-[150px] md:w-full' src={imagePlayer.imgPreview} alt='Player image' />
       ) : (
         <p>Drop player image</p>
       )}

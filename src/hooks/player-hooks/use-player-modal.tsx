@@ -10,8 +10,8 @@ import { useModalPlayerStore } from '@/store/modal/use-modal-player-store'
 import { PlayerSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createPlayers } from '@/actions/services/create'
-import axios from 'axios'
 import { mutate } from 'swr'
+import axios from 'axios'
 
 export const usePlayerModal = () => {
   const [isPending, setIsPending] = useState(false)
