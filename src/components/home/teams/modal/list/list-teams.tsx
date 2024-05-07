@@ -1,6 +1,14 @@
 import { calculateAge } from '@/helpers/calculate-age'
-import { Avatar, Card, CardBody, ScrollShadow } from '@nextui-org/react'
+import {
+  Avatar,
+  Card,
+  CardBody,
+  CardHeader,
+  ModalBody,
+  ScrollShadow
+} from '@nextui-org/react'
 import { Player, Team } from '@prisma/client'
+import { IconAlertCircle } from '@tabler/icons-react'
 
 type ExtendedTeam = Team & {
   players: Player[]
@@ -8,6 +16,21 @@ type ExtendedTeam = Team & {
 
 const ListTeam = ({ team }: { team: ExtendedTeam }) => {
   const players = team.players
+
+  if (players.length === 0)
+    return (
+      <div className='w-full pr-8'>
+        <Card
+          className='w-full border-2 py-4 border-custom-red
+        bg-custom-red/30 text-lg md:text-2xl font-bold text-custom-red/75'
+        >
+          <CardHeader className='flex justify-center'>
+            <IconAlertCircle size={48} className='animate-pulse' />
+          </CardHeader>
+          <ModalBody>No there are players in this team.</ModalBody>
+        </Card>
+      </div>
+    )
 
   return (
     <ScrollShadow
