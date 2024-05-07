@@ -12,7 +12,7 @@ const TournamentImage = ({ gallery }: { gallery: TournamentGallery }) => {
           src={gallery.url}
           alt={`image-${gallery.id}`}
         />
-        <CardFooter className='absolute z-50 bottom-0 p-1 justify-center gap-1 bg-custom-navy/50'>
+        <CardFooter className='w-full gap-1 p-1 flex items-center justify-center absolute z-50 bottom-0 bg-custom-navy/50'>
           <ButtonDeleteImageTournament gallery={gallery} />
           <ButtonEditImageTournament gallery={gallery} />
         </CardFooter>
