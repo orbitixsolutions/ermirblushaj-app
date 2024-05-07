@@ -1,10 +1,9 @@
-import { Avatar, Card } from '@nextui-org/react'
+import { Card } from '@nextui-org/react'
 import { getTranslations } from 'next-intl/server'
 import { Team } from '@prisma/client'
-import prisma from '@/libs/prisma'
-
 import ButtonAvatar from './button/button-avatar'
 import ModalTeam from './modal/modal-team/modal-team'
+import prisma from '@/libs/prisma'
 
 const getTeams = async () => {
   const teams = await prisma.team.findMany()
@@ -14,6 +13,17 @@ const getTeams = async () => {
 const Teams = async () => {
   const teams = await getTeams()
   const content = await getTranslations('Teams')
+
+  const contentModal = {
+    no_players: content('modal.no_players'),
+    years: content('modal.player_information.years'),
+    position: content('modal.player_information.position'),
+    height: content('modal.player_information.height'),
+    positions: {
+      goalkeeper: content('modal.player_information.positions.goalkeeper'),
+      attacker: content('modal.player_information.positions.attacker')
+    }
+  }
 
   return (
     <>
@@ -53,7 +63,7 @@ const Teams = async () => {
           })}
         </ol>
       </section>
-      <ModalTeam />
+      <ModalTeam contentModal={contentModal} />
     </>
   )
 }

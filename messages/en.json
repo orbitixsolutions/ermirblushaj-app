@@ -51,7 +51,19 @@
     "group_last_title": "Last"
   },
   "Teams": {
-    "title": "Team"
+    "title": "Team",
+    "modal": {
+      "no_players": "No there are players in this team.",
+      "player_information": {
+        "years": "Years",
+        "position": "Position",
+        "height": "Height",
+        "positions": {
+          "attacker": "Attacker",
+          "goalkeeper": "Goalkeeper"
+        }
+      }
+    }
   },
   "Footer": {
     "social": {

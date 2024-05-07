@@ -3,7 +3,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination } from 'swiper/modules'
 import BoardFootball from '@/components/home/teams/modal/modal-team/content/board-football'
-import ListTeam from '@/components/home/teams/modal/list/list-teams'
+import ListPlayers from '@/components/home/teams/modal/list/list-players'
 import {
   Modal,
   ModalContent,
@@ -25,7 +25,7 @@ type ExtendedTeam = Team & {
   players: Player[]
 }
 
-const ModalTeam = () => {
+const ModalTeam = ({ contentModal }: any) => {
   const { isOpen, teamId } = useModalTeamStore((state) => ({
     isOpen: state.teamModalOpen,
     teamId: state.teamModalId
@@ -66,7 +66,7 @@ const ModalTeam = () => {
                 modules={[Pagination]}
               >
                 <SwiperSlide>
-                  <ListTeam team={team!} />
+                  <ListPlayers contentModal={contentModal} team={team!} />
                 </SwiperSlide>
                 <SwiperSlide>
                   <BoardFootball team={team!} />

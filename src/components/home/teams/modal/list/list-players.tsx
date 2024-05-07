@@ -14,7 +14,24 @@ type ExtendedTeam = Team & {
   players: Player[]
 }
 
-const ListTeam = ({ team }: { team: ExtendedTeam }) => {
+interface Props {
+  no_players: string
+  years: string
+  height: string
+  position: string
+  positions: {
+    goalkeeper: string
+    attacker: string
+  }
+}
+
+const ListPlayers = ({
+  contentModal,
+  team
+}: {
+  team: ExtendedTeam
+  contentModal: Props
+}) => {
   const players = team.players
 
   if (players.length === 0)
@@ -27,10 +44,17 @@ const ListTeam = ({ team }: { team: ExtendedTeam }) => {
           <CardHeader className='flex justify-center'>
             <IconAlertCircle size={48} className='animate-pulse' />
           </CardHeader>
-          <ModalBody>No there are players in this team.</ModalBody>
+          <ModalBody>{contentModal.no_players}</ModalBody>
         </Card>
       </div>
     )
+
+  const getPosition = (position: string) => {
+    if (!position) return
+    
+    if (position === 'goalkeeper') return contentModal.positions.goalkeeper
+    if (position === 'attacker') return contentModal.positions.attacker
+  }
 
   return (
     <ScrollShadow
@@ -60,21 +84,21 @@ const ListTeam = ({ team }: { team: ExtendedTeam }) => {
                   <p className='font-bold'>
                     {calculateAge(player.dateOfBirth!)}
                   </p>
-                  <p>Years</p>
+                  <p>{contentModal.years}</p>
                 </div>
               </div>
               <div className='bg-custom-darknavy text-custom-lightgray text-xs'>
                 <div className='size-full flex flex-col justify-end pb-2'>
                   <p className='font-bold'>{player.height}mt</p>
-                  <p>Height</p>
+                  <p>{contentModal.height}</p>
                 </div>
               </div>
               <div className='bg-custom-darknavy text-custom-lightgray text-xs'>
                 <div className='size-full flex flex-col justify-end pb-2 pr-4'>
                   <p className='font-bold line-clamp-1 capitalize'>
-                    {player.position}
+                    {getPosition(player.position!)}
                   </p>
-                  <p>Position</p>
+                  <p>{contentModal.position}</p>
                 </div>
               </div>
             </CardBody>
@@ -85,4 +109,4 @@ const ListTeam = ({ team }: { team: ExtendedTeam }) => {
   )
 }
 
-export default ListTeam
+export default ListPlayers

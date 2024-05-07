@@ -51,7 +51,19 @@
     "group_last_title": "E fundit"
   },
   "Teams": {
-    "title": "Ekipet"
+    "title": "Ekipet",
+    "modal": {
+      "no_players": "Nuk ka lojtarë në këtë ekip.",
+      "player_information": {
+        "years": "Vitet",
+        "position": "Pozicioni",
+        "height": "Gjatësia",
+        "positions": {
+          "attacker": "Sulmues",
+          "goalkeeper": "Portier"
+        }
+      }
+    }
   },
   "Footer": {
     "social": {

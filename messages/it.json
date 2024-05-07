@@ -51,7 +51,19 @@
     "group_last_title": "Ultimo"
   },
   "Teams": {
-    "title": "Squadre"
+    "title": "Squadre",
+    "modal": {
+      "no_players": "Non ci sono giocatori in questa squadra.",
+      "player_information": {
+        "years": "Anni",
+        "position": "Posizione",
+        "height": "Altezza",
+        "positions": {
+          "attacker": "Attaccante",
+          "goalkeeper": "Portiere"
+        }
+      }
+    }
   },
   "Footer": {
     "social": {
