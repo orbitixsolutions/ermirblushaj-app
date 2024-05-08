@@ -1,5 +1,5 @@
 import { TournamentGallery } from '@prisma/client'
-import { Card, CardBody, CardFooter, Image } from '@nextui-org/react'
+import { Card, CardFooter, Image } from '@nextui-org/react'
 import ButtonDeleteImageTournament from '@/components/dashboard/gallery/buttons/tournament/button-delete-image-tournament'
 import ButtonEditImageTournament from '@/components/dashboard/gallery/buttons/tournament/button-edit-image-tournament'
 
