@@ -13,7 +13,7 @@ const CardPlayerImage = ({ player }: { player: Player }) => {
 
           <Avatar
           isBordered
-            className='w-20 h-20 md:w-24 md:h-24'
+            className='w-20 h-20 md:w-24 md:h-24 lg:w-16 lg:h-16'
             src={player.profilePhoto!}
             alt={player.firstName}
           />
