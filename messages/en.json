@@ -20,13 +20,14 @@
   },
   "Tributte": {
     "title": "Ermir Blushaj",
-    "main_paragraph": "Ermir Bujash left an indelible mark on the hearts of those who knew him. His joy and love for life were infectious, and his ability to light up a room with his smile will never be forgotten. Ermir didn't just live; he inspired everyone to live fully and passionately. We will always remember his courage, kindness, and indomitable spirit, which continues to teach us the importance of cherishing every moment.",
+    "main_paragraph": "Ermir Blushaj left an indelible mark on the hearts of those who knew him. His joy and love for life were infectious, and his ability to light up a room with his smile will never be forgotten. Ermir didn't just live; he inspired everyone to live fully and passionately. We will always remember his courage, kindness, and indomitable spirit, which continues to teach us the importance of cherishing every moment.",
     "gallery": {
       "title": "Gallery",
       "modal_title": "Ermir Blushaj Gallery",
       "button": "Show More"
     }
   },
+
   "Guide": {
     "title": "How does the tournament work?",
     "key": {
@@ -56,6 +57,12 @@
     "best_players": {
       "title": "Best scorer"
     }
+  },
+  "Keys": {
+    "title": "Keys of the tournament",
+    "no_items": "No there are keys in this tournament.",
+    "error_title": "Error",
+    "error_description": "Error loading the keys of the tournament. Please try again later."
   },
   "Groups": {
     "title": "Group stage",

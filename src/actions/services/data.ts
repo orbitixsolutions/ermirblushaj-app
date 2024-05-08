@@ -57,7 +57,7 @@ export const dataMatchesKeys = async () => {
       include: {
         teamKeyA: true,
         teamKeyB: true,
-        matchKeyHistory: true
+        matchKeyHistory: true,
       }
     })
 

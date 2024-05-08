@@ -1,4 +1,9 @@
 import {
+  CSIMilamoSponsor,
+  MeriTransportiSponsor
+} from '@/assets/images/sponsors'
+
+import {
   IconBrandFacebookFilled,
   IconBrandInstagram,
   IconBrandTiktokFilled,
@@ -39,5 +44,16 @@ export const streets = [
   },
   {
     street: 'Crra 42 #### San isidro'
+  }
+]
+
+export const sponsors = [
+  {
+    image: MeriTransportiSponsor.src,
+    name: 'Meri Transporti'
+  },
+  {
+    image: CSIMilamoSponsor.src,
+    name: 'CSI Milamo'
   }
 ]

@@ -1,8 +1,9 @@
+'use client'
+
 import { fetcher } from '@/helpers/fetcher'
-import { Avatar, Divider } from '@nextui-org/react'
+import { Avatar } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
 import ImagesMatchesKeys from '@/components/dashboard/dates/image/images-matches-keys'
-import PopoverFinalsTeam from '@/components/dashboard/dates/popover/popover-finals-team'
 import WrapperImage from '@/components/dashboard/dates/image/wrapper-images'
 import useSWR from 'swr'
 
@@ -20,33 +21,20 @@ const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
     fetcher
   )
 
+  const EMPTY_MATCHES = matches?.length !== 0
+
   return (
     <ol className='flex gap-2'>
-      {matches?.length !== 0 ? (
+      {EMPTY_MATCHES ? (
         matches?.map((matchKey) => (
           <li key={matchKey.id} className='relative'>
-            <div className='absolute w-full h-full flex justify-center items-center'>
-              <PopoverFinalsTeam
-                column={column}
-                phase={phase}
-                match={matchKey}
-              />
-            </div>
-
-            <div className='absolute w-full h-full flex justify-center items-center'>
-              <Divider
-                orientation='vertical'
-                className='bg-custom-lightgray h-32'
-              />
-            </div>
-
-            <WrapperImage className='space-y-16'>
+            <WrapperImage className='space-y-12'>
               <ImagesMatchesKeys match={matchKey} />
             </WrapperImage>
           </li>
         ))
       ) : (
-        <div>
+        <div className='space-y-12'>
           {Array(2)
             .fill(0)
             .map((_, index) => (

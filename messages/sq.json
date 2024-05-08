@@ -48,6 +48,12 @@
       "title": "Golashënuesit më të mirë"
     }
   },
+  "Keys": {
+    "title": "Çelësat e turneut",
+    "no_items": "Nuk ka çelësa në këtë turne.",
+    "error_title": "Gabim",
+    "error_description": "Gabim gjatë ngarkimit të çelësave të turneut. Ju lutemi provoni përsëri më vonë."
+  },
   "Groups": {
     "title": "Faza në grup",
     "group_title": "Grupi",
@@ -70,7 +76,7 @@
   },
   "Tributte": {
     "title": "Ermir Blushaj",
-    "main_paragraph": "Ermir Bujashi lajmoi një shenjë të pashlyeshme në zemrat e atyre që e njohën atë. Kënaqësia dhe dashuria e tij për jetën ishin të infektueshme, dhe aftësia e tij për të ndriçuar një dhomë me buzëqeshjen e tij nuk do të harrohet kurrë. Ermiri nuk jetoi vetëm; ai frymëzoi të gjithë të jetojnë plotësisht dhe me pasion. Ne gjithmonë do të kujtojmë guximin e tij, mirësjelljen dhe shpirtin e tij të pashkatërrueshëm, që vazhdon të na mësojë rëndësinë e çdo momenti.",
+    "main_paragraph": "Ermir Blushaj lajmoi një shenjë të pashlyeshme në zemrat e atyre që e njohën atë. Kënaqësia dhe dashuria e tij për jetën ishin të infektueshme, dhe aftësia e tij për të ndriçuar një dhomë me buzëqeshjen e tij nuk do të harrohet kurrë. Ermiri nuk jetoi vetëm; ai frymëzoi të gjithë të jetojnë plotësisht dhe me pasion. Ne gjithmonë do të kujtojmë guximin e tij, mirësjelljen dhe shpirtin e tij të pashkatërrueshëm, që vazhdon të na mësojë rëndësinë e çdo momenti.",
     "gallery": {
       "title": "Galeria",
       "modal_title": "Galeria e Ermir Blushaj",

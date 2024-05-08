@@ -4,7 +4,6 @@ import GroupsResume from '@/components/dashboard/home/list/groups-resumen'
 const DashboardPage = async () => {
   return (
     <WrapperSection>
-      <h2 className='text-2xl col-span-11 md:text-4xl text-center font-bold my-5'>State groups</h2>
       <GroupsResume />
     </WrapperSection>
   )

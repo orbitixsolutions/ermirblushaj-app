@@ -1,8 +1,9 @@
-import { Avatar, Card, CardBody } from '@nextui-org/react'
+'use client'
+
+import { Avatar } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
 import { fetcher } from '@/helpers/fetcher'
 import ImagesMatchesKeys from '@/components/dashboard/dates/image/images-matches-keys'
-import WrapperImage from '@/components/dashboard/dates/image/wrapper-images'
 import useSWR from 'swr'
 
 type ExtendedMatchKey = MatchKey & {
@@ -11,10 +12,16 @@ type ExtendedMatchKey = MatchKey & {
 }
 
 const skeletonClasses = {
-  0: '-translate-y-[7.95rem] xs:-translate-y-[9.5rem] sm:-translate-y-[11rem]',
-  1: '-translate-y-[2.55rem] xs:-translate-y-[3.4rem] sm:-translate-y-[3.85rem]',
-  2: 'translate-y-[2.55rem] xs:translate-y-[3rem] sm:translate-y-[3.85rem]',
-  3: 'translate-y-[7.95rem] xs:translate-y-[9.5rem] sm:translate-y-[11rem]'
+  0: '-translate-y-[0.25em] xs:translate-y-[1em] sm:translate-y-[1.5em]',
+  1: 'translate-y-[0em] xs:translate-y-[0.15em] sm:translate-y-[0.5em]',
+  2: '-translate-y-[0em] xs:translate-y-[-0.25em] sm:translate-y-[-0.5em]',
+  3: 'translate-y-[.40rem] xs:translate-y-[-1rem] sm:translate-y-[-1.5em]'
+}
+
+const matchClasses = {
+  0: '-translate-y-[2.75em] xs:-translate-y-[3.15em] sm:-translate-y-[4em]',
+  1: 'translate-y-[2.75rem] xs:translate-y-[3.15rem] sm:translate-y-[4em]',
+  
 }
 
 const avatarSkeleton =
@@ -32,18 +39,23 @@ const MatchesQuarters = ({
     fetcher
   )
 
+  const EMPTY_MATCHES = matches?.length !== 0
+
   return (
     <ol>
-      {matches?.length !== 0 ? (
-        matches?.map((matchKey) => (
-          <li key={matchKey.id} className='relative my-16'>
-            <WrapperImage className='space-y-28'>
+      {EMPTY_MATCHES ? (
+        matches?.map((matchKey, index) => (
+          <li
+            key={matchKey.id}
+            className={`${matchClasses[index as keyof typeof matchClasses]}`}
+          >
+            <div className='space-y-20  xs:space-y-[108px] sm:space-y-[128px]'>
               <ImagesMatchesKeys match={matchKey} />
-            </WrapperImage>
+            </div>
           </li>
         ))
       ) : (
-        <>
+        <div className='space-y-20 xs:space-y-[108px] sm:space-y-[128px]'>
           {Array(4)
             .fill(0)
             .map((_, index) => (
@@ -56,7 +68,7 @@ const MatchesQuarters = ({
                 }`}
               />
             ))}
-        </>
+        </div>
       )}
     </ol>
   )

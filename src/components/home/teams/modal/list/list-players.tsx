@@ -1,14 +1,7 @@
 import { calculateAge } from '@/helpers/calculate-age'
-import {
-  Avatar,
-  Card,
-  CardBody,
-  CardHeader,
-  ModalBody,
-  ScrollShadow
-} from '@nextui-org/react'
+import { Avatar, Card, CardBody, ScrollShadow } from '@nextui-org/react'
 import { Player, Team } from '@prisma/client'
-import { IconAlertCircle } from '@tabler/icons-react'
+import ErrorNoPlayers from '@/components/home/errors/error-no-players'
 
 type ExtendedTeam = Team & {
   players: Player[]
@@ -34,34 +27,18 @@ const ListPlayers = ({
 }) => {
   const players = team.players
 
-  if (players.length === 0)
-    return (
-      <div className='w-full pr-8'>
-        <Card
-          className='w-full border-2 py-4 border-custom-red
-        bg-custom-red/30 text-lg md:text-2xl font-bold text-custom-red/75'
-        >
-          <CardHeader className='flex justify-center'>
-            <IconAlertCircle size={48} className='animate-pulse' />
-          </CardHeader>
-          <ModalBody>{contentModal.no_players}</ModalBody>
-        </Card>
-      </div>
-    )
+  if (players.length === 0) return <ErrorNoPlayers content={contentModal} />
 
   const getPosition = (position: string) => {
     if (!position) return
-    
+
     if (position === 'goalkeeper') return contentModal.positions.goalkeeper
     if (position === 'attacker') return contentModal.positions.attacker
   }
 
   return (
-    <ScrollShadow
-      hideScrollBar
-      className='w-full h-full flex items-center pr-8'
-    >
-      <ol className='w-full grid grid-cols-1 gap-2'>
+    <div className='w-full h-full grid place-items-center'>
+      <ScrollShadow hideScrollBar className='w-full h-full space-y-2 pr-8'>
         {players.map((player) => (
           <Card
             key={player.id}
@@ -73,9 +50,9 @@ const ListPlayers = ({
               </div>
 
               <div className='absolute right-0 w-full bg-custom-green py-1.5'>
-                <h3 className='text-sm ml-24 xs:ml-36 space-x-2'>
+                <h3 className='text-sm ml-24 xs:ml-36 space-x-2 font-bold'>
                   <span>{player.firstName}</span>
-                  <span className='font-bold'>{player.lastName}</span>
+                  <span>{player.lastName}</span>
                 </h3>
               </div>
 
@@ -104,8 +81,8 @@ const ListPlayers = ({
             </CardBody>
           </Card>
         ))}
-      </ol>
-    </ScrollShadow>
+      </ScrollShadow>
+    </div>
   )
 }
 

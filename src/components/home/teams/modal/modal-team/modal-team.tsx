@@ -9,7 +9,8 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  Avatar
+  Avatar,
+  ScrollShadow
 } from '@nextui-org/react'
 
 import { useModalTeamStore } from '@/store/modal/use-modal-team-store'
@@ -65,8 +66,9 @@ const ModalTeam = ({ contentModal }: any) => {
                 className='h-full w-full'
                 modules={[Pagination]}
               >
-                <SwiperSlide>
-                  <ListPlayers contentModal={contentModal} team={team!} />
+                <SwiperSlide className='w-full h-full'>
+                    <ListPlayers contentModal={contentModal} team={team!} />
+                  
                 </SwiperSlide>
                 <SwiperSlide>
                   <BoardFootball team={team!} />

@@ -3,6 +3,7 @@ import Footer from '@/components/home/footer'
 import Guide from '@/components/home/guides/guide'
 import Header from '@/components/home/header/header'
 import Main from '@/components/home/main'
+import MatchesKeys from '@/components/home/matches-keys'
 import Sponsors from '@/components/home/sponsors'
 import TablesGroup from '@/components/home/tables'
 import Teams from '@/components/home/teams/teams'
@@ -18,6 +19,7 @@ export default function Home() {
         <Sponsors />
         <Guide />
         <Dates />
+        <MatchesKeys />
         <TablesGroup />
         <Teams />
       </main>

@@ -29,7 +29,7 @@ const Teams = async () => {
     <>
       <section
         id='teams'
-        className='max-w-[940px] mx-auto py-8 md:py-16 px-5 text-custom-white space-y-4'
+        className='max-w-[940px] mx-auto py-8 md:py-24 px-5 text-custom-white space-y-4'
       >
         <h2 className='w-full text-center text-lg md:text-2xl font-bold'>
           {content('title')}

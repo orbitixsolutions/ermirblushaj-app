@@ -18,20 +18,25 @@ const GroupsResume = () => {
   if (isLoading) return <TableSkeleton />
 
   return (
-    <ol className='col-span-11 grid grid-cols-8 gap-4 py-8'>
-      {data_groups?.map((group) => (
-        <li
-          className='col-span-8 md:col-span-4 border-[1px] border-custom-lightgray rounded-lg overflow-hidden'
-          key={group.id}
-        >
-          <h3 className='text-base md:text-xl font-bold uppercase w-full bg-custom-green py-3 px-4 text-center text-custom-white'>
-            Group {group.name}
-          </h3>
+    <div className='col-span-11'>
+      <h2 className='text-2xl col-span-11 md:text-4xl text-center font-bold'>
+        State groups
+      </h2>
+      <ol className='grid grid-cols-8 gap-4 py-4 md:py-8'>
+        {data_groups?.map((group) => (
+          <li
+            className='col-span-8 md:col-span-4 border-[1px] border-custom-lightgray rounded-lg overflow-hidden'
+            key={group.id}
+          >
+            <h3 className='text-base md:text-xl font-bold uppercase w-full bg-custom-green py-3 px-4 text-center text-custom-white'>
+              Group {group.name}
+            </h3>
 
-          <TableGroup group={group} />
-        </li>
-      ))}
-    </ol>
+            <TableGroup group={group} />
+          </li>
+        ))}
+      </ol>
+    </div>
   )
 }
 

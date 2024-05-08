@@ -47,7 +47,7 @@ const NavigationMenu = () => {
   return (
     <Navbar
       shouldHideOnScroll
-      className='bg-custom-darkblue py-4 rounded-2xl'
+      className='bg-custom-darkblue py-4 rounded-2xl z-50'
       onMenuOpenChange={setIsMenuOpen}
     >
       <NavbarContent>

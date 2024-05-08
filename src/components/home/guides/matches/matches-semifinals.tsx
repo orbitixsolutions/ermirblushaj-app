@@ -1,9 +1,9 @@
-import { Avatar, Divider } from '@nextui-org/react'
+'use client'
+
+import { Avatar } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
 import { fetcher } from '@/helpers/fetcher'
-import PopoverSemifinalsMatches from '@/components/dashboard/dates/popover/popover-semifinals-team'
 import ImagesMatchesKeys from '@/components/dashboard/dates/image/images-matches-keys'
-import WrapperImage from '@/components/dashboard/dates/image/wrapper-images'
 import useSWR from 'swr'
 
 type ExtendedMatchKey = MatchKey & {
@@ -12,8 +12,7 @@ type ExtendedMatchKey = MatchKey & {
 }
 
 const skeletonClasses = {
-  0: '-translate-y-[6.38rem] xs:-translate-y-[7.95rem] sm:-translate-y-[9.25rem]',
-  1: 'translate-y-[6.38rem] xs:translate-y-[7.95rem] sm:translate-y-[9.25rem]'
+  0: 'translate-y-[0em]'
 }
 
 const avatarSkeleton =
@@ -31,33 +30,25 @@ const MatchesSemifinals = ({
     fetcher
   )
 
+  const EMPTY_MATCHES = matches?.length !== 0
+
   return (
     <ol>
-      {matches?.length !== 0 ? (
-        matches?.map((matchKey) => (
-          <li key={matchKey.id} className='relative'>
-            <div className='absolute w-full h-full flex justify-center items-center'>
-              <PopoverSemifinalsMatches
-                column={column}
-                phase={phase}
-                match={matchKey}
-              />
-            </div>
-
-            <div className='absolute w-full h-full flex justify-center items-center'>
-              <Divider
-                orientation='vertical'
-                className='bg-custom-lightgray h-80'
-              />
-            </div>
-
-            <WrapperImage className='space-y-[275px]'>
+      {EMPTY_MATCHES ? (
+        matches?.map((matchKey, index) => (
+          <li
+            key={matchKey.id}
+            className={`${
+              skeletonClasses[index as keyof typeof skeletonClasses]
+            }`}
+          >
+            <div className='space-y-[204px] xs:space-y-[252px] sm:space-y-[300px] md:space-y-[300px]'>
               <ImagesMatchesKeys match={matchKey} />
-            </WrapperImage>
+            </div>
           </li>
         ))
       ) : (
-        <>
+        <div className='space-y-[204px] xs:space-y-[252px] sm:space-y-[300px] md:space-y-[300px]'>
           {Array(2)
             .fill(0)
             .map((_, index) => (
@@ -70,7 +61,7 @@ const MatchesSemifinals = ({
                 }`}
               />
             ))}
-        </>
+        </div>
       )}
     </ol>
   )

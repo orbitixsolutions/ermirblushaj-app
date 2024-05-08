@@ -1,7 +1,6 @@
 import { Date, Key, Team } from '@/assets/svg'
 import { Avatar, Button, Link } from '@nextui-org/react'
 import { useTranslations } from 'next-intl'
-import ModalKey from './modal/modal-key'
 
 const Guide = () => {
   const t = useTranslations('Guide')
@@ -11,10 +10,7 @@ const Guide = () => {
     key: {
       title: t('key.title'),
       description: t('key.description'),
-      button: t('key.button'),
-      key_modal: {
-        title: t('key.modal.title')
-      }
+      button: t('key.button')
     },
     team: {
       title: t('team.title'),
@@ -33,10 +29,7 @@ const Guide = () => {
       <h2 className='text-xl md:text-2xl w-full font-bold text-center mb-8'>
         {contentGuide.title}
       </h2>
-      <div
-        id='keys'
-        className='space-y-8 sm:space-y-0 w-full gap-4 sm:gap-8 md:gap-16 lg:gap-8 flex flex-wrap justify-center lg:justify-between items-start'
-      >
+      <div className='space-y-8 sm:space-y-0 w-full gap-4 sm:gap-8 md:gap-16 lg:gap-8 flex flex-wrap justify-center lg:justify-between items-start'>
         <div className='space-y-4 max-w-[300px]'>
           <Avatar size='lg' src={Key.src} className='mx-auto bg-transparent' />
           <h2 className='text-lg md:text-2xl text-center font-bold'>
@@ -47,7 +40,14 @@ const Guide = () => {
           </p>
 
           <div className='flex justify-center'>
-            <ModalKey content={contentGuide} />
+            <Button
+              as={Link}
+              href='#keys'
+              radius='full'
+              className='bg-custom-green font-bold'
+            >
+              {contentGuide.key.button}
+            </Button>
           </div>
         </div>
 
