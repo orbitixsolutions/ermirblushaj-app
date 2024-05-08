@@ -18,12 +18,24 @@
     "main_paragraph": "Ogni anno, Parma celebra con un campionato annuale il ricordo di Ermir Blushaj, una personalità significativa per la città. Questo evento non è solo una competizione, ma un'occasione per rafforzare i valori di comunità, integrità e amicizia.",
     "main_button": "Mostra Altro"
   },
+  "Tributte": {
+    "title": "Ermir Blushaj",
+    "main_paragraph": "Ermir Bujash ha lasciato un segno indelebile nei cuori di coloro che lo hanno conosciuto. La sua gioia e il suo amore per la vita erano contagiosi, e la sua capacità di illuminare una stanza con il suo sorriso non sarà mai dimenticata. Ermir non si è limitato a vivere; ha ispirato tutti a vivere pienamente e con passione. Ricorderemo sempre il suo coraggio, la sua gentilezza e il suo spirito indomito, che continua a insegnarci l'importanza di apprezzare ogni momento.",
+    "gallery": {
+      "title": "Galleria",
+      "modal_title": "Galleria di Ermir Blushaj",
+      "button": "Mostra Altro"
+    }
+  },
   "Guide": {
     "title": "Come funziona il torneo?",
     "key": {
       "title": "Chiavi",
       "description": "In questa sezione sono presentate le fasi del torneo, iniziando dalla fase a gironi fino agli scontri diretti. Qui puoi seguire il progresso delle squadre e vedere chi avanza ai turni successivi.",
-      "button": "Chiavi"
+      "button": "Chiavi",
+      "modal": {
+        "title": "Chiavi del torneo"
+      }
     },
     "team": {
       "title": "Squadre",

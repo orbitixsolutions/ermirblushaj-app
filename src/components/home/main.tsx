@@ -29,7 +29,7 @@ const Main = () => {
         </div>
       </div>
 
-      <div className='relative w-[400px] h-[300px] '>
+      <div className='relative w-[400px] h-[300px]'>
         <div className='absolute w-[190px] h-[230px] top-0 right-[50%] translate-x-[50%]'>
           <Image src={ManBradImage.src} alt='Ermir Blushaj' />
         </div>

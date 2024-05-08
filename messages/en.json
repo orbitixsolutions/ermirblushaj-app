@@ -18,12 +18,24 @@
     "main_paragraph": "Every year, Parma celebrates the memory of Ermir Blushaj, a significant personality for the city, with an annual championship. This event is not just a competition, but an opportunity to strengthen the values of community, integrity and friendship.",
     "main_button": "Show More"
   },
+  "Tributte": {
+    "title": "Ermir Blushaj",
+    "main_paragraph": "Ermir Bujash left an indelible mark on the hearts of those who knew him. His joy and love for life were infectious, and his ability to light up a room with his smile will never be forgotten. Ermir didn't just live; he inspired everyone to live fully and passionately. We will always remember his courage, kindness, and indomitable spirit, which continues to teach us the importance of cherishing every moment.",
+    "gallery": {
+      "title": "Gallery",
+      "modal_title": "Ermir Blushaj Gallery",
+      "button": "Show More"
+    }
+  },
   "Guide": {
     "title": "How does the tournament work?",
     "key": {
       "title": "Keys",
       "description": "This section presents the phases of the tournament, starting from the group stage up to the head-to-head matches. Here you can follow the progress of the teams and see who advances to the next rounds.",
-      "button": "Keys"
+      "button": "Keys",
+      "modal": {
+        "title": "Keys of the tournament"
+      }
     },
     "team": {
       "title": "Team",

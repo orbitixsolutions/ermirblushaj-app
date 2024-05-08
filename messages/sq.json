@@ -23,7 +23,10 @@
     "key": {
       "title": "Çelësat",
       "description": "Në këtë seksion prezantohen fazat e turneut, duke filluar nga faza e grupeve deri te eliminatoret. Këtu mund të ndiqni përparimin e ekipeve dhe të shihni cilët kalojnë në raundet e ardhshme.",
-      "button": "Çelësat"
+      "button": "Çelësat",
+      "modal": {
+        "title": "Çelësat e turneut"
+      }
     },
     "team": {
       "title": "Ekipet",
@@ -63,6 +66,15 @@
           "goalkeeper": "Portier"
         }
       }
+    }
+  },
+  "Tributte": {
+    "title": "Ermir Blushaj",
+    "main_paragraph": "Ermir Bujashi lajmoi një shenjë të pashlyeshme në zemrat e atyre që e njohën atë. Kënaqësia dhe dashuria e tij për jetën ishin të infektueshme, dhe aftësia e tij për të ndriçuar një dhomë me buzëqeshjen e tij nuk do të harrohet kurrë. Ermiri nuk jetoi vetëm; ai frymëzoi të gjithë të jetojnë plotësisht dhe me pasion. Ne gjithmonë do të kujtojmë guximin e tij, mirësjelljen dhe shpirtin e tij të pashkatërrueshëm, që vazhdon të na mësojë rëndësinë e çdo momenti.",
+    "gallery": {
+      "title": "Galeria",
+      "modal_title": "Galeria e Ermir Blushaj",
+      "button": "Shfaq më shumë"
     }
   },
   "Footer": {

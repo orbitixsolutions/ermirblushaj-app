@@ -15,9 +15,9 @@ import {
 } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
 import { BrandLogo } from '@/assets/images'
+import { useLocale } from 'next-intl'
 import LocalSwitcher from './local-switcher'
 import Dashboard from './dashboard'
-import { useLocale } from 'next-intl'
 
 interface Props {
   contentItems: {
@@ -59,12 +59,14 @@ const NavBar = ({ contentItems, contentDashboard }: Props) => {
           className='sm:hidden'
         />
         <NavbarBrand className='space-x-4'>
-          <Image
-            radius='none'
-            src={BrandLogo.src}
-            alt='Logo'
-            className='w-32 md:w-40'
-          />
+          <Link href='/'>
+            <Image
+              radius='none'
+              alt='Logo'
+              src={BrandLogo.src}
+              className='w-32 md:w-40'
+            />
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 
@@ -90,7 +92,7 @@ const NavBar = ({ contentItems, contentDashboard }: Props) => {
         <NavbarItem className='flex items-center gap-3'>
           <Button
             as={Link}
-            href='/tribute'
+            href={`/${locale}/tributte`}
             radius='sm'
             className='bg-custom-green font-bold'
           >

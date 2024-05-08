@@ -11,7 +11,18 @@ import {
 } from '@nextui-org/react'
 import Matches from '@/components/home/guides/modal/content/matches'
 
-const ModalKey = ({ content }: { content: string }) => {
+interface Props {
+  key: {
+    title: string
+    description: string
+    button: string
+    key_modal: {
+      title: string
+    }
+  }
+}
+
+const ModalKey = ({ content }: { content: Props }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
   return (
@@ -21,7 +32,7 @@ const ModalKey = ({ content }: { content: string }) => {
         radius='full'
         className='bg-custom-green font-bold'
       >
-        {content}
+        {content.key.button}
       </Button>
       <Modal
         className='absolute bg-custom-darknavy border-2 border-custom-green text-custom-white'
@@ -34,7 +45,7 @@ const ModalKey = ({ content }: { content: string }) => {
             <>
               <ModalBody className='h-full md:min-h-[670px] relative'>
                 <h2 className='text-xs sm:text-lg md:text-2xl font-bold left-[50%] -translate-x-[50%] absolute mt-2 text-custom-green'>
-                  Keys Tournament
+                  {content.key.key_modal.title}
                 </h2>
                 <Matches />
               </ModalBody>

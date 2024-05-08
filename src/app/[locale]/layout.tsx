@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { DM_Sans } from 'next/font/google'
 import { Toaster } from 'sonner'
-import Providers from './Providers'
+import Providers from '@/app/[locale]/Providers'
+
 import '../globals.css'
 
 const DM_SANS_FONT = DM_Sans({ subsets: ['latin'] })

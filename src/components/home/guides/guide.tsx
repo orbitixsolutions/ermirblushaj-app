@@ -6,10 +6,32 @@ import ModalKey from './modal/modal-key'
 const Guide = () => {
   const t = useTranslations('Guide')
 
+  const contentGuide = {
+    title: t('title'),
+    key: {
+      title: t('key.title'),
+      description: t('key.description'),
+      button: t('key.button'),
+      key_modal: {
+        title: t('key.modal.title')
+      }
+    },
+    team: {
+      title: t('team.title'),
+      description: t('team.description'),
+      button: t('team.button')
+    },
+    date: {
+      title: t('date.title'),
+      description: t('date.description'),
+      button: t('date.button')
+    }
+  }
+
   return (
     <section className='max-w-[1024px] mx-auto py-8 md:py-16 px-5 flex flex-wrap text-custom-white'>
       <h2 className='text-xl md:text-2xl w-full font-bold text-center mb-8'>
-        {t('title')}
+        {contentGuide.title}
       </h2>
       <div
         id='keys'
@@ -18,24 +40,24 @@ const Guide = () => {
         <div className='space-y-4 max-w-[300px]'>
           <Avatar size='lg' src={Key.src} className='mx-auto bg-transparent' />
           <h2 className='text-lg md:text-2xl text-center font-bold'>
-            {t('key.title')}
+            {contentGuide.key.title}
           </h2>
           <p className='text-center text-pretty text-sm sm:text-lg'>
-            {t('key.description')}
+            {contentGuide.key.description}
           </p>
 
           <div className='flex justify-center'>
-            <ModalKey content={t('key.button')} />
+            <ModalKey content={contentGuide} />
           </div>
         </div>
 
         <div className='space-y-4 max-w-[300px]'>
           <Avatar size='lg' src={Team.src} className='mx-auto bg-transparent' />
           <h2 className='text-lg md:text-2xl text-center font-bold'>
-            {t('team.title')}
+            {contentGuide.team.title}
           </h2>
           <p className='text-center text-pretty text-sm sm:text-lg'>
-            {t('team.description')}
+            {contentGuide.team.description}
           </p>
 
           <div className='flex justify-center'>
@@ -45,7 +67,7 @@ const Guide = () => {
               radius='full'
               className='bg-custom-green font-bold'
             >
-              {t('team.button')}
+              {contentGuide.team.button}
             </Button>
           </div>
         </div>
@@ -53,16 +75,20 @@ const Guide = () => {
         <div className='space-y-4 max-w-[300px]'>
           <Avatar size='lg' src={Date.src} className='mx-auto bg-transparent' />
           <h2 className='text-lg md:text-2xl text-center font-bold'>
-            {t('date.title')}
+            {contentGuide.date.title}
           </h2>
           <p className='text-center text-pretty text-sm sm:text-lg'>
-            {t('date.description')}
+            {contentGuide.date.description}
           </p>
 
           <div className='flex justify-center'>
-            <Button as={Link}
-              href='#dates' radius='full' className='bg-custom-green font-bold'>
-              {t('date.button')}
+            <Button
+              as={Link}
+              href='#dates'
+              radius='full'
+              className='bg-custom-green font-bold'
+            >
+              {contentGuide.date.button}
             </Button>
           </div>
         </div>

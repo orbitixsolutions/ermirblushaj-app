@@ -1,8 +1,9 @@
-import { Button, Card, Image } from '@nextui-org/react'
+import { Card, Image } from '@nextui-org/react'
 import ErrorDates from '@/components/home/errors/error-dates'
 import NoItems from '@/components/home/empty-items/no-items'
 import prisma from '@/libs/prisma'
 import ModalGallery from './modal/modal-gallery'
+import { getTranslations } from 'next-intl/server'
 
 const getImagesTournament = async () => {
   try {
@@ -17,13 +18,18 @@ const getImagesTournament = async () => {
   }
 }
 
-const Gallery = async ({ t }: { t: any }) => {
+const Gallery = async () => {
+  const content = await getTranslations('Dates')
   const { data: gallery, status } = await getImagesTournament()
 
   if (!gallery?.length) return <NoItems message='Comming Soon...' />
-
   if (status === 500) {
     return <ErrorDates message='Error loading data.' />
+  }
+
+  const contentGallery = {
+    title: content('gallery.title'),
+    button: content('gallery.button')
   }
 
   return (
@@ -31,7 +37,7 @@ const Gallery = async ({ t }: { t: any }) => {
       <div className='border-[1px] border-custom-lightgray rounded-md overflow-hidden'>
         <div className='bg-custom-green w-full py-2'>
           <h2 className='text-xs text-center font-bold text-slate-950'>
-            {t('gallery.title')}
+            {contentGallery.title}
           </h2>
         </div>
         <ol className='grid grid-cols-3'>
@@ -48,7 +54,7 @@ const Gallery = async ({ t }: { t: any }) => {
             </li>
           ))}
         </ol>
-        <ModalGallery gallery={gallery} content={t('gallery.button')} />
+        <ModalGallery gallery={gallery} content={contentGallery} />
       </div>
     </div>
   )

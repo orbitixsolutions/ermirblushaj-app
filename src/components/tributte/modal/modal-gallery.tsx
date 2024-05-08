@@ -1,5 +1,6 @@
 'use client'
 
+import { TributeGallery } from '@prisma/client'
 import {
   Modal,
   ModalContent,
@@ -12,36 +13,37 @@ import {
 
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination } from 'swiper/modules'
-import { TournamentGallery } from '@prisma/client'
 
 import 'swiper/css'
 import 'swiper/css/pagination'
 import './swiper.css'
 
 interface Props {
-  title: string
-  button: string
+  content: Content
+  gallery: TributeGallery[]
 }
 
-const ModalGallery = ({
-  gallery,
-  content
-}: {
-  content: Props
-  gallery: TournamentGallery[]
-}) => {
+interface Content {
+  title: string
+  gallery: {
+    title: string
+    modal_title: string
+    button: string
+  }
+}
+
+const ModalGallery = ({ gallery, content }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <>
       <Button
-        fullWidth
-        size='sm'
-        radius='none'
+        radius='full'
+        color='success'
         onPress={onOpen}
-        className='bg-custom-blue font-bold text-xs'
+        className='bg-custom-blue font-bold px-8 mx-auto'
       >
-        {content.button}
+        {content.gallery.button}
       </Button>
       <Modal
         size='xl'
@@ -52,12 +54,12 @@ const ModalGallery = ({
         <ModalContent>
           {() => (
             <>
-              <ModalHeader>
+              <ModalHeader className='px-4 pb-0'>
                 <h2 className='text-center w-full font-bold'>
-                  {content.title}
+                  {content.gallery.modal_title}
                 </h2>
               </ModalHeader>
-              <ModalBody>
+              <ModalBody className='p-4'>
                 <Swiper
                   spaceBetween={20}
                   pagination={{
@@ -65,18 +67,20 @@ const ModalGallery = ({
                   }}
                   loop={true}
                   modules={[Pagination]}
-                  className='mySwiper'
+                  className='w-full h-full'
                 >
                   {gallery?.map((image) => (
                     <SwiperSlide
                       key={image.id}
                       className='overflow-hidden relative rounded-xl w-full h-full bg-custom-green'
                     >
-                      <Image
-                        src={image.url}
-                        alt='Tournament image'
-                        className='bg-transparent size-full object-cover aspect-square'
-                      />
+                      <div className='absolute top-0 bottom-0 left-0 right-0 w-full h-full '>
+                        <Image
+                          alt='Tributte image'
+                          className='w-[600px] h-[500px] object-cover'
+                          src={image.url}
+                        />
+                      </div>
                     </SwiperSlide>
                   ))}
                 </Swiper>
