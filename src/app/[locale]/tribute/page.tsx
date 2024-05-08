@@ -1,7 +1,7 @@
 import Footer from '@/components/home/footer'
 import Header from '@/components/home/header/header'
-import Gallery from '@/components/tributte/gallery'
-import Main from '@/components/tributte/main'
+import Gallery from '@/components/tribute/gallery'
+import Main from '@/components/tribute/main'
 
 const TributePage = () => {
   return (

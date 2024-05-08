@@ -4,7 +4,15 @@
  * @Type {string[]}
  */
 
-export const publicRoutes = ['/', '/en', '/it', '/sq']
+export const publicRoutes = [
+  '/',
+  '/en',
+  '/it',
+  '/sq',
+  '/en/tributte',
+  '/it/tributte',
+  '/sq/tributte'
+]
 
 /**
  * En este arreglo de rutas es para la autentificacion

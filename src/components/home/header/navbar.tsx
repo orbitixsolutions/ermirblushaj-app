@@ -92,7 +92,7 @@ const NavBar = ({ contentItems, contentDashboard }: Props) => {
         <NavbarItem className='flex items-center gap-3'>
           <Button
             as={Link}
-            href={`/${locale}/tributte`}
+            href={`/${locale}/tribute`}
             radius='sm'
             className='bg-custom-green font-bold'
           >

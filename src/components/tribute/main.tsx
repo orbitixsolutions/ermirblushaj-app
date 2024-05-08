@@ -1,21 +1,18 @@
 import { BallBrand, ManPoseBrand } from '@/assets/images'
 import { Image } from '@nextui-org/react'
+import { useTranslations } from 'next-intl'
 
 const Main = () => {
+  const content = useTranslations('Tributte')
+
   return (
     <section className='flex max-w-[1024px] mx-auto py-8 md:py-24 px-5 justify-center lg:justify-between flex-wrap space-y-16 md:space-y-0'>
       <div className='max-w-[620px] relative w-[400px]'>
         <h2 className='text-lg md:text-4xl lg:text-5xl font-bold text-center md:text-start text-custom-green'>
-          Ermir Blushaj
+          {content('title')}
         </h2>
         <p className='max-w-[400px] mt-4 text-xs md:text-lg text-custom-white text-center md:text-start text-pretty'>
-          Ermir Bujash ha lasciato un segno indelebile nei cuori di coloro che
-          lo hanno conosciuto. La sua gioia e il suo amore per la vita erano
-          contagiosi, e la sua capacità di illuminare una stanza con il suo
-          sorriso non sarà mai dimenticata. Ermir non si è limitato a vivere; ha
-          ispirato tutti a vivere pienamente e con passione. Ricorderemo sempre
-          il suo coraggio, la sua gentilezza e il suo spirito indomito, che
-          continua a insegnarci l'importanza di apprezzare ogni momento.
+          {content('main_paragraph')}
         </p>
       </div>
 
