@@ -6,12 +6,12 @@ const Main = () => {
   const content = useTranslations('Tributte')
 
   return (
-    <section className='flex max-w-[1024px] mx-auto py-8 md:py-24 px-5 justify-center lg:justify-between flex-wrap space-y-16 md:space-y-0'>
+    <section className='flex max-w-[1024px] mx-auto py-8 md:py-24 px-5 justify-center lg:justify-between flex-wrap space-y-8 md:space-y-0'>
       <div className='max-w-[620px] relative w-[400px]'>
         <h2 className='text-lg md:text-4xl lg:text-5xl font-bold text-center md:text-start text-custom-green'>
           {content('title')}
         </h2>
-        <p className='max-w-[400px] mt-4 text-xs md:text-lg text-custom-white text-center md:text-start text-pretty'>
+        <p className='max-w-[400px] mt-4 text-sm md:text-lg text-custom-white text-center md:text-start text-pretty'>
           {content('main_paragraph')}
         </p>
       </div>

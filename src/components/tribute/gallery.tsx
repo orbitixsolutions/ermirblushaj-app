@@ -23,7 +23,7 @@ const Gallery = async () => {
   }
 
   return (
-    <section className='flex max-w-[1024px] mx-auto py-8 md:py-24 px-5 justify-center lg:justify-between flex-wrap space-y-8'>
+    <section className='flex max-w-[1024px] mx-auto py-16 md:py-24 px-5 justify-center lg:justify-between flex-wrap space-y-8'>
       <h2 className='w-full text-center text-2xl text-custom-lightgray font-bold'>
         {content('title')}
       </h2>
