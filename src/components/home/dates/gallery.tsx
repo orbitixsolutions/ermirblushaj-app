@@ -1,9 +1,9 @@
+import { getTranslations } from 'next-intl/server'
 import { Card, Image } from '@nextui-org/react'
 import ErrorDates from '@/components/home/errors/error-dates'
 import NoItems from '@/components/home/empty-items/no-items'
 import prisma from '@/libs/prisma'
 import ModalGallery from './modal/modal-gallery'
-import { getTranslations } from 'next-intl/server'
 
 const getImagesTournament = async () => {
   try {

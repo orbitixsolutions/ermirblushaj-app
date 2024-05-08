@@ -1,4 +1,5 @@
 import { Player, PlayerStats, TeamStats } from '@prisma/client'
+import { getTranslations } from 'next-intl/server'
 import { Card } from '@nextui-org/react'
 import ItemFirstPlayer from '@/components/home/dates/item/item-first-player'
 import ItemPlayer from '@/components/home/dates/item/item-player'
@@ -45,7 +46,8 @@ const getBestGoals = async () => {
   }
 }
 
-const BestGoals = async ({ t }: { t: any }) => {
+const BestGoals = async () => {
+  const content = await getTranslations('Dates')
   const { data: players, status } = await getBestGoals()
 
   if (!players?.length) return <NoItems message='Comming Soon...' />
@@ -58,7 +60,7 @@ const BestGoals = async ({ t }: { t: any }) => {
     <div className='mx-auto max-w-full w-[480px] md:w-[640px] col-span-12 xl:col-span-4 space-y-2'>
       <Card radius='sm' className='bg-custom-blue py-2'>
         <h2 className='text-lg text-center font-bold text-custom-white'>
-          {t('best_players.title')}
+          {content('best_players.title')}
         </h2>
       </Card>
       <Card
