@@ -9,9 +9,9 @@ export const publicRoutes = [
   '/en',
   '/it',
   '/sq',
-  '/en/tributte',
-  '/it/tributte',
-  '/sq/tributte'
+  '/en/tribute',
+  '/it/tribute',
+  '/sq/tribute'
 ]
 
 /**
