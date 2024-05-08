@@ -110,7 +110,7 @@ export const editPlayer = async (
       }
     })
 
-    return { success: 'Player edited!', status: 200 }
+    return { message: 'Player edited!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
   }

@@ -1,20 +1,23 @@
-import { Card, Spinner } from '@nextui-org/react'
+import { Avatar, Card } from '@nextui-org/react'
 import { Player } from '@prisma/client'
-import PlayerImage from '@/components/dashboard/new/image/players/player-image'
+import DropdownPlayer from '@/components/dashboard/new/dropdown/dropdown-player'
 
 const CardPlayerImage = ({ player }: { player: Player }) => {
-  const imageLoading = player.profilePhoto === null
-
   return (
     <li className='col-span-3 xs:col-span-2 md:col-span-1 lg:col-span-2 2xl:col-span-1'>
       <Card className='bg-custom-darknavy relative aspect-square'>
-        {imageLoading ? (
-          <div className='w-full h-full grid place-items-center'>
-            <Spinner color='primary' size='lg' />
+        <div className='relative size-full grid place-items-center'>
+          <div className='w-full p-2 absolute bottom-0 left-0 right-0 z-40 flex gap-2'>
+            <DropdownPlayer player={player} />
           </div>
-        ) : (
-          <PlayerImage player={player} />
-        )}
+
+          <Avatar
+          isBordered
+            className='w-20 h-20 md:w-24 md:h-24'
+            src={player.profilePhoto!}
+            alt={player.firstName}
+          />
+        </div>
       </Card>
       <div className='flex-col mt-2'>
         <h2 className='text-sm md:text-lg text-center text-custom-white mt-2 line-clamp-1'>

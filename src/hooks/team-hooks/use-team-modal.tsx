@@ -3,18 +3,18 @@ import { v4 as uuid } from 'uuid'
 import { useForm } from 'react-hook-form'
 import { TeamSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEffect, useState } from 'react'
+import { useEffect, useTransition } from 'react'
 import { useLoadImageStore } from '@/store/use-load-image-store'
 import { uploadImage } from '@/helpers/upload-image'
-import { toast } from 'sonner'
 import { editTeam } from '@/actions/services/edit'
 import { useModalTeamStore } from '@/store/modal/use-modal-team-store'
 import { createTeam } from '@/actions/services/create'
+import { dataTeamById, dataTeams } from '@/actions/services/data'
+import { toast } from 'sonner'
 import { mutate } from 'swr'
-import axios from 'axios'
 
 export const useTeamModal = () => {
-  const [isPending, setIsPending] = useState(false)
+  const [isPending, startTranstion] = useTransition()
 
   // Establecer formulario
   const { handleSubmit, setValue, reset, control } = useForm<
@@ -52,19 +52,18 @@ export const useTeamModal = () => {
   // Si estamos editando rellenamos los campos del modal
   useEffect(() => {
     if (teamModalEdit) {
-      setIsPending(true)
-      axios
-        .get(`/api/teams/${teamModalId}`)
-        .then((res) => {
-          setValue('name', res.data.name)
-          updatedImageTeam({ imgFile: null, imgPreview: res.data.logo })
-        })
-        .catch(() => {
-          toast.error('An ocurred a error!')
-        })
-        .finally(() => {
-          setIsPending(false)
-        })
+      startTranstion(() => {
+        dataTeamById(teamModalId)
+          .then((res) => {
+            const data = res.data
+
+            setValue('name', data?.name!)
+            updatedImageTeam({ imgFile: null, imgPreview: data?.logo! })
+          })
+          .catch(() => {
+            toast.error('An ocurred a error!')
+          })
+      })
     }
   }, [teamModalEdit])
 
@@ -74,7 +73,6 @@ export const useTeamModal = () => {
 
   const clearState = () => {
     reset()
-    setIsPending(false)
     onTeamModalClose()
     updatedImageTeam({ imgFile: null, imgPreview: '' })
   }
@@ -84,57 +82,65 @@ export const useTeamModal = () => {
     const teamId = uuid()
     const MAX_TEAM_CREATE = 20
 
-    const { data: teamsList } = await axios.get('/api/teams')
-
-    if (teamsList.length === MAX_TEAM_CREATE && !teamModalEdit) {
+    const { data: teamsList } = await dataTeams()
+    if (teamsList?.length === MAX_TEAM_CREATE && !teamModalEdit) {
       clearState()
       return toast.error('Team limit reached (20)')
     }
 
     if (teamModalEdit) {
-      setIsPending(true)
-      const res = await editTeam(teamModalId, data)
+      startTranstion(async () => {
+        const res = await editTeam(teamModalId, data)
 
-      await uploadImage({
-        path: 'teams',
-        id: teamModalId,
-        imgFile: imageTeam.imgFile
-      })
+        await uploadImage({
+          path: 'teams',
+          id: teamModalId,
+          imgFile: imageTeam.imgFile
+        })
 
-      if (res.status === 200) {
+        if (res.status === 200) {
+          clearState()
+          mutate('/api/teams')
+          toast.success('Team edited!')
+          return
+        }
+
         clearState()
-        mutate('/api/teams')
-        return toast.success('Team edited!')
-      }
-
-      clearState()
-      return toast.error('An ocurred error!')
+        toast.error('An ocurred error!')
+        return
+      })
     }
 
     if (data.name === '') {
       return toast.info('Name is required!')
     }
-    if (imageTeam.imgFile === null) {
-      return toast.info('Image is required!')
-    }
 
+    // Creamos el objeto y lo mandamos a la API
     const dataTeam = { ...data, id: teamId }
-    const { status, message } = await createTeam(dataTeam)
 
-    uploadImage({
-      path: 'teams',
-      id: teamId,
-      imgFile: imageTeam.imgFile
-    })
+    // Creamos el equipo
+    startTranstion(async () => {
+      const { status, message } = await createTeam(dataTeam)
 
-    if (status === 200) {
+      if (imageTeam.imgFile) {
+        uploadImage({
+          path: 'teams',
+          id: teamId,
+          imgFile: imageTeam.imgFile
+        })
+      }
+
+      if (status === 200) {
+        clearState()
+        mutate('/api/teams')
+        toast.success(message)
+        return
+      }
+
       clearState()
-      mutate('/api/teams')
-      return toast.success(message)
-    }
-
-    clearState()
-    return toast.error('An ocurred error!')
+      toast.error('An ocurred error!')
+      return
+    })
   })
 
   return {

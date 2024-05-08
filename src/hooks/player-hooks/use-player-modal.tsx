@@ -1,20 +1,21 @@
 import * as z from 'zod'
 import { v4 as uuid } from 'uuid'
+
 import { useForm } from 'react-hook-form'
-import { useEffect, useState } from 'react'
+import { useEffect, useTransition } from 'react'
 import { useLoadImageStore } from '@/store/use-load-image-store'
 import { uploadImage } from '@/helpers/upload-image'
-import { toast } from 'sonner'
 import { editPlayer } from '@/actions/services/edit'
 import { useModalPlayerStore } from '@/store/modal/use-modal-player-store'
 import { PlayerSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createPlayers } from '@/actions/services/create'
+import { dataPlayersById, dataTeamById } from '@/actions/services/data'
+import { toast } from 'sonner'
 import { mutate } from 'swr'
-import axios from 'axios'
 
 export const usePlayerModal = () => {
-  const [isPending, setIsPending] = useState(false)
+  const [isPending, startTranstion] = useTransition()
 
   const { handleSubmit, setValue, reset, control } = useForm<
     z.infer<typeof PlayerSchema>
@@ -62,36 +63,35 @@ export const usePlayerModal = () => {
   // Si estamos editando rellenamos los campos del modal
   useEffect(() => {
     if (playerModalEdit) {
-      setIsPending(true)
-      axios
-        .get(`/api/players/${playerModalId}`)
-        .then((res) => {
-          setValue('first_name', res.data.firstName)
-          setValue('last_name', res.data.lastName)
-          setValue('date_birthday', res.data.dateOfBirth)
-          setValue('number', res.data.number)
-          setValue('height', res.data.height)
-          setValue('nationality', res.data.nationality)
-          setValue('position', res.data.position)
-          setValue('team_id', res.data.teamId)
-          updatedImagePlayer({
-            imgFile: null,
-            imgPreview: res.data.profilePhoto
+      startTranstion(() => {
+        dataPlayersById(playerModalId)
+          .then((res) => {
+            const data = res.data
+
+            setValue('first_name', data?.firstName!)
+            setValue('last_name', data?.lastName!)
+            setValue('date_birthday', data?.dateOfBirth!)
+            setValue('number', data?.number!)
+            setValue('height', data?.height!)
+            setValue('nationality', data?.nationality!)
+            setValue('position', data?.position!)
+            setValue('team_id', data?.teamId!)
+            updatedImagePlayer({
+              imgFile: null,
+              imgPreview: data?.profilePhoto!
+            })
           })
-        })
-        .catch(() => {
-          toast.error('An ocurred a error!')
-        })
-        .finally(() => {
-          setIsPending(false)
-        })
+          .catch(() => {
+            toast.error('An ocurred a error!')
+          })
+      })
     }
   }, [playerModalEdit])
 
+  // Limpiar el estado del modal
   const clearState = () => {
     reset()
     onPlayerModalClose()
-    setIsPending(false)
     updatedImagePlayer({ imgFile: null, imgPreview: '' })
   }
 
@@ -100,38 +100,48 @@ export const usePlayerModal = () => {
     const playerId = uuid()
     const currentTeamId = teamData.id || data.team_id
 
+    // Evitar crear mas de 10 jugadores por equipo
     if (currentTeamId) {
-      const teamById = await axios.get(`/api/teams/${currentTeamId}`)
+      startTranstion(async () => {
+        const { data, status } = await dataTeamById(currentTeamId)
 
-      if (teamById.status === 200) {
-        const playersByTeamId = teamById.data.players
-        const maxPlayersPerTeam = 10
+        if (status === 200) {
+          const playersByTeam = data?.players
+          const maxPlayersPerTeam = 10
 
-        if (playersByTeamId.length === maxPlayersPerTeam) {
-          return toast.error('You can only create up to 10 players per team!')
+          if (playersByTeam?.length === maxPlayersPerTeam) {
+            toast.error('You can only create up to 10 players per team!')
+            return
+          }
         }
-      }
-    }
-
-    if (playerModalEdit) {
-      setIsPending(true)
-      const res = editPlayer(playerModalId, data)
-
-      await uploadImage({
-        path: 'players',
-        id: playerModalId,
-        imgFile: imagePlayer.imgFile
       })
-
-      if ((await res).status === 200) {
-        clearState()
-        mutate('/api/players')
-        return toast.success('Player created!')
-      }
-
-      clearState()
-      return toast.error('An ocurred error!')
     }
+
+    // Si estamos editando
+    if (playerModalEdit) {
+      startTranstion(async () => {
+        const { status, message } = await editPlayer(playerModalId, data)
+
+        await uploadImage({
+          path: 'players',
+          id: playerModalId,
+          imgFile: imagePlayer.imgFile
+        })
+
+        if (status === 200) {
+          clearState()
+          mutate('/api/players')
+          toast.success(message)
+          return
+        }
+
+        clearState()
+        toast.error('An ocurred error!')
+        return
+      })
+    }
+
+    // Condiciones generales
     if (data.first_name === '') {
       return toast.info('First name is required!')
     }
@@ -140,33 +150,38 @@ export const usePlayerModal = () => {
         return toast.info('Team name is required!')
       }
     }
-    if (imagePlayer.imgFile === null) {
-      return toast.info('Image is required!')
-    }
 
-    setIsPending(true)
+    // Guardamos los datos en un objeto y lo mandamos a la API
     const playerData = {
       ...data,
       id: playerId,
       EXIST_TEAM_NAME: teamData.name,
       EXIST_TEAM_ID: teamData.id
     }
-    const { status, message } = await createPlayers(playerData)
 
-    uploadImage({
-      path: 'players',
-      id: playerId,
-      imgFile: imagePlayer.imgFile
-    })
+    // Creamos el jugador
+    startTranstion(async () => {
+      const { status, message } = await createPlayers(playerData)
 
-    if (status === 200) {
+      if (imagePlayer.imgFile) {
+        uploadImage({
+          path: 'players',
+          id: playerId,
+          imgFile: imagePlayer.imgFile
+        })
+      }
+
+      if (status === 200) {
+        clearState()
+        mutate('/api/players')
+        toast.success(message)
+        return
+      }
+
       clearState()
-      mutate('/api/players')
-      return toast.success(message)
-    }
-
-    clearState()
-    return toast.error('An ocurred error!')
+      toast.error('An ocurred error!')
+      return
+    })
   })
 
   return {
