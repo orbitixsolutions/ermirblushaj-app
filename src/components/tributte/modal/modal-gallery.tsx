@@ -74,13 +74,14 @@ const ModalGallery = ({ gallery, content }: Props) => {
                       key={image.id}
                       className='overflow-hidden relative rounded-xl w-full h-full bg-custom-green'
                     >
-                      <div className='absolute top-0 bottom-0 left-0 right-0 w-full h-full '>
-                        <Image
-                          alt='Tributte image'
-                          className='w-[600px] h-[500px] object-cover'
-                          src={image.url}
-                        />
-                      </div>
+                      <Image
+                        alt='Tributte image'
+                        className='object-cover'
+                        classNames={{
+                          wrapper: 'aspect-square w-full h-full',
+                        }}
+                        src={image.url}
+                      />
                     </SwiperSlide>
                   ))}
                 </Swiper>
