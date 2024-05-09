@@ -17,6 +17,7 @@ import { Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import './swiper.css'
+import SwiperTribute from './swiper/swiper-tribute'
 
 interface Props {
   content: Content
@@ -60,31 +61,7 @@ const ModalGallery = ({ gallery, content }: Props) => {
                 </h2>
               </ModalHeader>
               <ModalBody className='p-4'>
-                <Swiper
-                  spaceBetween={20}
-                  pagination={{
-                    dynamicBullets: true
-                  }}
-                  loop={true}
-                  modules={[Pagination]}
-                  className='w-full h-full'
-                >
-                  {gallery?.map((image) => (
-                    <SwiperSlide
-                      key={image.id}
-                      className='overflow-hidden relative rounded-xl w-full h-full bg-custom-green'
-                    >
-                      <Image
-                        alt='Tributte image'
-                        className='object-cover'
-                        classNames={{
-                          wrapper: 'aspect-square w-full h-full',
-                        }}
-                        src={image.url}
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
+                <SwiperTribute gallery={gallery} />
               </ModalBody>
             </>
           )}

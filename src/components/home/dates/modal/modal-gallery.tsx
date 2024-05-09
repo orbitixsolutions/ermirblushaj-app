@@ -6,16 +6,15 @@ import {
   ModalHeader,
   ModalBody,
   Button,
-  useDisclosure,
-  Image
+  useDisclosure
 } from '@nextui-org/react'
 
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination } from 'swiper/modules'
 import { TournamentGallery } from '@prisma/client'
+import SwiperTournament from './swiper/swiper-tournament'
 
 import 'swiper/css'
 import 'swiper/css/pagination'
+import 'swiper/css/navigation'
 import './swiper.css'
 
 interface Props {
@@ -57,29 +56,8 @@ const ModalGallery = ({
                   {content.title}
                 </h2>
               </ModalHeader>
-              <ModalBody>
-                <Swiper
-                  spaceBetween={20}
-                  pagination={{
-                    dynamicBullets: true
-                  }}
-                  loop={true}
-                  modules={[Pagination]}
-                  className='mySwiper'
-                >
-                  {gallery?.map((image) => (
-                    <SwiperSlide
-                      key={image.id}
-                      className='overflow-hidden relative rounded-xl w-full h-full bg-custom-green'
-                    >
-                      <Image
-                        src={image.url}
-                        alt='Tournament image'
-                        className='bg-transparent size-full object-cover aspect-square'
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
+              <ModalBody className='select-none'>
+                <SwiperTournament gallery={gallery} />
               </ModalBody>
             </>
           )}
