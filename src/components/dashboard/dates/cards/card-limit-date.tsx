@@ -5,11 +5,13 @@ import { MatchKey, Team } from '@prisma/client'
 import { IconAlertCircle } from '@tabler/icons-react'
 
 type ExtendedMatchKey = MatchKey & {
-    teamKeyA: Team
-    teamKeyB: Team
-  }
+  teamKeyA: Team
+  teamKeyB: Team
+}
 
 const CardLimitDate = ({ match }: { match: ExtendedMatchKey }) => {
+  if (match.status === 'COMPLETED') return null
+  
   return (
     <>
       {isCurrentDate(match.playStartDate!) && (
