@@ -7,16 +7,9 @@ import {
   ModalHeader,
   ModalBody,
   Button,
-  useDisclosure,
-  Image
+  useDisclosure
 } from '@nextui-org/react'
 
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination } from 'swiper/modules'
-
-import 'swiper/css'
-import 'swiper/css/pagination'
-import './swiper.css'
 import SwiperTribute from './swiper/swiper-tribute'
 
 interface Props {
@@ -47,20 +40,20 @@ const ModalGallery = ({ gallery, content }: Props) => {
         {content.gallery.button}
       </Button>
       <Modal
-        size='xl'
-        className='bg-custom-darkblue text-custom-white'
+        size='2xl'
         isOpen={isOpen}
         onClose={onClose}
+        className='bg-custom-darkblue text-custom-white'
       >
         <ModalContent>
           {() => (
-            <>
+            <> 
               <ModalHeader className='px-4 pb-0'>
                 <h2 className='text-center w-full font-bold'>
                   {content.gallery.modal_title}
                 </h2>
               </ModalHeader>
-              <ModalBody className='p-4'>
+              <ModalBody className='select-none'>
                 <SwiperTribute gallery={gallery} />
               </ModalBody>
             </>

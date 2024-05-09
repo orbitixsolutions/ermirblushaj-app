@@ -17,6 +17,7 @@ const SwiperTournament = ({ gallery }: { gallery: TournamentGallery[] }) => {
       }}
       loop={true}
       modules={[Pagination]}
+      className='w-full h-full'
     >
       <SwiperButtons colorIcon='text-custom-blue' size={32} />
 
@@ -26,12 +27,12 @@ const SwiperTournament = ({ gallery }: { gallery: TournamentGallery[] }) => {
           className='overflow-hidden relative rounded-xl w-full h-full'
         >
           <Image
-            src={image.url}
             alt='Tournament image'
-            className='object-cover'
+            className=''
             classNames={{
               wrapper: 'aspect-square w-full h-full'
             }}
+            src={image.url}
           />
         </SwiperSlide>
       ))}

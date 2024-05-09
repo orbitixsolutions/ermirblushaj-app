@@ -1,11 +1,12 @@
-import 'swiper/css'
-import 'swiper/css/pagination'
-import '../swiper.css'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Image } from '@nextui-org/react'
 import { Pagination } from 'swiper/modules'
 import { TributeGallery } from '@prisma/client'
 import SwiperButtons from './buttons/swiper-buttons'
+
+import 'swiper/css'
+import 'swiper/css/pagination'
+import '../swiper.css'
 
 const SwiperTribute = ({ gallery }: { gallery: TributeGallery[] }) => {
   return (
@@ -23,7 +24,7 @@ const SwiperTribute = ({ gallery }: { gallery: TributeGallery[] }) => {
       {gallery?.map((image) => (
         <SwiperSlide
           key={image.id}
-          className='overflow-hidden relative rounded-xl w-full h-full'
+          className='overflow-hidden relative rounded-xl'
         >
           <Image
             alt='Tributte image'
