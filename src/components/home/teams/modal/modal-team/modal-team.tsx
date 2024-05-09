@@ -59,7 +59,7 @@ const ModalTeam = ({ contentModal }: any) => {
             <ModalBody>
               <ScrollShadow
                 hideScrollBar
-                className='w-full max-w-[375px] mx-auto h-[400px] space-y-8'
+                className='w-full h-[480px] space-y-8'
               >
                 <ListPlayers contentModal={contentModal} team={team!} />
                 <BoardFootball team={team!} />
