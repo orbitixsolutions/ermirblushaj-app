@@ -25,7 +25,7 @@ const Dashboard = ({ contentDashboard }: Props) => {
   const localte = useLocale()
   const session = useCurrentUser()
 
-  const urlPrefix = `${localte}/dashboard`
+  const urlPrefix = `/${localte}/dashboard`
 
   const signOutSession = async () => {
     toast.success('Logout successfully!')
