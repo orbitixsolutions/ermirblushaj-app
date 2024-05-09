@@ -12,9 +12,7 @@ type ExtendedGroup = Group & {
 const useCreateGroups = () => {
   const [isPending, setIsPending] = useState(false)
 
-  const { data: getTeams } = useSWR<Team[]>('/api/teams', fetcher, {
-    refreshInterval: 1000
-  })
+  const { data: getTeams } = useSWR<Team[]>('/api/teams', fetcher)
 
   // Mezclamos los equipos que son pasados como parametro
   const mixTeams = (team: Team[] | null | undefined): Team[] => {

@@ -14,8 +14,9 @@ import {
 } from '@nextui-org/react'
 import { IconCheck, IconSettings } from '@tabler/icons-react'
 import { updatedData } from '@/helpers/updated-data'
-import FormMatchDate from '@/components/dashboard/dates/form/form-match-date'
 import { isCurrentDate } from '@/helpers/is-today'
+import FormMatchDate from '@/components/dashboard/dates/form/form-match-date'
+import CardLimitDate from '@/components/dashboard/dates/cards/card-limit-date'
 
 type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
@@ -34,7 +35,6 @@ const PopoverQuarterMatches = ({
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleOpen = () => {
-    if (isCurrentDate(match.playStartDate!)) return
     setIsOpen((prev) => !prev)
   }
 
@@ -67,6 +67,8 @@ const PopoverQuarterMatches = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent className='w-[400px] flex flex-col gap-4 p-4 bg-custom-darknavy'>
+        <CardLimitDate match={match} />
+
         {!isOpen ? (
           isCurrentDate(match.playStartDate!) ? (
             <>
@@ -77,13 +79,13 @@ const PopoverQuarterMatches = ({
                 </Button>
               ) : (
                 <>
-                 <Button
+                  <Button
                     fullWidth
                     onPress={toggleOpen}
                     className='font-bold bg-custom-darkblue text-custom-green'
                   >
                     <IconCheck size={24} />
-                    Today
+                    Live
                   </Button>
 
                   <h2 className='font-semibold text-center text-xl text-custom-white'>

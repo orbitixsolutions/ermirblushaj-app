@@ -3,9 +3,9 @@
 import { fetcher } from '@/helpers/fetcher'
 import { Avatar, Card, CardBody, Image } from '@nextui-org/react'
 import { Team } from '@prisma/client'
-import SkeletonError from '@/components/dashboard/dates/skeleton/skeleton-error'
 import SkeletonBestTeams from '@/components/dashboard/dates/skeleton/skeleton-best-teams'
 import CrownImage from '@/assets/svg/crown.svg'
+import ErrorDates from '@/components/dashboard/dates/errors/error-dates'
 import useSWR from 'swr'
 
 const borderColors = {
@@ -24,7 +24,7 @@ const BestTeams = () => {
   const EMPTY_BEST_TEAMS = 0
   if (data_bestteams?.length === EMPTY_BEST_TEAMS) return
 
-  if (error) return <SkeletonError />
+  if (error) return <ErrorDates />
   if (isLoading) return <SkeletonBestTeams />
 
   return (

@@ -11,8 +11,8 @@ type ExtendedMatchKey = MatchKey & {
 }
 
 const columnClasses = {
-  a: '-left-12',
-  b: '-right-12'
+  a: '-left-14',
+  b: '-right-14'
 }
 
 const MatchesEighths = ({
@@ -32,7 +32,7 @@ const MatchesEighths = ({
       {matches?.map((matchKey) => (
         <li key={matchKey.id} className='relative'>
           <div
-            className={`absolute top-0 h-full flex justify-center items-center ${
+            className={`absolute top-0 h-full w-full flex justify-center items-center ${
               columnClasses[column as keyof typeof columnClasses] || ''
             }`}
           >

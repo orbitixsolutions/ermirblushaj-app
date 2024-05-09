@@ -4,7 +4,7 @@ import { fetcher } from '@/helpers/fetcher'
 import { Card, Image } from '@nextui-org/react'
 import { Group, Team } from '@prisma/client'
 import SkeletonGroups from '@/components/dashboard/dates/skeleton/skeleton-groups'
-import SkeletonError from '@/components/dashboard/dates/skeleton/skeleton-error'
+import ErrorDates from '@/components/dashboard/dates/errors/error-dates'
 import useSWR from 'swr'
 
 type extendedGroups = Group & {
@@ -21,7 +21,7 @@ const GroupTeams = () => {
   const EMPTY_GROUPS = 0
   if (data_groups?.length === EMPTY_GROUPS) return
 
-  if (error) return <SkeletonError />
+  if (error) return <ErrorDates />
   if (isLoading) return <SkeletonGroups />
 
   return (

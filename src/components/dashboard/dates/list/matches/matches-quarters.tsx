@@ -1,4 +1,4 @@
-import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
+import { Avatar, Divider } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
 import { fetcher } from '@/helpers/fetcher'
 import ImagesMatchesKeys from '@/components/dashboard/dates/image/images-matches-keys'
@@ -11,10 +11,15 @@ type ExtendedMatchKey = MatchKey & {
   teamKeyB: Team
 }
 
-const columnClass = {
-  a: 'left-28',
-  b: 'right-28'
+const skeletonClasses = {
+  0: '-translate-y-[0.25em] xs:translate-y-[1em] sm:translate-y-[1.5em]',
+  1: 'translate-y-[0em] xs:translate-y-[0.15em] sm:translate-y-[0.5em]',
+  2: '-translate-y-[0em] xs:translate-y-[-0.25em] sm:translate-y-[-0.5em]',
+  3: 'translate-y-[.40rem] xs:translate-y-[-1rem] sm:translate-y-[-1.5em]'
 }
+
+const avatarSkeleton =
+  'bg-custom-darkblue text-custom-white size-5 xs:size-12 sm:size-16'
 
 const MatchesQuarters = ({
   column,
@@ -29,55 +34,47 @@ const MatchesQuarters = ({
   )
 
   return (
-    <div
-      className={`absolute top-0 h-full flex justify-center items-center ${
-        columnClass[column as keyof typeof columnClass] || ''
-      }`}
-    >
-      <div className='w-[80px] flex justify-center items-center'>
-        <ol>
-          {matches?.length !== 0 ? (
-            matches?.map((matchKey) => (
-              <li key={matchKey.id} className='relative my-16'>
-                <div className='absolute w-full h-full flex justify-center items-center'>
-                  <PopoverQuarterMatches
-                    column={column}
-                    phase={phase}
-                    match={matchKey}
-                  />
-                </div>
+    <ol>
+      {matches?.length !== 0 ? (
+        matches?.map((matchKey) => (
+          <li key={matchKey.id} className='relative my-16'>
+            <div className='absolute w-full h-full flex justify-center items-center'>
+              <PopoverQuarterMatches
+                column={column}
+                phase={phase}
+                match={matchKey}
+              />
+            </div>
 
-                <div className='absolute w-full h-full flex justify-center items-center'>
-                  <Divider
-                    orientation='vertical'
-                    className='bg-custom-lightgray h-32'
-                  />
-                </div>
+            <div className='absolute w-full h-full flex justify-center items-center'>
+              <Divider
+                orientation='vertical'
+                className='bg-custom-lightgray h-32'
+              />
+            </div>
 
-                <WrapperImage className='space-y-28'>
-                  <ImagesMatchesKeys match={matchKey} />
-                </WrapperImage>
-              </li>
-            ))
-          ) : (
-            <>
-              {Array(4)
-                .fill(0)
-                .map((_, index) => (
-                  <Card
-                    key={index}
-                    className='bg-custom-darkblue text-custom-white my-28'
-                  >
-                    <CardBody>
-                      <Avatar size='sm' />
-                    </CardBody>
-                  </Card>
-                ))}
-            </>
-          )}
-        </ol>
-      </div>
-    </div>
+            <WrapperImage className='space-y-28'>
+              <ImagesMatchesKeys match={matchKey} />
+            </WrapperImage>
+          </li>
+        ))
+      ) : (
+        <div className='space-y-20 xs:space-y-[108px] sm:space-y-[128px]'>
+          {Array(4)
+            .fill(0)
+            .map((_, index) => (
+              <Avatar
+                key={index}
+                radius='sm'
+                size='sm'
+                className={`${avatarSkeleton} ${
+                  skeletonClasses[index as keyof typeof skeletonClasses]
+                }`}
+              />
+            ))}
+        </div>
+      )}
+    </ol>
   )
 }
 

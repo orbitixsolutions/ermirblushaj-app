@@ -7,8 +7,8 @@ import { Match, Team } from '@prisma/client'
 import { useEffect, useTransition } from 'react'
 import { dataMatchesById } from '@/actions/services/data'
 import { mutate } from 'swr'
-import useMatches from '@/hooks/matches-hooks/use-matches'
 import { parseDate } from '@internationalized/date'
+import useMatches from '@/hooks/matches-hooks/use-matches'
 
 type ExtendedMatch = Match & {
   teamA: Team

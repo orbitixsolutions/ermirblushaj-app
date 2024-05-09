@@ -12,15 +12,17 @@ import {
   Tooltip
 } from '@nextui-org/react'
 import { IconCheck, IconSettings } from '@tabler/icons-react'
-import { toast } from 'sonner'
 import { updatedData } from '@/helpers/updated-data'
-import FormMatchDate from '@/components/dashboard/dates/form/form-match-date'
 import { isCurrentDate } from '@/helpers/is-today'
+import { toast } from 'sonner'
+import FormMatchDate from '@/components/dashboard/dates/form/form-match-date'
+import CardLimitDate from '@/components/dashboard/dates/cards/card-limit-date'
 
 type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
   teamKeyB: Team
 }
+
 const PopoverEighthTeam = ({
   column,
   phase,
@@ -34,7 +36,6 @@ const PopoverEighthTeam = ({
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleOpen = () => {
-    if (isCurrentDate(match.playStartDate!)) return
     setIsOpen((prev) => !prev)
   }
 
@@ -67,6 +68,8 @@ const PopoverEighthTeam = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent className='w-[400px] flex flex-col gap-4 p-4 bg-custom-darknavy'>
+        <CardLimitDate match={match} />
+
         {!isOpen ? (
           isCurrentDate(match.playStartDate!) ? (
             <>
@@ -79,11 +82,12 @@ const PopoverEighthTeam = ({
                 <>
                   <Button
                     fullWidth
+                    size='lg'
                     onPress={toggleOpen}
                     className='font-bold bg-custom-darkblue text-custom-green'
                   >
                     <IconCheck size={24} />
-                    Today
+                    Live
                   </Button>
 
                   <h2 className='font-semibold text-center text-xl text-custom-white'>
