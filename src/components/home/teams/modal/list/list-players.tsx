@@ -37,14 +37,14 @@ const ListPlayers = ({
   }
 
   return (
-    <div className='w-full h-full grid place-items-center'>
-      <ScrollShadow hideScrollBar className='w-full h-full space-y-2 pr-8'>
+    <div>
+      <ol className='w-full  space-y-2'>
         {players.map((player) => (
           <Card
             key={player.id}
             className='relative border-2 border-custom-lightgray  h-20 bg-transparent'
           >
-            <CardBody className=' grid grid-cols-4 p-0'>
+            <CardBody className='grid grid-cols-4 p-0'>
               <div className='bg-custom-green h-full w-full grid place-items-center z-20'>
                 <Avatar isBordered src={player.profilePhoto!} />
               </div>
@@ -81,7 +81,7 @@ const ListPlayers = ({
             </CardBody>
           </Card>
         ))}
-      </ScrollShadow>
+      </ol>
     </div>
   )
 }

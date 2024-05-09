@@ -47,33 +47,23 @@ const ModalTeam = ({ contentModal }: any) => {
       size='xl'
       isOpen={isOpen}
       onOpenChange={onTeamModalClose}
-      className='absolute bg-custom-darknavy text-custom-white h-full max-h-[660px]'
+      className='absolute bg-custom-darknavy text-custom-white'
     >
       <ModalContent>
         {() => (
           <>
             <ModalHeader className='flex items-center gap-5'>
               <Avatar src={team?.logo!} />
-              <h2>{team?.name}</h2>
+              <h3>{team?.name}</h3>
             </ModalHeader>
             <ModalBody>
-              <Swiper
-                pagination={{
-                  dynamicBullets: true
-                }}
-                direction={'vertical'}
-                spaceBetween={48}
-                className='h-full w-full'
-                modules={[Pagination]}
+              <ScrollShadow
+                hideScrollBar
+                className='w-full max-w-[375px] mx-auto h-[400px] space-y-8'
               >
-                <SwiperSlide className='w-full h-full'>
-                    <ListPlayers contentModal={contentModal} team={team!} />
-                  
-                </SwiperSlide>
-                <SwiperSlide>
-                  <BoardFootball team={team!} />
-                </SwiperSlide>
-              </Swiper>
+                <ListPlayers contentModal={contentModal} team={team!} />
+                <BoardFootball team={team!} />
+              </ScrollShadow>
             </ModalBody>
           </>
         )}
