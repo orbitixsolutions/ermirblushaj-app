@@ -5,7 +5,7 @@ import { updatedStats } from '@/actions/services/edit'
 import { toast } from 'sonner'
 import DropdownWrapper from '@/components/dashboard/dates/dropdown/wrappers/dropdown-wrapper-team'
 import DropdownTeamContent from '@/components/dashboard/dates/dropdown/content/dropdown-team-content'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 
 type ExtendedMatch = Match & {
   teamA: Team
@@ -21,17 +21,17 @@ export const DropdownTeamA = ({ match }: { match: ExtendedMatch }) => {
     data: team,
     isLoading,
     error
-  } = useSWR<ExtendedPlayer>(`/api/teams/${match.teamA.id}`, fetcher, {
-    revalidateOnFocus: true
-  })
+  } = useSWR<ExtendedPlayer>(`/api/teams/${match.teamA.id}`, fetcher)
 
   const addGoalPlayer = async (player: Player) => {
     const res = await updatedStats(player)
 
     if (res.status === 200) {
-      return toast.success(
+      toast.success(
         `Goal added for player: ${player.firstName} ${player.lastName}`
       )
+      mutate('/api/matches')
+      return
     }
 
     return toast.error('An ocurred a error!')
@@ -63,17 +63,15 @@ export const DropdownTeamA = ({ match }: { match: ExtendedMatch }) => {
 
   return (
     <DropdownWrapper
-      render={
-        team?.players.map((player) => (
-          <DropdownItem
-            key={player.id}
-            textValue={player.firstName}
-            onPress={() => addGoalPlayer(player)}
-          >
-            <DropdownTeamContent player={player} />
-          </DropdownItem>
-        )) as any
-      }
+      render={team?.players.map((player) => (
+        <DropdownItem
+          key={player.id}
+          textValue={player.firstName}
+          onPress={() => addGoalPlayer(player)}
+        >
+          <DropdownTeamContent player={player} />
+        </DropdownItem>
+      ))}
     />
   )
 }

@@ -28,7 +28,7 @@ const DateTeams = () => {
   const EMPTY_DATES = data_matches?.length !== 0
 
   return (
-    <div className='flex justify-center md:justify-between gap-8 flex-wrap px-4 md:px-16 space-y-20 xl:space-y-0'>
+    <div className='flex justify-center md:justify-between gap-8 flex-wrap px-16 sm:px-4 md:px-16 space-y-20 xl:space-y-0'>
       <div className=''>
         <h2 className='text-2xl xl:text-5xl font-bold mb-5 text-center'>
           Dates

@@ -1,12 +1,13 @@
-import { Match, Team } from '@prisma/client'
+import { Match, Team, TeamStats } from '@prisma/client'
 import { Avatar, Card, CardFooter } from '@nextui-org/react'
 import { DropdownTeamA } from '@/components/dashboard/dates/dropdown/teams/dropdown-team-a'
 import { DropdownTeamB } from '@/components/dashboard/dates/dropdown/teams/dropdown-team-b'
 import { isCurrentDate } from '@/helpers/is-today'
+import { IconCaretLeftFilled, IconCaretRightFilled } from '@tabler/icons-react'
 
 type ExtendedMatch = Match & {
-  teamA: Team
-  teamB: Team
+  teamA: Team & { teamStats: TeamStats }
+  teamB: Team & { teamStats: TeamStats }
 }
 
 const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
@@ -24,15 +25,21 @@ const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
           </CardFooter>
         </Card>
         {match.status === 'LIVE' && isCurrentDate(playStartDate!) && (
-          <div className='flex flex-col absolute gap-1 top-0 left-[-4rem]'>
-            <h3>Goals</h3>
-            <DropdownTeamA match={match} />
+          <div className='flex flex-col absolute top-0 left-[-3.5rem] md:left-[-5rem] w-[65px]'>
+            <h3 className='text-sm md:text-base text-center md:text-end'>
+              Goals
+            </h3>
+            <div className='flex items-center flex-col-reverse md:flex-row'>
+              <p>{teamA.teamStats.goalsFor}</p>
+              <IconCaretLeftFilled className='text-custom-blue hidden md:block' />
+              <DropdownTeamA match={match} />
+            </div>
           </div>
         )}
       </div>
 
       <div className='grid place-items-center relative'>
-        <h2 className='text-xl font-bold'>VS</h2>
+        <h2 className='text-lg font-bold'>VS</h2>
       </div>
 
       <div className='flex-1 relative'>
@@ -45,9 +52,15 @@ const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
           </CardFooter>
         </Card>
         {match.status === 'LIVE' && isCurrentDate(playStartDate!) && (
-          <div className='flex flex-col absolute gap-1 top-0 right-[-4rem]'>
-            <h3>Goals</h3>
-            <DropdownTeamB match={match} />
+          <div className='flex flex-col absolute top-0 right-[-3.5rem] md:right-[-5rem] w-[65px]'>
+            <h3 className='text-sm md:text-base text-center md:text-start'>
+              Goals
+            </h3>
+            <div className='flex items-center flex-col md:flex-row'>
+              <DropdownTeamB match={match} />
+              <IconCaretRightFilled className='text-custom-blue hidden md:block' />
+              <p>{teamB.teamStats.goalsFor}</p>
+            </div>
           </div>
         )}
       </div>
