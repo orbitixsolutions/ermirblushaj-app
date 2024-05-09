@@ -2,7 +2,7 @@
 
 import { Divider } from '@nextui-org/react'
 import { fetcher } from '@/helpers/fetcher'
-import { Match, Team } from '@prisma/client'
+import { Match, Team, TeamStats } from '@prisma/client'
 import CardMatchup from '@/components/dashboard/dates/cards/card-matchup'
 import DateOwnerOptions from '@/components/dashboard/dates/options/date-owner-options'
 import DateGeneralOptions from '@/components/dashboard/dates/options/date-general-options'
@@ -11,8 +11,8 @@ import ErrorDates from '@/components/dashboard/dates/errors/error-dates'
 import useSWR from 'swr'
 
 type ExtendedMatch = Match & {
-  teamA: Team
-  teamB: Team
+  teamA: Team & { teamStats: TeamStats }
+  teamB: Team & { teamStats: TeamStats }
 }
 
 const DateTeams = () => {
@@ -28,13 +28,13 @@ const DateTeams = () => {
   const EMPTY_DATES = data_matches?.length !== 0
 
   return (
-    <div className='flex justify-center md:justify-between gap-8 flex-wrap px-16 sm:px-4 md:px-16 space-y-20 xl:space-y-0'>
-      <div className=''>
+    <div className='flex justify-center md:justify-between gap-8 flex-wrap space-y-20 xl:space-y-0'>
+      <div className='flex-1'>
         <h2 className='text-2xl xl:text-5xl font-bold mb-5 text-center'>
           Dates
         </h2>
 
-        <ol>
+        <ol className='w-full px-12 sm:px-2'>
           {EMPTY_DATES ? (
             data_matches?.map((matchup) => (
               <>
@@ -48,7 +48,7 @@ const DateTeams = () => {
               </>
             ))
           ) : (
-            <div className=''>
+            <div>
               <p className='text-center text-xl md:text-2xl'>
                 No there dates available.
               </p>
@@ -57,7 +57,7 @@ const DateTeams = () => {
         </ol>
       </div>
 
-      <div className='flex space-x-4'>
+      <div className='flex justify-center flex-wrap gap-4'>
         <DateGeneralOptions />
         <DateOwnerOptions />
       </div>

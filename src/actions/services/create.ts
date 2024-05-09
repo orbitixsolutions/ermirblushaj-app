@@ -4,7 +4,6 @@ import { z } from 'zod'
 
 import { getUserByEmail } from '@/data/user'
 import { UserRole } from '@prisma/client'
-import { NextResponse } from 'next/server'
 import { currentRole } from '@/libs/auth'
 import { Group, Team } from '@prisma/client'
 import { Player, TeamData } from '@/actions/types'

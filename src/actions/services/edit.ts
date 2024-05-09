@@ -2,7 +2,7 @@
 
 import * as z from 'zod'
 
-import { MatchesSchemas, PlayerSchema, TeamSchema } from '@/schemas'
+import { PlayerSchema, TeamSchema } from '@/schemas'
 import { currentRole } from '@/libs/auth'
 import { Match, MatchStatus, Player } from '@prisma/client'
 import { ExtendedMatches } from '@/actions/types'

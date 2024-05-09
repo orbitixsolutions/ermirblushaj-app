@@ -1,12 +1,12 @@
 import { useIsActive } from '@/store/use-active'
-import { Match, Team } from '@prisma/client'
+import { Match, Team, TeamStats } from '@prisma/client'
 import ImagesMatches from '@/components/dashboard/dates/image/images-matches'
 import FormDateMatches from '@/components/dashboard/dates/form/form-date-matches'
 import ButtonDateMatchup from '@/components/dashboard/dates/buttons/button-date-matchup'
 
 type ExtendedMatch = Match & {
-  teamA: Team
-  teamB: Team
+  teamA: Team & { teamStats: TeamStats }
+  teamB: Team & { teamStats: TeamStats }
 }
 
 const CardMatchup = ({ match }: { match: ExtendedMatch }) => {

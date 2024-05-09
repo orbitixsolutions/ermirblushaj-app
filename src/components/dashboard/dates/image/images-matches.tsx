@@ -16,9 +16,9 @@ const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
   return (
     <div className='flex w-full gap-3'>
       <div className='flex-1 relative'>
-        <Card className=' bg-custom-darkblue text-custom-white'>
+        <Card className='bg-custom-darkblue text-custom-white'>
           <CardFooter className='space-x-3'>
-            <Avatar src={teamA.logo!} alt={`Team ${teamA.name}`} />
+            <Avatar className='w-5 h-5 md:w-8 md:h-8' src={teamA.logo!} alt={`Team ${teamA.name}`} />
             <h2 className='text-xs md:text-sm font-medium line-clamp-1'>
               {teamA.name}
             </h2>
@@ -45,7 +45,7 @@ const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
       <div className='flex-1 relative'>
         <Card className='bg-custom-darkblue text-custom-white'>
           <CardFooter className='space-x-3'>
-            <Avatar src={teamB.logo!} alt={`Team ${teamA.name}`} />
+            <Avatar className='w-5 h-5 md:w-8 md:h-8' src={teamB.logo!} alt={`Team ${teamA.name}`} />
             <h2 className='text-xs md:text-sm font-medium line-clamp-1'>
               {teamB.name}
             </h2>
