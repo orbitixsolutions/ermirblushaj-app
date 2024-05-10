@@ -14,15 +14,14 @@ import useCreateMatches from '@/hooks/dates-hooks/buttons/create/use-create-matc
 
 const DropdownGeneral = () => {
   const role = useCurrentRole()
-
+  
   const { fullGroups, isPendingGroups, handleCreateGroups } = useCreateGroups()
   const { emptyGroups, fullMatches, isPendingMatches, handleCreateMatches } =
-    useCreateMatches()
+  useCreateMatches()
   const { completedMatches, isPendingFinish, handleFinishGroups } =
-    useFinishGroups()
+  useFinishGroups()
   const { fullMatchesKeys, isPendingKeys, handleCreateKeys } = useCreateKeys()
-
-  if (role !== 'OWNER') return null
+  
 
   return (
     <Popover placement='bottom' className='w-[440px]'>
@@ -142,7 +141,7 @@ const DropdownGeneral = () => {
                 fullWidth
                 color='primary'
                 isLoading={isPendingKeys}
-                isDisabled={!fullMatches}
+                isDisabled={!fullMatches || fullMatchesKeys}
                 className='bg-custom-blue font-bold'
                 startContent={<IconCheck size={20} />}
                 onPress={() => handleCreateKeys()}

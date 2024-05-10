@@ -26,8 +26,8 @@ const DateTeams = () => {
   const EMPTY_DATES = data_matches?.length !== 0
 
   return (
-    <div className=''>
-      <h2 className='text-2xl xl:text-5xl font-bold text-center'>
+    <div>
+      <h2 className='text-2xl xl:text-5xl font-bold text-center mb-5'>
         Date Matches
       </h2>
 
