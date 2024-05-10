@@ -40,7 +40,6 @@ const DateTeams = () => {
                 className='col-span-4 md:col-span-2 rounded-lg flex flex-col items-start gap-4'
               >
                 <CardMatchup match={matchup} />
-
                 <Divider className='bg-custom-lightgray' />
               </li>
             </>

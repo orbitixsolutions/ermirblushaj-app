@@ -33,10 +33,12 @@ const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
               color='primary'
               className='bg-custom-blue'
               endContent={
-                <p className='text-xs'>Goals: {teamA.teamStats.goalsFor}</p>
+                <p className='text-xs'>G: {teamA.teamStats.goalsFor}</p>
               }
             >
-              <span className='mx-5 font-bold'>Add Goal</span>
+              <span className='mx-5 font-bold text-xs md:text-sm'>
+                Add Goal
+              </span>
             </Button>
           </DropdownTeams>
         )}
@@ -66,10 +68,12 @@ const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
               color='primary'
               className='bg-custom-blue'
               endContent={
-                <p className='text-xs'>Goals: {teamB.teamStats.goalsFor}</p>
+                <p className='text-xs'>G: {teamB.teamStats.goalsFor}</p>
               }
             >
-              <span className='mx-5 font-bold'>Add Goal</span>
+              <span className='mx-5 font-bold text-xs md:text-sm'>
+                Add Goal
+              </span>
             </Button>
           </DropdownTeams>
         )}
