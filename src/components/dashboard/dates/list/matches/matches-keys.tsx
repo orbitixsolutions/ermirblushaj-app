@@ -6,7 +6,7 @@ import MatchesEighths from '@/components/dashboard/dates/list/matches/matches-ei
 import MatchesQuarters from '@/components/dashboard/dates/list/matches/matches-quarters'
 import MatchesSemifinals from '@/components/dashboard/dates/list/matches/matches-semifinals'
 import MatchesFinal from '@/components/dashboard/dates/list/matches/matches-final'
-import ButtonDeleteKeyMatches from '@/components/dashboard/dates/buttons/options/delete/button-delete-key-matches'
+import ButtonDeleteKeyMatches from '@/components/dashboard/dates/buttons/delete/button-delete-key-matches'
 import ButtonOptionsKeys from '@/components/dashboard/dates/buttons/options/button-options-keys'
 import ErrorDates from '@/components/dashboard/dates/errors/error-dates'
 import Loader from '@/components/dashboard/dates/loader'
