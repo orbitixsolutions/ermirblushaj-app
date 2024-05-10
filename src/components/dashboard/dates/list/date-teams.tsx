@@ -46,7 +46,7 @@ const DateTeams = () => {
             </>
           ))
         ) : (
-          <div className='col-span-4 md:col-span-2'>
+          <div className='col-span-4'>
             <p className='text-center text-xl md:text-2xl'>
               No there dates available.
             </p>
