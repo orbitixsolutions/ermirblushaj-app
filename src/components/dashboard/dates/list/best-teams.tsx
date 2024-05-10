@@ -21,8 +21,8 @@ const BestTeams = () => {
     error
   } = useSWR<Team[]>('/api/matches/keys/top', fetcher)
 
-  const EMPTY_BEST_TEAMS = 0
-  if (data_bestteams?.length === EMPTY_BEST_TEAMS) return
+  const EMPTY_BEST_TEAMS = data_bestteams?.length === 0
+  if (EMPTY_BEST_TEAMS) return
 
   if (error) return <ErrorDates />
   if (isLoading) return <SkeletonBestTeams />

@@ -4,7 +4,7 @@ import { Button, Spinner } from '@nextui-org/react'
 import { fetcher } from '@/helpers/fetcher'
 import { Match } from '@prisma/client'
 import { IconAlertCircle } from '@tabler/icons-react'
-import useCreateGroups from '@/hooks/dates-hooks/buttons/options/use-create-groups'
+import useCreateGroups from '@/hooks/dates-hooks/buttons/create/use-create-groups'
 import useSWR from 'swr'
 
 const ButtonCreateGroups = () => {
@@ -15,6 +15,7 @@ const ButtonCreateGroups = () => {
     isLoading,
     error
   } = useSWR<Match[]>('/api/groups', fetcher)  
+  
   const FULL_MATCHES = matches?.length === 4
 
   if (error)

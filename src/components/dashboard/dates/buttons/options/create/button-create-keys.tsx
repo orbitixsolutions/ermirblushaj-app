@@ -18,6 +18,22 @@ const ButtonCreateKeys = () => {
   } = useSWR<Match[]>('/api/matches/keys', fetcher)
   const FULL_MATCHES = (matches?.length ?? 0) >= 8
 
+  const handleCreateKeys = async () => {
+    startTransition(async () => {
+      const { status, message } = await createKeys()
+
+      if (status === 200) {
+        toast.success(message)
+        updatedData()
+        return
+      }
+      if (status === 409) {
+        toast.error(message)
+        return
+      }
+    })
+  }
+
   if (error)
     return (
       <Button
@@ -40,22 +56,6 @@ const ButtonCreateKeys = () => {
         <Spinner color='default' />
       </Button>
     )
-
-  const handleCreateKeys = async () => {
-    startTransition(async () => {
-      const { status, message } = await createKeys()
-
-      if (status === 200) {
-        toast.success(message)
-        updatedData()
-        return
-      }
-      if (status === 409) {
-        toast.error(message)
-        return
-      }
-    })
-  }
 
   return (
     <Button

@@ -196,7 +196,7 @@ export const deleteGroups = async () => {
     await prisma.matchHistory.deleteMany()
     await prisma.group.deleteMany()
 
-    return { success: 'Groups deleted!', status: 200 }
+    return { message: 'Groups deleted!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
   }
@@ -210,7 +210,7 @@ export const deleteMatches = async () => {
     await prisma.matchHistory.deleteMany()
     await prisma.match.deleteMany()
 
-    return { success: 'Matches deleted!', status: 200 }
+    return { message: 'Matches deleted!', status: 200 }
   } catch (error) {
     return { error: 'An ocurred a error!', status: 500 }
   }
@@ -264,7 +264,7 @@ export const resetAllStats = async () => {
       prisma.match.updateMany({
         data: {
           playEndDate: null,
-          status: 'PENDING'
+          status: 'LIVE'
         }
       }),
       prisma.matchHistory.deleteMany()
