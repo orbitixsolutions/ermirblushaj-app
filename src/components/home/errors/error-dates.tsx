@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader } from '@nextui-org/react'
+import { Card, CardBody } from '@nextui-org/react'
 import { IconAlertCircle } from '@tabler/icons-react'
 
 const ErrorDates = ({ message }: { message: string }) => {

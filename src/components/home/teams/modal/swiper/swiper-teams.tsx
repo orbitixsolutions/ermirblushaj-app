@@ -22,6 +22,7 @@ const SwiperTeams = ({
         dynamicBullets: true
       }}
       modules={[Pagination]}
+      loop={true}
       className='w-full h-full'
     >
       <SwiperButtons colorIcon='text-custom-blue' size={32} />

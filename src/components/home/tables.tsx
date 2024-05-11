@@ -1,8 +1,8 @@
 import { ExtendedGroups } from '@/actions/types'
+import { getTranslations } from 'next-intl/server'
 import TableGroup from '@/components/dashboard/home/tables/table-group'
 import ErrorDates from '@/components/home/errors/error-dates'
 import prisma from '@/libs/prisma'
-import { getTranslations } from 'next-intl/server'
 
 const getGroups = async () => {
   try {
@@ -43,6 +43,9 @@ const Tables = async () => {
   const content = await getTranslations('Groups')
 
   const { data: groups, status } = await getGroups()
+
+  const EMPTY_GROUPS = !groups?.length
+  if (EMPTY_GROUPS) return
 
   if (status === 500) {
     return <ErrorDates message='Error loading data.' />

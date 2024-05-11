@@ -27,7 +27,8 @@ const ListPlayers = ({
 }) => {
   const players = team.players
 
-  if (players.length === 0) return <ErrorNoPlayers content={contentModal} />
+  const EMPTY_PLAYERS = !players?.length
+  if (EMPTY_PLAYERS) return <ErrorNoPlayers content={contentModal} />
 
   const getPosition = (position: string) => {
     if (!position) return

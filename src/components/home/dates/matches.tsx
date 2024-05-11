@@ -1,6 +1,5 @@
 import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
 import ErrorDates from '@/components/home/errors/error-dates'
-import NoItems from '@/components/home/empty-items/no-items'
 import prisma from '@/libs/prisma'
 
 const getMatches = async () => {
@@ -25,7 +24,8 @@ const getMatches = async () => {
 const Matches = async () => {
   const { data: matches, status } = await getMatches()
 
-  if (!matches?.length) return <NoItems message='Comming Soon...' />
+  const EMPTY_MACTHES = !matches?.length
+  if (EMPTY_MACTHES) return
 
   if (status === 500) {
     return <ErrorDates message='Error loading data.' />

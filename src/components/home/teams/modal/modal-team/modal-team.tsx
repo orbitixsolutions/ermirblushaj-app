@@ -1,16 +1,11 @@
 'use client'
 
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination } from 'swiper/modules'
-import BoardFootball from '@/components/home/teams/modal/modal-team/content/board-football'
-import ListPlayers from '@/components/home/teams/modal/list/list-players'
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   Avatar,
-  ScrollShadow
 } from '@nextui-org/react'
 
 import { useModalTeamStore } from '@/store/modal/use-modal-team-store'

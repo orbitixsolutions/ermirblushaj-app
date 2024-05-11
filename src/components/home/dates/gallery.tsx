@@ -1,7 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 import { Card, Image } from '@nextui-org/react'
 import ErrorDates from '@/components/home/errors/error-dates'
-import NoItems from '@/components/home/empty-items/no-items'
 import prisma from '@/libs/prisma'
 import ModalGallery from './modal/modal-gallery'
 
@@ -22,7 +21,9 @@ const Gallery = async () => {
   const content = await getTranslations('Dates')
   const { data: gallery, status } = await getImagesTournament()
 
-  if (!gallery?.length) return <NoItems message='Comming Soon...' />
+  const EMPTY_GALLERY = !gallery?.length
+  if (EMPTY_GALLERY) return
+
   if (status === 500) {
     return <ErrorDates message='Error loading data.' />
   }
