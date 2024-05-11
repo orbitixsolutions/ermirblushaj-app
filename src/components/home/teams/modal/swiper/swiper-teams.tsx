@@ -17,14 +17,7 @@ const SwiperTeams = ({
   team: ExtendedTeam
 }) => {
   return (
-    <Swiper
-      pagination={{
-        dynamicBullets: true
-      }}
-      modules={[Pagination]}
-      loop={true}
-      className='w-full h-full'
-    >
+    <Swiper modules={[Pagination]} loop={true} className='w-full h-full'>
       <SwiperButtons colorIcon='text-custom-blue' size={32} />
       <SwiperSlide>
         <ListPlayers contentModal={contentModal} team={team!} />

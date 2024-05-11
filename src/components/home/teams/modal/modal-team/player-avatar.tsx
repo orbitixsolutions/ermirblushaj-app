@@ -10,7 +10,7 @@ const PlayerAvatar = ({ player }: { player: Player }) => {
         </p>
       }
     >
-      <Avatar isBordered size='lg' src={player.profilePhoto!} />
+      <Avatar isBordered className='w-8 h-8 md:w-12 md:h-12' src={player.profilePhoto!} />
     </Tooltip>
   )
 }
