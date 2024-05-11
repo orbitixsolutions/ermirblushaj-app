@@ -1,7 +1,7 @@
-import { Image } from '@nextui-org/react'
 import { TournamentGallery } from '@prisma/client'
 import { Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { Card, Image } from '@nextui-org/react'
 import SwiperButtons from './buttons/swiper-buttons'
 
 import 'swiper/css'
@@ -17,22 +17,17 @@ const SwiperTournament = ({ gallery }: { gallery: TournamentGallery[] }) => {
       }}
       loop={true}
       modules={[Pagination]}
-      className='w-full h-full'
+      className='w-full h-full rounded-xl'
     >
       <SwiperButtons colorIcon='text-custom-blue' size={32} />
 
       {gallery?.map((image) => (
-        <SwiperSlide
-          key={image.id}
-          className='overflow-hidden relative rounded-xl w-full h-full'
-        >
+        <SwiperSlide key={image.id}>
           <Image
-            alt='Tournament image'
-            className=''
-            classNames={{
-              wrapper: 'aspect-square w-full h-full'
-            }}
+            isBlurred
             src={image.url}
+            alt={image.id}
+            className='aspect-square size-full object-cover'
           />
         </SwiperSlide>
       ))}

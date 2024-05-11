@@ -14,13 +14,13 @@ const SwiperButtons = ({
   return (
     <>
       <SwiperButtonPrevSlide
-        className={`absolute z-50 top-[50%] -translate-y-[50%] left-8 ${colorWrapper}`}
+        className={`absolute z-50 top-[50%] -translate-y-[50%] left-4 ${colorWrapper}`}
       >
         <IconArrowLeft className={colorIcon} size={size} />
       </SwiperButtonPrevSlide>
 
       <SwiperButtonNextSlide
-        className={`absolute z-50 top-[50%] -translate-y-[50%] right-8 ${colorWrapper}`}
+        className={`absolute z-50 top-[50%] -translate-y-[50%] right-4 ${colorWrapper}`}
       >
         <IconArrowRight className={colorIcon} size={size} />
       </SwiperButtonNextSlide>
