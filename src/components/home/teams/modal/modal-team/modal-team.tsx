@@ -21,6 +21,7 @@ import useSWR from 'swr'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import './modal.css'
+import SwiperTeams from '../swiper/swiper-teams'
 
 type ExtendedTeam = Team & {
   players: Player[]
@@ -57,13 +58,7 @@ const ModalTeam = ({ contentModal }: any) => {
               <h3>{team?.name}</h3>
             </ModalHeader>
             <ModalBody>
-              <ScrollShadow
-                hideScrollBar
-                className='w-full h-[480px] space-y-8'
-              >
-                <ListPlayers contentModal={contentModal} team={team!} />
-                <BoardFootball team={team!} />
-              </ScrollShadow>
+              <SwiperTeams contentModal={contentModal} team={team!}/>
             </ModalBody>
           </>
         )}

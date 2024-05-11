@@ -7,15 +7,15 @@ interface Props {
 
 const ErrorNoPlayers = ({ content }: { content: Props }) => {
   return (
-    <div className='w-full h-full pr-8'>
+    <div className='w-full h-full'>
       <Card
         className='w-full h-full grid place-items-center border-2 py-4 border-custom-red
         bg-custom-red/30 text-custom-red/75 text-lg md:text-2xl font-bold '
       >
-        <ModalBody>
+        <ModalBody className='px-8'>
           <div className='space-y-2'>
             <IconAlertCircle className='text-center w-full' size={80} />
-            <p>{content.no_players}</p>
+            <p className='text-center'>{content.no_players}</p>
           </div>
         </ModalBody>
       </Card>

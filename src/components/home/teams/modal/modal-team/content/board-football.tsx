@@ -17,8 +17,8 @@ const BoardFootball = ({ team }: { team: ExtendedTeam }) => {
   const player = newPlayersArray(players)
 
   return (
-    <div>
-      <Card className='h-[720px] border-2 border-custom-lightgray bg-transparent p-0 relative'>
+    <div className='w-full max-w-[400px] h-full px-8 md:px-2'>
+      <Card className='h-full border-2 border-custom-lightgray bg-transparent p-0 relative'>
         <div className='absolute top-0 left-[50%] -translate-x-[50%] w-full max-w-[210px] h-[45px] mx-auto border-r-2 border-l-2 border-b-2 border-custom-lightgray bg-transparent p-0 rounded-none rounded-br-md rounded-bl-md'>
           <div className='absolute top-0 left-[50%] -translate-x-[50%] w-full max-w-[122px] h-[25px] mx-auto border-r-2 border-l-2 border-b-2 border-custom-lightgray bg-transparent p-0 rounded-none rounded-br-md rounded-bl-md'></div>
         </div>
