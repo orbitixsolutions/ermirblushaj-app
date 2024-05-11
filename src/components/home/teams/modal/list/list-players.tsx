@@ -72,7 +72,7 @@ const ListPlayers = ({
                 <p className='font-bold line-clamp-1 capitalize'>
                   {getPosition(player.position!)}
                 </p>
-                <p>{contentModal.position}</p>
+                <p className='line-clamp-1'>{contentModal.position}</p>
               </div>
             </div>
           </CardBody>
