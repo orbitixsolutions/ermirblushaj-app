@@ -10,20 +10,19 @@ import GalleryWrapper from '@/components/dashboard/gallery/wrappers/wrapper-gall
 import ErrorAlert from '@/components/dashboard/gallery/lists/error-alert'
 
 const ListTributeGallery = () => {
-  const EMPTY_ITEMS = 0
-
   const {
     data: tribute_gallery,
     isLoading,
     error
   } = useSWR<TributeGallery[]>('/api/tribute-gallery', fetcher)
 
-  if (error) return <ErrorAlert />
-
-  if (tribute_gallery?.length === EMPTY_ITEMS) {
+  const EMPTY_ITEMS = tribute_gallery?.length === 0
+  if (EMPTY_ITEMS) {
     return <NoItems />
   }
 
+  if (error) return <ErrorAlert />
+  
   if (isLoading) {
     return <SkeletonGallery />
   }

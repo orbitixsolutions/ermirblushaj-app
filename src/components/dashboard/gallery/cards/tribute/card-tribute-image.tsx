@@ -8,7 +8,7 @@ const CardTributeImage = ({ gallery }: { gallery: TributeGallery }) => {
   return (
     <Card
       isFooterBlurred
-      className='col-span-3 md:col-span-1  bg-custom-darknavy relative aspect-square group/card'
+      className='col-span-3 md:col-span-1  bg-custom-darknavy relative aspect-square'
     >
       {!imageLoading ? (
         <Spinner
@@ -25,7 +25,7 @@ const CardTributeImage = ({ gallery }: { gallery: TributeGallery }) => {
       )}
 
       <CardFooter className='justify-between overflow-hidden p-0 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10'>
-        <ButtonOptionsTribute gallery={gallery} />
+        <ButtonOptionsTribute imageId={gallery.id} />
       </CardFooter>
     </Card>
   )

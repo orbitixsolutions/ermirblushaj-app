@@ -1,25 +1,15 @@
 'use client'
 
 import { uploadImage } from '@/helpers/upload-image'
-import { useGetId } from '@/store/use-get-id'
-import { Button } from '@nextui-org/react'
-import { TournamentGallery } from '@prisma/client'
+import { Button, Tooltip } from '@nextui-org/react'
 import { IconEdit } from '@tabler/icons-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { toast } from 'sonner'
 
-const ButtonEditImageTournament = ({
-  gallery
-}: {
-  gallery: TournamentGallery
-}) => {
+const ButtonEditImageTournament = ({ imageId }: { imageId: string }) => {
+  const [isPending, startTransition] = useTransition()
   const [editImage, setEditImage] = useState<File | null>(null)
-
-  const { getId, resetId, updatedGetId } = useGetId((state) => ({
-    getId: state.getId,
-    updatedGetId: state.updatedGetId,
-    resetId: state.resetId
-  }))
+  const [currentId, setNewId] = useState('')
 
   useEffect(() => {
     if (editImage) {
@@ -41,40 +31,49 @@ const ButtonEditImageTournament = ({
       return toast.info('Please upload a image!')
     }
 
-    if (gallery.id !== '') {
-      uploadImage({
-        id: getId,
-        imgFile: editImage,
-        path: 'tournament'
+    if (imageId !== '') {
+      startTransition(async () => {
+        uploadImage({
+          id: currentId,
+          imgFile: editImage,
+          path: 'tournament'
+        })
+
+        toast.success('Image edited!')
+        setEditImage(null)
+        setNewId('')
       })
 
-      toast.success('Image edited!')
-      resetId()
-      return setEditImage(null)
+      return
     }
 
     return toast.error('An ocurred error')
   }
 
+  const handleOpenInput = (id: string) => {
+    const input = document.getElementById(`input-${id}`) as HTMLInputElement
+    input.click()
+    setNewId(id)
+  }
+
   return (
-    <label htmlFor='edit-tournament'>
-      <input
-        id='edit-tournament'
-        type='file'
-        className='hidden'
-        onChange={handleChangeImage}
-      />
+    <Tooltip content={<p>Edit</p>} placement='bottom'>
       <Button
-        onPress={() => updatedGetId(gallery.id)}
-        isIconOnly
-        as='p'
-        radius='full'
         size='sm'
         color='primary'
+        className='bg-custom-blue'
+        isLoading={isPending}
+        onPress={() => handleOpenInput(imageId)}
       >
-        <IconEdit />
+        <input
+          type='file'
+          className='hidden'
+          id={`input-${imageId}`}
+          onChange={handleChangeImage}
+        />
+        <IconEdit size={16} />
       </Button>
-    </label>
+    </Tooltip>
   )
 }
 

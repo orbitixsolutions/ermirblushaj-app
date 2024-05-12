@@ -1,26 +1,15 @@
 'use client'
 
-import { uploadImage } from '@/helpers/upload-image'
-import { useGetId } from '@/store/use-get-id'
-import { Button, Tooltip } from '@nextui-org/react'
-import { TournamentGallery } from '@prisma/client'
-import { IconEdit } from '@tabler/icons-react'
 import { useEffect, useState, useTransition } from 'react'
+import { uploadImage } from '@/helpers/upload-image'
+import { Button, Tooltip } from '@nextui-org/react'
+import { IconEdit } from '@tabler/icons-react'
 import { toast } from 'sonner'
 
-const ButtonEditImageTribute = ({
-  gallery
-}: {
-  gallery: TournamentGallery
-}) => {
+const ButtonEditImageTribute = ({ imageId }: { imageId: string }) => {
   const [isPending, startTransition] = useTransition()
   const [editImage, setEditImage] = useState<File | null>(null)
-
-  const { getId, resetId, updatedGetId } = useGetId((state) => ({
-    getId: state.getId,
-    updatedGetId: state.updatedGetId,
-    resetId: state.resetId
-  }))
+  const [currentId, setNewId] = useState('')
 
   useEffect(() => {
     if (editImage) {
@@ -28,7 +17,7 @@ const ButtonEditImageTribute = ({
     }
   }, [editImage])
 
-  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  function handleChangeImage(e: React.ChangeEvent<HTMLInputElement>) {
     setEditImage(null)
 
     if (e.target.files && e.target.files[0]) {
@@ -37,43 +26,49 @@ const ButtonEditImageTribute = ({
     }
   }
 
-  const sendImageTribute = async (imgFile: File | null) => {
+  const sendImageTribute = (imgFile: File | null) => {
     if (imgFile === null) {
       return toast.info('Please upload a image!')
     }
 
-    if (gallery.id !== '') {
-      startTransition(() => {
+    if (imageId !== '') {
+      startTransition(async () => {
         uploadImage({
-          id: getId,
+          id: currentId,
           imgFile: editImage,
           path: 'tribute'
         })
 
         toast.success('Image edited!')
         setEditImage(null)
-        resetId()
-        return
+        setNewId('')
       })
+
+      return
     }
 
     return toast.error('An ocurred error')
   }
 
+  const handleOpenInput = (id: string) => {
+    const input = document.getElementById(`input-${id}`) as HTMLInputElement
+    input.click()
+    setNewId(id)
+  }
+
   return (
-    <Tooltip content='Edit'>
+    <Tooltip content={<p>Edit</p>} placement='bottom'>
       <Button
         size='sm'
-        as='label'
         color='primary'
-        htmlFor='edit-tribute'
-        isDisabled={isPending}
-        onPress={() => updatedGetId(gallery.id)}
+        className='bg-custom-blue'
+        isLoading={isPending}
+        onPress={() => handleOpenInput(imageId)}
       >
         <input
-          id='edit-tribute'
           type='file'
           className='hidden'
+          id={`input-${imageId}`}
           onChange={handleChangeImage}
         />
         <IconEdit size={16} />

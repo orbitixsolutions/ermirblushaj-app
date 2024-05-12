@@ -10,19 +10,18 @@ import useSWR from 'swr'
 import ErrorAlert from '../error-alert'
 
 const ListTournamentGallery = () => {
-  const EMPTY_ITEMS = 0
-
   const {
-    data: tournamentGallery,
+    data: tournament_gallery,
     isLoading,
     error
   } = useSWR<TournamentGallery[]>('/api/tournament-gallery', fetcher)
 
-  if (error) return <ErrorAlert />
-
-  if (tournamentGallery?.length === EMPTY_ITEMS) {
+  const EMPTY_ITEMS = tournament_gallery?.length === 0
+  if (EMPTY_ITEMS) {
     return <NoItems />
   }
+  
+  if (error) return <ErrorAlert />
 
   if (isLoading) {
     return <SkeletonGallery />
@@ -30,8 +29,8 @@ const ListTournamentGallery = () => {
 
   return (
     <WrapperGallery>
-      {tournamentGallery?.map((item) => (
-        <CardTournamentImage key={item.id} item={item} />
+      {tournament_gallery?.map((gallery) => (
+        <CardTournamentImage key={gallery.id} gallery={gallery} />
       ))}
     </WrapperGallery>
   )

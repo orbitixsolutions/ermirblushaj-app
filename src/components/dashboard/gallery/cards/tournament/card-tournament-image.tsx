@@ -1,19 +1,29 @@
-import { Card, Spinner } from '@nextui-org/react'
+import { Card, CardFooter, Image, Spinner } from '@nextui-org/react'
 import { TournamentGallery } from '@prisma/client'
-import TournamentImage from '@/components/dashboard/gallery/image/tournament/tournament-image'
+import ButtonOptionsTournament from '../../buttons/options/button-options-tournament'
 
-const CardTournamentImage = ({ item }: { item: TournamentGallery }) => {
-  const imageLoading = item.url === ''
+const CardTournamentImage = ({ gallery }: { gallery: TournamentGallery }) => {
+  const imageLoading = gallery.url
 
   return (
-    <Card className='col-span-3 xs:col-span-2 md:col-span-1 bg-custom-darknavy relative aspect-square'>
-      {imageLoading ? (
-        <div className='w-full h-full grid place-items-center'>
-          <Spinner color='primary' size='lg' />
-        </div>
+    <Card className='col-span-3 md:col-span-1  bg-custom-darknavy relative aspect-square'>
+      {!imageLoading ? (
+        <Spinner
+          color='primary'
+          size='lg'
+          className='absolute z-20 size-full grid place-items-center '
+        />
       ) : (
-        <TournamentImage gallery={item} />
+        <Image
+          className='aspect-square size-full object-cover'
+          src={gallery.url!}
+          alt={`image-${gallery.id}`}
+        />
       )}
+
+      <CardFooter className='justify-between overflow-hidden p-0 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10'>
+        <ButtonOptionsTournament imageId={gallery.id} />
+      </CardFooter>
     </Card>
   )
 }
