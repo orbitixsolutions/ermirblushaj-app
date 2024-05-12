@@ -43,7 +43,7 @@ const ModalGallery = ({ gallery, content }: Props) => {
         size='2xl'
         isOpen={isOpen}
         onClose={onClose}
-        className='bg-custom-darkblue text-custom-white'
+        className='bg-custom-darkblue text-custom-white pb-5'
       >
         <ModalContent>
           {() => (
