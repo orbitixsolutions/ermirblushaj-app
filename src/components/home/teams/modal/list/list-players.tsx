@@ -38,11 +38,11 @@ const ListPlayers = ({
   }
 
   return (
-    <ScrollShadow hideScrollBar className='w-full h-full px-12 space-y-2'>
+    <ScrollShadow hideScrollBar className='w-full h-full space-y-2'>
       {players.map((player) => (
         <Card
           key={player.id}
-          className='relative border-2 border-custom-lightgray  h-20 bg-transparent'
+          className='relative border-2 border-custom-lightgray h-20 bg-transparent'
         >
           <CardBody className='grid grid-cols-4 p-0'>
             <div className='bg-custom-green h-full w-full grid place-items-center '>

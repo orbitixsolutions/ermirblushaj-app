@@ -43,7 +43,7 @@ const ModalTeam = ({ contentModal }: any) => {
       size='2xl'
       isOpen={isOpen}
       onOpenChange={onTeamModalClose}
-      className='bg-custom-darknavy text-custom-white p-5'
+      className='bg-custom-darknavy text-custom-white pb-5'
     >
       <ModalContent>
         {() => (

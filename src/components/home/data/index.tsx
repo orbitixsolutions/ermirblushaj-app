@@ -13,19 +13,23 @@ import {
 export const social = [
   {
     icon: <IconBrandFacebookFilled />,
-    text: 'Social Media'
+    text: 'Facebook',
+    link: 'https://www.facebook.com/p/Ermir-Blushaj-Memorial-100052159106193'
   },
   {
     icon: <IconBrandInstagram />,
-    text: 'Social Media'
+    text: 'Instagram',
+    link: '/'
   },
   {
     icon: <IconBrandTiktokFilled />,
-    text: 'Social Media'
+    text: 'Tiktok',
+    link: '/'
   },
   {
     icon: <IconBrandWhatsapp />,
-    text: 'Social Media'
+    text: 'Whatsapp',
+    link: '/'
   }
 ]
 

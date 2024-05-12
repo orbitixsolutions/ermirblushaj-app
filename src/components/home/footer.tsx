@@ -1,5 +1,5 @@
 import { BrandLogo } from '@/assets/images'
-import { Image } from '@nextui-org/react'
+import { Image, Link } from '@nextui-org/react'
 import { useTranslations } from 'next-intl'
 import { phonesNumbers, social, streets } from './data'
 
@@ -24,9 +24,13 @@ const Footer = () => {
             {social.map((item, index) => (
               <li key={index} className='flex items-center gap-2'>
                 {item.icon}{' '}
-                <span className='text-custom-lightgray/80 text-xs md:text-lg'>
+                <Link
+                  isExternal
+                  href={item.link}
+                  className='text-custom-lightgray/80 text-xs md:text-lg'
+                >
                   {item.text}
-                </span>
+                </Link>
               </li>
             ))}
           </ol>
