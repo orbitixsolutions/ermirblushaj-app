@@ -32,7 +32,7 @@ const SwiperTribute = ({ gallery }: { gallery: TributeGallery[] }) => {
             classNames={{
               wrapper: 'aspect-square w-full h-full'
             }}
-            src={image.url}
+            src={image.url!}
           />
         </SwiperSlide>
       ))}
