@@ -47,7 +47,7 @@ const Gallery = async () => {
               <Card radius='none' className='w-full h-full bg-custom-lightgray'>
                 <Image
                   radius='none'
-                  src={image.url}
+                  src={image.url!}
                   alt={image.id}
                   className='aspect-square size-full object-cover'
                 />

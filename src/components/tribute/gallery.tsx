@@ -1,8 +1,8 @@
+import { getTranslations } from 'next-intl/server'
 import { Card, Image } from '@nextui-org/react'
 import { TributeGallery } from '@prisma/client'
 import prisma from '@/libs/prisma'
 import ModalGallery from './modal/modal-gallery'
-import { getTranslations } from 'next-intl/server'
 
 const getImages = async () => {
   const images = await prisma.tributeGallery.findMany()
@@ -33,7 +33,7 @@ const Gallery = async () => {
             <Card className='aspect-square'>
               <Image
                 className='aspect-square size-full object-cover'
-                src={image.url}
+                src={image.url!}
                 alt={`Tribute image`}
               />
             </Card>
