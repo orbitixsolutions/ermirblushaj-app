@@ -50,7 +50,7 @@ const ListPlayers = ({
             </div>
 
             <div className='absolute right-0 w-full bg-custom-green py-1.5'>
-              <h3 className='text-sm ml-24 xs:ml-36 space-x-2 font-bold'>
+              <h3 className='text-sm ml-24 xs:ml-36 space-x-2 font-bold line-clamp-1'>
                 <span>{player.firstName}</span>
                 <span>{player.lastName}</span>
               </h3>
