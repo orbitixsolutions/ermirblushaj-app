@@ -2,7 +2,7 @@
 
 import { deleteImageTribute } from '@/actions/services/delete'
 import { deleteImage } from '@/helpers/delete-image'
-import { Button } from '@nextui-org/react'
+import { Button, Tooltip } from '@nextui-org/react'
 import { TributeGallery } from '@prisma/client'
 import { IconTrash } from '@tabler/icons-react'
 import { useTransition } from 'react'
@@ -17,28 +17,30 @@ const ButtonDeleteImageTribute = ({ gallery }: { gallery: TributeGallery }) => {
       const { status, message } = await deleteImageTribute(gallery.id)
 
       if (status === 200) {
-        deleteImage({ id: gallery.id, path: 'tribute' })
-        toast.success(message)
-        mutate('/api/tribute-gallery')
+        startTransition(() => {
+          deleteImage({ id: gallery.id, path: 'tribute' })
+          toast.success(message)
+          mutate('/api/tribute-gallery')
+          return
+        })
+
+        toast.error('An ocurred a error')
         return
       }
-
-      toast.error('An ocurred a error')
-      return
     })
   }
 
   return (
-    <Button
-      isDisabled={isPending}
-      onPress={() => handleDeleteImage()}
-      isIconOnly
-      radius='full'
-      size='sm'
-      color='danger'
-    >
-      <IconTrash />
-    </Button>
+    <Tooltip content='Delete'>
+      <Button
+        size='sm'
+        color='danger'
+        isDisabled={isPending}
+        onPress={() => handleDeleteImage()}
+      >
+        <IconTrash size={16} />
+      </Button>
+    </Tooltip>
   )
 }
 

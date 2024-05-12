@@ -30,8 +30,8 @@ const ListTributeGallery = () => {
 
   return (
     <GalleryWrapper>
-      {tribute_gallery?.map((item) => (
-        <CardTributeImage key={item.id} item={item} />
+      {tribute_gallery?.map((gallery) => (
+        <CardTributeImage key={gallery.id} gallery={gallery} />
       ))}
     </GalleryWrapper>
   )

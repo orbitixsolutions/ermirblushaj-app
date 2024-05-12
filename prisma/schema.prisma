@@ -121,13 +121,13 @@ model PlayerStats {
 
 model TournamentGallery {
   id        String   @id @unique
-  url       String
+  url       String?
   createdAt DateTime @default(now())
 }
 
 model TributeGallery {
   id        String   @id @unique
-  url       String
+  url       String?
   createdAt DateTime @default(now())
 }
 
