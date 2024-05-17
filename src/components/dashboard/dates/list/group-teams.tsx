@@ -40,7 +40,7 @@ const GroupTeams = () => {
                 {group.name}
               </h3>
 
-              <ol className='grid grid-cols-6 md:grid-cols-5 gap-4'>
+              <ol className='grid grid-cols-6 md:grid-cols-4 gap-4'>
                 {group.teams.map((team) => (
                   <li
                     key={team.id}

@@ -38,7 +38,7 @@ const useCreateGroups = () => {
 
     const newGroups = Array.from({ length: 4 }, (_, i) => ({
       name: String.fromCharCode(65 + i),
-      teams: mixedTeams.slice(i * 5, (i + 1) * 5)
+      teams: mixedTeams.slice(i * 4, (i + 1) * 4)
     }))
     return newGroups as ExtendedGroup[]
   }
