@@ -239,7 +239,7 @@ export const createKeys = async () => {
               points: 'desc'
             }
           },
-          take: 4
+          take: 2
         }
       }
     })
@@ -262,7 +262,8 @@ export const createKeys = async () => {
       matches.map((match: any) => ({
         column: 'A',
         teamAId: match.teamA.id,
-        teamBId: match.teamB.id
+        teamBId: match.teamB.id,
+        phase: 'QUARTER'
       }))
     )
 
@@ -270,7 +271,8 @@ export const createKeys = async () => {
       matches.map((match: any) => ({
         column: 'B',
         teamAId: match.teamA.id,
-        teamBId: match.teamB.id
+        teamBId: match.teamB.id,
+        phase: 'QUARTER'
       }))
     )
 

@@ -60,7 +60,7 @@ const MatchesQuarters = ({
         ))
       ) : (
         <div className='space-y-20 xs:space-y-[108px] sm:space-y-[128px]'>
-          {Array(4)
+          {Array(2)
             .fill(0)
             .map((_, index) => (
               <Avatar

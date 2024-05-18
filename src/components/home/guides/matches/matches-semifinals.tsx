@@ -5,6 +5,7 @@ import { MatchKey, Team } from '@prisma/client'
 import { fetcher } from '@/helpers/fetcher'
 import ImagesMatchesKeys from '@/components/dashboard/dates/image/images-matches-keys'
 import useSWR from 'swr'
+import WrapperImage from '@/components/dashboard/dates/image/wrapper-images'
 
 type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
@@ -35,20 +36,15 @@ const MatchesSemifinals = ({
   return (
     <ol>
       {EMPTY_MATCHES ? (
-        matches?.map((matchKey, index) => (
-          <li
-            key={matchKey.id}
-            className={`${
-              skeletonClasses[index as keyof typeof skeletonClasses]
-            }`}
-          >
-            <div className='space-y-[204px] xs:space-y-[252px] sm:space-y-[300px] md:space-y-[300px]'>
+        matches?.map((matchKey) => (
+          <li key={matchKey.id} className='relative'>
+            <WrapperImage className='space-y-[275px]'>
               <ImagesMatchesKeys match={matchKey} />
-            </div>
+            </WrapperImage>
           </li>
         ))
       ) : (
-        <div className='space-y-[204px] xs:space-y-[252px] sm:space-y-[300px] md:space-y-[300px]'>
+        <div className='space-y-[256px] xs:space-y-[252px] sm:space-y-[300px] md:space-y-[300px] px-8'>
           {Array(2)
             .fill(0)
             .map((_, index) => (

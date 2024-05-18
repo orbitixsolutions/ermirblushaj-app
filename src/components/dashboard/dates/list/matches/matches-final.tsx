@@ -21,7 +21,7 @@ const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
   )
 
   return (
-    <ol>
+    <ol className='grid place-items-center'>
       {matches?.length !== 0 ? (
         matches?.map((matchKey) => (
           <li key={matchKey.id} className='relative'>

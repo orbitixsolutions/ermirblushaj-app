@@ -56,7 +56,7 @@ const MatchesSemifinals = ({
           </li>
         ))
       ) : (
-        <div className='space-y-[204px] xs:space-y-[252px] sm:space-y-[300px] md:space-y-[300px]'>
+        <div className='space-y-[256px] xs:space-y-[252px] sm:space-y-[300px] md:space-y-[300px] px-8'>
           {Array(2)
             .fill(0)
             .map((_, index) => (

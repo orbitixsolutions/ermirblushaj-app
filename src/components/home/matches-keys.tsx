@@ -17,34 +17,35 @@ const MatchesKeys = async () => {
   if (EMPTY_MATCHES) return
 
   return (
-    <section id='keys' className='w-full max-w-[700px] mx-auto py-8 md:py-24'>
-      <Card className='bg-custom-darknavy text-custom-white rounded-none sm:rounded-xl sm:border-[1px] border-custom-lightgray'>
+    <section className='max-w-[1280px] mx-auto py-8 md:py-16 px-5 flex'>
+      <Card className='bg-custom-darknavy text-custom-white w-full rounded-none sm:rounded-xl sm:border-[1px] border-custom-tgray'>
         <CardHeader className='bg-custom-green py-4 rounded-none sm:rounded-xl'>
-          <h2 className='w-full text-xl md:text-2xl font-bold text-center'>
-            {content('title')}
+          <h2 className='text-2xl xl:text-5xl mx-auto font-bold text-center'>
+            Keys Tournament
           </h2>
         </CardHeader>
-        <CardBody className='px-8 sm:px-5'>
+
+        <CardBody>
           <div className='w-full flex items-center justify-between'>
-            <MatchesEighths column='A' phase='EIGHTH' />
+            <MatchesEighths column='a' phase='EIGHTH' />
 
-            <div className='flex justify-between items-center size-full max-w-[500px] px-3 relative'>
-              <MatchesQuarters column='A' phase='QUARTER' />
+            <div className='flex justify-between items-center size-full max-w-[750px] px-3 relative'>
+              <MatchesQuarters column='a' phase='QUARTER' />
 
-              <div className='flex justify-between items-center size-full max-w-[300px] px-2 xs:px-4'>
-                <MatchesSemifinals column='A' phase='SEMIFINALS' />
+              <div className='flex justify-between items-center size-full max-w-[500px] px-2 xs:px-4'>
+                <MatchesSemifinals column='a' phase='SEMIFINALS' />
 
                 <div className='flex justify-center size-full max-w-[150px] px-2 xs:px-4'>
-                  <MatchesFinal column='NONE' phase='FINAL' />
+                  <MatchesFinal column='none' phase='FINAL' />
                 </div>
 
-                <MatchesSemifinals column='B' phase='SEMIFINALS' />
+                <MatchesSemifinals column='b' phase='SEMIFINALS' />
               </div>
 
-              <MatchesQuarters column='B' phase='QUARTER' />
+              <MatchesQuarters column='b' phase='QUARTER' />
             </div>
 
-            <MatchesEighths column='B' phase='EIGHTH' />
+            <MatchesEighths column='b' phase='EIGHTH' />
           </div>
         </CardBody>
       </Card>

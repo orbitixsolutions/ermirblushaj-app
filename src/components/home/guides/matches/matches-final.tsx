@@ -24,7 +24,7 @@ const MatchesFinal = ({ column, phase }: { column: string; phase: string }) => {
   const EMPTY_MATCHES = matches?.length !== 0
 
   return (
-    <ol className='flex gap-2'>
+    <ol className='grid place-items-center'>
       {EMPTY_MATCHES ? (
         matches?.map((matchKey) => (
           <li key={matchKey.id} className='relative'>

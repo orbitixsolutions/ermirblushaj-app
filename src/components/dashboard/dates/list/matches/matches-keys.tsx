@@ -2,6 +2,7 @@
 
 import { fetcher } from '@/helpers/fetcher'
 import { MatchKey, Team } from '@prisma/client'
+import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/react'
 import MatchesEighths from '@/components/dashboard/dates/list/matches/matches-eighths'
 import MatchesQuarters from '@/components/dashboard/dates/list/matches/matches-quarters'
 import MatchesSemifinals from '@/components/dashboard/dates/list/matches/matches-semifinals'
@@ -31,36 +32,42 @@ const MatchesKeys = () => {
   if (isLoading) return <Loader />
 
   return (
-    <div className='hidden md:block md:max-w-[640px] lg:max-w-[720px] xl:w-[968px] mx-auto space-y-2'>
-      <h2 className='text-2xl xl:text-5xl font-bold text-center'>Keys</h2>
+    <Card className='bg-custom-darknavy text-custom-white rounded-none sm:rounded-xl sm:border-[1px] border-custom-tgray'>
+      <CardHeader className='bg-custom-green py-4 rounded-none sm:rounded-xl'>
+        <h2 className='text-2xl xl:text-5xl mx-auto font-bold text-center'>
+          Keys Tournament
+        </h2>
+      </CardHeader>
 
-      <div className='w-full flex items-center justify-between'>
-        <MatchesEighths column='a' phase='EIGHTH' />
+      <CardBody>
+        <div className='w-full flex items-center justify-between'>
+          <MatchesEighths column='a' phase='EIGHTH' />
 
-        <div className='flex justify-between items-center size-full max-w-[500px] px-3 relative'>
-          <MatchesQuarters column='a' phase='QUARTER' />
+          <div className='flex justify-between items-center size-full max-w-[750px] px-3 relative'>
+            <MatchesQuarters column='a' phase='QUARTER' />
 
-          <div className='flex justify-between items-center size-full max-w-[300px] px-2 xs:px-4'>
-            <MatchesSemifinals column='a' phase='SEMIFINALS' />
+            <div className='flex justify-between items-center size-full max-w-[500px] px-2 xs:px-4'>
+              <MatchesSemifinals column='a' phase='SEMIFINALS' />
 
-            <div className='flex justify-center size-full max-w-[150px] px-2 xs:px-4'>
-              <MatchesFinal column='none' phase='FINAL' />
+              <div className='flex justify-center size-full max-w-[150px] px-2 xs:px-4'>
+                <MatchesFinal column='none' phase='FINAL' />
+              </div>
+
+              <MatchesSemifinals column='b' phase='SEMIFINALS' />
             </div>
 
-            <MatchesSemifinals column='b' phase='SEMIFINALS' />
+            <MatchesQuarters column='b' phase='QUARTER' />
           </div>
 
-          <MatchesQuarters column='b' phase='QUARTER' />
+          <MatchesEighths column='b' phase='EIGHTH' />
         </div>
+      </CardBody>
 
-        <MatchesEighths column='b' phase='EIGHTH' />
-      </div>
-
-      <div className='max-w-[400px] mx-auto grid gap-3'>
+      <CardFooter className='grid gap-3'>
         <ButtonOptionsKeys />
         <ButtonDeleteKeyMatches />
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   )
 }
 
