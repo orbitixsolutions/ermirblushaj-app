@@ -17,11 +17,11 @@ const MatchesKeys = async () => {
   if (EMPTY_MATCHES) return
 
   return (
-    <section className='max-w-[1280px] mx-auto py-8 md:py-16 px-5 flex'>
+    <section className='max-w-[1024px] mx-auto py-8 md:py-16 px-5 flex'>
       <Card className='bg-custom-darknavy text-custom-white w-full rounded-none sm:rounded-xl sm:border-[1px] border-custom-tgray'>
         <CardHeader className='bg-custom-green py-4 rounded-none sm:rounded-xl'>
-          <h2 className='text-2xl xl:text-5xl mx-auto font-bold text-center'>
-            Keys Tournament
+          <h2 className='w-full text-center text-lg md:text-2xl font-bold'>
+            {content('title')}
           </h2>
         </CardHeader>
 
