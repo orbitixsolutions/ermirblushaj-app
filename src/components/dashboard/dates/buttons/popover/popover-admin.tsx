@@ -2,14 +2,14 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  Button,
-  Tooltip
+  Button
 } from '@nextui-org/react'
 import { useCurrentRole } from '@/hooks/auth/use-current-role'
 import { IconTrash, IconRestore } from '@tabler/icons-react'
 import useDeleteGroups from '@/hooks/dates-hooks/buttons/delete/use-delete-groups'
 import useDeleteMatches from '@/hooks/dates-hooks/buttons/delete/use-delete-matches'
 import useResetStats from '@/hooks/dates-hooks/buttons/delete/use-reset-stats'
+import useResetDates from '@/hooks/dates-hooks/buttons/delete/use-reset-dates'
 
 const DropdownAdmin = () => {
   const role = useCurrentRole()
@@ -18,6 +18,8 @@ const DropdownAdmin = () => {
   const { emptyMatches, isPendingMatches, handleDeleteMatches } =
     useDeleteMatches()
   const { isPendingStats, handleResetStats } = useResetStats()
+
+  const { isPendingDates, handleResetDates } = useResetDates()
 
   if (role !== 'OWNER') return null
 
@@ -34,93 +36,51 @@ const DropdownAdmin = () => {
       <PopoverContent className='bg-custom-darkblue p-4'>
         <div className='w-full text-custom-white space-y-4'>
           <h3 className='text-center text-xl font-bold'>Options</h3>
-          <Tooltip
-            placement='bottom'
-            className='w-80 text-custom-white bg-custom-navy p-5'
-            content={
-              <div className='space-y-2 text-center'>
-                <h3 className='text-xl xl:text-2xl font-bold'>Delete Groups</h3>
-                <div>
-                  <p>
-                    This{' '}
-                    <span className='text-custom-red underline'>action</span>{' '}
-                    cannot be undone!
-                  </p>
-                </div>
-              </div>
-            }
+          <Button
+            fullWidth
+            color='danger'
+            isDisabled={emptyGroups}
+            isLoading={isPendingGroups}
+            className='bg-custom-red font-bold'
+            startContent={<IconTrash size={20} />}
+            onPress={() => handleDeleteGroups()}
           >
-            <Button
-              fullWidth
-              color='danger'
-              isDisabled={emptyGroups}
-              isLoading={isPendingGroups}
-              className='bg-custom-red font-bold'
-              startContent={<IconTrash size={20} />}
-              onPress={() => handleDeleteGroups()}
-            >
-              Delete Groups
-            </Button>
-          </Tooltip>
+            Delete Groups
+          </Button>
 
-          <Tooltip
-            placement='bottom'
-            className='w-80 text-custom-white bg-custom-navy p-5'
-            content={
-              <div className='space-y-2 text-center'>
-                <h3 className='text-xl xl:text-2xl font-bold'>
-                  Delete Matches
-                </h3>
-                <div>
-                  <p>
-                    This{' '}
-                    <span className='text-custom-red underline'>action</span>{' '}
-                    cannot be undone!
-                  </p>
-                </div>
-              </div>
-            }
+          <Button
+            fullWidth
+            color='danger'
+            isDisabled={emptyMatches}
+            isLoading={isPendingMatches}
+            className='bg-custom-red font-bold'
+            startContent={<IconTrash size={20} />}
+            onPress={() => handleDeleteMatches()}
           >
-            <Button
-              fullWidth
-              color='danger'
-              isDisabled={emptyMatches}
-              isLoading={isPendingMatches}
-              className='bg-custom-red font-bold'
-              startContent={<IconTrash size={20} />}
-              onPress={() => handleDeleteMatches()}
-            >
-              Delete Matches
-            </Button>
-          </Tooltip>
+            Delete Matches
+          </Button>
 
-          <Tooltip
-            placement='bottom'
-            className='w-80 text-custom-white bg-custom-navy p-5'
-            content={
-              <div className='space-y-2 text-center'>
-                <h3 className='text-xl xl:text-2xl font-bold'>Reset Stats</h3>
-                <div>
-                  <p>
-                    This{' '}
-                    <span className='text-custom-red underline'>action</span>{' '}
-                    cannot be undone!
-                  </p>
-                </div>
-              </div>
-            }
+          <Button
+            fullWidth
+            color='danger'
+            isLoading={isPendingStats}
+            className='bg-custom-red font-bold'
+            startContent={<IconRestore size={20} />}
+            onPress={() => handleResetStats()}
           >
-            <Button
-              fullWidth
-              color='danger'
-              isLoading={isPendingStats}
-              className='bg-custom-red font-bold'
-              startContent={<IconRestore size={20} />}
-              onPress={() => handleResetStats()}
-            >
-              Reset Stats
-            </Button>
-          </Tooltip>
+            Reset Stats
+          </Button>
+
+          <Button
+            fullWidth
+            color='danger'
+            isLoading={isPendingDates}
+            className='bg-custom-red font-bold'
+            startContent={<IconRestore size={20} />}
+            onPress={() => handleResetDates()}
+          >
+            Reset Dates
+          </Button>
         </div>
       </PopoverContent>
     </Popover>

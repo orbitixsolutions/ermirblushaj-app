@@ -275,3 +275,21 @@ export const resetAllStats = async () => {
     return { error: 'An ocurred a error!', status: 500 }
   }
 }
+
+export const resetAllDates = async () => {
+  try {
+    await prisma.$transaction([
+      prisma.match.updateMany({
+        data: {
+          playEndDate: null,
+          playStartDate: null,
+          status: 'PENDING'
+        }
+      })
+    ])
+
+    return { success: 'All stats reseted!', status: 200 }
+  } catch (error) {
+    return { error: 'An ocurred a error!', status: 500 }
+  }
+}
