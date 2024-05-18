@@ -44,10 +44,7 @@ export const phonesNumbers = [
 
 export const streets = [
   {
-    street: 'Crra 42 #### San isidro'
-  },
-  {
-    street: 'Crra 42 #### San isidro'
+    street: 'Centro Sportivo di Colorno'
   }
 ]
 
