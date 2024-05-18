@@ -10,7 +10,8 @@ export const useCreateKeys = () => {
   const [isPendingKeys, startTransition] = useTransition()
 
   const { data: matches } = useSWR<Match[]>('/api/matches/keys', fetcher)
-  const fullMatchesKeys = (matches?.length ?? 0) >= 8
+  const fullMatchesKeys =
+    (matches?.length ?? 0) >= 4 || (matches?.length ?? 0) >= 8
 
   const handleCreateKeys = async () => {
     if (fullMatchesKeys) {
