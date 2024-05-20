@@ -1,6 +1,7 @@
 import { updateLogo } from '@/actions/update-logo'
 import { storage } from '@/firebase/firebaseConfig'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { getSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { mutate } from 'swr'
 
@@ -17,12 +18,16 @@ const routes = [
   '/api/tribute-gallery'
 ]
 
-export const uploadImage = ({
+export const uploadImage = async ({
   path: path,
   id: id,
   imgFile: imgFile
 }: Props) => {
   try {
+    const sesion = await getSession()
+    
+    if (!sesion) return
+
     const metadata = { contentType: 'image/webp' }
     const imageRef = ref(storage, `${path}/${id}`)
     if (!imgFile) return
@@ -30,7 +35,7 @@ export const uploadImage = ({
     return uploadBytes(imageRef, imgFile, metadata).then(async () => {
       const downloadUrl = await getDownloadURL(imageRef)
       await updateLogo({ path: path, id: id, imgUrl: downloadUrl })
-      
+
       routes.map((route) => mutate(route))
     })
   } catch (error) {

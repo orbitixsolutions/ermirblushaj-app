@@ -142,6 +142,12 @@ export const deleteAdmin = async (id: string) => {
 // RESET TEAM STATS //
 // -------------------------------- //
 export const resetTeamStats = async () => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+  
   try {
     await prisma.teamStats.updateMany({
       data: {
@@ -162,6 +168,12 @@ export const resetTeamStats = async () => {
 // RESET PLAYER STATS //
 // -------------------------------- //
 export const resetPlayerStats = async () => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     await prisma.playerStats.updateMany({
       data: {
@@ -179,6 +191,12 @@ export const resetPlayerStats = async () => {
 // DELETE GROUPS //
 // -------------------------------- //
 export const deleteGroups = async () => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     await prisma.playerStats.updateMany({
       data: {
@@ -206,6 +224,12 @@ export const deleteGroups = async () => {
 // DELETE MATCHES //
 // -------------------------------- //
 export const deleteMatches = async () => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     await prisma.matchHistory.deleteMany()
     await prisma.match.deleteMany()
@@ -220,6 +244,12 @@ export const deleteMatches = async () => {
 // DELETE MATCHES //
 // -------------------------------- //
 export const deleteKeyMatches = async () => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     await prisma.matchKey.findMany()
     await prisma.matchHistory.deleteMany()
@@ -241,6 +271,12 @@ export const deleteKeyMatches = async () => {
 }
 
 export const resetAllStats = async () => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     await prisma.$transaction([
       prisma.teamStats.updateMany({
@@ -277,6 +313,12 @@ export const resetAllStats = async () => {
 }
 
 export const resetAllDates = async () => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     await prisma.$transaction([
       prisma.match.updateMany({

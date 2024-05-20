@@ -142,6 +142,12 @@ export const createPlayers = async (data: Player) => {
 }
 
 export const createImageTournamnet = async (data: any) => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     await prisma.tournamentGallery.create({
       data
@@ -154,6 +160,12 @@ export const createImageTournamnet = async (data: any) => {
 }
 
 export const createImageTribute = async (data: any) => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     await prisma.tributeGallery.create({
       data
@@ -223,6 +235,12 @@ export const createMatches = async (teamAId: string, teamBId: string) => {
 }
 
 export const createKeys = async () => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     const keys = await prisma.matchKey.findMany()
     const ALREADY_KEYS = keys.length === 8
@@ -289,6 +307,12 @@ export const createKeys = async () => {
 }
 
 const generateMatchups = async (teamA: Team[] | any, teamB: Team[] | any) => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   return teamA.map((aTeam: any, index: number) => [
     {
       teamA: aTeam,
@@ -298,6 +322,12 @@ const generateMatchups = async (teamA: Team[] | any, teamB: Team[] | any) => {
 }
 
 export const finishMatchesEights = async () => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     const matches = await prisma.matchKey.findMany({
       orderBy: {
@@ -365,6 +395,12 @@ export const finishMatchesEights = async () => {
 }
 
 export const finishMatchesQuarters = async () => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     const blockA = await prisma.matchKey.findMany({
       include: {
@@ -454,6 +490,12 @@ export const finishMatchesQuarters = async () => {
 }
 
 export const finishMatchesSemifinals = async () => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     const blockA = await prisma.matchKey.findMany({
       include: {
@@ -527,6 +569,12 @@ export const finishMatchesSemifinals = async () => {
 }
 
 export const finishMatchFinal = async () => {
+  const role = await currentRole()
+
+  if (role !== 'ADMIN' && role !== 'OWNER') {
+    return { error: 'You no have permissions.', status: 501 }
+  }
+
   try {
     // Finalizar torneo
     await prisma.matchKey.updateMany({
