@@ -34,7 +34,9 @@ const DropdownPlayer = ({ player }: Props) => {
 
   const handlePlayerDeleted = async (playerId: string, teamId: string) => {
     startTransition(async () => {
-      await deleteImage({ path: 'players', id: playerId })
+      if (player.profilePhoto !== null) {
+        await deleteImage({ path: 'players', id: playerId })
+      }
 
       const { status, message } = await deletePlayer(playerId, teamId)
       if (status === 200) {

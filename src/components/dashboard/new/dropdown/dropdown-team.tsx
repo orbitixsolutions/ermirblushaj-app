@@ -45,7 +45,9 @@ const DropdownTeam = ({ team }: { team: Team }) => {
 
   const handleDeleteTeam = async (teamId: string) => {
     startTransition(async () => {
-      await deleteImage({ path: 'teams', id: teamId })
+      if (team.logo !== null) {
+        await deleteImage({ path: 'teams', id: teamId })
+      }
 
       const { status, message } = await deleteTeam(teamId)
       if (status === 200) {
