@@ -1,4 +1,4 @@
-import { Avatar, Card } from '@nextui-org/react'
+import { Avatar, Card, Tooltip } from '@nextui-org/react'
 import { Player } from '@prisma/client'
 import DropdownPlayer from '@/components/dashboard/new/dropdown/dropdown-player'
 
@@ -12,7 +12,7 @@ const CardPlayerImage = ({ player }: { player: Player }) => {
           </div>
 
           <Avatar
-          isBordered
+            isBordered
             className='w-20 h-20 md:w-24 md:h-24 lg:w-16 lg:h-16'
             src={player.profilePhoto!}
             alt={player.firstName}
@@ -20,14 +20,34 @@ const CardPlayerImage = ({ player }: { player: Player }) => {
         </div>
       </Card>
       <div className='flex-col mt-2'>
-        <h2 className='text-sm md:text-lg text-center text-custom-white mt-2 line-clamp-1'>
-          {player.firstName} {player.lastName}
-        </h2>
-        <h3 className='text-center text-sm text-custom-lightgray'>
-          <span className='text-xs md:text-sm font-bold underline line-clamp-1'>
-            {player.teamName}
-          </span>
-        </h3>
+        <Tooltip
+          className='bg-custom-green'
+          radius='md'
+          content={
+            <h2 className='text-center text-sm text-slate-900 font-bold'>
+              {player.firstName} {player.lastName}
+            </h2>
+          }
+        >
+          <h2 className='text-sm md:text-lg text-center text-custom-white mt-2 line-clamp-1'>
+            {player.firstName} {player.lastName}
+          </h2>
+        </Tooltip>
+        <Tooltip
+          className='bg-custom-green'
+          radius='md'
+          content={
+            <h3 className='text-center text-sm text-slate-900 font-bold'>
+              {player.teamName}
+            </h3>
+          }
+        >
+          <h3 className='text-center text-sm text-custom-lightgray'>
+            <span className='text-xs md:text-sm font-bold underline line-clamp-1'>
+              {player.teamName}
+            </span>
+          </h3>
+        </Tooltip>
       </div>
     </li>
   )

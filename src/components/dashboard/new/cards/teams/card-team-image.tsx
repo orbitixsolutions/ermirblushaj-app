@@ -1,4 +1,4 @@
-import { Avatar, Card } from '@nextui-org/react'
+import { Avatar, Card, Tooltip } from '@nextui-org/react'
 import { Team } from '@prisma/client'
 import DropdownTeam from '@/components/dashboard/new/dropdown/dropdown-team'
 
@@ -19,9 +19,19 @@ const CardTeamImage = ({ team }: { team: Team }) => {
           />
         </div>
       </Card>
-      <h2 className='text-sm md:text-lg text-center text-custom-white mt-2 line-clamp-1'>
-        {team.name}
-      </h2>
+      <Tooltip
+        className='bg-custom-green'
+        radius='md'
+        content={
+          <h2 className='text-center text-sm text-slate-900 font-bold'>
+            {team.name}
+          </h2>
+        }
+      >
+        <h2 className='text-sm md:text-lg text-center text-custom-white mt-2 line-clamp-1'>
+          {team.name}
+        </h2>
+      </Tooltip>
     </li>
   )
 }
