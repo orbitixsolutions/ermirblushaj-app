@@ -100,28 +100,23 @@ export const usePlayerModal = () => {
     const playerId = uuid()
     const currentTeamId = teamData.id || data.team_id
 
-    // Evitar crear mas de 15 jugadores por equipo
-    if (currentTeamId) {
-      startTranstion(async () => {
-        const { data, status } = await dataTeamById(currentTeamId)
+    const { data: teams, status: statusTeam } = await dataTeamById(
+      currentTeamId
+    )
+    const playersByTeam = teams?.players.length ?? 0
+    const maxPlayersPerTeam = 15
 
-        if (status === 200) {
-          const playersByTeam = data?.players
-          const maxPlayersPerTeam = 15
-
-          if (playersByTeam?.length === maxPlayersPerTeam) {
-            toast.error('You can only create up to 15 players per team!')
-            return
-          }
+    startTranstion(async () => {
+      // Evitar crear mas de 15 jugadores por equipo
+      if (playersByTeam >= maxPlayersPerTeam) {
+        if (statusTeam === 200) {
+          toast.error('You can only create up to 15 players per team!')
+          return
         }
+      }
 
-        return
-      })
-    }
-
-    // Si estamos editando
-    if (playerModalEdit) {
-      startTranstion(async () => {
+      // Si estamos editando
+      if (playerModalEdit) {
         const { status, message } = await editPlayer(playerModalId, data)
 
         await uploadImage({
@@ -140,31 +135,30 @@ export const usePlayerModal = () => {
         clearState()
         toast.error('An ocurred error!')
         return
-      })
-      return
-    }
-
-    // Condiciones generales
-    if (data.first_name === '') {
-      return toast.info('First name is required!')
-    }
-    if (teamData.id === '') {
-      if (data.team_id === '') {
-        return toast.info('Team name is required!')
       }
-    }
 
-    // Guardamos los datos en un objeto y lo mandamos a la API
-    const playerData = {
-      ...data,
-      id: playerId,
-      EXIST_TEAM_NAME: teamData.name,
-      EXIST_TEAM_ID: teamData.id
-    }
+      // Condiciones generales
+      if (data.first_name === '') {
+        toast.info('First name is required!')
+        return
+      }
+      if (teamData.id === '') {
+        if (data.team_id === '') {
+          toast.info('Team name is required!')
+          return
+        }
+      }
 
-    // Creamos el jugador
-    startTranstion(async () => {
-      const { status, message } = await createPlayers(playerData)
+      // Guardamos los datos en un objeto y lo mandamos a la API
+      const playerData = {
+        ...data,
+        id: playerId,
+        EXIST_TEAM_NAME: teamData.name,
+        EXIST_TEAM_ID: teamData.id
+      }
+
+      // Creamos el jugador
+      const { status: statusPlayer, message } = await createPlayers(playerData)
 
       if (imagePlayer.imgFile) {
         uploadImage({
@@ -174,8 +168,8 @@ export const usePlayerModal = () => {
         })
       }
 
-      if (status === 200) {
-        clearState()
+      if (statusPlayer === 200) {
+        // clearState()
         mutate('/api/players')
         toast.success(message)
         return
