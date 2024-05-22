@@ -1,6 +1,5 @@
 import { storage } from '@/firebase/firebaseConfig'
 import { deleteObject, ref } from 'firebase/storage'
-import { toast } from 'sonner'
 
 interface Props {
   path: string

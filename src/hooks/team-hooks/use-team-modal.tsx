@@ -80,10 +80,12 @@ export const useTeamModal = () => {
   // Enviamos el form para crear/editar equipo
   const onSubmit = handleSubmit(async (data) => {
     const teamId = uuid()
-    const MAX_TEAM_CREATE = 20
-
     const { data: teamsList } = await dataTeams()
-    if (teamsList?.length === MAX_TEAM_CREATE && !teamModalEdit) {
+
+    const MAX_TEAM_CREATE = 20
+    const TEAM_LIMIT = teamsList?.length === MAX_TEAM_CREATE
+
+    if (TEAM_LIMIT && !teamModalEdit) {
       clearState()
       return toast.error('Team limit reached (20)')
     }

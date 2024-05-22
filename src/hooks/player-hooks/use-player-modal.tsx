@@ -172,7 +172,7 @@ export const usePlayerModal = () => {
       }
 
       if (statusPlayer === 200) {
-        // clearState()
+        clearState()
         mutate('/api/players')
         toast.success(message)
         return
