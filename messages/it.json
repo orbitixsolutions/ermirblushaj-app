@@ -1,7 +1,7 @@
 {
   "Header": {
     "navigation": {
-      "keys": "Chiavi",
+      "keys": "Gironi",
       "teams": "Squadre",
       "date": "Date",
       "positions": "Classifica",
@@ -30,11 +30,11 @@
   "Guide": {
     "title": "Come funziona il torneo?",
     "key": {
-      "title": "Chiavi",
+      "title": "Gironi",
       "description": "In questa sezione sono presentate le fasi del torneo, iniziando dalla fase a gironi fino agli scontri diretti. Qui puoi seguire il progresso delle squadre e vedere chi avanza ai turni successivi.",
-      "button": "Chiavi",
+      "button": "Gironi",
       "modal": {
-        "title": "Chiavi del torneo"
+        "title": "Gironi del torneo"
       }
     },
     "team": {
