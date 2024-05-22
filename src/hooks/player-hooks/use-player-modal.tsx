@@ -113,6 +113,9 @@ export const usePlayerModal = () => {
           toast.error('You can only create up to 15 players per team!')
           return
         }
+
+        toast.error('An ocurred error!')
+        return
       }
 
       // Si estamos editando
