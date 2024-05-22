@@ -29,7 +29,7 @@ const ImageDropzoneTeam = () => {
 
   return (
     <div
-      className={`bg-custom-lightgray w-full aspect-video object-cover grid place-items-center rounded-xl cursor-pointer text-center text-2xl text-slate-900/40 ${
+      className={`bg-custom-lightgray grid aspect-square place-items-center rounded-xl cursor-pointer text-center text-2xl text-slate-900/40 ${
         isDragActive ? 'border-4 border-custom-blue' : 'border-2'
       }`}
       {...getRootProps()}
@@ -39,11 +39,16 @@ const ImageDropzoneTeam = () => {
         <p>Drop the images here ...</p>
       ) : imageTeam.imgFile ? (
         <Image
+          className='aspect-square object-cover'
           src={URL.createObjectURL(imageTeam.imgFile)}
           alt='New image preview'
         />
       ) : imageTeam.imgPreview ? (
-        <Image src={imageTeam.imgPreview} alt='Team shield image' />
+        <Image
+          className='aspect-square object-cover'
+          src={imageTeam.imgPreview}
+          alt='Team shield image'
+        />
       ) : (
         <p>Drop shield team image</p>
       )}

@@ -100,20 +100,22 @@ export const usePlayerModal = () => {
     const playerId = uuid()
     const currentTeamId = teamData.id || data.team_id
 
-    // Evitar crear mas de 10 jugadores por equipo
+    // Evitar crear mas de 15 jugadores por equipo
     if (currentTeamId) {
       startTranstion(async () => {
         const { data, status } = await dataTeamById(currentTeamId)
 
         if (status === 200) {
           const playersByTeam = data?.players
-          const maxPlayersPerTeam = 10
+          const maxPlayersPerTeam = 15
 
           if (playersByTeam?.length === maxPlayersPerTeam) {
-            toast.error('You can only create up to 10 players per team!')
+            toast.error('You can only create up to 15 players per team!')
             return
           }
         }
+
+        return
       })
     }
 
@@ -139,6 +141,7 @@ export const usePlayerModal = () => {
         toast.error('An ocurred error!')
         return
       })
+      return
     }
 
     // Condiciones generales

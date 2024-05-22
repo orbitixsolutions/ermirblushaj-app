@@ -101,6 +101,7 @@ export const useTeamModal = () => {
         if (res.status === 200) {
           clearState()
           mutate('/api/teams')
+          mutate('/api/players')
           toast.success('Team edited!')
           return
         }
@@ -109,6 +110,7 @@ export const useTeamModal = () => {
         toast.error('An ocurred error!')
         return
       })
+      return
     }
 
     if (data.name === '') {
