@@ -47,7 +47,11 @@ const GroupTeams = () => {
                     className='col-span-3 xs:col-span-2 md:col-span-1'
                   >
                     <Card className='bg-custom-navy p-2 md:p-4 aspect-square'>
-                      <Image src={team.logo!} alt={`Team ${team.name}`} />
+                      <Image
+                        className='aspect-square object-cover'
+                        src={team.logo!}
+                        alt={`Team ${team.name}`}
+                      />
                     </Card>
                     <h2 className='text-sm md:text-lg text-center line-clamp-1 mt-2'>
                       {team.name}

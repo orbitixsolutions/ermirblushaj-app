@@ -1,4 +1,4 @@
-import { Avatar, Card, CardBody, Divider } from '@nextui-org/react'
+import { Avatar, Card, CardBody, Divider, Tooltip } from '@nextui-org/react'
 import ErrorDates from '@/components/home/errors/error-dates'
 import prisma from '@/libs/prisma'
 
@@ -32,41 +32,64 @@ const Matches = async () => {
   }
 
   return (
-    <div id='dates' className='mx-auto max-w-full w-[480px] md:w-[640px] col-span-12 xl:col-span-4'>
+    <div
+      id='dates'
+      className='mx-auto max-w-full w-[480px] md:w-[640px] col-span-12 xl:col-span-4'
+    >
       <ol className='grid grid-cols-4 gap-3'>
         {matches?.slice(0, 10).map((match) => {
           const date = match.playStartDate?.replaceAll('-', '/').split('T')[0]
           return (
             <li key={match.id} className='col-span-12'>
               <div className='grid grid-cols-3 gap-1 md:gap-3'>
-                <Card className='bg-custom-darkblue text-custom-white p-2 sm:p-8 md:p-4'>
-                  <CardBody>
-                    <Avatar
-                      size='lg'
-                      src={match.teamA.logo!}
-                      className='w-full h-full'
-                    />
-                  </CardBody>
-                  <h2 className='text-center text-sm md:text-lg font-medium w-full'>
-                    {match.teamA.name}
-                  </h2>
-                </Card>
+                <Tooltip
+                  placement='bottom'
+                  className='bg-custom-darknavy rounded-md px-4'
+                  content={
+                    <h2 className='text-center text-sm md:text-lg font-medium w-full capitalize line-clamp-1 text-custom-white'>
+                      {match.teamA.name}
+                    </h2>
+                  }
+                >
+                  <Card className='bg-custom-darkblue text-custom-white p-2 sm:p-8 md:p-4'>
+                    <CardBody>
+                      <Avatar
+                        size='lg'
+                        src={match.teamA.logo!}
+                        className='w-full h-full aspect-square object-cover'
+                      />
+                    </CardBody>
+                    <h2 className='text-center text-sm md:text-lg font-medium w-full capitalize line-clamp-1'>
+                      {match.teamA.name}
+                    </h2>
+                  </Card>
+                </Tooltip>
                 <div className='flex flex-col items-center justify-center'>
                   <p className='text-xs md:text-lg text-custom-green'>{date}</p>
                   <p className='text-center font-bold'>VS</p>
                 </div>
-                <Card className='bg-custom-darkblue text-custom-white p-2 sm:p-8 md:p-4'>
-                  <CardBody>
-                    <Avatar
-                      size='lg'
-                      src={match.teamB.logo!}
-                      className='w-full h-full'
-                    />
-                  </CardBody>
-                  <h2 className='text-center text-sm md:text-lg font-medium w-full'>
-                    {match.teamB.name}
-                  </h2>
-                </Card>
+                <Tooltip
+                  placement='bottom'
+                  className='bg-custom-darknavy rounded-md px-4'
+                  content={
+                    <h2 className='text-center text-sm md:text-lg font-medium w-full capitalize line-clamp-1 text-custom-white'>
+                      {match.teamB.name}
+                    </h2>
+                  }
+                >
+                  <Card className='bg-custom-darkblue text-custom-white p-2 sm:p-8 md:p-4'>
+                    <CardBody>
+                      <Avatar
+                        size='lg'
+                        src={match.teamB.logo!}
+                        className='w-full h-full aspect-square object-cover'
+                      />
+                    </CardBody>
+                    <h2 className='text-center text-sm md:text-lg font-medium w-full capitalize line-clamp-1'>
+                      {match.teamB.name}
+                    </h2>
+                  </Card>
+                </Tooltip>
               </div>
               <Divider
                 orientation='horizontal'
