@@ -1,14 +1,13 @@
 import { BrandLogo } from '@/assets/images'
 import { Image, Link } from '@nextui-org/react'
 import { useTranslations } from 'next-intl'
-import { phonesNumbers, social, streets } from './data'
-import {  IconHeartFilled } from '@tabler/icons-react'
+import { phonesNumbers, social, streets } from '@/components/home/data'
 
 const Footer = () => {
   const content = useTranslations('Footer')
 
   return (
-    <footer className='h-[375px] py-16 md:py-24 px-12 text-custom-white bg-custom-teal relative'>
+    <footer className='min-h-[608px] sm:min-h-[375px] py-16 md:py-24 px-12 text-custom-white bg-custom-teal relative'>
       <div className='max-w-[1354px] mx-auto grid grid-cols-8 gap-y-12 md:gap-8'>
         <div className='col-span-8 md:col-span-2'>
           <Image
@@ -64,8 +63,8 @@ const Footer = () => {
           </ol>
         </div>
 
-        <div className='absolute bottom-0 left-0 flex items-center gap-4 w-full'>
-          <h2 className='text-center mx-auto text-lg pb-2'>
+        <div className='absolute bottom-0 flex items-center gap-4'>
+          <h2 className='text-lg pb-2'>
             Make by{' '}
             <Link
               isExternal

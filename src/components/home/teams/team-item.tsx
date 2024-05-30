@@ -15,7 +15,7 @@ const TeamItem = ({ team }: { team: Team }) => {
       <Card
         isPressable
         onPress={() => handleOpenModal(team.id)}
-        radius='md'
+        radius='sm'
         className='bg-custom-darkblue size-full p-4 xs:p-6 md:p-10'
       >
         <Avatar
@@ -24,8 +24,8 @@ const TeamItem = ({ team }: { team: Team }) => {
           className='w-full h-full object-cover bg-transparent'
         />
       </Card>
-      <Card radius='md' className='bg-custom-darkblue text-custom-white'>
-        <h2 className='text-xs md:text-lg text-center font-light line-clamp-1 py-1.5'>
+      <Card radius='sm' className='bg-custom-darkblue py-2 text-custom-white'>
+        <h2 className='text-xs md:text-lg text-center font-light line-clamp-1'>
           {team.name}
         </h2>
       </Card>
