@@ -15,21 +15,6 @@ export const social = [
     icon: <IconBrandFacebookFilled />,
     text: 'Facebook',
     link: 'https://www.facebook.com/p/Ermir-Blushaj-Memorial-100052159106193'
-  },
-  {
-    icon: <IconBrandInstagram />,
-    text: 'Instagram',
-    link: '/'
-  },
-  {
-    icon: <IconBrandTiktokFilled />,
-    text: 'Tiktok',
-    link: '/'
-  },
-  {
-    icon: <IconBrandWhatsapp />,
-    text: 'Whatsapp',
-    link: '/'
   }
 ]
 
