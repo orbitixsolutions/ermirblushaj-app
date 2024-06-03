@@ -25,9 +25,9 @@ const MatchesKeys = async () => {
   if (data_team_status !== 200) return <ErrorMatchesKeys />
 
   const EMPTY_MATCHES = data_matches?.length === 0
-  const MAX_MATCHES = data_matches?.length === 7
+  const TEAM_TOP = data_team_top?.length === 3
 
-  if (MAX_MATCHES) return <TopTeams teams={data_team_top} />
+  if (TEAM_TOP) return <TopTeams teams={data_team_top} />
   if (EMPTY_MATCHES) return
 
   return (
