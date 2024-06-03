@@ -61,9 +61,11 @@
     "title": "Chiavi del torneo",
     "no_items": "Non ci sono chiavi in questo torneo.",
     "error_title": "Errore",
-    "error_description": "Errore durante il caricamento delle chiavi del torneo. Si prega di riprovare più tardi."
-  }
-,
+    "error_description": "Errore durante il caricamento delle chiavi del torneo. Si prega di riprovare più tardi.",
+    "top_team": {
+      "title": "Classifica"
+    }
+  },
   "Groups": {
     "title": "Fase a gironi",
     "group_title": "Gruppo",

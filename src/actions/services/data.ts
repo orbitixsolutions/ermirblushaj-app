@@ -57,7 +57,7 @@ export const dataMatchesKeys = async () => {
       include: {
         teamKeyA: true,
         teamKeyB: true,
-        matchKeyHistory: true,
+        matchKeyHistory: true
       }
     })
 
@@ -100,6 +100,32 @@ export const dataMatchesKeysById = async (matchKeyId: string) => {
     })
 
     return { data: matches, message: 'Data loaded!', status: 200 }
+  } catch (error) {
+    return { error: 'An occurred error!', status: 500 }
+  }
+}
+
+export const dataTopTeams = async () => {
+  try {
+    const matchesKeys = await prisma.matchKey.findMany()
+
+    const allMatchesFinished =
+      matchesKeys.length > 0 &&
+      matchesKeys.every((match) => match.matchStatus === 'FINISHED')
+
+    if (allMatchesFinished) {
+      const topTeam = await prisma.team.findMany({
+        orderBy: {
+          position: 'desc'
+        },
+        skip: 4,
+        take: 3
+      })
+
+      return { data: topTeam, message: 'Data loaded!', status: 200 }
+    }
+
+    return { data: [], message: 'Data loaded!', status: 200 }
   } catch (error) {
     return { error: 'An occurred error!', status: 500 }
   }

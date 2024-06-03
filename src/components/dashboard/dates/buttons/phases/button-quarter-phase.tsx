@@ -1,6 +1,7 @@
 import { finishMatchesQuarters } from '@/actions/services/create'
 import { fetcher } from '@/helpers/fetcher'
 import { updatedData } from '@/helpers/updated-data'
+import { usePhase } from '@/store/use-current-phase'
 import { Button } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
 import { useTransition } from 'react'
@@ -15,10 +16,9 @@ type ExtendedMatchKey = MatchKey & {
 const ButtonQuaterPhase = () => {
   const [isPending, startTransition] = useTransition()
 
-  const { data: key_matches } = useSWR<ExtendedMatchKey[]>(
-    '/api/matches/keys',
-    fetcher
-  )
+  const currentPhase = usePhase((state) => state.phase)
+  const setPhase = usePhase((state) => state.setPhase)
+
   const { data: quarter_matches } = useSWR<ExtendedMatchKey[]>(
     '/api/matches/keys?phase=quarter&status=completed',
     fetcher
@@ -27,15 +27,17 @@ const ButtonQuaterPhase = () => {
   const QUARTERS = 4
 
   const status =
-    (quarter_matches?.length ?? 0) === QUARTERS &&
+    quarter_matches?.length === QUARTERS &&
     quarter_matches?.every((match) => match.status === 'COMPLETED')
-  const quarterPhase = key_matches?.length === 12 && status
+
+  const quarterPhase = currentPhase === 'QUARTERS' && status
 
   const handleFinish = () => {
     startTransition(async () => {
       const { status, message } = await finishMatchesQuarters()
       if (status === 200) {
         toast.success(message)
+        setPhase('SEMIFINALS')
         updatedData()
         return
       }

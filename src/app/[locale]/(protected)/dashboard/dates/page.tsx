@@ -1,6 +1,6 @@
 import GroupTeams from '@/components/dashboard/dates/list/group-teams'
 import MatchesKeys from '@/components/dashboard/dates/list/matches/matches-keys'
-import BestTeams from '@/components/dashboard/dates/list/best-teams'
+import TopTeams from '@/components/dashboard/dates/list/top-teams'
 import DateTeams from '@/components/dashboard/dates/list/date-teams'
 import GeneralButtons from '@/components/dashboard/dates/buttons/general-buttons'
 
@@ -10,7 +10,7 @@ const DatePage = () => {
       <GeneralButtons />
       <GroupTeams />
       <MatchesKeys />
-      <BestTeams />
+      <TopTeams />
       <DateTeams />
     </section>
   )

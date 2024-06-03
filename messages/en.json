@@ -62,7 +62,10 @@
     "title": "Keys of the tournament",
     "no_items": "No there are keys in this tournament.",
     "error_title": "Error",
-    "error_description": "Error loading the keys of the tournament. Please try again later."
+    "error_description": "Error loading the keys of the tournament. Please try again later.",
+    "top_team": {
+      "title": "Classification"
+    }
   },
   "Groups": {
     "title": "Group stage",

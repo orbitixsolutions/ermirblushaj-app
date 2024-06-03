@@ -52,7 +52,10 @@
     "title": "Çelësat e turneut",
     "no_items": "Nuk ka çelësa në këtë turne.",
     "error_title": "Gabim",
-    "error_description": "Gabim gjatë ngarkimit të çelësave të turneut. Ju lutemi provoni përsëri më vonë."
+    "error_description": "Gabim gjatë ngarkimit të çelësave të turneut. Ju lutemi provoni përsëri më vonë.",
+    "top_team": {
+      "title": "Klasifikimi"
+    }
   },
   "Groups": {
     "title": "Faza në grup",

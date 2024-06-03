@@ -1,6 +1,7 @@
 import { finishMatchesSemifinals } from '@/actions/services/create'
 import { fetcher } from '@/helpers/fetcher'
 import { updatedData } from '@/helpers/updated-data'
+import { usePhase } from '@/store/use-current-phase'
 import { Button } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
 import { useTransition } from 'react'
@@ -15,10 +16,9 @@ type ExtendedMatchKey = MatchKey & {
 const ButtonSemifinalPhase = () => {
   const [isPending, startTransition] = useTransition()
 
-  const { data: key_matches } = useSWR<ExtendedMatchKey[]>(
-    '/api/matches/keys',
-    fetcher
-  )
+  const currentPhase = usePhase((state) => state.phase)
+  const setPhase = usePhase((state) => state.setPhase)
+
   const { data: semifinal_matches } = useSWR<ExtendedMatchKey[]>(
     '/api/matches/keys?phase=semifinals&status=completed',
     fetcher
@@ -27,15 +27,17 @@ const ButtonSemifinalPhase = () => {
   const SEMIFINALS = 2
 
   const status =
-    (semifinal_matches?.length ?? 0) === SEMIFINALS &&
+    semifinal_matches?.length === SEMIFINALS &&
     semifinal_matches?.every((match) => match.status === 'COMPLETED')
-  const semifinalPhase = key_matches?.length === 14 && status
+
+  const semifinalPhase = currentPhase === 'SEMIFINALS' && status
 
   const handleFinish = () => {
     startTransition(async () => {
       const { status, message } = await finishMatchesSemifinals()
       if (status === 200) {
         toast.success(message)
+        setPhase('FINAL')
         updatedData()
         return
       }
@@ -46,6 +48,7 @@ const ButtonSemifinalPhase = () => {
   }
 
   if (!semifinalPhase) return
+
   return (
     <Button
       onPress={() => handleFinish()}

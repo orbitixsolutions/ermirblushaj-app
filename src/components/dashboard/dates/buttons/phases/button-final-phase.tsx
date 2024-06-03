@@ -7,6 +7,7 @@ import { useTransition } from 'react'
 import { toast } from 'sonner'
 import JSConfetti from 'js-confetti'
 import useSWR from 'swr'
+import { usePhase } from '@/store/use-current-phase'
 
 type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
@@ -17,10 +18,9 @@ const ButtonFinalPhase = () => {
   const Confetti = new JSConfetti()
   const [isPending, startTransition] = useTransition()
 
-  const { data: matchesKey } = useSWR<ExtendedMatchKey[]>(
-    '/api/matches/keys',
-    fetcher
-  )
+  const currentPhase = usePhase((state) => state.phase)
+  const setPhase = usePhase((state) => state.setPhase)
+
   const { data: final_matches } = useSWR<ExtendedMatchKey[]>(
     '/api/matches/keys?phase=final&status=completed',
     fetcher
@@ -29,9 +29,10 @@ const ButtonFinalPhase = () => {
   const FINAL = 1
 
   const status =
-    (final_matches?.length ?? 0) === FINAL &&
+    final_matches?.length === FINAL &&
     final_matches?.every((match) => match.status === 'COMPLETED')
-  const finalPhase = matchesKey?.length === 15 && status
+
+  const finalPhase = currentPhase === 'FINAL' && status
 
   const handleFinish = () => {
     startTransition(async () => {
@@ -39,6 +40,7 @@ const ButtonFinalPhase = () => {
       if (status === 200) {
         toast.success(message)
         Confetti.addConfetti()
+        setPhase('FINISHED')
         updatedData()
         return
       }
@@ -49,6 +51,7 @@ const ButtonFinalPhase = () => {
   }
 
   if (!finalPhase) return
+
   return (
     <Button
       onPress={() => handleFinish()}

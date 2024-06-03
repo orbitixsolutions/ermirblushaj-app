@@ -1,13 +1,9 @@
 import { useTransition } from 'react'
-import { Group, Match, Team } from '@prisma/client'
+import { Match, Team } from '@prisma/client'
 import { toast } from 'sonner'
 import { fetcher } from '@/helpers/fetcher'
 import { createGroups } from '@/actions/services/create'
 import useSWR, { mutate } from 'swr'
-
-type ExtendedGroup = Group & {
-  teams: Team[]
-}
 
 const useCreateGroups = () => {
   const [isPendingGroups, startTransition] = useTransition()

@@ -1,6 +1,7 @@
 import { deleteKeyMatches } from '@/actions/services/delete'
 import { fetcher } from '@/helpers/fetcher'
 import { updatedData } from '@/helpers/updated-data'
+import { usePhase } from '@/store/use-current-phase'
 import {
   Button,
   Modal,
@@ -19,6 +20,7 @@ import useSWR from 'swr'
 const ButtonDeleteKeyMatches = () => {
   const [isPending, startTransition] = useTransition()
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const setPhase = usePhase((state) => state.setPhase)
 
   const { data: key_matches } = useSWR<Match[]>('/api/matches/keys', fetcher)
   const EMPTY_KEY_MATCHES = !key_matches?.length
@@ -33,17 +35,12 @@ const ButtonDeleteKeyMatches = () => {
 
       if (status === 200) {
         toast.success(message)
+        setPhase('QUARTERS')
         updatedData()
         return
       }
 
-      if (status === 409) {
-        toast.error(message)
-        return
-      }
-
-      toast.error('An occurred error while deleting matches!')
-      return
+      toast.error(message)
     })
   }
 

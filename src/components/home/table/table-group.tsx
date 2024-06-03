@@ -31,38 +31,40 @@ const TableGroup = ({ group }: { group: ExtendedGroups }) => {
       case 'gp':
         return (
           <div>
-            <h2 className='text-xs md:text-sm'>{item.teamStats.matchPlayed}</h2>
+            <h2 className='text-xs md:text-sm'>
+              {item.teamStats?.matchPlayed}
+            </h2>
           </div>
         )
       case 'gw':
         return (
           <div>
-            <h2 className='text-xs md:text-sm'>{item.teamStats.matchWin}</h2>
+            <h2 className='text-xs md:text-sm'>{item.teamStats?.matchWin}</h2>
           </div>
         )
       case 'gl':
         return (
           <div>
-            <h2 className='text-xs md:text-sm'>{item.teamStats.matchLoss}</h2>
+            <h2 className='text-xs md:text-sm'>{item.teamStats?.matchLoss}</h2>
           </div>
         )
       case 'gd':
         return (
           <div>
-            <h2 className='text-xs md:text-sm'>{item.teamStats.matchDraw}</h2>
+            <h2 className='text-xs md:text-sm'>{item.teamStats?.matchDraw}</h2>
           </div>
         )
       case 'gs':
         return (
           <div>
-            <h2 className='text-xs md:text-sm'>{item.teamStats.goalsFor}</h2>
+            <h2 className='text-xs md:text-sm'>{item.teamStats?.goalsFor}</h2>
           </div>
         )
       case 'ga':
         return (
           <div>
             <h2 className='text-xs md:text-sm'>
-              {item.teamStats.goalsAgainst}
+              {item.teamStats?.goalsAgainst}
             </h2>
           </div>
         )
@@ -70,14 +72,14 @@ const TableGroup = ({ group }: { group: ExtendedGroups }) => {
         return (
           <div>
             <h2 className='text-xs md:text-sm'>
-              {item.teamStats.goalDifference}
+              {item.teamStats?.goalDifference}
             </h2>
           </div>
         )
       case 'pts':
         return (
           <div>
-            <h2 className='text-xs md:text-sm'>{item.teamStats.points}</h2>
+            <h2 className='text-xs md:text-sm'>{item.teamStats?.points}</h2>
           </div>
         )
       case 'history':

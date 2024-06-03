@@ -14,24 +14,24 @@ const borderColors = {
   2: 'border-orange-600'
 }
 
-const BestTeams = () => {
+const TopTeams = () => {
   const {
-    data: data_bestteams,
+    data: data_team_top,
     isLoading,
     error
   } = useSWR<Team[]>('/api/matches/keys/top', fetcher)
 
-  const EMPTY_BEST_TEAMS = data_bestteams?.length === 0
+  const EMPTY_BEST_TEAMS = data_team_top?.length === 0
   if (EMPTY_BEST_TEAMS) return
 
   if (error) return <ErrorDates />
   if (isLoading) return <SkeletonBestTeams />
 
   return (
-    <div>
-      <h2 className='text-xl md:text-4xl font-bold text-center'>Best Teams</h2>
-      <ol className='max-w-[400px] mx-auto flex flex-col gap-4 my-8'>
-        {data_bestteams?.map((team, index) => (
+    <div className='space-y-5'>
+      <h2 className='text-xl md:text-4xl font-bold text-center'>Top Teams</h2>
+      <ol className='w-full flex flex-col gap-4'>
+        {data_team_top?.map((team, index) => (
           <li key={team.id}>
             <Card
               className={`bg-custom-darkblue border-2 ${
@@ -70,4 +70,4 @@ const BestTeams = () => {
   )
 }
 
-export default BestTeams
+export default TopTeams

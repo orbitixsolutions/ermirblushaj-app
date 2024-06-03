@@ -33,6 +33,7 @@ const PopoverSemifinalsMatches = ({
 }) => {
   const [isPending, startTransition] = useTransition()
   const [isOpen, setIsOpen] = useState(false)
+  const [isOpenPopover, setIsOpenPopover] = useState(false)
 
   const toggleOpen = () => {
     setIsOpen((prev) => !prev)
@@ -47,11 +48,13 @@ const PopoverSemifinalsMatches = ({
       )
 
       if (status === 200) {
+        setIsOpenPopover(false)
         toast.success(message)
         updatedData()
         return
       }
 
+      setIsOpenPopover(false)
       toast.error('An occurred error while selecting winner!')
       return
     })
@@ -60,7 +63,12 @@ const PopoverSemifinalsMatches = ({
   if (match.matchStatus === 'FINISHED') return null
 
   return (
-    <Popover placement='bottom' showArrow={true}>
+    <Popover
+      placement='bottom'
+      showArrow={true}
+      isOpen={isOpenPopover}
+      onOpenChange={(open) => setIsOpenPopover(open)}
+    >
       <PopoverTrigger>
         <Button isIconOnly className='bg-custom-blue'>
           <IconSettings size={24} />
