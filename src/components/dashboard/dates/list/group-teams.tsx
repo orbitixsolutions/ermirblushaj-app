@@ -29,7 +29,7 @@ const GroupTeams = () => {
         Groups
       </h2>
 
-      <ol className='grid grid-cols-6 gap-4 w-full'>
+      <ol className='grid grid-cols-4 gap-4 w-full'>
         {EMPTY_GROUPS ? (
           data_groups?.map((group) => (
             <li
@@ -40,7 +40,7 @@ const GroupTeams = () => {
                 {group.name}
               </h3>
 
-              <ol className='grid grid-cols-2 gap-4'>
+              <ol className='grid grid-cols-3 gap-4'>
                 {group.teams.map((team) => (
                   <li key={team.id} className='col-span-1'>
                     <Card className='bg-custom-navy p-2 md:p-4 aspect-square grid place-items-center'>
