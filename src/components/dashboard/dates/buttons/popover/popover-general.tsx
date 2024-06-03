@@ -23,7 +23,11 @@ const DropdownGeneral = () => {
   const { fullMatchesKeys, isPendingKeys, handleCreateKeys } = useCreateKeys()
 
   return (
-    <Popover placement='bottom' className='w-full max-w-[440px]'>
+    <Popover
+      backdrop='opaque'
+      placement='bottom'
+      className='w-full max-w-[440px]'
+    >
       <PopoverTrigger>
         <Button
           color='primary'

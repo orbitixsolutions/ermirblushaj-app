@@ -82,12 +82,12 @@ export const useTeamModal = () => {
     const teamId = uuid()
     const { data: teamsList } = await dataTeams()
 
-    const MAX_TEAM_CREATE = 20
+    const MAX_TEAM_CREATE = 12
     const TEAM_LIMIT = teamsList?.length === MAX_TEAM_CREATE
 
     if (TEAM_LIMIT && !teamModalEdit) {
       clearState()
-      return toast.error('Team limit reached (20)')
+      return toast.error(`Team limit reached (${MAX_TEAM_CREATE})!`)
     }
 
     if (teamModalEdit) {

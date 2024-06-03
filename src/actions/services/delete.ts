@@ -147,7 +147,7 @@ export const resetTeamStats = async () => {
   if (role !== 'ADMIN' && role !== 'OWNER') {
     return { error: 'You no have permissions.', status: 501 }
   }
-  
+
   try {
     await prisma.teamStats.updateMany({
       data: {
@@ -203,6 +203,7 @@ export const deleteGroups = async () => {
         goals: 0
       }
     })
+
     await prisma.teamStats.updateMany({
       data: {
         goalsFor: 0,
@@ -211,6 +212,7 @@ export const deleteGroups = async () => {
         points: 0
       }
     })
+
     await prisma.matchHistory.deleteMany()
     await prisma.group.deleteMany()
 

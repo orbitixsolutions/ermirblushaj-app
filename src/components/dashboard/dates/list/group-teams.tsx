@@ -1,7 +1,7 @@
 'use client'
 
 import { fetcher } from '@/helpers/fetcher'
-import { Card, Image } from '@nextui-org/react'
+import { Avatar, Card, Image } from '@nextui-org/react'
 import { Group, Team } from '@prisma/client'
 import SkeletonGroups from '@/components/dashboard/dates/skeleton/skeleton-groups'
 import ErrorDates from '@/components/dashboard/dates/errors/error-dates'
@@ -29,26 +29,24 @@ const GroupTeams = () => {
         Groups
       </h2>
 
-      <ol className='grid grid-cols-8 gap-4 w-full'>
+      <ol className='grid grid-cols-6 gap-4 w-full'>
         {EMPTY_GROUPS ? (
           data_groups?.map((group) => (
             <li
-              className='col-span-8 lg:col-span-4 bg-custom-darknavy p-5 rounded-lg'
+              className='col-span-2 bg-custom-darknavy p-5 rounded-lg'
               key={group.id}
             >
               <h3 className='text-xl md:text-3xl font-bold uppercase text-custom-green mb-4'>
                 {group.name}
               </h3>
 
-              <ol className='grid grid-cols-6 md:grid-cols-4 gap-4'>
+              <ol className='grid grid-cols-2 gap-4'>
                 {group.teams.map((team) => (
-                  <li
-                    key={team.id}
-                    className='col-span-3 xs:col-span-2 md:col-span-1'
-                  >
-                    <Card className='bg-custom-navy p-2 md:p-4 aspect-square'>
-                      <Image
-                        className='aspect-square object-cover'
+                  <li key={team.id} className='col-span-1'>
+                    <Card className='bg-custom-navy p-2 md:p-4 aspect-square grid place-items-center'>
+                      <Avatar
+                        radius='sm'
+                        className='w-full h-full aspect-square object-cover'
                         src={team.logo!}
                         alt={`Team ${team.name}`}
                       />

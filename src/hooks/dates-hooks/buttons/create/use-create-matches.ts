@@ -14,7 +14,7 @@ const useCreateMatches = () => {
   const { data: data_groups } = useSWR<ExtendedGroup[]>('/api/groups', fetcher)
   const { data: data_matches } = useSWR('/api/matches', fetcher)
 
-  const fullMatches = data_matches?.length >= 24 && data_matches?.length % 2 === 0
+  const fullMatches = data_matches?.length >= 6 && data_matches?.length % 2 === 0
   const emptyGroups = !data_groups || data_groups?.length === 0
   const emptyMatches = !data_matches || data_matches?.length === 0
 

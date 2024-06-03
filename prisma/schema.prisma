@@ -195,5 +195,6 @@ model MatchHistory {
 model Group {
   id    String @id @unique @default(uuid())
   name  String
+  
   teams Team[]
 }

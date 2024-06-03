@@ -24,7 +24,11 @@ const DropdownAdmin = () => {
   if (role !== 'OWNER') return null
 
   return (
-    <Popover placement='bottom' className='w-full max-w-[440px]'>
+    <Popover
+      backdrop='opaque'
+      placement='bottom'
+      className='w-full max-w-[440px]'
+    >
       <PopoverTrigger>
         <Button
           color='danger'

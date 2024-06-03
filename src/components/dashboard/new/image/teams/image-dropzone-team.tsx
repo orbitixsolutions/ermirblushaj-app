@@ -1,5 +1,5 @@
 import { useLoadImageStore } from '@/store/use-load-image-store'
-import { Image } from '@nextui-org/react'
+import { Avatar } from '@nextui-org/react'
 import { useCallback, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
 
@@ -38,14 +38,16 @@ const ImageDropzoneTeam = () => {
       {isDragActive ? (
         <p>Drop the images here ...</p>
       ) : imageTeam.imgFile ? (
-        <Image
-          className='aspect-square object-cover'
+        <Avatar
+          radius='sm'
+          className='w-full h-full aspect-square object-cover'
           src={URL.createObjectURL(imageTeam.imgFile)}
           alt='New image preview'
         />
       ) : imageTeam.imgPreview ? (
-        <Image
-          className='aspect-square object-cover'
+        <Avatar
+          radius='sm'
+          className='w-full h-full aspect-square object-cover'
           src={imageTeam.imgPreview}
           alt='Team shield image'
         />

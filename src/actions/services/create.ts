@@ -3,17 +3,13 @@
 import { z } from 'zod'
 
 import { getUserByEmail } from '@/data/user'
-import { UserRole } from '@prisma/client'
+import { TournamentPhase, TournamentStatus, UserRole } from '@prisma/client'
 import { currentRole } from '@/libs/auth'
-import { Group, Team } from '@prisma/client'
+import { Team } from '@prisma/client'
 import { Player, TeamData } from '@/actions/types'
 import { RegisterAdminSchema } from '@/schemas'
 import prisma from '@/libs/prisma'
 import bcrypt from 'bcryptjs'
-
-type ExtendedGroup = Group & {
-  teams: TeamData[]
-}
 
 export const createUser = async (data: z.infer<typeof RegisterAdminSchema>) => {
   const role = await currentRole()
@@ -177,31 +173,40 @@ export const createImageTribute = async (data: any) => {
   }
 }
 
-export const createGroups = async (data: ExtendedGroup) => {
+export const createGroups = async (data: any) => {
   const role = await currentRole()
+
+  const groups = data.groups
+  const teams = data.teams
 
   if (role !== 'ADMIN' && role !== 'OWNER') {
     return { error: 'You no have permissions.', status: 501 }
   }
 
   try {
-    const groups = await prisma.group.findMany()
-    const ALREADY_GROUPS = groups.length === 4
+    const GROUP_LENGTH = await prisma.group.findMany()
+    const ALREADY_GROUPS = GROUP_LENGTH.length === 6
 
     if (ALREADY_GROUPS)
       return { error: 'Already exists groups created!', status: 409 }
 
-    await prisma.group.create({
-      data: {
-        name: data.name,
-        teams: {
-          connect: data.teams
-        }
-      }
+    await prisma.group.createMany({
+      data: groups,
+      skipDuplicates: true
     })
 
-    return { success: 'Groups created!', status: 200 }
+    const transaction = teams.map((team: Team) => {
+      return prisma.team.update({
+        where: { id: team.id },
+        data: { groupId: team.groupId }
+      })
+    })
+
+    await prisma.$transaction(transaction)
+
+    return { message: 'Groups created!', status: 200 }
   } catch (error: any) {
+    console.log(error)
     return { error: 'An ocurred a error!', status: 500 }
   }
 }

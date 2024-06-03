@@ -15,7 +15,7 @@ const useCreateGroups = () => {
   const { data: data_teams } = useSWR<Team[]>('/api/teams', fetcher)
   const { data: data_groups } = useSWR<Match[]>('/api/groups', fetcher)
 
-  const fullGroups = data_groups?.length === 4
+  const fullGroups = data_groups?.length === 6
 
   // Mezclamos los equipos que son pasados como parametro
   const mixTeams = (team: Team[] | null | undefined): Team[] => {
@@ -29,6 +29,7 @@ const useCreateGroups = () => {
       const j = Math.floor(Math.random() * (i + 1))
       ;[team[i], team[j]] = [team[j], team[i]]
     }
+
     return team
   }
 
@@ -36,11 +37,16 @@ const useCreateGroups = () => {
   const generateGroups = () => {
     const mixedTeams = mixTeams(data_teams)
 
-    const newGroups = Array.from({ length: 4 }, (_, i) => ({
-      name: String.fromCharCode(65 + i),
-      teams: mixedTeams.slice(i * 4, (i + 1) * 4)
+    const newGroups = Array.from({ length: 6 }, (_, i) => ({
+      id: crypto.randomUUID(),
+      name: String.fromCharCode(65 + i)
     }))
-    return newGroups as ExtendedGroup[]
+
+    for (let i = 0; i < mixedTeams.length; i++) {
+      mixedTeams[i].groupId = newGroups[Math.floor(i / 2)].id
+    }
+
+    return { groups: newGroups, teams: mixedTeams }
   }
 
   // Creamos los grupos
@@ -50,31 +56,17 @@ const useCreateGroups = () => {
     }
 
     startTransition(async () => {
-      const generatedGroups = generateGroups()
-      const groupsPromises = generatedGroups.map((groups) =>
-        createGroups(groups)
-      )
+      const data = generateGroups()
 
-      try {
-        const responses = await Promise.all(groupsPromises)
+      const { status, message, error } = await createGroups(data)
 
-        if (responses.every((response) => response.status === 200)) {
-          toast.success('Groups have been created!')
-          return
-        }
-
-        if (responses.every((response) => response.status === 409)) {
-          toast.error('Already exists groups created!')
-          return
-        }
-
-        if (responses.every((response) => response.status === 500)) {
-          toast.error('An ocurred a error!')
-          return
-        }
-      } finally {
+      if (status === 200) {
+        toast.success(message)
         mutate('/api/groups')
+        return
       }
+
+      toast.error(error)
     })
   }
 

@@ -21,7 +21,7 @@ export default function RootLayout({
   params: { locale: string }
 }) {
   return (
-    <html lang={locale} className='transition-all bg-custom-navy'>
+    <html lang={locale} className='bg-custom-navy'>
       <body id='body' className={`${DM_SANS_FONT.className}`}>
         <Toaster position='bottom-right' richColors />
         <Providers>{children}</Providers>
