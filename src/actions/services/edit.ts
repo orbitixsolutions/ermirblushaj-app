@@ -500,7 +500,7 @@ export const selectQuartersWinners = async (
     })
 
     // Si el equipo ganador es de cuartos de final
-    if (winnerTeam?.phase === 'QUARTER') {
+    if (winnerTeam?.phase === 'NONE') {
       await prisma.team.update({
         where: {
           id: teamWinnerId
