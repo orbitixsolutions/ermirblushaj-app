@@ -14,7 +14,7 @@ const ButtonModalTeam = () => {
   const openModal = useModalTeamStore((state) => state.onTeamModalOpen)
 
   const handleOpenModal = async () => {
-    const UNDEFINED_TEAMS = 20
+    const UNDEFINED_TEAMS = 12
     const { data } = await axios.get('/api/teams')
 
     if (data.length === UNDEFINED_TEAMS) {
