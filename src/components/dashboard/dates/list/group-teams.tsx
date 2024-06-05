@@ -1,7 +1,7 @@
 'use client'
 
 import { fetcher } from '@/helpers/fetcher'
-import { Avatar, Card, Image } from '@nextui-org/react'
+import { Avatar, Card, Image, Tooltip } from '@nextui-org/react'
 import { Group, Team } from '@prisma/client'
 import SkeletonGroups from '@/components/dashboard/dates/skeleton/skeleton-groups'
 import ErrorDates from '@/components/dashboard/dates/errors/error-dates'
@@ -29,18 +29,18 @@ const GroupTeams = () => {
         Groups
       </h2>
 
-      <ol className='grid grid-cols-4 gap-4 w-full'>
+      <ol className='grid grid-cols-3 gap-4 w-full'>
         {EMPTY_GROUPS ? (
           data_groups?.map((group) => (
             <li
-              className='col-span-2 bg-custom-darknavy p-5 rounded-lg'
+              className='col-span-1 bg-custom-darknavy p-5 rounded-lg'
               key={group.id}
             >
               <h3 className='text-xl md:text-3xl font-bold uppercase text-custom-green mb-4'>
                 {group.name}
               </h3>
 
-              <ol className='grid grid-cols-3 gap-4'>
+              <ol className='grid grid-cols-4 gap-4'>
                 {group.teams.map((team) => (
                   <li key={team.id} className='col-span-1'>
                     <Card className='bg-custom-navy p-2 md:p-4 aspect-square grid place-items-center'>
@@ -51,9 +51,14 @@ const GroupTeams = () => {
                         alt={`Team ${team.name}`}
                       />
                     </Card>
-                    <h2 className='text-sm md:text-lg text-center line-clamp-1 mt-2'>
-                      {team.name}
-                    </h2>
+                    <Tooltip
+                      className='bg-custom-green text-slate-900 font-bold'
+                      content={team.name}
+                    >
+                      <h2 className='text-sm md:text-lg text-center line-clamp-1 mt-2'>
+                        {team.name}
+                      </h2>
+                    </Tooltip>
                   </li>
                 ))}
               </ol>

@@ -20,17 +20,15 @@ export const useCreateKeys = () => {
     }
 
     startTransition(async () => {
-      const { status, message } = await createKeys()
+      const { status, message, error } = await createKeys()
 
       if (status === 200) {
         toast.success(message)
         updatedData()
         return
       }
-      if (status === 409) {
-        toast.error(message)
-        return
-      }
+
+      toast.error(error)
     })
   }
 

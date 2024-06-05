@@ -267,7 +267,7 @@ export const createKeys = async () => {
       }
     })
 
-    const [firstHalf, secondHalf] = [
+    const [firstHalf] = [
       groups.slice(0, groups.length / 2),
       groups.slice(groups.length / 2)
     ]
@@ -276,10 +276,11 @@ export const createKeys = async () => {
       firstHalf[0].teams,
       firstHalf[1].teams
     )
-    const matchesCD = await generateMatchups(
-      secondHalf[0].teams,
-      secondHalf[1].teams
-    )
+
+    // const matchesCA = await generateMatchups(
+    //   firstHalf[0].teams,
+    //   secondHalf[0].teams,
+    // )
 
     const aMatchKeys = matchesAB.flatMap((matches: any) =>
       matches.map((match: any) => ({
@@ -290,23 +291,27 @@ export const createKeys = async () => {
       }))
     )
 
-    const bMatchKeys = matchesCD.flatMap((matches: any) =>
-      matches.map((match: any) => ({
-        column: 'B',
-        teamAId: match.teamA.id,
-        teamBId: match.teamB.id,
-        phase: 'QUARTER'
-      }))
-    )
+    console.log(aMatchKeys)
 
-    const matchKeys = [...aMatchKeys, ...bMatchKeys]
+    // const bMatchKeys = matchesCA.flatMap((matches: any) =>
+    //   matches.map((match: any) => ({
+    //     column: 'B',
+    //     teamAId: match.teamA.id,
+    //     teamBId: match.teamB.id,
+    //     phase: 'QUARTER'
+    //   }))
+    // )
+
+    const matchKeys = [...aMatchKeys]
+
+    console.log(matchKeys)
 
     await prisma.matchKey.createMany({
       data: matchKeys
     })
 
     return { message: 'Keys created!', status: 200 }
-  } catch {
+  } catch (error: any) {
     return { error: 'An error occurred while updating stats.', status: 500 }
   }
 }
@@ -318,12 +323,18 @@ const generateMatchups = async (teamA: Team[] | any, teamB: Team[] | any) => {
     return { error: 'You no have permissions.', status: 501 }
   }
 
-  return teamA.map((aTeam: any, index: number) => [
+  console.log('asd', teamA, teamB)
+
+  const teams = teamA.map((aTeam: any, index: number) => [
     {
       teamA: aTeam,
       teamB: teamB[index]
     }
   ])
+
+  console.log(teams)
+
+  return teams
 }
 
 export const finishMatchesEights = async () => {

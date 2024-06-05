@@ -43,7 +43,7 @@ const DropdownAdmin = () => {
           <Button
             fullWidth
             color='danger'
-            isDisabled={emptyGroups}
+            isDisabled
             isLoading={isPendingGroups}
             className='bg-custom-red font-bold'
             startContent={<IconTrash size={20} />}
