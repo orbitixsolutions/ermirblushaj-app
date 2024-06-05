@@ -20,16 +20,16 @@ const GroupsResume = () => {
   if (isLoading) return <TableSkeleton />
 
   return (
-    <div>
+    <div className='space-y-8'>
       <h2 className='text-xl lg:text-3xl font-bold text-center'>
         Groups Resume
       </h2>
 
-      <ol className='grid grid-cols-8 gap-4 py-4 md:py-8'>
+      <ol className='flex flex-wrap justify-center gap-8'>
         {!EMPTY_GROUPS ? (
           data_groups?.map((group) => (
             <li
-              className='col-span-8 md:col-span-4 border-[1px] border-custom-lightgray rounded-lg overflow-hidden'
+              className='border-[1px] border-custom-lightgray rounded-lg overflow-hidden'
               key={group.id}
             >
               <h3 className='text-base md:text-xl font-bold uppercase w-full bg-custom-green py-3 px-4 text-center text-custom-white'>

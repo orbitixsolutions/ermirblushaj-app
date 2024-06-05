@@ -54,12 +54,12 @@ const Tables = async () => {
   return (
     <section
       id='classification'
-      className='max-w-[1440px] mx-auto py-8 md:py-16 px-5 text-custom-white'
+      className='max-w-[1440px] mx-auto py-8 md:py-16 px-5 space-y-8 text-custom-white'
     >
       <h2 className='w-full text-center text-lg md:text-2xl font-bold'>
         {content('title')}
       </h2>
-      <ol className='grid grid-cols-8 gap-4 py-8 w-full'>
+      <ol className='flex flex-wrap justify-center gap-8'>
         {groups?.map((group, index) => (
           <li
             className='col-span-8 md:col-span-4 border-[1px] border-custom-lightgray rounded-lg overflow-hidden'
