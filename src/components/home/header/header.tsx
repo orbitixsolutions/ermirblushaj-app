@@ -1,8 +1,11 @@
-import { useTranslations } from 'next-intl'
+import { dataMatchesKeys } from '@/actions/services/data'
+import { getTranslations } from 'next-intl/server'
 import NavBar from '@/components/home/header/navbar'
 
-const Header = () => {
-  const content = useTranslations('Header')
+const Header = async () => {
+  const matchKeys = await dataMatchesKeys()
+
+  const content = await getTranslations('Header')
 
   const contentItems = {
     keys: content('navigation.keys'),
@@ -20,7 +23,11 @@ const Header = () => {
 
   return (
     <header>
-      <NavBar contentItems={contentItems} contentDashboard={contentDashboard} />
+      <NavBar
+        matchKeys={matchKeys}
+        contentItems={contentItems}
+        contentDashboard={contentDashboard}
+      />
     </header>
   )
 }

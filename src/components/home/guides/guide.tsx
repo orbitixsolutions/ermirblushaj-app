@@ -1,9 +1,13 @@
+import { dataMatchesKeys } from '@/actions/services/data'
 import { Date, Key, Team } from '@/assets/svg'
 import { Avatar, Button, Link } from '@nextui-org/react'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 
-const Guide = () => {
-  const t = useTranslations('Guide')
+const Guide = async () => {
+  const matchesKeys = await dataMatchesKeys()
+  const data = matchesKeys.data?.length! > 1
+
+  const t = await getTranslations('Guide')
 
   const contentGuide = {
     title: t('title'),
@@ -42,7 +46,7 @@ const Guide = () => {
           <div className='flex justify-center'>
             <Button
               as={Link}
-              href='#keys'
+              href={data ? '#keys' : '#classification'}
               radius='full'
               className='bg-custom-green font-bold'
             >

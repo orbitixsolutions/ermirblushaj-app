@@ -16,8 +16,8 @@ import {
 import { usePathname } from 'next/navigation'
 import { BrandLogo } from '@/assets/images'
 import { useLocale } from 'next-intl'
-import LocalSwitcher from './local-switcher'
-import Dashboard from './dashboard'
+import LocalSwitcher from '@/components/home/header/local-switcher'
+import Dashboard from '@/components/home/header/dashboard'
 
 interface Props {
   contentItems: {
@@ -27,23 +27,26 @@ interface Props {
     tables: string
     tribute: string
   }
-
   contentDashboard: {
     title: string
     dashboard: string
     logout: string
   }
+  matchKeys: any
 }
 
-const NavBar = ({ contentItems, contentDashboard }: Props) => {
-  const locale = useLocale()
+const NavBar = ({ matchKeys, contentItems, contentDashboard }: Props) => {
+  const data = matchKeys.data.length > 1
+
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const locale = useLocale()
   const pathname = usePathname()
 
   const menuItems = [
-    { url: `#keys`, name: contentItems.keys },
+    { url: data ? '#keys' : '#classification', name: contentItems.keys },
     { url: `#teams`, name: contentItems.teams },
-    { url: `#dates`, name: contentItems.dates },
+    { url: '#dates', name: contentItems.dates },
     { url: `#classification`, name: contentItems.tables }
   ]
 

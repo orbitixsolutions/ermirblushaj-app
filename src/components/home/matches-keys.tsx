@@ -1,13 +1,13 @@
 import { dataMatchesKeys, dataTopTeams } from '@/actions/services/data'
 import { getTranslations } from 'next-intl/server'
 import { Avatar, Card, CardBody, CardHeader, Image } from '@nextui-org/react'
+import { Team } from '@prisma/client'
 import CrownImage from '@/assets/svg/crown.svg'
 import MatchesEighths from '@/components/home/guides/matches/matches-eighths'
 import MatchesQuarters from '@/components/home/guides/matches/matches-quarters'
 import MatchesSemifinals from '@/components/home/guides/matches/matches-semifinals'
 import MatchesFinal from '@/components/home/guides/matches/matches-final'
 import ErrorMatchesKeys from '@/components/home/errors/error-matches-keys'
-import { Team } from '@prisma/client'
 
 const borderColors = {
   0: 'border-yellow-400',
