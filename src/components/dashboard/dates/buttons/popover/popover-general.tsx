@@ -65,7 +65,7 @@ const DropdownGeneral = () => {
             Generate Dates
           </Button>
 
-          {completedMatches ? (
+          {!completedMatches ? (
             <Button
               fullWidth
               color='primary'
