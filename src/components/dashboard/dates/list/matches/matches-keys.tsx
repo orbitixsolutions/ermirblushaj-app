@@ -40,26 +40,20 @@ const MatchesKeys = () => {
       </CardHeader>
 
       <CardBody>
-        <div className='w-full flex items-center justify-between'>
-          <MatchesEighths column='a' phase='EIGHTH' />
+        <div className='flex justify-between items-center size-full mx-auto max-w-[750px] h-[700px] px-3 relative overflow-hidden'>
+          <MatchesQuarters column='a' phase='QUARTER' />
 
-          <div className='flex justify-between items-center size-full max-w-[750px] px-3 relative'>
-            <MatchesQuarters column='a' phase='QUARTER' />
+          <div className='flex justify-between items-center size-full max-w-[500px] px-2 xs:px-4'>
+            <MatchesSemifinals column='a' phase='SEMIFINALS' />
 
-            <div className='flex justify-between items-center size-full max-w-[500px] px-2 xs:px-4'>
-              <MatchesSemifinals column='a' phase='SEMIFINALS' />
-
-              <div className='flex justify-center size-full max-w-[150px] px-2 xs:px-4'>
-                <MatchesFinal column='none' phase='FINAL' />
-              </div>
-
-              <MatchesSemifinals column='b' phase='SEMIFINALS' />
+            <div className='flex justify-center size-full max-w-[150px] px-2 xs:px-4'>
+              <MatchesFinal column='none' phase='FINAL' />
             </div>
 
-            <MatchesQuarters column='b' phase='QUARTER' />
+            <MatchesSemifinals column='b' phase='SEMIFINALS' />
           </div>
 
-          <MatchesEighths column='b' phase='EIGHTH' />
+          <MatchesQuarters column='b' phase='QUARTER' />
         </div>
       </CardBody>
 

@@ -254,7 +254,7 @@ export const createKeys = async () => {
       return { message: 'Already exists keys created!', status: 409 }
     }
 
-    const groups = await prisma.group.findMany({
+    const groupsWithTopTeams = await prisma.group.findMany({
       include: {
         teams: {
           orderBy: {
@@ -262,27 +262,48 @@ export const createKeys = async () => {
               points: 'desc'
             }
           },
-          take: 2
+          take: 3
         }
       }
     })
 
-    const [firstHalf] = [
-      groups.slice(0, groups.length / 2),
-      groups.slice(groups.length / 2)
-    ]
+    const groupsWithThirdPlaceTeams = await prisma.group.findMany({
+      include: {
+        teams: {
+          orderBy: {
+            teamStats: {
+              points: 'desc'
+            }
+          },
+          skip: 2,
+          take: 1
+        }
+      }
+    })
 
-    const matchesAB = await generateMatchups(
-      firstHalf[0].teams,
-      firstHalf[1].teams
+    const thirdPlaceTeams = groupsWithThirdPlaceTeams.map(
+      (group) => group.teams[0]
     )
 
-    // const matchesCA = await generateMatchups(
-    //   firstHalf[0].teams,
-    //   secondHalf[0].teams,
-    // )
+    const thirdPlaceGroup = [
+      {
+        id: crypto.randomUUID(),
+        name: 'Third Place Group',
+        teams: thirdPlaceTeams
+      }
+    ]
 
-    const aMatchKeys = matchesAB.flatMap((matches: any) =>
+    const combinedGroups = [...groupsWithTopTeams, ...thirdPlaceGroup]
+
+    const [firstHalf, secondHalf] = [
+      combinedGroups.slice(0, combinedGroups.length / 2),
+      combinedGroups.slice(combinedGroups.length / 2)
+    ]
+
+    const matchesAB = createMatchups(firstHalf[0].teams, firstHalf[1].teams)
+    const matchesCA = createMatchups(secondHalf[0].teams, secondHalf[1].teams)
+
+    const aMatchKeys = matchesAB.slice(0, 2).flatMap((matches: any) =>
       matches.map((match: any) => ({
         column: 'A',
         teamAId: match.teamA.id,
@@ -291,20 +312,16 @@ export const createKeys = async () => {
       }))
     )
 
-    console.log(aMatchKeys)
+    const bMatchKeys = matchesCA.slice(0, 2).flatMap((matches: any) =>
+      matches.map((match: any) => ({
+        column: 'B',
+        teamAId: match.teamA.id,
+        teamBId: match.teamB.id,
+        phase: 'QUARTER'
+      }))
+    )
 
-    // const bMatchKeys = matchesCA.flatMap((matches: any) =>
-    //   matches.map((match: any) => ({
-    //     column: 'B',
-    //     teamAId: match.teamA.id,
-    //     teamBId: match.teamB.id,
-    //     phase: 'QUARTER'
-    //   }))
-    // )
-
-    const matchKeys = [...aMatchKeys]
-
-    console.log(matchKeys)
+    const matchKeys = [...aMatchKeys, ...bMatchKeys]
 
     await prisma.matchKey.createMany({
       data: matchKeys
@@ -312,27 +329,17 @@ export const createKeys = async () => {
 
     return { message: 'Keys created!', status: 200 }
   } catch (error: any) {
-    return { error: 'An error occurred while updating stats.', status: 500 }
+    return { error: 'An error occurred while create keys.', status: 500 }
   }
 }
 
-const generateMatchups = async (teamA: Team[] | any, teamB: Team[] | any) => {
-  const role = await currentRole()
-
-  if (role !== 'ADMIN' && role !== 'OWNER') {
-    return { error: 'You no have permissions.', status: 501 }
-  }
-
-  console.log('asd', teamA, teamB)
-
+const createMatchups = (teamA: Team[] | any, teamB: Team[] | any) => {
   const teams = teamA.map((aTeam: any, index: number) => [
     {
       teamA: aTeam,
       teamB: teamB[index]
     }
   ])
-
-  console.log(teams)
 
   return teams
 }
