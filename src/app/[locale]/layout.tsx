@@ -8,7 +8,7 @@ import '../globals.css'
 const DM_SANS_FONT = DM_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Ermirblushaj',
+  title: 'Memorial Ermir Ermirblushaj',
   description:
     "Ogni anno, Parma celebra con un campionato annuale il ricordo di Ermir Blushaj, una personalità significativa per la città. Questo evento non è solo una competizione, ma un'occasione per rafforzare i valori di comunità, integrità e amicizia."
 }
