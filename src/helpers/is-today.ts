@@ -1,5 +1,6 @@
 export const isCurrentDate = (date: string) => {
   const dateFormatted = date.replaceAll(/[/]/g, '-')
+  
   const current = new Date()
   const target = new Date(dateFormatted)
 

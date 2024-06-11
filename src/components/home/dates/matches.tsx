@@ -38,7 +38,13 @@ const Matches = async () => {
     >
       <ol className='grid grid-cols-4 gap-3'>
         {matches?.slice(0, 10).map((match) => {
-          const date = match.playStartDate?.replaceAll('-', '/').split('T')[0]
+          const date = new Date(match.playStartDate!)
+          const formattedDate = date.toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+          })
+
           return (
             <li key={match.id} className='col-span-12'>
               <div className='grid grid-cols-3 gap-1 md:gap-3'>
@@ -65,7 +71,9 @@ const Matches = async () => {
                   </Card>
                 </Tooltip>
                 <div className='flex flex-col items-center justify-center'>
-                  <p className='text-xs md:text-lg text-custom-green'>{date}</p>
+                  <p className='text-xs md:text-lg text-custom-green'>
+                    {formattedDate}
+                  </p>
                   <p className='text-center font-bold'>VS</p>
                 </div>
                 <Tooltip
