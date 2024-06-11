@@ -1,9 +1,9 @@
 export const isCurrentDate = (date: string) => {
+  const dateFormatted = date.replaceAll(/[/]/g, '-')
   const current = new Date()
-  const target = new Date(date)
+  const target = new Date(dateFormatted)
 
   // Crear fechas para mañana y pasado mañana
-
   const tomorrow = new Date()
   tomorrow.setDate(current.getDate() + 1)
 
@@ -12,7 +12,10 @@ export const isCurrentDate = (date: string) => {
 
   // Formatear las fechas para compararlas
   const formatDate = (date: Date) =>
-    `${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}`
+    `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(
+      2,
+      '0'
+    )}-${String(date.getUTCDate()).padStart(2, '0')}`
 
   const targetDate = formatDate(target)
   const currentDate = formatDate(current)
