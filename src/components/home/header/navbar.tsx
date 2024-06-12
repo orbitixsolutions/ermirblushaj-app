@@ -71,7 +71,7 @@ const NavBar = ({ matchKeys, contentItems, contentDashboard }: Props) => {
           className='sm:hidden'
         />
         <NavbarBrand className='space-x-4'>
-          <Link href='/'>
+          <Link href='/'> 
             <Image
               radius='none'
               alt='Logo'
