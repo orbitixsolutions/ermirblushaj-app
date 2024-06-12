@@ -31,11 +31,11 @@ const MatchesKeys = async () => {
   if (EMPTY_MATCHES) return
 
   return (
-    <section className='max-w-[1024px] mx-auto py-8 md:py-16 px-5 flex'>
-      <Card
-        id='keys'
-        className='bg-custom-darknavy text-custom-white w-full rounded-none sm:rounded-xl sm:border-[1px] border-custom-tgray'
-      >
+    <section
+      id='keys'
+      className='max-w-[1024px] mx-auto py-8 md:py-16 px-5 flex'
+    >
+      <Card className='bg-custom-darknavy text-custom-white w-full rounded-none sm:rounded-xl sm:border-[1px] border-custom-tgray'>
         <CardHeader className='bg-custom-green py-4 rounded-none sm:rounded-xl'>
           <h2 className='w-full text-center text-lg md:text-2xl font-bold'>
             {content('title')}

@@ -44,15 +44,24 @@ const NavBar = ({ matchKeys, contentItems, contentDashboard }: Props) => {
   const pathname = usePathname()
 
   const menuItems = [
-    { url: data ? '#keys' : '#classification', name: contentItems.keys },
-    { url: `#teams`, name: contentItems.teams },
-    { url: '#dates', name: contentItems.dates },
-    { url: `#classification`, name: contentItems.tables }
+    {
+      key: 'keys',
+      url: data ? '#keys' : '#classification',
+      name: contentItems.keys
+    },
+    { key: 'teams', url: `#teams`, name: contentItems.teams },
+    { key: 'dates', url: '#dates', name: contentItems.dates },
+    { key: 'classification', url: `#classification`, name: contentItems.tables }
   ]
+
+  const handleCloseMenu = () => {
+    setIsMenuOpen(false)
+  }
 
   return (
     <Navbar
       shouldHideOnScroll
+      isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
       className='bg-custom-navy border-b-[1px] border-custom-lightgray/50 text-custom-white py-5'
     >
@@ -76,7 +85,7 @@ const NavBar = ({ matchKeys, contentItems, contentDashboard }: Props) => {
       <NavbarContent className='hidden sm:flex gap-4' justify='center'>
         {menuItems.map((items) => {
           return (
-            <NavbarItem key={`${items.url}`}>
+            <NavbarItem key={`${items.key}`}>
               <Link
                 className={`text-custom-white ${
                   pathname === items.url ? 'underline' : ''
@@ -108,8 +117,9 @@ const NavBar = ({ matchKeys, contentItems, contentDashboard }: Props) => {
 
       <NavbarMenu className='bg-custom-darkblue text-custom-white mt-2 z-[1000]'>
         {menuItems.map((items) => (
-          <NavbarMenuItem key={`${items.url}`}>
+          <NavbarMenuItem onClick={handleCloseMenu} key={`${items.key}`}>
             <Link
+              onPress={() => handleCloseMenu()}
               className={`text-custom-white ${
                 pathname === items.url ? 'text-custom-green' : ''
               } `}
