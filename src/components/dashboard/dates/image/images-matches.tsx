@@ -33,7 +33,7 @@ const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
               color='primary'
               className='bg-custom-blue'
               endContent={
-                <p className='text-xs'>G: {teamA.teamStats.goalsFor}</p>
+                <p className='text-xs'>G: {teamA.teamStats.teamGoalsCount}</p>
               }
             >
               <span className='mx-5 font-bold text-xs md:text-sm'>
@@ -68,7 +68,7 @@ const ImagesMatches = ({ match }: { match: ExtendedMatch }) => {
               color='primary'
               className='bg-custom-blue'
               endContent={
-                <p className='text-xs'>G: {teamB.teamStats.goalsFor}</p>
+                <p className='text-xs'>G: {teamB.teamStats.teamGoalsCount}</p>
               }
             >
               <span className='mx-5 font-bold text-xs md:text-sm'>

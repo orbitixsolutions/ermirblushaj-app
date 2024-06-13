@@ -184,7 +184,8 @@ export const updatedStats = async (data: Player) => {
       data: {
         goalsFor: { increment: 1 },
         currentGoals: { increment: 1 },
-        matchPlayed: { increment: 1 }
+        matchPlayed: { increment: 1 },
+        teamGoalsCount: { increment: 1 }
       }
     })
     return { success: 'Status updated!', status: 200 }
@@ -235,7 +236,8 @@ export const updatedFinishStats = async (data: Match) => {
           goalsAgainst: { increment: goalsForTeamB },
           goalDifference: goalsForTeamA - goalsForTeamB,
           points: { increment: pointsTeamA },
-          currentGoals: 0
+          currentGoals: 0,
+          teamGoalsCount: 0
         }
       }),
       prisma.teamStats.update({
@@ -244,7 +246,8 @@ export const updatedFinishStats = async (data: Match) => {
           goalsAgainst: { increment: goalsForTeamA },
           goalDifference: goalsForTeamA - goalsForTeamA,
           points: { increment: pointsTeamB },
-          currentGoals: 0
+          currentGoals: 0,
+          teamGoalsCount: 0
         }
       })
     )
