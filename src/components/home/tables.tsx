@@ -62,7 +62,7 @@ const Tables = async () => {
       <ol className='flex flex-wrap justify-center gap-8'>
         {groups?.map((group, index) => (
           <li
-            className='col-span-8 md:col-span-4 border-[1px] border-custom-lightgray rounded-lg overflow-hidden'
+            className='border-[1px] border-custom-lightgray rounded-lg overflow-hidden'
             key={index}
           >
             <h3 className='text-base md:text-xl font-bold uppercase w-full bg-custom-green py-3 px-4 text-center '>

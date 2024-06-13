@@ -2,12 +2,14 @@ import { Avatar, Card, CardBody, Divider, Tooltip } from '@nextui-org/react'
 import ErrorDates from '@/components/home/errors/error-dates'
 import prisma from '@/libs/prisma'
 
+export const dynamic = 'force-dynamic'
+
 const getMatches = async () => {
   try {
     const matches = await prisma.match.findMany({
       where: {
-        playStartDate: {
-          notIn: null
+        status: {
+          equals: 'LIVE'
         }
       },
       include: {
@@ -15,6 +17,9 @@ const getMatches = async () => {
         teamB: true
       }
     })
+
+    console.log(matches)
+
     return { data: matches, status: 200, message: 'Success' }
   } catch (error: any) {
     return { data: null, status: 500, message: error.message }

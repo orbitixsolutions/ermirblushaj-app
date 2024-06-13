@@ -183,7 +183,8 @@ export const updatedStats = async (data: Player) => {
       where: { teamId: teamId },
       data: {
         goalsFor: { increment: 1 },
-        currentGoals: { increment: 1 }
+        currentGoals: { increment: 1 },
+        matchPlayed: { increment: 1 }
       }
     })
     return { success: 'Status updated!', status: 200 }
