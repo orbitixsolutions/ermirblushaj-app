@@ -20,7 +20,7 @@ const TableSkeleton = () => {
               </h3>
 
               <ol className='flex flex-col gap-2 px-5 my-10'>
-                {Array(5)
+                {Array(4)
                   .fill(0)
                   .map((_, index) => (
                     <li key={index}>

@@ -44,7 +44,7 @@ const Matches = async () => {
       <ol className='grid grid-cols-4 gap-3'>
         {matches?.slice(0, 10).map((match) => {
           const date = new Date(match.playStartDate!)
-          const formattedDate = date.toLocaleDateString('es-ES', {
+          const formattedDate = date.toLocaleDateString('it-IT', {
             year: 'numeric',
             month: 'numeric',
             day: 'numeric'
