@@ -56,19 +56,13 @@ const ItemFirstPlayer = ({
           </h2>
         </div>
 
-        <div className='col-span-1 grid-cols-3 flex items-center gap-0.5 text-xs'>
-          <div>
-            <h2 className='font-bold'>PJ</h2>
-            <p>{formatNumber(player.number!)}</p>
-          </div>
-          <div>
-            <h2 className='font-bold'>PG</h2>
-            <p>{formatNumber(player.team.teamStats.matchPlayed!)}</p>
-          </div>
-          <div>
-            <h2 className='font-bold'>G</h2>
-            <p>{formatNumber(player.playerStatus.goals!)}</p>
-          </div>
+        <div className='col-span-1 grid-cols-3 flex items-center gap-0.5 text-sm'>
+          <h2 className='text-sm font-bold'>
+            G{' '}
+            <span className='text-lg'>
+              {formatNumber(player.playerStatus.goals!)}
+            </span>
+          </h2>
         </div>
       </div>
     </li>
