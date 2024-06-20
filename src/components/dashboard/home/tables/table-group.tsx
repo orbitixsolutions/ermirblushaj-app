@@ -36,24 +36,6 @@ const TableGroup = ({ group }: { group: ExtendedGroups }) => {
             </h2>
           </div>
         )
-      case 'gw':
-        return (
-          <div>
-            <h2 className='text-xs md:text-sm'>{item.teamStats?.matchWin}</h2>
-          </div>
-        )
-      case 'gl':
-        return (
-          <div>
-            <h2 className='text-xs md:text-sm'>{item.teamStats?.matchLoss}</h2>
-          </div>
-        )
-      case 'gd':
-        return (
-          <div>
-            <h2 className='text-xs md:text-sm'>{item.teamStats?.matchDraw}</h2>
-          </div>
-        )
       case 'gs':
         return (
           <div>
