@@ -235,6 +235,9 @@ export const updatedFinishStats = async (data: Match) => {
         data: {
           goalsAgainst: { increment: goalsForTeamB },
           goalDifference: goalsForTeamA - goalsForTeamB,
+          matchWin: resultTeamA === 'WIN' ? { increment: 1 } : 0,
+          matchDraw: resultTeamA === 'DRAW' ? { increment: 1 } : 0,
+          matchLoss: resultTeamA === 'LOSS' ? { increment: 1 } : 0,
           points: { increment: pointsTeamA },
           currentGoals: 0,
           teamGoalsCount: 0
@@ -245,6 +248,9 @@ export const updatedFinishStats = async (data: Match) => {
         data: {
           goalsAgainst: { increment: goalsForTeamA },
           goalDifference: goalsForTeamA - goalsForTeamA,
+          matchWin: resultTeamA === 'WIN' ? { increment: 1 } : 0,
+          matchDraw: resultTeamA === 'DRAW' ? { increment: 1 } : 0,
+          matchLoss: resultTeamA === 'LOSS' ? { increment: 1 } : 0,
           points: { increment: pointsTeamB },
           currentGoals: 0,
           teamGoalsCount: 0
