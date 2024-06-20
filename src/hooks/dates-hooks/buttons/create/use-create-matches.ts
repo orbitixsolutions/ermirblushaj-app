@@ -14,9 +14,12 @@ const useCreateMatches = () => {
   const { data: data_groups } = useSWR<ExtendedGroup[]>('/api/groups', fetcher)
   const { data: data_matches } = useSWR('/api/matches', fetcher)
 
-  const fullMatches = data_matches?.length >= 6 && data_matches?.length % 2 === 0
-  const emptyGroups = !data_groups || data_groups?.length === 0
-  const emptyMatches = !data_matches || data_matches?.length === 0
+  const MATCHES_LENGTH = data_matches?.length
+  const DATA_GROUPS = data_groups?.length
+
+  const fullMatches = MATCHES_LENGTH >= 6 && MATCHES_LENGTH % 2 === 0
+  const emptyGroups = !data_groups || DATA_GROUPS === 0
+  const emptyMatches = !data_matches || MATCHES_LENGTH === 0
 
   const generateMatches = (group: ExtendedGroup) => {
     const newGroups = group.teams
