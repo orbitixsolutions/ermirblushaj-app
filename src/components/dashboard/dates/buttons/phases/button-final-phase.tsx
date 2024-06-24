@@ -5,9 +5,9 @@ import { Button } from '@nextui-org/react'
 import { MatchKey, Team } from '@prisma/client'
 import { useTransition } from 'react'
 import { toast } from 'sonner'
+import { usePhase } from '@/store/use-current-phase'
 import JSConfetti from 'js-confetti'
 import useSWR from 'swr'
-import { usePhase } from '@/store/use-current-phase'
 
 type ExtendedMatchKey = MatchKey & {
   teamKeyA: Team
@@ -17,9 +17,12 @@ type ExtendedMatchKey = MatchKey & {
 const ButtonFinalPhase = () => {
   const Confetti = new JSConfetti()
   const [isPending, startTransition] = useTransition()
-
-  const currentPhase = usePhase((state) => state.phase)
   const setPhase = usePhase((state) => state.setPhase)
+
+  const { data: key_matches } = useSWR<ExtendedMatchKey[]>(
+    '/api/matches/keys',
+    fetcher
+  )
 
   const { data: final_matches } = useSWR<ExtendedMatchKey[]>(
     '/api/matches/keys?phase=final&status=completed',
@@ -32,7 +35,7 @@ const ButtonFinalPhase = () => {
     final_matches?.length === FINAL &&
     final_matches?.every((match) => match.status === 'COMPLETED')
 
-  const finalPhase = currentPhase === 'FINAL' && status
+  const finalPhase = key_matches?.length === 1 && status
 
   const handleFinish = () => {
     startTransition(async () => {

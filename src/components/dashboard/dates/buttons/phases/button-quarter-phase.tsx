@@ -15,9 +15,12 @@ type ExtendedMatchKey = MatchKey & {
 
 const ButtonQuaterPhase = () => {
   const [isPending, startTransition] = useTransition()
-
-  const currentPhase = usePhase((state) => state.phase)
   const setPhase = usePhase((state) => state.setPhase)
+
+  const { data: key_matches } = useSWR<ExtendedMatchKey[]>(
+    '/api/matches/keys',
+    fetcher
+  )
 
   const { data: quarter_matches } = useSWR<ExtendedMatchKey[]>(
     '/api/matches/keys?phase=quarter&status=completed',
@@ -30,7 +33,7 @@ const ButtonQuaterPhase = () => {
     quarter_matches?.length === QUARTERS &&
     quarter_matches?.every((match) => match.status === 'COMPLETED')
 
-  const quarterPhase = currentPhase === 'QUARTERS' && status
+  const quarterPhase = key_matches?.length === 4 && status
 
   const handleFinish = () => {
     startTransition(async () => {

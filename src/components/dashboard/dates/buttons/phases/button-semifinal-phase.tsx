@@ -15,9 +15,12 @@ type ExtendedMatchKey = MatchKey & {
 
 const ButtonSemifinalPhase = () => {
   const [isPending, startTransition] = useTransition()
-
-  const currentPhase = usePhase((state) => state.phase)
   const setPhase = usePhase((state) => state.setPhase)
+
+  const { data: key_matches } = useSWR<ExtendedMatchKey[]>(
+    '/api/matches/keys',
+    fetcher
+  )
 
   const { data: semifinal_matches } = useSWR<ExtendedMatchKey[]>(
     '/api/matches/keys?phase=semifinals&status=completed',
@@ -30,7 +33,7 @@ const ButtonSemifinalPhase = () => {
     semifinal_matches?.length === SEMIFINALS &&
     semifinal_matches?.every((match) => match.status === 'COMPLETED')
 
-  const semifinalPhase = currentPhase === 'SEMIFINALS' && status
+  const semifinalPhase = key_matches?.length === 2 && status
 
   const handleFinish = () => {
     startTransition(async () => {
