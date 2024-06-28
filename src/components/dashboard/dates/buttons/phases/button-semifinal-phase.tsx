@@ -33,7 +33,7 @@ const ButtonSemifinalPhase = () => {
     semifinal_matches?.length === SEMIFINALS &&
     semifinal_matches?.every((match) => match.status === 'COMPLETED')
 
-  const semifinalPhase = key_matches?.length === 2 && status
+  const semifinalPhase = key_matches?.length !== 2 && status
 
   const handleFinish = () => {
     startTransition(async () => {

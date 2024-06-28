@@ -42,12 +42,12 @@ const PopoverQuarterMatches = ({
   const handleSelectWinner = (teamWinnerId: string) => {
     startTransition(async () => {
       const matchId = match.id
-      
+
       const { status, message } = await selectQuartersWinners(
         matchId,
         teamWinnerId
       )
-      
+
       if (status === 200) {
         setIsOpenPopover(false)
         toast.success(message)
@@ -79,7 +79,7 @@ const PopoverQuarterMatches = ({
         <CardLimitDate match={match} />
 
         {!isOpen ? (
-          isCurrentDate(match.playStartDate!) ? (
+          !isCurrentDate(match.playStartDate!) ? (
             <>
               {match.status === 'COMPLETED' ? (
                 <Button fullWidth className='font-bold bg-custom-darkblue '>
