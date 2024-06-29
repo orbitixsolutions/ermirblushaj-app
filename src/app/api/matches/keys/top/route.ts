@@ -13,12 +13,10 @@ export async function GET(request: Request) {
   if (allMatchesFinished) {
     const topTeam = await prisma.team.findMany({
       orderBy: {
-        position: 'desc'
+        position: 'asc'
       },
-      skip: 4,
       take: 3
     })
-
     return NextResponse.json(topTeam, { status: 200, statusText: 'OK' })
   }
 

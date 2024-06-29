@@ -19,6 +19,7 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
         content={
           <div className='text-center'>
             <p>{teamKeyA.name}</p>
+            <p> {teamKeyA.id}</p>
           </div>
         }
       >
@@ -42,6 +43,7 @@ const ImagesMatchesKeys = ({ match }: { match: ExtendedMatch }) => {
         content={
           <div className='text-center'>
             <p>{teamKeyB.name}</p>
+            <p>{teamKeyB.id}</p>
           </div>
         }
       >

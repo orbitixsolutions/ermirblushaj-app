@@ -35,7 +35,7 @@ const ButtonFinalPhase = () => {
     final_matches?.length === FINAL &&
     final_matches?.every((match) => match.status === 'COMPLETED')
 
-  const finalPhase = key_matches?.length === 1 && status
+  const finalPhase = key_matches?.length !== 1 && status
 
   const handleFinish = () => {
     startTransition(async () => {

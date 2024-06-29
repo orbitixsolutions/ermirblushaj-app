@@ -116,9 +116,8 @@ export const dataTopTeams = async () => {
     if (allMatchesFinished) {
       const topTeam = await prisma.team.findMany({
         orderBy: {
-          position: 'desc'
+          position: 'asc'
         },
-        skip: 4,
         take: 3
       })
 
