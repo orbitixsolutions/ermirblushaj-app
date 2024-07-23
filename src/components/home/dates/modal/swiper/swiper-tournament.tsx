@@ -25,7 +25,7 @@ const SwiperTournament = ({ gallery }: { gallery: TournamentGallery[] }) => {
         <SwiperSlide key={image.id}>
           <Image
             isBlurred
-            src={image.url!}
+            src={image.url! ?? ''}
             alt={image.id}
             className='aspect-square size-full object-cover'
           />
