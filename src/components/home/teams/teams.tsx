@@ -29,20 +29,24 @@ const Teams = async () => {
 
   return (
     <>
-      <section
-        id='teams'
-        className='max-w-[940px] mx-auto py-8 md:py-24 px-5 text-custom-white space-y-4'
-      >
-        <h2 className='w-full text-center text-lg md:text-2xl font-bold'>
-          {content('title')}
-        </h2>
-        <ol className='grid grid-cols-4 rounded-md overflow-hidden border-[1px] p-2 gap-1'>
-          {teams?.map((team) => (
-            <TeamItem key={team.id} team={team} />
-          ))}
-        </ol>
-      </section>
-      <ModalTeam contentModal={contentModal} />
+      {teams?.length && (
+        <>
+          <section
+            id='teams'
+            className='max-w-[940px] mx-auto py-8 md:py-24 px-5 text-custom-white space-y-4'
+          >
+            <h2 className='w-full text-center text-lg md:text-2xl font-bold'>
+              {content('title')}
+            </h2>
+            <ol className='grid grid-cols-4 rounded-md overflow-hidden border-[1px] p-2 gap-1'>
+              {teams?.map((team) => (
+                <TeamItem key={team.id} team={team} />
+              ))}
+            </ol>
+          </section>
+          <ModalTeam contentModal={contentModal} />
+        </>
+      )}
     </>
   )
 }

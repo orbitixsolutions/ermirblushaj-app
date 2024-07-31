@@ -36,7 +36,7 @@ interface Props {
 }
 
 const NavBar = ({ matchKeys, contentItems, contentDashboard }: Props) => {
-  const data = matchKeys.data.length > 1
+  const data = matchKeys?.data?.length > 1
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
