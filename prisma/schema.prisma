@@ -1,12 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -156,7 +154,7 @@ model MatchKey {
   loserId  String?
   winnerId String?
 
-  order Int @default(autoincrement())
+  order Int @default(0)
 
   phase  TournamentPhase @default(EIGHTH)
   status MatchStatus     @default(PENDING)

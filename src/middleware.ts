@@ -1,12 +1,12 @@
-import authConfig from '@/auth.config'
-import NextAuth from 'next-auth'
-import createMiddleware from 'next-intl/middleware'
 import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
   publicRoutes
 } from '@/routes'
+import authConfig from '@/auth.config'
+import NextAuth from 'next-auth'
+import createMiddleware from 'next-intl/middleware'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const { auth } = NextAuth(authConfig)
