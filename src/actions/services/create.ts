@@ -3,11 +3,12 @@
 import { z } from 'zod'
 
 import { getUserByEmail } from '@/data/user'
-import { TournamentPhase, TournamentStatus, UserRole } from '@prisma/client'
+import { UserRole } from '@prisma/client'
 import { currentRole } from '@/libs/auth'
 import { Team } from '@prisma/client'
 import { Player, TeamData } from '@/actions/types'
 import { RegisterAdminSchema } from '@/schemas'
+import { v4 as uuid } from 'uuid'
 import prisma from '@/libs/prisma'
 import bcrypt from 'bcryptjs'
 
@@ -40,8 +41,8 @@ export const createUser = async (data: z.infer<typeof RegisterAdminSchema>) => {
         name,
         email: emailLowerCase,
         role: role as UserRole,
-        password: hashedPassword
-      }
+        password: hashedPassword,
+      },
     })
 
     return { message: 'User created!', status: 200 }
@@ -59,16 +60,11 @@ export const createTeam = async (data: TeamData) => {
 
   try {
     await prisma.team.create({
-      data: {
-        name: data.name,
-        id: data.id
-      }
+      data: { name: data.name, id: data.id },
     })
 
     await prisma.teamStats.create({
-      data: {
-        teamId: data.id
-      }
+      data: { teamId: data.id },
     })
 
     return { message: 'Team created!', status: 200 }
@@ -96,13 +92,11 @@ export const createPlayers = async (data: Player) => {
       team_id,
       id,
       EXIST_TEAM_NAME,
-      EXIST_TEAM_ID
+      EXIST_TEAM_ID,
     } = data
 
     const teamFoundName = await prisma.team.findUnique({
-      where: {
-        id: team_id
-      }
+      where: { id: team_id },
     })
 
     const teamId = team_id === '' ? EXIST_TEAM_ID : team_id
@@ -119,8 +113,8 @@ export const createPlayers = async (data: Player) => {
         id: id,
         height: height,
         firstName: first_name,
-        dateOfBirth: date_birthday
-      }
+        dateOfBirth: date_birthday,
+      },
     })
 
     await prisma.playerStats.create({
@@ -128,8 +122,8 @@ export const createPlayers = async (data: Player) => {
         teamId: teamId,
         playerId: id,
         lastName: last_name,
-        firstName: first_name
-      }
+        firstName: first_name,
+      },
     })
     return { message: 'Player created!', status: 200 }
   } catch (error: any) {
@@ -145,9 +139,7 @@ export const createImageTournamnet = async (data: any) => {
   }
 
   try {
-    await prisma.tournamentGallery.create({
-      data
-    })
+    await prisma.tournamentGallery.create({ data })
 
     return { message: 'Image created!', status: 200 }
   } catch (error) {
@@ -163,9 +155,7 @@ export const createImageTribute = async (data: any) => {
   }
 
   try {
-    await prisma.tributeGallery.create({
-      data
-    })
+    await prisma.tributeGallery.create({ data })
 
     return { message: 'Image created!', status: 200 }
   } catch (error) {
@@ -190,15 +180,12 @@ export const createGroups = async (data: any) => {
     if (ALREADY_GROUPS)
       return { error: 'Already exists groups created!', status: 409 }
 
-    await prisma.group.createMany({
-      data: groups,
-      skipDuplicates: true
-    })
+    await prisma.group.createMany({ data: groups })
 
     const transaction = teams.map((team: Team) => {
       return prisma.team.update({
         where: { id: team.id },
-        data: { groupId: team.groupId }
+        data: { groupId: team.groupId },
       })
     })
 
@@ -206,7 +193,6 @@ export const createGroups = async (data: any) => {
 
     return { message: 'Groups created!', status: 200 }
   } catch (error: any) {
-    console.log(error)
     return { error: 'An ocurred a error!', status: 500 }
   }
 }
@@ -225,16 +211,10 @@ export const createMatches = async (teamAId: string, teamBId: string) => {
     if (ALREADY_MATCHES)
       return { error: 'Already exists matchups created!', status: 409 }
 
-    await prisma.match.create({
-      data: {
-        teamAId,
-        teamBId
-      }
-    })
+    await prisma.match.create({ data: { teamAId, teamBId } })
 
     return { success: 'Matches created!', status: 200 }
   } catch (error: any) {
-    console.log(error)
     return { error: 'An ocurred a error!', status: 500 }
   }
 }
@@ -257,28 +237,20 @@ export const createKeys = async () => {
     const groupsWithTopTeams = await prisma.group.findMany({
       include: {
         teams: {
-          orderBy: {
-            teamStats: {
-              points: 'desc'
-            }
-          },
-          take: 3
-        }
-      }
+          orderBy: { teamStats: { points: 'desc' } },
+          take: 3,
+        },
+      },
     })
 
     const groupsWithThirdPlaceTeams = await prisma.group.findMany({
       include: {
         teams: {
-          orderBy: {
-            teamStats: {
-              points: 'desc'
-            }
-          },
+          orderBy: { teamStats: { points: 'desc' } },
           skip: 2,
-          take: 1
-        }
-      }
+          take: 1,
+        },
+      },
     })
 
     const thirdPlaceTeams = groupsWithThirdPlaceTeams.map(
@@ -289,43 +261,44 @@ export const createKeys = async () => {
       {
         id: crypto.randomUUID(),
         name: 'Third Place Group',
-        teams: thirdPlaceTeams
-      }
+        teams: thirdPlaceTeams,
+      },
     ]
 
     const combinedGroups = [...groupsWithTopTeams, ...thirdPlaceGroup]
 
     const [firstHalf, secondHalf] = [
       combinedGroups.slice(0, combinedGroups.length / 2),
-      combinedGroups.slice(combinedGroups.length / 2)
+      combinedGroups.slice(0, combinedGroups.length / 2),
     ]
 
     const matchesAB = createMatchups(firstHalf[0].teams, firstHalf[1].teams)
-    const matchesCA = createMatchups(secondHalf[0].teams, secondHalf[1].teams)
+    const matchesCD = createMatchups(secondHalf[0].teams, secondHalf[1].teams)
 
     const aMatchKeys = matchesAB.slice(0, 2).flatMap((matches: any) =>
-      matches.map((match: any) => ({
-        column: 'A',
-        teamAId: match.teamA.id,
-        teamBId: match.teamB.id,
-        phase: 'QUARTER'
-      }))
+      matches.map((match: any, index: number) => {
+        return {
+          order: index + 1,
+          column: 'A',
+          teamAId: match.teamA.id,
+          teamBId: match.teamB.id,
+          phase: 'QUARTER',
+        }
+      })
     )
 
-    const bMatchKeys = matchesCA.slice(0, 2).flatMap((matches: any) =>
-      matches.map((match: any) => ({
+    const bMatchKeys = matchesCD.slice(0, 2).flatMap((matches: any) =>
+      matches.map((match: any, index: number) => ({
+        order: index + 1,
         column: 'B',
         teamAId: match.teamA.id,
         teamBId: match.teamB.id,
-        phase: 'QUARTER'
+        phase: 'QUARTER',
       }))
     )
 
     const matchKeys = [...aMatchKeys, ...bMatchKeys]
-
-    await prisma.matchKey.createMany({
-      data: matchKeys
-    })
+    await prisma.matchKey.createMany({ data: matchKeys })
 
     return { message: 'Keys created!', status: 200 }
   } catch (error: any) {
@@ -335,10 +308,7 @@ export const createKeys = async () => {
 
 const createMatchups = (teamA: Team[] | any, teamB: Team[] | any) => {
   const teams = teamA.map((aTeam: any, index: number) => [
-    {
-      teamA: aTeam,
-      teamB: teamB[index]
-    }
+    { teamA: aTeam, teamB: teamB[index] },
   ])
 
   return teams
@@ -353,9 +323,7 @@ export const finishMatchesEights = async () => {
 
   try {
     const matches = await prisma.matchKey.findMany({
-      orderBy: {
-        order: 'asc'
-      }
+      orderBy: { order: 'asc' },
     })
 
     const winnersId = matches.map((match) => match.winnerId)
@@ -364,52 +332,48 @@ export const finishMatchesEights = async () => {
       [winnersId[0], winnersId[1]],
       [winnersId[2], winnersId[3]],
       [winnersId[4], winnersId[5]],
-      [winnersId[6], winnersId[7]]
+      [winnersId[6], winnersId[7]],
     ]
 
     const matchCreation = matchups.map((matchup) => {
-      return [
-        {
-          teamAId: matchup[0]
-        },
-        {
-          teamBId: matchup[1]
-        }
-      ]
+      return [{ teamAId: matchup[0] }, { teamBId: matchup[1] }]
     })
 
     const matchesQuartersA = matchCreation.slice(0, 2)
     const matchesQuartersB = matchCreation.slice(2, 4)
 
-    const aMatchKeys = matchesQuartersA.map((match) => {
+    const aMatchKeys = matchesQuartersA.map((match, index) => {
       const teamAId = match[0].teamAId
       const teamBId = match[1].teamBId
 
       return {
+        id: uuid(),
+        order: index + 1,
         column: 'A',
         phase: 'QUARTER',
         matchStatus: 'QUARTER',
         teamAId: teamAId,
-        teamBId: teamBId
+        teamBId: teamBId,
       }
     })
-    const bMatchKeys = matchesQuartersB.map((match) => {
+
+    const bMatchKeys = matchesQuartersB.map((match, index) => {
       const teamAId = match[0].teamAId
       const teamBId = match[1].teamBId
 
       return {
+        id: uuid(),
+        order: index + 1,
         column: 'B',
         phase: 'QUARTER',
         matchStatus: 'QUARTER',
         teamAId: teamAId,
-        teamBId: teamBId
+        teamBId: teamBId,
       }
     })
 
     const matchKeys: any = [...aMatchKeys, ...bMatchKeys]
-    await prisma.matchKey.createMany({
-      data: matchKeys
-    })
+    await prisma.matchKey.createMany({ data: matchKeys })
 
     return { message: 'Matches finished!', status: 200 }
   } catch (error) {
@@ -426,30 +390,14 @@ export const finishMatchesQuarters = async () => {
 
   try {
     const blockA = await prisma.matchKey.findMany({
-      include: {
-        teamKeyA: true,
-        teamKeyB: true
-      },
-      orderBy: {
-        order: 'asc'
-      },
-      where: {
-        column: 'A',
-        phase: 'QUARTER'
-      }
+      include: { teamKeyA: true, teamKeyB: true },
+      orderBy: { order: 'asc' },
+      where: { column: 'A', phase: 'QUARTER' },
     })
     const blockB = await prisma.matchKey.findMany({
-      include: {
-        teamKeyA: true,
-        teamKeyB: true
-      },
-      orderBy: {
-        order: 'asc'
-      },
-      where: {
-        column: 'B',
-        phase: 'QUARTER'
-      }
+      include: { teamKeyA: true, teamKeyB: true },
+      orderBy: { order: 'asc' },
+      where: { column: 'B', phase: 'QUARTER' },
     })
 
     const matches = [...blockA, ...blockB]
@@ -457,54 +405,48 @@ export const finishMatchesQuarters = async () => {
 
     const matchups = [
       [winnersId[0], winnersId[1]],
-      [winnersId[2], winnersId[3]]
+      [winnersId[2], winnersId[3]],
     ]
 
     const matchCreation = matchups.map((matchup) => {
-      return [
-        {
-          teamAId: matchup[0]
-        },
-        {
-          teamBId: matchup[1]
-        }
-      ]
+      return [{ teamAId: matchup[0] }, { teamBId: matchup[1] }]
     })
 
     const matchesQuartersA = matchCreation.slice(0, 1)
     const matchesQuartersB = matchCreation.slice(1, 2)
 
-    const aMatchKeys = matchesQuartersA.map((match) => {
+    const aMatchKeys = matchesQuartersA.map((match, index) => {
       const teamAId = match[0].teamAId
       const teamBId = match[1].teamBId
 
       return {
+        id: uuid(),
+        order: index + 1,
         column: 'A',
         phase: 'SEMIFINALS',
         matchStatus: 'SEMIFINALS',
         teamAId: teamAId,
-        teamBId: teamBId
+        teamBId: teamBId,
       }
     })
 
-    const bMatchKeys = matchesQuartersB.map((match) => {
+    const bMatchKeys = matchesQuartersB.map((match, index) => {
       const teamAId = match[0].teamAId
       const teamBId = match[1].teamBId
 
       return {
+        id: uuid(),
+        order: index + 1,
         column: 'B',
         phase: 'SEMIFINALS',
         matchStatus: 'SEMIFINALS',
         teamAId: teamAId,
-        teamBId: teamBId
+        teamBId: teamBId,
       }
     })
 
     const matchKeys: any = [...aMatchKeys, ...bMatchKeys]
-
-    await prisma.matchKey.createMany({
-      data: matchKeys
-    })
+    await prisma.matchKey.createMany({ data: matchKeys })
 
     return { message: 'Matches finished!', status: 200 }
   } catch (error) {
@@ -521,30 +463,14 @@ export const finishMatchesSemifinals = async () => {
 
   try {
     const blockA = await prisma.matchKey.findMany({
-      include: {
-        teamKeyA: true,
-        teamKeyB: true
-      },
-      orderBy: {
-        order: 'asc'
-      },
-      where: {
-        column: 'A',
-        phase: 'SEMIFINALS'
-      }
+      include: { teamKeyA: true, teamKeyB: true },
+      orderBy: { order: 'asc' },
+      where: { column: 'A', phase: 'SEMIFINALS' },
     })
     const blockB = await prisma.matchKey.findMany({
-      include: {
-        teamKeyA: true,
-        teamKeyB: true
-      },
-      orderBy: {
-        order: 'asc'
-      },
-      where: {
-        column: 'B',
-        phase: 'SEMIFINALS'
-      }
+      include: { teamKeyA: true, teamKeyB: true },
+      orderBy: { order: 'asc' },
+      where: { column: 'B', phase: 'SEMIFINALS' },
     })
 
     const matches = [...blockA, ...blockB]
@@ -553,36 +479,32 @@ export const finishMatchesSemifinals = async () => {
     const matchups = [[winnersId[0], winnersId[1]]]
 
     const matchCreation = matchups.map((matchup) => {
-      return [
-        {
-          teamAId: matchup[0]
-        },
-        {
-          teamBId: matchup[1]
-        }
-      ]
+      return [{ teamAId: matchup[0] }, { teamBId: matchup[1] }]
     })
 
-    const finalMatchup = matchCreation.map((match) => {
+    const finalMatchup = matchCreation.map((match, index) => {
       const teamIdA = match[0].teamAId
       const teamIdB = match[1].teamBId
 
       return {
+        id: uuid(),
+        order: index + 1,
         phase: 'FINAl',
         matchStatus: 'FINAL',
         teamAId: teamIdA,
-        teamBId: teamIdB
+        teamBId: teamIdB,
       }
     })
 
     await prisma.matchKey.create({
       data: {
+        id: uuid(),
         column: 'NONE',
         phase: 'FINAL',
         matchStatus: 'FINAL',
         teamAId: finalMatchup[0].teamAId!,
-        teamBId: finalMatchup[0].teamBId!
-      }
+        teamBId: finalMatchup[0].teamBId!,
+      },
     })
 
     return { message: 'Matches finished!', status: 200 }
@@ -602,8 +524,8 @@ export const finishMatchFinal = async () => {
     // Finalizar torneo
     await prisma.matchKey.updateMany({
       data: {
-        matchStatus: 'FINISHED'
-      }
+        matchStatus: 'FINISHED',
+      },
     })
 
     return { message: 'Matches finished!', status: 200 }

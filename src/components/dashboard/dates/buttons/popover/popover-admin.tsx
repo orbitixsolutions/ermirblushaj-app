@@ -2,7 +2,7 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-  Button
+  Button,
 } from '@nextui-org/react'
 import { useCurrentRole } from '@/hooks/auth/use-current-role'
 import { IconTrash, IconRestore } from '@tabler/icons-react'
@@ -37,13 +37,13 @@ const DropdownAdmin = () => {
           Admin Options
         </Button>
       </PopoverTrigger>
-      <PopoverContent className='bg-custom-darkblue p-4'>
+      <PopoverContent className='bg-custom-darkblue p-4'> 
         <div className='w-full text-custom-white space-y-4'>
           <h3 className='text-center text-xl font-bold'>Options</h3>
           <Button
             fullWidth
             color='danger'
-            isDisabled
+            isDisabled={emptyGroups}  
             isLoading={isPendingGroups}
             className='bg-custom-red font-bold'
             startContent={<IconTrash size={20} />}

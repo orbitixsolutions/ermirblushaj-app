@@ -5,9 +5,7 @@ import { fetcher } from '@/helpers/fetcher'
 import { createMatches } from '@/actions/services/create'
 import useSWR, { mutate } from 'swr'
 
-type ExtendedGroup = Group & {
-  teams: Team[]
-}
+type ExtendedGroup = Group & { teams: Team[] }
 
 const useCreateMatches = () => {
   const [isPendingMatches, startTransition] = useTransition()
@@ -78,7 +76,7 @@ const useCreateMatches = () => {
     emptyGroups,
     fullMatches,
     isPendingMatches,
-    handleCreateMatches
+    handleCreateMatches,
   }
 }
 

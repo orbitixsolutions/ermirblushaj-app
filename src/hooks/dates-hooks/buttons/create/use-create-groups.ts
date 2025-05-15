@@ -11,16 +11,13 @@ const useCreateGroups = () => {
   const { data: data_teams } = useSWR<Team[]>('/api/teams', fetcher)
   const { data: data_groups } = useSWR<Match[]>('/api/groups', fetcher)
 
-  const fullGroups = (data_groups?.length ?? 0) >= 3
+  const fullGroups = (data_groups?.length ?? 0) >= 4
 
-  // Mezclamos los equipos que son pasados como parametro
   const mixTeams = (team: Team[] | null | undefined): Team[] => {
-    // Si es null un undefined retornamos un arreglo vacio
     if (!team || team.length <= 1) {
       return team || []
     }
 
-    // Procede a mezclar el team como antes
     for (let i = team.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
       ;[team[i], team[j]] = [team[j], team[i]]
@@ -29,11 +26,10 @@ const useCreateGroups = () => {
     return team
   }
 
-  // Generamos los grupos
   const generateGroups = () => {
     const mixedTeams = mixTeams(data_teams)
 
-    const newGroups = Array.from({ length: 3 }, (_, i) => ({
+    const newGroups = Array.from({ length: 4 }, (_, i) => ({
       id: crypto.randomUUID(),
       name: String.fromCharCode(65 + i)
     }))
