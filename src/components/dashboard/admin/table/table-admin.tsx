@@ -10,7 +10,7 @@ import {
   TableCell,
   Button,
   Tooltip,
-  Spinner
+  Spinner,
 } from '@nextui-org/react'
 import { columns } from '@/components/dashboard/admin/data/index'
 import { User as TypeUsers, User } from '@prisma/client'
@@ -28,7 +28,7 @@ const TableAdmin = () => {
   const userId = user?.id
 
   const { data: users } = useSWR<User[]>('/api/users', fetcher, {
-    refreshInterval: 3000
+    refreshInterval: 3000,
   })
 
   const handleDeleteAdmin = async (id: string) => {
@@ -60,7 +60,10 @@ const TableAdmin = () => {
       case 'actions':
         return (
           <div className='relative flex items-center gap-2'>
-            <Tooltip color='danger' content={'Delete admin'}>
+            <Tooltip
+              color='danger'
+              content={'Delete admin'}
+            >
               <Button
                 onPress={() => handleDeleteAdmin(user.id)}
                 isIconOnly
@@ -81,7 +84,7 @@ const TableAdmin = () => {
     <Table
       classNames={{
         wrapper: 'bg-custom-navy border-[1px] border-custom-lightgray',
-        th: 'bg-custom-darkblue text-custom-white font-bold'
+        th: 'bg-custom-darkblue text-custom-white font-bold',
       }}
       aria-label='Admin users'
     >
@@ -95,7 +98,13 @@ const TableAdmin = () => {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={<Spinner color='success' size='lg' />}>
+      <TableBody
+        emptyContent={
+          <div>
+            <p>No admin users</p>
+          </div>
+        }
+      >
         {users &&
           (users.map((user) => {
             if (user.id === userId) return
