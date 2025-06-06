@@ -14,11 +14,11 @@ const ButtonModalTeam = () => {
   const openModal = useModalTeamStore((state) => state.onTeamModalOpen)
 
   const handleOpenModal = async () => {
-    const UNDEFINED_TEAMS = 12
+    const UNDEFINED_TEAMS = 16
     const { data } = await axios.get('/api/teams')
 
     if (data.length === UNDEFINED_TEAMS) {
-      return toast.error('Team limit reached (20)')
+      return toast.error(`Team limit reached (${UNDEFINED_TEAMS})`)
     }
 
     return openModal()
