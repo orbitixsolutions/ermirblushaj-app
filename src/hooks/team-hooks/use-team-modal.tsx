@@ -82,7 +82,7 @@ export const useTeamModal = () => {
     const teamId = uuid()
     const { data: teamsList } = await dataTeams()
 
-    const MAX_TEAM_CREATE = 12
+    const MAX_TEAM_CREATE = 16
     const TEAM_LIMIT = teamsList?.length === MAX_TEAM_CREATE
 
     if (TEAM_LIMIT && !teamModalEdit) {
