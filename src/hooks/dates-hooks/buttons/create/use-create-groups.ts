@@ -21,7 +21,7 @@ const useCreateGroups = () => {
     for (let i = team.length - 1; i > 0; i--) {
       //Dejamos esta parte vacia (Sorteo de equipos)
     }
-
+    team = ['d6c9e139-8d27-41e4-bcbd-4c759fa0381c','d6c9e139-8d27-41e4-bcbd-4c759fa0381c','d6c9e139-8d27-41e4-bcbd-4c759fa0381c','d6c9e139-8d27-41e4-bcbd-4c759fa0381c','d6c9e139-8d27-41e4-bcbd-4c759fa0381c','d6c9e139-8d27-41e4-bcbd-4c759fa0381c']
     return team
   }
 
