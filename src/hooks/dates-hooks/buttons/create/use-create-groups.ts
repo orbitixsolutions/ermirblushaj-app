@@ -19,8 +19,7 @@ const useCreateGroups = () => {
     }
 
     for (let i = team.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[team[i], team[j]] = [team[j], team[i]]
+      //Dejamos esta parte vacia (Sorteo de equipos)
     }
 
     return team
