@@ -68,10 +68,10 @@ const Footer = () => {
             Make by{' '}
             <Link
               isExternal
-              href='https://bzsoftwares.com/'
+              href='https://orbitixsolutions.com/'
               className='text-custom-white hover:underline'
             >
-              BzSoftwares
+              Orbitix Solutions
             </Link>{' '}
             {/* with{' '}
             <Link
